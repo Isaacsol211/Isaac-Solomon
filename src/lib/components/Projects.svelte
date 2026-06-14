@@ -93,7 +93,7 @@
 									? 'md:order-1 md:rotate-[-0.75deg]'
 									: 'md:rotate-[0.75deg]'} transition-transform duration-500 ease-out group-hover:translate-y-[-0.4rem] group-hover:rotate-0"
 							>
-								<ProjectVisual kind={project.visual} label={project.frameLabel} {dark} />
+								<ProjectVisual kind={project.visual} label={project.frameLabel} {dark} image={project.image} />
 							</div>
 						</div>
 					</a>

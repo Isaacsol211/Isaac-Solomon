@@ -5,8 +5,9 @@
 	let {
 		kind,
 		label,
-		dark = false
-	}: { kind: ProjectVisualKind; label: string; dark?: boolean } = $props();
+		dark = false,
+		image = ''
+	}: { kind: ProjectVisualKind; label: string; dark?: boolean; image?: string } = $props();
 
 	// The gallery vignette reuses the photography placeholders
 	const tiles = [
@@ -132,7 +133,7 @@
 				{/each}
 			</div>
 		</div>
-	{:else}
+	{:else if kind === 'typing'}
 		<div class="grid aspect-[16/10] content-center gap-4 p-5 sm:gap-5 sm:p-7">
 			<div class="flex gap-2 font-mono text-[9px] tracking-[0.2em] uppercase opacity-60">
 				<span class="rounded-full border border-current/15 px-2 py-0.5">84 wpm</span>
@@ -147,6 +148,16 @@
 			<div class="h-1 w-full overflow-hidden rounded-full bg-current/10">
 				<span class="type-prog block h-full bg-accent"></span>
 			</div>
+		</div>
+	{:else}
+		<!-- Real project screenshot -->
+		<div class="aspect-[16/10] overflow-hidden">
+			<img
+				src={image}
+				alt="Screenshot of {label}"
+				loading="lazy"
+				class="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+			/>
 		</div>
 	{/if}
 </div>

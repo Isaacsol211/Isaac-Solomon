@@ -58,8 +58,11 @@ export const stats = [
 	{ value: 4, suffix: '', label: 'Years writing code for the web' }
 ];
 
-/** Which live-coded preview vignette the card renders (see ProjectVisual.svelte) */
-export type ProjectVisualKind = 'terminal' | 'gallery' | 'dashboard' | 'typing';
+/**
+ * 'image' shows a real project screenshot in a browser frame.
+ * All other kinds render live-coded vignettes (see ProjectVisual.svelte).
+ */
+export type ProjectVisualKind = 'terminal' | 'gallery' | 'dashboard' | 'typing' | 'image';
 
 export type Project = {
 	title: string;
@@ -73,6 +76,8 @@ export type Project = {
 	visual: ProjectVisualKind;
 	/** Text shown in the preview window's title/address bar */
 	frameLabel: string;
+	/** Path to screenshot — only used when visual === 'image' */
+	image?: string;
 };
 
 export const projectsIntro =
@@ -88,8 +93,9 @@ export const projects: Project[] = [
 		tags: ['Custom CMS', 'E-Commerce', 'UI Engineering', 'Mailers'],
 		href: 'https://www.mivi.in',
 		theme: 'dark',
-		visual: 'dashboard',
-		frameLabel: 'mivi.in'
+		visual: 'image',
+		frameLabel: 'mivi.in',
+		image: '/projects/mivi.png'
 	},
 	{
 		title: 'Vibrant Living',
@@ -100,8 +106,9 @@ export const projects: Project[] = [
 		tags: ['Custom CMS', 'Design System', 'Multi-surface', 'UI Engineering'],
 		href: 'https://vibrantliving.in',
 		theme: 'light',
-		visual: 'gallery',
-		frameLabel: 'vibrantliving.in'
+		visual: 'image',
+		frameLabel: 'vibrantliving.in',
+		image: '/projects/vibrant-living.png'
 	},
 	{
 		title: 'AAP',
@@ -112,8 +119,9 @@ export const projects: Project[] = [
 		tags: ['Static Site', 'Editorial', 'HTML / CSS', 'UI Design'],
 		href: 'https://github.com/Isaacsol211',
 		theme: 'light',
-		visual: 'typing',
-		frameLabel: 'aamaadmiparty.org'
+		visual: 'image',
+		frameLabel: 'aamaadmiparty.org',
+		image: '/projects/aap.png'
 	},
 	{
 		title: 'Novarock',
