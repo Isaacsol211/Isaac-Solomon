@@ -45,15 +45,15 @@ export const about = {
 	lead: 'I design and build things for the web —',
 	leadAccent: 'fast, accessible and a little bit playful.',
 	paragraphs: [
-		'Placeholder bio — a couple of sentences about who you are, the kind of problems you love solving and what you are currently focused on. Keep it human; skip the buzzwords.',
-		'When I am not pushing commits I am usually out with a camera, chasing light and interesting strangers.'
+		"I'm a frontend developer who cares as much about the seams as the surface. I've shipped e-commerce platforms for consumer brands, componentised CMS systems that non-technical teams can actually use, and the odd political website that never saw daylight. My instinct is always to build less but build it right.",
+		'When I\'m not pushing commits I\'m usually out with a camera — 35mm mostly, chasing light and interesting strangers.'
 	],
 	imageAlt: 'Generative glitch artwork — a grid of pixels with bursts of red and blue',
 	imageCaption: 'fig. 01 — controlled chaos'
 };
 
 export const stats = [
-	{ value: 320, suffix: '+', label: 'Commits pushed in the last year' },
+	{ value: 3, suffix: '', label: 'Client products live in the market' },
 	{ value: 12, suffix: '+', label: 'Projects designed, built and shipped' },
 	{ value: 4, suffix: '', label: 'Years writing code for the web' }
 ];
@@ -76,56 +76,56 @@ export type Project = {
 };
 
 export const projectsIntro =
-	'A few things I have designed, broken and rebuilt recently. Each one taught me something I could not have googled.';
+	'Three client builds and one side project. Each one pushed the work further than the brief required.';
 
 export const projects: Project[] = [
+	{
+		title: 'Mivi',
+		year: '2024',
+		category: 'E-Commerce',
+		description:
+			"India's first audio manufacturing tech brand needed a storefront that moved as fast as their products. I built the entire UI on a custom in-house CMS — componentised from the ground up, with a live cart, transactional mailers and dynamic product pages that the team could manage without touching code.",
+		tags: ['Custom CMS', 'E-Commerce', 'UI Engineering', 'Mailers'],
+		href: 'https://www.mivi.in',
+		theme: 'dark',
+		visual: 'dashboard',
+		frameLabel: 'mivi.in'
+	},
+	{
+		title: 'Vibrant Living',
+		year: '2024',
+		category: 'Brand & Commerce',
+		description:
+			'A Hyderabad health-food brand with a café, store and community all under one roof — and three separate web surfaces to match. Built on the same custom CMS stack: fully dynamic product catalogue, order flows, and a design system that kept the earthy, botanical brand voice consistent across every page.',
+		tags: ['Custom CMS', 'Design System', 'Multi-surface', 'UI Engineering'],
+		href: 'https://vibrantliving.in',
+		theme: 'light',
+		visual: 'gallery',
+		frameLabel: 'vibrantliving.in'
+	},
+	{
+		title: 'AAP',
+		year: '2023',
+		category: 'Political Web',
+		description:
+			"A static campaign site for the Aam Aadmi Party — editorial, urgent, built to mobilise. Strong typographic hierarchy, video-first news sections and a volunteer sign-up flow. The party loved it; it never went live. Some of the best work I've done for an audience of zero.",
+		tags: ['Static Site', 'Editorial', 'HTML / CSS', 'UI Design'],
+		href: 'https://github.com/Isaacsol211',
+		theme: 'light',
+		visual: 'typing',
+		frameLabel: 'aamaadmiparty.org'
+	},
 	{
 		title: 'Novarock',
 		year: '2026',
 		category: 'Tooling',
 		description:
-			'Placeholder — one good sentence about what Novarock does and the problem it solves.',
-		tags: ['TypeScript', 'CLI'],
+			'A personal CLI tool for scaffolding and building frontend projects the way I actually work — opinionated defaults, zero config, fast output. Built to scratch my own itch and sharpen my TypeScript.',
+		tags: ['TypeScript', 'CLI', 'Node.js', 'Open Source'],
 		href: 'https://github.com/Isaacsol211',
 		theme: 'light',
 		visual: 'terminal',
 		frameLabel: 'novarock — zsh'
-	},
-	{
-		title: 'Lumen Gallery',
-		year: '2025',
-		category: 'Web App',
-		description:
-			'Placeholder — a self-hosted photography portfolio engine with buttery image loading.',
-		tags: ['SvelteKit', 'Cloudflare'],
-		href: 'https://github.com/Isaacsol211',
-		theme: 'dark',
-		visual: 'gallery',
-		frameLabel: 'lumen.gallery'
-	},
-	{
-		title: 'Pulse Board',
-		year: '2025',
-		category: 'Dashboard',
-		description:
-			'Placeholder — a realtime analytics dashboard that turns noisy events into calm signals.',
-		tags: ['Svelte', 'WebSockets'],
-		href: 'https://github.com/Isaacsol211',
-		theme: 'light',
-		visual: 'dashboard',
-		frameLabel: 'pulse.app/live'
-	},
-	{
-		title: 'Type Trainer',
-		year: '2024',
-		category: 'Side Quest',
-		description:
-			'Placeholder — a tiny keyboard speed game built in a weekend, played for far too many.',
-		tags: ['Vite', 'Canvas'],
-		href: 'https://github.com/Isaacsol211',
-		theme: 'light',
-		visual: 'typing',
-		frameLabel: 'type-trainer.dev'
 	}
 ];
 
@@ -141,7 +141,7 @@ export const experience = [
 		role: 'Independent Developer',
 		company: 'Freelance',
 		description:
-			'Placeholder — designing and shipping web apps end-to-end for clients, from first sketch to production.'
+			'Designing and shipping web products end-to-end for clients — from first Figma frame to production deploy. Recent work spans e-commerce, brand sites and custom CMS builds for Mivi and Vibrant Living.'
 	},
 	{
 		from: '2017',
@@ -149,7 +149,7 @@ export const experience = [
 		role: 'Frontend Developer',
 		company: 'Studio Nova',
 		description:
-			'Placeholder — built and maintained component systems and marketing sites for a small product studio.'
+			'Built and maintained component systems and marketing sites for a small product studio. First time owning a design system end-to-end.'
 	},
 	{
 		from: '2015',
@@ -157,7 +157,7 @@ export const experience = [
 		role: 'Developer (Intern)',
 		company: 'Able.do',
 		description:
-			'Placeholder — learned the craft the honest way: code reviews, broken builds and very patient mentors.'
+			'Learned the craft the honest way — code reviews, broken builds and very patient mentors. Left knowing why things work, not just that they do.'
 	}
 ];
 
