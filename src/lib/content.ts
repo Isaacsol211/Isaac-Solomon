@@ -124,16 +124,17 @@ export const projects: Project[] = [
 		image: '/projects/aap.png'
 	},
 	{
-		title: 'Novarock',
-		year: '2026',
-		category: 'Tooling',
+		title: 'Nova Rock Tools',
+		year: '2025',
+		category: 'B2B / Industrial',
 		description:
-			'A personal CLI tool for scaffolding and building frontend projects the way I actually work — opinionated defaults, zero config, fast output. Built to scratch my own itch and sharpen my TypeScript.',
-		tags: ['TypeScript', 'CLI', 'Node.js', 'Open Source'],
-		href: 'https://github.com/Isaacsol211',
+			'A bilingual product site for a Lima-based mining equipment company. DTH hammers, drill bits and tricones presented in a clean, trust-first layout. SvelteKit with i18n, a product catalogue, ISO certification callouts and a WhatsApp inquiry flow.',
+		tags: ['SvelteKit', 'i18n', 'B2B', 'Product Catalogue'],
+		href: 'https://www.novarocktools.com',
 		theme: 'light',
-		visual: 'terminal',
-		frameLabel: 'novarock — zsh'
+		visual: 'image',
+		frameLabel: 'novarocktools.com',
+		image: '/projects/novarock.png'
 	}
 ];
 
