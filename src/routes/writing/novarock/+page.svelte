@@ -111,7 +111,7 @@
 			<div>
 				<div class="mb-2 flex items-center justify-between">
 					<span class="text-[10px] font-medium tracking-[0.2em] uppercase text-accent">Production (SvelteKit)</span>
-					<span class="rounded-full bg-accent/10 border border-accent/30 px-2.5 py-1 font-mono text-[10px] text-accent">Perf 76</span>
+					<span class="rounded-full bg-accent/10 border border-accent/30 px-2.5 py-1 font-mono text-[10px] text-accent">Perf 100</span>
 				</div>
 				<div class="overflow-hidden rounded-xl border border-accent/30 shadow-[0_16px_32px_-16px_rgba(20,19,17,0.15)]">
 					<div class="flex items-center gap-1.5 border-b border-line bg-paper-2 px-3 py-2">
@@ -143,11 +143,11 @@
 				<span class="col-span-2 text-right">Delta</span>
 			</div>
 			{#each [
-				{ label: 'Performance', before: '57', after: '76', delta: '+19', good: true },
-				{ label: 'Best Practices', before: '76', after: '93', delta: '+17', good: true },
-				{ label: 'LCP', before: '7.7 s', after: '3.8 s', delta: '−3.9 s', good: true },
-				{ label: 'FCP', before: '6.1 s', after: '3.6 s', delta: '−2.5 s', good: true },
-				{ label: 'Speed Index', before: '11.0 s', after: '6.1 s', delta: '−4.9 s', good: true },
+				{ label: 'Performance', before: '57', after: '100', delta: '+43', good: true },
+				{ label: 'Best Practices', before: '76', after: '92', delta: '+16', good: true },
+				{ label: 'LCP', before: '7.7 s', after: '0.8 s', delta: '−6.9 s', good: true },
+				{ label: 'FCP', before: '6.1 s', after: '0.5 s', delta: '−5.6 s', good: true },
+				{ label: 'Speed Index', before: '11.0 s', after: '0.6 s', delta: '−10.4 s', good: true },
 				{ label: 'Page weight', before: '549 KB', after: '248 KB', delta: '−55%', good: true },
 			] as row}
 				<div class="grid grid-cols-5 items-center border-b border-line/60 px-5 py-3 text-sm last:border-0">
