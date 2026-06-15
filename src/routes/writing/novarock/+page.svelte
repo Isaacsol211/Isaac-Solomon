@@ -482,7 +482,12 @@
 				is a fully static SvelteKit build on Cloudflare Pages — ten prerendered routes, WebP images, self-hosted fonts,
 				a Cloudflare Workers contact function wired to Resend with escaping, validation, and a honeypot,
 				and a floating WhatsApp CTA on every product page.
-				The design is clean, industrial, and boring in exactly the right way.
+			</p>
+
+			<p>
+				The final site is not trying to be flashy. It is static, fast, bilingual, crawlable,
+				shareable on WhatsApp, and clear about what Nova Rock Tools sells. For this kind of business,
+				that is the design win: not delight, but confidence.
 			</p>
 
 			<p>
