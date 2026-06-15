@@ -130,8 +130,8 @@ export const projects: Project[] = [
 		year: '2025',
 		category: 'B2B / Industrial',
 		description:
-			'A bilingual product site for a Lima-based mining equipment company. DTH hammers, drill bits and tricones presented in a clean, trust-first layout. SvelteKit with i18n, a product catalogue, ISO certification callouts and a WhatsApp inquiry flow.',
-		tags: ['SvelteKit', 'i18n', 'B2B', 'Product Catalogue'],
+			'Bilingual product site for a Lima-based DTH drilling equipment company. DTH hammers with Laser Cladding wear protection, tri-cone bits with configurable skirt and circulation options, and DHD/QL-compatible drill bits — all catalogued with technical specs, ISO 9001/14001/45001 certification callouts, and a WhatsApp inquiry flow pre-filled per product. SvelteKit static, Cloudflare Pages.',
+		tags: ['SvelteKit', 'i18n', 'B2B', 'Static / Cloudflare'],
 		href: 'https://www.novarocktools.com',
 		theme: 'light',
 		visual: 'image',
