@@ -79,26 +79,87 @@
 		</div>
 	</div>
 
-	<!-- ── Cover image — full-bleed site screenshot ──────────────────── -->
+	<!-- ── Before / After screenshots ───────────────────────────────── -->
 	<div class="mx-auto mt-12 max-w-5xl">
-		<div class="overflow-hidden rounded-2xl border border-line shadow-[0_32px_64px_-24px_rgba(20,19,17,0.2)]">
-			<!-- browser chrome -->
-			<div class="flex items-center gap-1.5 border-b border-line bg-paper-2 px-4 py-2.5">
-				<span class="size-2.5 rounded-full bg-[#ff5f57]"></span>
-				<span class="size-2.5 rounded-full bg-[#febc2e]"></span>
-				<span class="size-2.5 rounded-full bg-[#28c840]"></span>
-				<span class="ml-3 rounded-md border border-line bg-paper px-3 py-1 font-mono text-[10px] tracking-wider text-dim">
-					novarocktools.com
-				</span>
+		<div class="grid gap-4 md:grid-cols-2">
+			<!-- BEFORE — WordPress concept -->
+			<div>
+				<div class="mb-2 flex items-center justify-between">
+					<span class="text-[10px] font-medium tracking-[0.2em] uppercase text-dim">Concept (WordPress)</span>
+					<span class="rounded-full bg-paper-2 border border-line px-2.5 py-1 font-mono text-[10px] text-dim">Perf 57</span>
+				</div>
+				<div class="overflow-hidden rounded-xl border border-line opacity-80">
+					<div class="flex items-center gap-1.5 border-b border-line bg-paper-2 px-3 py-2">
+						<span class="size-2 rounded-full bg-[#ff5f57]"></span>
+						<span class="size-2 rounded-full bg-[#febc2e]"></span>
+						<span class="size-2 rounded-full bg-[#28c840]"></span>
+						<span class="ml-2 rounded bg-paper px-2 py-0.5 font-mono text-[9px] tracking-wider text-dim border border-line">
+							216.222.198.80/~luxor430/novarocktools
+						</span>
+					</div>
+					<img
+						src="/writing/novarock/wp-concept.png"
+						alt="WordPress concept site — navy theme, large text, minimal product content"
+						width="1440"
+						height="900"
+						class="w-full object-cover object-top"
+						loading="eager"
+					/>
+				</div>
 			</div>
-			<img
-				src="/projects/novarock.png"
-				alt="Nova Rock Tools homepage — dark hero with DTH hammer product"
-				width="1440"
-				height="900"
-				class="w-full object-cover object-top"
-				loading="eager"
-			/>
+			<!-- AFTER — SvelteKit production -->
+			<div>
+				<div class="mb-2 flex items-center justify-between">
+					<span class="text-[10px] font-medium tracking-[0.2em] uppercase text-accent">Production (SvelteKit)</span>
+					<span class="rounded-full bg-accent/10 border border-accent/30 px-2.5 py-1 font-mono text-[10px] text-accent">Perf 76</span>
+				</div>
+				<div class="overflow-hidden rounded-xl border border-accent/30 shadow-[0_16px_32px_-16px_rgba(20,19,17,0.15)]">
+					<div class="flex items-center gap-1.5 border-b border-line bg-paper-2 px-3 py-2">
+						<span class="size-2 rounded-full bg-[#ff5f57]"></span>
+						<span class="size-2 rounded-full bg-[#febc2e]"></span>
+						<span class="size-2 rounded-full bg-[#28c840]"></span>
+						<span class="ml-2 rounded bg-paper px-2 py-0.5 font-mono text-[9px] tracking-wider text-dim border border-line">
+							novarocktools.com
+						</span>
+					</div>
+					<img
+						src="/writing/novarock/sk-live.png"
+						alt="SvelteKit production site — product-first hero with DTH hammer specs"
+						width="1440"
+						height="900"
+						class="w-full object-cover object-top"
+						loading="eager"
+					/>
+				</div>
+			</div>
+		</div>
+
+		<!-- Lighthouse comparison strip -->
+		<div class="mt-4 overflow-hidden rounded-xl border border-line">
+			<div class="grid grid-cols-5 border-b border-line bg-paper-2 px-5 py-2.5 text-[10px] font-medium tracking-[0.2em] uppercase text-dim">
+				<span>Metric</span>
+				<span class="text-center">Concept</span>
+				<span class="text-center">Production</span>
+				<span class="col-span-2 text-right">Delta</span>
+			</div>
+			{#each [
+				{ label: 'Performance', before: '57', after: '76', delta: '+19', good: true },
+				{ label: 'Best Practices', before: '76', after: '93', delta: '+17', good: true },
+				{ label: 'LCP', before: '7.7 s', after: '3.8 s', delta: '−3.9 s', good: true },
+				{ label: 'FCP', before: '6.1 s', after: '3.6 s', delta: '−2.5 s', good: true },
+				{ label: 'Speed Index', before: '11.0 s', after: '6.1 s', delta: '−4.9 s', good: true },
+				{ label: 'Page weight', before: '549 KB', after: '248 KB', delta: '−55%', good: true },
+			] as row}
+				<div class="grid grid-cols-5 items-center border-b border-line/60 px-5 py-3 text-sm last:border-0">
+					<span class="text-xs font-medium text-dim">{row.label}</span>
+					<span class="text-center font-mono text-xs text-dim/70">{row.before}</span>
+					<span class="text-center font-mono text-xs">{row.after}</span>
+					<span class="col-span-2 text-right font-mono text-xs font-semibold text-accent">{row.delta}</span>
+				</div>
+			{/each}
+			<div class="border-t border-line bg-paper-2/60 px-5 py-2.5 text-[10px] leading-relaxed text-dim">
+				Lighthouse desktop audit — concept site at IP, production at novarocktools.com. Same test conditions, same categories.
+			</div>
 		</div>
 	</div>
 
