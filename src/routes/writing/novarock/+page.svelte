@@ -36,7 +36,7 @@
 	</div>
 </header>
 
-<main class="px-5 pb-24 sm:px-8">
+<main id="main" class="px-5 pb-24 sm:px-8">
 
 	<!-- ── Hero ──────────────────────────────────────────────────────── -->
 	<div class="mx-auto max-w-3xl pt-14 md:pt-20">
