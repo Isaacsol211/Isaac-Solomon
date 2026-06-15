@@ -4,6 +4,10 @@
 	import ArrowUpRight from './ArrowUpRight.svelte';
 	import Eyebrow from './Eyebrow.svelte';
 	import ProjectVisual from './ProjectVisual.svelte';
+
+	// First 3 → big featured split cards. Rest → tight secondary grid.
+	const featured = projects.slice(0, 3);
+	const secondary = projects.slice(3);
 </script>
 
 <section id="projects" class="border-t border-line px-5 py-20 sm:px-8 md:py-32">
@@ -20,8 +24,9 @@
 			</p>
 		</div>
 
+		<!-- ── Featured projects — full asymmetric split cards ──────────── -->
 		<ul class="mt-12 grid gap-5 md:mt-16">
-			{#each projects as project, i (project.title)}
+			{#each featured as project, i (project.title)}
 				{@const dark = project.theme === 'dark'}
 				{@const flip = i % 2 === 1}
 				<li use:reveal={{ delay: 60 }}>
@@ -34,7 +39,6 @@
 							: 'border-line bg-paper-2/50 hover:bg-paper-2'}"
 					>
 						{#if dark}
-							<!-- decorative circles, like the mockup's dark card -->
 							<span
 								aria-hidden="true"
 								class="pointer-events-none absolute -top-28 -right-16 size-96 rounded-full border border-cream/10 transition-transform duration-700 group-hover:scale-110"
@@ -87,7 +91,6 @@
 								</div>
 							</div>
 
-							<!-- live-coded preview, not a screenshot -->
 							<div
 								class="md:col-span-6 {flip
 									? 'md:order-1 md:rotate-[-0.75deg]'
@@ -100,5 +103,69 @@
 				</li>
 			{/each}
 		</ul>
+
+		<!-- ── Secondary grid — tight image cards ───────────────────────── -->
+		{#if secondary.length > 0}
+			<div use:reveal class="mt-16 md:mt-20">
+				<!-- divider -->
+				<div class="flex items-center gap-5">
+					<span class="text-xs font-medium tracking-[0.25em] uppercase text-dim">More Work</span>
+					<span class="h-px flex-1 bg-line"></span>
+				</div>
+
+				<ul class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+					{#each secondary as project, i (project.title)}
+						{@const cardHref = project.caseStudy ?? project.href}
+						{@const cardExternal = !project.caseStudy}
+						<li use:reveal={{ delay: i * 60 }}>
+							<a
+								href={cardHref}
+								target={cardExternal ? '_blank' : undefined}
+								rel={cardExternal ? 'noopener noreferrer' : undefined}
+								class="group relative block overflow-hidden rounded-xl border border-line bg-paper-2/50 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:bg-paper-2"
+							>
+								<!-- thumbnail -->
+								<div class="aspect-[16/10] overflow-hidden bg-paper-2">
+									{#if project.image}
+										<img
+											src={project.image}
+											alt="Screenshot of {project.frameLabel}"
+											loading="lazy"
+											class="h-full w-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.04]"
+										/>
+									{:else}
+										<div class="flex h-full w-full items-center justify-center">
+											<span class="font-mono text-xs text-dim">{project.frameLabel}</span>
+										</div>
+									{/if}
+								</div>
+
+								<!-- meta row -->
+								<div class="flex items-end justify-between gap-3 p-4">
+									<div class="min-w-0">
+										<p class="text-[10px] font-medium tracking-[0.2em] uppercase text-dim">
+											{project.year} — {project.category}
+										</p>
+										<h3 class="mt-0.5 truncate font-medium tracking-tight">
+											{project.title}
+										</h3>
+										{#if project.caseStudy}
+											<span class="mt-1.5 inline-flex items-center gap-1 text-[10px] font-medium tracking-[0.15em] uppercase text-accent">
+												Case study
+											</span>
+										{/if}
+									</div>
+									<span
+										class="grid size-9 shrink-0 place-items-center rounded-full border border-ink/15 transition-all duration-300 group-hover:border-accent group-hover:bg-accent group-hover:text-cream"
+									>
+										<ArrowUpRight class="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+									</span>
+								</div>
+							</a>
+						</li>
+					{/each}
+				</ul>
+			</div>
+		{/if}
 	</div>
 </section>

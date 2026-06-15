@@ -78,6 +78,8 @@ export type Project = {
 	frameLabel: string;
 	/** Path to screenshot — only used when visual === 'image' */
 	image?: string;
+	/** Internal path to a case study / writing page, e.g. '/writing/novarock' */
+	caseStudy?: string;
 };
 
 export const projectsIntro =
@@ -134,7 +136,8 @@ export const projects: Project[] = [
 		theme: 'light',
 		visual: 'image',
 		frameLabel: 'novarocktools.com',
-		image: '/projects/novarock.png'
+		image: '/projects/novarock.png',
+		caseStudy: '/writing/novarock'
 	}
 ];
 
