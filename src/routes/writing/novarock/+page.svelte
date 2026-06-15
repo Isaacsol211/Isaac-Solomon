@@ -3,7 +3,7 @@
 
 	const title = 'Building Without a Brief — Isaac Solomon';
 	const description =
-		'What it actually means to design a static website when there is no designer in the room. A case study from the Nova Rock Tools project.';
+		'How I turned a four-word brief into a static, bilingual, WhatsApp-first website for a mining tools company — without a designer, mockups, or a brand guide.';
 	const canonical = `${site.url}/writing/novarock`;
 </script>
 
@@ -51,8 +51,8 @@
 		</h1>
 
 		<p class="mt-6 max-w-xl text-lg leading-relaxed text-dim md:text-xl">
-			What it actually means to ship a static website when there's no designer in the room
-			— and why that constraint can make the work better.
+			How I turned a four-word brief into a static, bilingual, WhatsApp-first website
+			for a mining tools company — without a designer, mockups, or a brand guide.
 		</p>
 
 		<!-- meta -->
@@ -68,6 +68,15 @@
 				novarocktools.com ↗
 			</a>
 		</div>
+
+		<!-- payoff teaser — give readers the result before the deep dive -->
+		<div class="mt-10 rounded-xl border border-line bg-paper-2/60 px-6 py-5">
+			<p class="text-sm leading-relaxed text-dim">
+				<strong class="font-medium text-ink">The result:</strong> a static, bilingual, WhatsApp-first product site
+				that went from ~4.2 MB per load to under 400 KB, shipped correct Open Graph previews for every product page,
+				and looked like it belonged in industrial procurement — not a template marketplace.
+			</p>
+		</div>
 	</div>
 
 	<!-- ── Cover image — full-bleed site screenshot ──────────────────── -->
@@ -78,7 +87,7 @@
 				<span class="size-2.5 rounded-full bg-[#ff5f57]"></span>
 				<span class="size-2.5 rounded-full bg-[#febc2e]"></span>
 				<span class="size-2.5 rounded-full bg-[#28c840]"></span>
-				<span class="ml-3 rounded-md bg-paper px-3 py-1 font-mono text-[10px] tracking-wider text-dim border border-line">
+				<span class="ml-3 rounded-md border border-line bg-paper px-3 py-1 font-mono text-[10px] tracking-wider text-dim">
 					novarocktools.com
 				</span>
 			</div>
@@ -105,6 +114,11 @@
 				No designer. No brand guide. No mockups. A logo, a handful of product photos, and a client —
 				a Lima-based mining equipment company called <a href="https://www.novarocktools.com" target="_blank" rel="noopener noreferrer">Nova Rock Tools</a> — who knew exactly
 				what they needed their customers to feel, but couldn't sketch it for you.
+			</p>
+
+			<p>
+				This wasn't a redesign from a Figma file. It was a business translation exercise:
+				turn a vague need into a site that felt credible to mining procurement teams.
 				That's the most common brief a solo developer gets, and it's the one nobody really talks about.
 			</p>
 
@@ -114,11 +128,13 @@
 				Nova Rock Tools makes DTH hammers, drill bits and tricones for underground mining operations.
 				Their customers are procurement engineers at Peruvian mining companies — people who need to
 				<em>trust a supplier</em> before they'll put their number on a quote request.
+				There's no impulse buy. There's no "add to cart." There is: <em>does this company look like
+				they know what they're doing?</em>
 			</p>
 
 		</div>
 
-		<!-- product grid — show what we were building for -->
+		<!-- product grid -->
 		<div class="not-prose my-10 grid grid-cols-3 gap-3">
 			<figure class="overflow-hidden rounded-xl border border-line bg-paper-2">
 				<img
@@ -180,10 +196,35 @@
 				<li>Where does the customer go when they're convinced? (WhatsApp — not a contact form. WhatsApp.)</li>
 			</ul>
 
+		</div>
+
+		<!-- decision framework callout -->
+		<div class="not-prose my-10 overflow-hidden rounded-xl border border-accent/20 bg-accent/5">
+			<div class="border-b border-accent/15 px-6 py-4">
+				<p class="text-xs font-medium tracking-[0.25em] uppercase text-accent">The Design Rule</p>
+				<p class="mt-1 font-medium tracking-tight">Every decision ran through the same three filters.</p>
+			</div>
+			<div class="divide-y divide-accent/10 px-6">
+				{#each [
+					{ n: '01', q: 'Does it increase trust?' },
+					{ n: '02', q: 'Does it make the product easier to understand?' },
+					{ n: '03', q: 'Does it move the buyer closer to WhatsApp?' },
+				] as item}
+					<div class="flex items-baseline gap-5 py-4">
+						<span class="shrink-0 font-mono text-[10px] tracking-[0.2em] text-accent/60">{item.n}</span>
+						<span class="text-sm font-medium">{item.q}</span>
+					</div>
+				{/each}
+			</div>
+		</div>
+
+		<div class="prose">
+
 			<p>
-				Those three questions produced most of the design decisions: dark, high-contrast type;
+				Those three filters produced most of the design decisions: dark, high-contrast type;
 				clean product photography with no noise around it; a floating WhatsApp CTA pre-filled
 				with the product name, because that's how deals actually happen in Lima in 2025.
+				The goal was not to make it exciting. The goal was to make it credible.
 			</p>
 
 			<h2>Why static — and why it mattered</h2>
@@ -204,7 +245,7 @@
 
 		</div>
 
-		<!-- callout: the image problem -->
+		<!-- image savings callout -->
 		<div class="not-prose my-10 overflow-hidden rounded-2xl border border-line">
 			<div class="border-b border-line bg-paper-2 px-6 py-4">
 				<p class="text-xs font-medium tracking-[0.25em] uppercase text-accent">The Image Problem</p>
@@ -214,48 +255,48 @@
 				<table class="w-full text-sm">
 					<thead>
 						<tr class="border-b border-line text-left text-[10px] font-medium tracking-[0.2em] uppercase text-dim">
-							<th class="pb-3 font-medium">Image</th>
+							<th class="pb-3 font-medium">Asset</th>
 							<th class="pb-3 font-medium">Before</th>
 							<th class="pb-3 font-medium">After (WebP)</th>
-							<th class="pb-3 font-medium text-accent">Saved</th>
+							<th class="pb-3 font-medium text-accent">Reduction</th>
 						</tr>
 					</thead>
 					<tbody class="font-mono text-xs">
 						<tr class="border-b border-line/50">
-							<td class="py-2.5 text-dim">dth-hammer.png</td>
+							<td class="py-2.5 text-dim">Hero hammer</td>
 							<td class="py-2.5">1.78 MB</td>
 							<td class="py-2.5">77 KB</td>
-							<td class="py-2.5 font-sans font-semibold text-accent">−96%</td>
+							<td class="py-2.5 font-sans font-semibold text-accent">96%</td>
 						</tr>
 						<tr class="border-b border-line/50">
-							<td class="py-2.5 text-dim">dth-brocas.png</td>
+							<td class="py-2.5 text-dim">Drill bits</td>
 							<td class="py-2.5">1.39 MB</td>
 							<td class="py-2.5">214 KB</td>
-							<td class="py-2.5 font-sans font-semibold text-accent">−85%</td>
+							<td class="py-2.5 font-sans font-semibold text-accent">85%</td>
 						</tr>
 						<tr class="border-b border-line/50">
-							<td class="py-2.5 text-dim">triconos.png</td>
+							<td class="py-2.5 text-dim">Tricones</td>
 							<td class="py-2.5">1.33 MB</td>
 							<td class="py-2.5">230 KB</td>
-							<td class="py-2.5 font-sans font-semibold text-accent">−83%</td>
+							<td class="py-2.5 font-sans font-semibold text-accent">83%</td>
 						</tr>
 						<tr>
-							<td class="py-2.5 text-dim">martillo.png</td>
+							<td class="py-2.5 text-dim">Hammer (small)</td>
 							<td class="py-2.5">749 KB</td>
 							<td class="py-2.5">92 KB</td>
-							<td class="py-2.5 font-sans font-semibold text-accent">−88%</td>
+							<td class="py-2.5 font-sans font-semibold text-accent">88%</td>
 						</tr>
 					</tbody>
 				</table>
-				<p class="mt-4 text-xs text-dim leading-relaxed">
-					Each file was converted with <code class="rounded bg-paper-2 px-1.5 py-0.5 text-[10px] border border-line">cwebp -q 82</code> at three widths (480/960/1440 px).
-					The hero image was also hidden on mobile with <code class="rounded bg-paper-2 px-1.5 py-0.5 text-[10px] border border-line">display:none</code> in the original —
+				<p class="mt-4 text-xs leading-relaxed text-dim">
+					Converted with <code class="rounded border border-line bg-paper-2 px-1.5 py-0.5 text-[10px]">cwebp -q 82</code> at three widths (480/960/1440 px).
+					The hero was hidden on mobile with <code class="rounded border border-line bg-paper-2 px-1.5 py-0.5 text-[10px]">display:none</code> in the original —
 					which doesn't stop the download. Phones were paying 1.78 MB for a picture they never saw.
 				</p>
 			</div>
 		</div>
 
-		<!-- hero image half-width with caption -->
+		<!-- hammer + fix explanation -->
 		<div class="not-prose my-10 flex flex-col gap-6 sm:flex-row sm:items-start">
 			<figure class="overflow-hidden rounded-xl border border-line sm:w-1/2">
 				<img
@@ -264,18 +305,20 @@
 					loading="lazy"
 					class="w-full object-cover"
 				/>
-				<figcaption class="border-t border-line bg-paper-2 px-4 py-3 text-xs text-dim leading-relaxed">
-					The hero image. 1.78 MB as a PNG. 77 KB as a responsive WebP. The same hammer, 23× smaller.
+				<figcaption class="border-t border-line bg-paper-2 px-4 py-3 text-xs leading-relaxed text-dim">
+					The hero. 1.78 MB as a PNG. 77 KB as a responsive WebP. Same hammer, 23× smaller.
 				</figcaption>
 			</figure>
 			<div class="sm:w-1/2">
-				<p class="text-xs font-medium tracking-[0.25em] uppercase text-accent mb-3">The Fix</p>
+				<p class="mb-3 text-xs font-medium tracking-[0.25em] uppercase text-accent">The Fix</p>
 				<p class="text-sm leading-relaxed text-dim">
-					A <code class="rounded bg-paper-2 px-1.5 py-0.5 text-[11px] border border-line">&lt;Picture&gt;</code> component now emits a proper <code class="rounded bg-paper-2 px-1.5 py-0.5 text-[11px] border border-line">&lt;picture&gt;</code> element
-					with <code class="rounded bg-paper-2 px-1.5 py-0.5 text-[11px] border border-line">srcset</code> + <code class="rounded bg-paper-2 px-1.5 py-0.5 text-[11px] border border-line">sizes</code>,
-					explicit dimensions, <code class="rounded bg-paper-2 px-1.5 py-0.5 text-[11px] border border-line">fetchpriority="high"</code> on the LCP image,
-					and a <code class="rounded bg-paper-2 px-1.5 py-0.5 text-[11px] border border-line">mobileSkip</code> option that emits an empty source
-					on small screens — so the heavy hero is <em>genuinely</em> never downloaded on mobile, not just hidden.
+					A <code class="rounded border border-line bg-paper-2 px-1.5 py-0.5 text-[11px]">&lt;Picture&gt;</code> component emits a proper
+					<code class="rounded border border-line bg-paper-2 px-1.5 py-0.5 text-[11px]">&lt;picture&gt;</code> element
+					with <code class="rounded border border-line bg-paper-2 px-1.5 py-0.5 text-[11px]">srcset + sizes</code>,
+					explicit dimensions to kill CLS, <code class="rounded border border-line bg-paper-2 px-1.5 py-0.5 text-[11px]">fetchpriority="high"</code> on the LCP image,
+					and a <code class="rounded border border-line bg-paper-2 px-1.5 py-0.5 text-[11px]">mobileSkip</code> prop that emits
+					an empty source on small screens — so the hero is <em class="font-serif italic">genuinely</em> never
+					downloaded on mobile, not just hidden.
 				</p>
 			</div>
 		</div>
@@ -289,7 +332,6 @@
 			</p>
 
 			<p>
-				Constraints are the things that look like limitations but are actually decisions made for you.
 				When you're building for a Peruvian mining-tools company:
 			</p>
 
@@ -301,16 +343,16 @@
 			</ul>
 
 			<p>
-				None of those are especially creative decisions. They're <em>correct</em> ones.
+				None of those are especially creative decisions. They're correct ones.
 				Consumer brands need to delight; industrial B2B needs to not scare people off.
-				Lower the bar to the right bar.
+				The goal was not to make it exciting. The goal was to make it credible.
 			</p>
 
 			<h2>The part AI actually helped with</h2>
 
 			<p>
-				The audit that surfaced the image problem, the font-loading issue, the injectable contact form, the
-				button-navigations-masquerading-as-links — that was done by pairing with an AI agent that read
+				The audit that surfaced the image problem, the font-loading issue, the injection-prone contact form, the
+				buttons masquerading as links — that was done by pairing with an AI agent that read
 				the entire codebase and ran real measurements. Not "you should probably optimise images" but
 				<em>"dth-hammer.png is 1.78 MB; at 960w WebP it's 77 KB; here's the cwebp command."</em>
 			</p>
@@ -329,24 +371,24 @@
 
 		</div>
 
-		<!-- outcome table -->
+		<!-- ── What changed — merged outcome + what shipped ─────────── -->
 		<div class="not-prose my-10 overflow-hidden rounded-2xl border border-coal bg-coal text-cream">
 			<div class="border-b border-cream/10 px-6 py-4">
-				<p class="text-xs font-medium tracking-[0.25em] uppercase text-cream/50">Outcome</p>
-				<p class="mt-1 font-medium tracking-tight">What shipped and what changed.</p>
+				<p class="text-xs font-medium tracking-[0.25em] uppercase text-cream/50">What changed</p>
+				<p class="mt-1 font-medium tracking-tight">Before and after, in plain numbers.</p>
 			</div>
 			<div class="divide-y divide-cream/10">
 				{#each [
 					{ metric: 'Page weight (home)', before: '~4.2 MB', after: '< 400 KB' },
-					{ metric: 'Largest image', before: '1.78 MB', after: '77 KB' },
-					{ metric: 'Rendering', before: 'Client-side only', after: 'Static HTML' },
+					{ metric: 'Largest asset', before: '1.78 MB', after: '77 KB' },
+					{ metric: 'Rendering', before: 'Client-side SPA', after: 'Static HTML' },
 					{ metric: 'Crawlable links', before: '0', after: 'All routes' },
-					{ metric: 'WhatsApp previews', before: 'Homepage only', after: 'Correct per page' },
-					{ metric: 'Contact form', before: 'Injectable, no validation', after: 'Escaped + bot-filtered' },
+					{ metric: 'WhatsApp / social previews', before: 'Homepage only', after: 'Correct per page' },
+					{ metric: 'Contact form', before: 'Injection-prone, no validation', after: 'Escaped + bot-filtered' },
 				] as row}
-					<div class="grid grid-cols-3 px-6 py-3.5 text-sm">
-						<span class="text-cream/50 text-xs font-medium tracking-wide">{row.metric}</span>
-						<span class="font-mono text-xs text-cream/40 line-through">{row.before}</span>
+					<div class="grid grid-cols-3 gap-2 px-6 py-3.5 text-sm">
+						<span class="text-xs font-medium tracking-wide text-cream/50">{row.metric}</span>
+						<span class="font-mono text-xs text-cream/35 line-through">{row.before}</span>
 						<span class="font-mono text-xs text-[#86d993]">{row.after}</span>
 					</div>
 				{/each}
@@ -355,24 +397,27 @@
 
 		<div class="prose">
 
-			<h2>What shipped</h2>
-
 			<p>
 				The live site at <a href="https://www.novarocktools.com" target="_blank" rel="noopener noreferrer">novarocktools.com</a>
-				is a fully static SvelteKit build on Cloudflare Pages. Ten prerendered routes.
-				WebP images with responsive variants. Self-hosted fonts. A contact function on Cloudflare Workers
-				wired to Resend, with escaping, validation, and a honeypot. Correct per-page Open Graph tags.
-				A floating WhatsApp CTA on every product page.
-			</p>
-
-			<p>
-				The design is clean, industrial, and boring in exactly the right way. It looks like a company
-				that knows what it's doing.
+				is a fully static SvelteKit build on Cloudflare Pages — ten prerendered routes, WebP images, self-hosted fonts,
+				a Cloudflare Workers contact function wired to Resend with escaping, validation, and a honeypot,
+				and a floating WhatsApp CTA on every product page.
+				The design is clean, industrial, and boring in exactly the right way.
 			</p>
 
 			<p>
 				That was the brief.
 			</p>
+
+			<h2>What I'd improve next</h2>
+
+			<ul>
+				<li>Add product structured data (JSON-LD) for each tool — drilling equipment queries are specific and long-tail.</li>
+				<li>Downloadable PDF spec sheets per product, gated behind the WhatsApp CTA.</li>
+				<li>Track WhatsApp CTA clicks by product to understand which tools drive the most inquiries.</li>
+				<li>Spanish-first SEO landing pages targeting specific drill types and mining regions.</li>
+				<li>A small FAQ section answering "¿Hacen envíos a mina?" and "¿Tiempos de entrega?" — those questions earn rich results.</li>
+			</ul>
 
 		</div>
 
