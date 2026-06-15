@@ -245,6 +245,54 @@
 
 		</div>
 
+		<!-- WhatsApp preview comparison -->
+		<div class="not-prose my-10">
+			<p class="mb-4 text-xs font-medium tracking-[0.25em] uppercase text-dim">Before → After: WhatsApp link preview</p>
+			<div class="grid gap-4 sm:grid-cols-2">
+				<!-- BEFORE — SPA, no JS, fallback to homepage OG -->
+				<div>
+					<p class="mb-2 text-[10px] font-medium tracking-[0.15em] uppercase text-dim/60">SPA — every page looks like this</p>
+					<div class="overflow-hidden rounded-xl border border-line bg-[#111b21]">
+						<div class="aspect-[16/9] overflow-hidden bg-[#1a2730]">
+							<div class="flex h-full flex-col items-center justify-center gap-2 p-6 text-center">
+								<div class="size-10 rounded-full bg-white/5"></div>
+								<div class="h-2 w-32 rounded bg-white/10"></div>
+								<div class="h-2 w-20 rounded bg-white/5"></div>
+							</div>
+						</div>
+						<div class="px-3 py-2.5">
+							<p class="text-[11px] font-medium text-white/30 uppercase tracking-wide">novarocktools.com</p>
+							<p class="mt-0.5 text-xs font-medium text-white/80">Nova Rock Tools</p>
+							<p class="mt-0.5 text-[11px] text-white/40 leading-snug">Herramientas de perforación DTH para minería…</p>
+						</div>
+					</div>
+				</div>
+				<!-- AFTER — prerendered, correct product OG per page -->
+				<div>
+					<p class="mb-2 text-[10px] font-medium tracking-[0.15em] uppercase text-accent/80">Static — correct per page</p>
+					<div class="overflow-hidden rounded-xl border border-accent/30 bg-[#111b21]">
+						<div class="aspect-[16/9] overflow-hidden">
+							<img
+								src="/writing/novarock/hammer.webp"
+								alt="Correct Open Graph preview showing the DTH hammer product"
+								loading="lazy"
+								class="h-full w-full object-cover object-center"
+							/>
+						</div>
+						<div class="px-3 py-2.5">
+							<p class="text-[11px] font-medium uppercase tracking-wide text-accent/70">novarocktools.com</p>
+							<p class="mt-0.5 text-xs font-medium text-white/90">Martillo DTH NRT45DH — Nova Rock Tools</p>
+							<p class="mt-0.5 text-[11px] leading-snug text-white/50">Martillo de alta eficiencia para perforación…</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<p class="mt-3 text-xs leading-relaxed text-dim">
+				The SPA returned a blank image + generic title for every URL — because scrapers never executed the JS that set per-page <code class="rounded border border-line bg-paper-2 px-1 py-0.5 text-[10px]">og:*</code> tags.
+				After prerendering, each product page ships its own correct title, description, and product photo in the initial HTML.
+			</p>
+		</div>
+
 		<!-- image savings callout -->
 		<div class="not-prose my-10 overflow-hidden rounded-2xl border border-line">
 			<div class="border-b border-line bg-paper-2 px-6 py-4">
@@ -320,6 +368,38 @@
 					an empty source on small screens — so the hero is <em class="font-serif italic">genuinely</em> never
 					downloaded on mobile, not just hidden.
 				</p>
+			</div>
+		</div>
+
+		<!-- Picture component code snippet -->
+		<div class="not-prose my-10 overflow-hidden rounded-xl border border-line">
+			<div class="flex items-center justify-between border-b border-line bg-paper-2 px-4 py-2.5">
+				<span class="font-mono text-[10px] tracking-wider text-dim">Picture.svelte — usage</span>
+				<span class="text-[10px] font-medium tracking-[0.15em] uppercase text-dim/60">Svelte 5</span>
+			</div>
+			<pre class="overflow-x-auto p-5 text-[12px] leading-relaxed"><code><span class="text-dim">&lt;!-- Hero — preloaded, never downloaded on mobile --&gt;</span>
+<span class="text-accent">&lt;Picture</span>
+  <span class="text-[#86d993]">src</span>=<span class="text-[#e8c57d]">"/img/dth-hammer.png"</span>
+  <span class="text-[#86d993]">alt</span>=<span class="text-[#e8c57d]">"DTH hammer NRT45DH"</span>
+  <span class="text-[#86d993]">widths</span>=<span class="text-[#e8c57d]">{"{[480, 960, 1440]}"}</span>
+  <span class="text-[#86d993]">sizes</span>=<span class="text-[#e8c57d]">"(min-width: 1024px) 50vw, 100vw"</span>
+  <span class="text-[#86d993]">mobileSkip</span>
+  <span class="text-[#86d993]">fetchpriority</span>=<span class="text-[#e8c57d]">"high"</span>
+<span class="text-accent">/&gt;</span>
+
+<span class="text-dim">&lt;!-- Below-fold product — lazy, no mobile skip --&gt;</span>
+<span class="text-accent">&lt;Picture</span>
+  <span class="text-[#86d993]">src</span>=<span class="text-[#e8c57d]">"/img/triconos.png"</span>
+  <span class="text-[#86d993]">alt</span>=<span class="text-[#e8c57d]">"Tricone drill bits"</span>
+  <span class="text-[#86d993]">widths</span>=<span class="text-[#e8c57d]">{"{[480, 960]}"}</span>
+  <span class="text-[#86d993]">sizes</span>=<span class="text-[#e8c57d]">"(min-width: 768px) 400px, 100vw"</span>
+  <span class="text-[#86d993]">loading</span>=<span class="text-[#e8c57d]">"lazy"</span>
+<span class="text-accent">/&gt;</span></code></pre>
+			<div class="border-t border-line bg-paper-2/50 px-4 py-3 text-xs leading-relaxed text-dim">
+				<code class="rounded border border-line bg-paper-2 px-1.5 py-0.5 text-[10px]">mobileSkip</code> emits
+				<code class="rounded border border-line bg-paper-2 px-1.5 py-0.5 text-[10px]">&lt;source media="(max-width: 639px)" srcset=""&gt;</code>
+				as the first source — browsers stop at the first matching source, so mobile never requests the file.
+				<code class="rounded border border-line bg-paper-2 px-1.5 py-0.5 text-[10px]">display:none</code> doesn't do this.
 			</div>
 		</div>
 
