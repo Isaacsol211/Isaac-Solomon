@@ -5,9 +5,11 @@
 	import Eyebrow from './Eyebrow.svelte';
 	import ProjectVisual from './ProjectVisual.svelte';
 
-	// First 3 → big featured split cards. Rest → tight secondary grid.
-	const featured = projects.slice(0, 3);
-	const secondary = projects.slice(3);
+	// Mivi gets the hero position, rest go in a uniform 2-col grid
+	const hero = projects[0];
+	const heroHref = hero.caseStudy ?? hero.href;
+	const heroExternal = !hero.caseStudy;
+	const grid = projects.slice(1);
 </script>
 
 <section id="projects" class="border-t border-line px-5 py-20 sm:px-8 md:py-32">
@@ -24,148 +26,158 @@
 			</p>
 		</div>
 
-		<!-- ── Featured projects — full asymmetric split cards ──────────── -->
-		<ul class="mt-12 grid gap-5 md:mt-16">
-			{#each featured as project, i (project.title)}
+		<!-- ── Hero card — first project, full-width dark split ─────────── -->
+		<div use:reveal={{ delay: 60 }} class="mt-12 md:mt-16">
+			<a
+				href={heroHref}
+				target={heroExternal ? '_blank' : undefined}
+				rel={heroExternal ? 'noopener noreferrer' : undefined}
+				class="group relative block overflow-hidden rounded-2xl border border-transparent bg-coal text-cream transition-all duration-300 hover:-translate-y-1 dark:border-cream/10"
+			>
+				<div class="grid gap-6 p-7 md:grid-cols-12 md:items-center md:gap-0 md:p-0">
+					<div class="md:col-span-5 md:px-12 md:py-10">
+						<div class="text-xs font-medium tracking-[0.25em] uppercase text-cream/50">
+							<span>{hero.year}</span>
+							<span class="mx-2 text-cream/20">·</span>
+							<span>{hero.category}</span>
+						</div>
+
+						<h3 class="mt-5 text-4xl font-medium tracking-tight md:text-5xl">
+							{hero.title}
+						</h3>
+
+						<p class="mt-4 max-w-md leading-relaxed text-cream/60">
+							{hero.description}
+						</p>
+
+						<ul class="mt-6 flex flex-wrap gap-2">
+							{#each hero.tags as tag (tag)}
+								<li
+									class="rounded-full border border-cream/20 px-3.5 py-1.5 text-xs font-medium tracking-wider uppercase text-cream/70"
+								>
+									{tag}
+								</li>
+							{/each}
+						</ul>
+
+						{#if hero.caseStudy}
+							<p
+								class="mt-6 flex items-center gap-2 text-sm font-medium text-accent"
+							>
+								Read case study
+								<span
+									class="transition-transform duration-200 group-hover:translate-x-1"
+									aria-hidden="true">→</span
+								>
+							</p>
+						{/if}
+					</div>
+
+					<div class="md:col-span-7 md:py-6 md:pr-6">
+						<ProjectVisual
+							kind={hero.visual}
+							label={hero.frameLabel}
+							dark
+							image={hero.image}
+						/>
+					</div>
+				</div>
+			</a>
+		</div>
+
+		<!-- ── Grid — 2 columns, uniform cards ─────────────────────────── -->
+		<ul class="mt-5 grid gap-5 sm:grid-cols-2">
+			{#each grid as project, i (project.title)}
 				{@const dark = project.theme === 'dark'}
-				{@const flip = i % 2 === 1}
-				<li use:reveal={{ delay: 60 }}>
+				{@const cardHref = project.caseStudy ?? project.href}
+				{@const cardExternal = !project.caseStudy}
+				<li use:reveal={{ delay: i * 60 }}>
 					<a
-						href={project.href}
-						target="_blank"
-						rel="noopener noreferrer"
-						class="group relative block overflow-hidden rounded-2xl border p-7 transition-all duration-300 before:absolute before:inset-x-0 before:top-0 before:z-10 before:h-0.5 before:origin-left before:scale-x-0 before:bg-accent before:transition-transform before:duration-500 before:ease-out hover:-translate-y-1 hover:before:scale-x-100 md:p-12 {dark
+						href={cardHref}
+						target={cardExternal ? '_blank' : undefined}
+						rel={cardExternal ? 'noopener noreferrer' : undefined}
+						class="group relative block overflow-hidden rounded-2xl border transition-all duration-300 hover:-translate-y-1 {dark
 							? 'border-transparent bg-coal text-cream dark:border-cream/10'
 							: 'border-line bg-paper-2/50 hover:bg-paper-2'}"
 					>
-						{#if dark}
-							<span
-								aria-hidden="true"
-								class="pointer-events-none absolute -top-28 -right-16 size-96 rounded-full border border-cream/10 transition-transform duration-700 group-hover:scale-110"
-							></span>
-							<span
-								aria-hidden="true"
-								class="pointer-events-none absolute -bottom-44 right-44 size-72 rounded-full border border-cream/10"
-							></span>
-						{/if}
-
-						<div
-							class="relative flex items-baseline justify-between gap-4 text-xs font-medium tracking-[0.25em] uppercase {dark
-								? 'text-cream/50'
-								: 'text-dim'}"
-						>
-							<span class="tabular-nums">( 0{i + 1} )</span>
-							<span>{project.year} — {project.category}</span>
+						<!-- screenshot -->
+						<div class="aspect-[16/10] overflow-hidden {dark ? 'bg-coal' : 'bg-paper-2'}">
+							{#if project.image}
+								<img
+									src={project.image}
+									alt="Screenshot of {project.frameLabel}"
+									loading="lazy"
+									class="h-full w-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.04]"
+								/>
+							{:else}
+								<div class="flex h-full w-full items-center justify-center">
+									<span class="font-mono text-xs {dark ? 'text-cream/40' : 'text-dim'}"
+										>{project.frameLabel}</span
+									>
+								</div>
+							{/if}
 						</div>
 
-						<div class="relative mt-8 grid gap-8 md:mt-10 md:grid-cols-12 md:items-center md:gap-10">
-							<div class="md:col-span-6 {flip ? 'md:order-2' : ''}">
-								<h3 class="text-4xl font-medium tracking-tight md:text-5xl">
+						<!-- info -->
+						<div class="p-6">
+							<p
+								class="text-[10px] font-medium tracking-[0.2em] uppercase {dark
+									? 'text-cream/50'
+									: 'text-dim'}"
+							>
+								{project.year} — {project.category}
+							</p>
+
+							<div class="mt-2 flex items-center justify-between gap-4">
+								<h3 class="text-2xl font-medium tracking-tight">
 									{project.title}
 								</h3>
-								<p class="mt-3 max-w-xl leading-relaxed {dark ? 'text-cream/60' : 'text-dim'}">
-									{project.description}
-								</p>
-
-								<div class="mt-8 flex items-end justify-between gap-4 md:mt-10">
-									<ul class="flex flex-wrap gap-2">
-										{#each project.tags as tag (tag)}
-											<li
-												class="rounded-full border px-3.5 py-1.5 text-xs font-medium tracking-wider uppercase {dark
-													? 'border-cream/20 text-cream/70'
-													: 'border-line text-dim'}"
-											>
-												{tag}
-											</li>
-										{/each}
-									</ul>
-									<span
-										class="grid size-12 shrink-0 place-items-center rounded-full border transition-all duration-300 group-hover:border-accent group-hover:bg-accent group-hover:text-cream md:size-14 {dark
-											? 'border-cream/25'
-											: 'border-ink/20'}"
-									>
-										<ArrowUpRight
-											class="size-5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-										/>
-									</span>
-								</div>
+								<span
+									class="grid size-10 shrink-0 place-items-center rounded-full border transition-all duration-300 group-hover:border-accent group-hover:bg-accent group-hover:text-cream {dark
+										? 'border-cream/20'
+										: 'border-ink/15'}"
+								>
+									<ArrowUpRight
+										class="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+									/>
+								</span>
 							</div>
 
-							<div
-								class="md:col-span-6 {flip
-									? 'md:order-1 md:rotate-[-0.75deg]'
-									: 'md:rotate-[0.75deg]'} transition-transform duration-500 ease-out group-hover:translate-y-[-0.4rem] group-hover:rotate-0"
+							<p
+								class="mt-3 line-clamp-3 text-sm leading-relaxed {dark
+									? 'text-cream/60'
+									: 'text-dim'}"
 							>
-								<ProjectVisual kind={project.visual} label={project.frameLabel} {dark} image={project.image} />
-							</div>
+								{project.description}
+							</p>
+
+							<ul class="mt-4 flex flex-wrap gap-1.5">
+								{#each project.tags as tag (tag)}
+									<li
+										class="rounded-full border px-3 py-1 text-[10px] font-medium tracking-wider uppercase {dark
+											? 'border-cream/20 text-cream/60'
+											: 'border-line text-dim'}"
+									>
+										{tag}
+									</li>
+								{/each}
+							</ul>
+
+							{#if project.caseStudy}
+								<p
+									class="mt-4 flex items-center gap-1.5 text-xs font-medium text-accent"
+								>
+									Read case study
+									<span
+										class="transition-transform duration-200 group-hover:translate-x-1"
+										aria-hidden="true">→</span
+									>
+								</p>
+							{/if}
 						</div>
 					</a>
 				</li>
 			{/each}
 		</ul>
-
-		<!-- ── Secondary grid — tight image cards ───────────────────────── -->
-		{#if secondary.length > 0}
-			<div use:reveal class="mt-16 md:mt-20">
-				<!-- divider -->
-				<div class="flex items-center gap-5">
-					<span class="text-xs font-medium tracking-[0.25em] uppercase text-dim">More Work</span>
-					<span class="h-px flex-1 bg-line"></span>
-				</div>
-
-				<ul class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-					{#each secondary as project, i (project.title)}
-						{@const cardHref = project.caseStudy ?? project.href}
-						{@const cardExternal = !project.caseStudy}
-						<li use:reveal={{ delay: i * 60 }}>
-							<a
-								href={cardHref}
-								target={cardExternal ? '_blank' : undefined}
-								rel={cardExternal ? 'noopener noreferrer' : undefined}
-								class="group relative block overflow-hidden rounded-xl border border-line bg-paper-2/50 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:bg-paper-2"
-							>
-								<!-- thumbnail -->
-								<div class="aspect-[16/10] overflow-hidden bg-paper-2">
-									{#if project.image}
-										<img
-											src={project.image}
-											alt="Screenshot of {project.frameLabel}"
-											loading="lazy"
-											class="h-full w-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.04]"
-										/>
-									{:else}
-										<div class="flex h-full w-full items-center justify-center">
-											<span class="font-mono text-xs text-dim">{project.frameLabel}</span>
-										</div>
-									{/if}
-								</div>
-
-								<!-- meta row -->
-								<div class="flex items-end justify-between gap-3 p-4">
-									<div class="min-w-0">
-										<p class="text-[10px] font-medium tracking-[0.2em] uppercase text-dim">
-											{project.year} — {project.category}
-										</p>
-										<h3 class="mt-0.5 truncate font-medium tracking-tight">
-											{project.title}
-										</h3>
-										{#if project.caseStudy}
-											<span class="mt-1.5 inline-flex items-center gap-1 text-[10px] font-medium tracking-[0.15em] uppercase text-accent">
-												Case study
-											</span>
-										{/if}
-									</div>
-									<span
-										class="grid size-9 shrink-0 place-items-center rounded-full border border-ink/15 transition-all duration-300 group-hover:border-accent group-hover:bg-accent group-hover:text-cream"
-									>
-										<ArrowUpRight class="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-									</span>
-								</div>
-							</a>
-						</li>
-					{/each}
-				</ul>
-			</div>
-		{/if}
 	</div>
 </section>

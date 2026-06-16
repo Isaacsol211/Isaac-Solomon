@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { site } from '$lib/content';
+	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
 
 	const title = 'Building Without a Brief — Isaac Solomon';
 	const description =
@@ -32,7 +33,10 @@
 			<span class="inline-block transition-transform duration-200 group-hover:-translate-x-1" aria-hidden="true">←</span>
 			Isaac Solomon
 		</a>
-		<span class="text-xs font-medium tracking-[0.2em] uppercase text-dim">Writing</span>
+		<div class="flex items-center gap-3">
+			<span class="text-xs font-medium tracking-[0.2em] uppercase text-dim">Writing</span>
+			<ThemeToggle />
+		</div>
 	</div>
 </header>
 

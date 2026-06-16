@@ -10,7 +10,7 @@ export const site = {
 	name: 'Isaac Solomon',
 	firstName: 'Isaac',
 	role: 'Developer',
-	tagline: 'part-time photographer',
+	tagline: 'hobbyist photographer',
 	email: 'isaacsolomon211@gmail.com',
 	location: 'Remote — worldwide',
 	availability: 'Open to new projects',
@@ -83,7 +83,7 @@ export type Project = {
 };
 
 export const projectsIntro =
-	'Three client builds and one side project. Each one pushed the work further than the brief required.';
+	'Client builds and side projects. Each one pushed the work further than the brief required.';
 
 export const projects: Project[] = [
 	{
@@ -97,7 +97,22 @@ export const projects: Project[] = [
 		theme: 'dark',
 		visual: 'image',
 		frameLabel: 'mivi.in',
-		image: '/projects/mivi.png'
+		image: '/projects/mivi.png',
+		caseStudy: '/writing/mivi'
+	},
+	{
+		title: 'Keus',
+		year: '2024',
+		category: 'Smart Home',
+		description:
+			'Scroll-driven animation site for India\'s fastest-growing premium smart home company. Built with 11ty and GSAP — pivoted from image-sequence scrubbing to a video pause-and-play approach after the initial POC produced 300-500 frames per animation across ten sections.',
+		tags: ['11ty', 'GSAP', 'Scroll Animation', 'Performance'],
+		href: 'https://www.keus.in',
+		theme: 'dark',
+		visual: 'image',
+		frameLabel: 'keus.in',
+		image: '/projects/keus.png',
+		caseStudy: '/writing/keus'
 	},
 	{
 		title: 'Vibrant Living',
@@ -148,28 +163,28 @@ export const experienceHeading = {
 
 export const experience = [
 	{
-		from: '2021',
+		from: '2026',
 		to: 'Now',
 		role: 'Independent Developer',
-		company: 'Freelance',
+		company: 'Freelance (Part-time)',
 		description:
-			'Designing and shipping web products end-to-end for clients — from first Figma frame to production deploy. Recent work spans e-commerce, brand sites and custom CMS builds for Mivi and Vibrant Living.'
+			'Side projects and freelance work alongside the day job — bilingual B2B sites, static builds on Cloudflare, and the odd experiment that never ships.'
 	},
 	{
-		from: '2017',
-		to: '2021',
+		from: '2018',
+		to: 'Now',
 		role: 'Frontend Developer',
-		company: 'Studio Nova',
+		company: 'Able.do',
 		description:
-			'Built and maintained component systems and marketing sites for a small product studio. First time owning a design system end-to-end.'
+			'Eight years building and shipping client products — e-commerce platforms, custom CMS systems, component libraries and design systems. Led the frontend for Mivi, Vibrant Living and a dozen other builds from first commit to production.'
 	},
 	{
-		from: '2015',
+		from: '2016',
 		to: '2017',
 		role: 'Developer (Intern)',
 		company: 'Able.do',
 		description:
-			'Learned the craft the honest way — code reviews, broken builds and very patient mentors. Left knowing why things work, not just that they do.'
+			'Learned the craft the honest way — code reviews, broken builds and very patient mentors. Left the internship knowing why things work, not just that they do.'
 	}
 ];
 
