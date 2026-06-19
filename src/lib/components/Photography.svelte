@@ -6,9 +6,20 @@
 
 	let dialog = $state<HTMLDialogElement>();
 	let active = $state(0);
+	let sectionEl = $state<HTMLElement>();
+	let progress = $state(0);
+	let isDesktop = $state(false);
 
-	/** which frame gets the grease-pencil "select" circle */
-	const circled = 5;
+	/* Distribute photos across 3 columns (round-robin) */
+	const cols: { photo: (typeof photos)[0]; idx: number }[][] = [[], [], []];
+	photos.forEach((photo, i) => cols[i % 3].push({ photo, idx: i }));
+
+	/* Forced aspect ratios — tuned so each column's total height is roughly equal */
+	const colAspects = [
+		['aspect-[4/5]', 'aspect-[1/1]', 'aspect-[4/5]'], // col 0: 1.25+1+1.25 = 3.5
+		['aspect-[3/4]', 'aspect-[4/5]', 'aspect-[3/4]'], // col 1: 1.33+1.25+1.33 = 3.91
+		['aspect-[9/16]', 'aspect-[9/16]'] // col 2 (2 images): 1.78+1.78 = 3.56
+	];
 
 	function show(i: number) {
 		active = i;
@@ -17,99 +28,183 @@
 	function step(dir: number) {
 		active = (active + dir + photos.length) % photos.length;
 	}
-	function onDialogKeydown(event: KeyboardEvent) {
-		if (event.key === 'ArrowRight') step(1);
-		if (event.key === 'ArrowLeft') step(-1);
+	function onDialogKeydown(e: KeyboardEvent) {
+		if (e.key === 'ArrowRight') step(1);
+		if (e.key === 'ArrowLeft') step(-1);
 	}
-	function onDialogClick(event: MouseEvent) {
-		// click on the backdrop (the dialog element itself) closes
-		if (event.target === dialog) dialog?.close();
+	function onDialogClick(e: MouseEvent) {
+		if (e.target === dialog) dialog?.close();
 	}
+
+	$effect(() => {
+		if (!sectionEl) return;
+
+		/* Track viewport width for responsive horizontal scroll */
+		const mq = window.matchMedia('(min-width: 768px)');
+		isDesktop = mq.matches;
+		const onMq = (e: MediaQueryListEvent) => {
+			isDesktop = e.matches;
+		};
+		mq.addEventListener('change', onMq);
+
+		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+			progress = 0.5;
+			return () => mq.removeEventListener('change', onMq);
+		}
+
+		function onScroll() {
+			const rect = sectionEl!.getBoundingClientRect();
+			const scrollable = rect.height - window.innerHeight;
+			if (scrollable <= 0) return;
+			progress = Math.max(0, Math.min(1, -rect.top / scrollable));
+		}
+
+		window.addEventListener('scroll', onScroll, { passive: true });
+		onScroll();
+		return () => {
+			window.removeEventListener('scroll', onScroll);
+			mq.removeEventListener('change', onMq);
+		};
+	});
 </script>
 
-<section id="photography" class="border-t border-line px-5 py-20 sm:px-8 md:py-32">
-	<div class="mx-auto max-w-6xl">
-		<div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-			<div use:reveal>
-				<Eyebrow index="04" title="Photography" />
-				<h2 class="mt-6 text-4xl font-medium tracking-tight md:text-6xl">
-					{photographyIntro.plain}
-					<em class="font-serif font-normal text-dim italic">{photographyIntro.accent}</em>
-				</h2>
-			</div>
-			<p use:reveal={{ delay: 120 }} class="max-w-sm leading-relaxed text-dim md:text-right">
-				{photographyIntro.note}
-			</p>
+<section
+	id="photography"
+	bind:this={sectionEl}
+	class="photo-section relative h-[200vh] md:h-[300vh]"
+>
+	<div class="photo-frame sticky top-0 flex h-screen flex-col overflow-hidden border-t border-line bg-paper">
+		<!-- Mobile heading (hidden on md+) -->
+		<div use:reveal class="shrink-0 px-5 pt-10 pb-6 sm:px-8 md:hidden">
+			<Eyebrow index="04" title="Photography" />
+			<h2 class="mt-4 text-3xl font-medium tracking-tight sm:text-4xl">
+				{photographyIntro.plain}
+				<em class="font-serif font-normal italic text-dim"> {photographyIntro.accent}</em>
+			</h2>
 		</div>
 
-		<!-- the contact sheet -->
+		<!-- Horizontal track — wider than viewport on desktop, slides left on scroll -->
 		<div
-			use:reveal={{ delay: 100 }}
-			class="mt-12 rounded-3xl bg-coal p-5 text-cream sm:p-8 md:mt-16 md:p-10 dark:border dark:border-cream/10"
+			class="photo-track flex min-h-0 flex-1 gap-[5vw] will-change-transform"
+			style="transform: translateX({isDesktop ? progress * -110 : 0}vw)"
 		>
+			<!-- Left typography panel (desktop only) -->
 			<div
-				class="flex flex-wrap items-baseline justify-between gap-2 border-b border-cream/15 pb-4 font-mono text-[10px] tracking-[0.25em] uppercase text-cream/40"
+				class="photo-panel-left hidden shrink-0 flex-col justify-center px-[5vw] md:flex"
 			>
-				<span>Contact sheet — Isaac Solomon</span>
-				<span>35mm · 400TX <span class="text-accent">✱</span> dev &amp; scan</span>
+				<div use:reveal>
+					<Eyebrow index="04" title="Photography" />
+					<h2
+						class="mt-8 font-medium leading-[0.95] tracking-tight"
+						style="font-size: clamp(3rem, 7vw, 7.5rem)"
+					>
+						{photographyIntro.plain}
+						<em class="mt-2 block font-serif font-normal italic text-dim">
+							{photographyIntro.accent}
+						</em>
+					</h2>
+				</div>
+				<p class="mt-8 max-w-[18rem] text-sm leading-relaxed text-dim">
+					{photographyIntro.note}
+				</p>
 			</div>
 
-			<ul class="mt-6 grid grid-cols-2 gap-x-3 gap-y-6 sm:grid-cols-3 md:grid-cols-4 md:gap-x-4 md:gap-y-8">
-				{#each photos as photo, i (photo.src)}
-					<li use:reveal={{ delay: (i % 4) * 70 }} class="relative">
-						<button
-							type="button"
-							onclick={() => show(i)}
-							class="group block w-full cursor-zoom-in text-left {i % 2 === 0
-								? 'rotate-[0.4deg]'
-								: 'rotate-[-0.4deg]'} transition-transform duration-300 hover:rotate-0"
-							aria-label="View photo: {photo.caption}"
-						>
-							<span class="block overflow-hidden rounded-sm border border-cream/15">
+			<!-- 3-column photo mosaic -->
+			<div class="photo-mosaic flex shrink-0 gap-1.5 overflow-hidden bg-coal p-1.5 md:gap-2 md:p-2">
+				{#each cols as col, c}
+					<div
+						class="flex w-1/3 flex-col gap-1.5 will-change-transform md:gap-2"
+						style="transform: translateY({c % 2 === 0 ? progress * -25 : -25 + progress * 25}%)"
+					>
+						{#each col as { photo, idx }, i (photo.src)}
+							<button
+								type="button"
+								onclick={() => show(idx)}
+								class="group shrink-0 cursor-zoom-in overflow-hidden rounded-sm"
+								aria-label="View photo: {photo.caption}"
+							>
 								<img
 									src={photo.src}
 									alt={photo.alt}
 									width={photo.w}
 									height={photo.h}
 									loading="lazy"
-									class="aspect-[3/2] w-full object-cover brightness-90 transition-all duration-500 ease-out group-hover:scale-[1.03] group-hover:brightness-105"
+									class="{colAspects[c][i] ?? 'aspect-[3/4]'} w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
 								/>
-							</span>
-							<span
-								class="mt-2 flex items-baseline justify-between font-mono text-[10px] tracking-[0.2em] uppercase"
-							>
-								<span class="text-cream/40">№ 0{i + 1}A</span>
-								<span class="text-cream/0 transition-colors duration-300 group-hover:text-cream/60">
-									{photo.caption}
-								</span>
-							</span>
-
-							{#if i === circled}
-								<!-- grease-pencil select mark -->
-								<svg
-									aria-hidden="true"
-									viewBox="0 0 100 70"
-									preserveAspectRatio="none"
-									class="pointer-events-none absolute -inset-x-1 top-0 h-[calc(100%-1.3rem)] w-[calc(100%+0.5rem)] rotate-[-1.5deg] text-accent"
-								>
-									<ellipse
-										cx="50"
-										cy="35"
-										rx="46"
-										ry="30"
-										fill="none"
-										stroke="currentColor"
-										stroke-width="2"
-										stroke-linecap="round"
-										stroke-dasharray="276 14"
-										opacity="0.85"
-									/>
-								</svg>
-							{/if}
-						</button>
-					</li>
+							</button>
+						{/each}
+					</div>
 				{/each}
-			</ul>
+			</div>
+
+			<!-- Right panel: magazine spread (desktop only) -->
+			<div class="photo-panel-right hidden shrink-0 md:flex">
+				<!-- 70% — editorial spread: top text / center image / bottom text -->
+				<div class="magazine-spread w-[70%]">
+					<!-- Top text row -->
+					<div class="flex items-end justify-between px-8 lg:px-12">
+						<p
+							class="font-medium leading-none tracking-tight"
+							style="font-size: clamp(3rem, 8vw, 8rem)"
+						>
+							Capture
+						</p>
+						<div class="mb-2 text-right">
+							<p class="text-[10px] tracking-[0.25em] uppercase text-dim/50">
+								Isaac Solomon
+							</p>
+							<p class="mt-1 text-[10px] tracking-[0.25em] uppercase text-dim/40">
+								photography
+							</p>
+						</div>
+					</div>
+
+					<!-- Center featured image -->
+					<div class="min-h-0 px-8 lg:px-12">
+						<button
+							type="button"
+							onclick={() => show(0)}
+							class="group h-full w-full cursor-zoom-in overflow-hidden"
+							aria-label="View featured photo: {photos[0].caption}"
+						>
+							<img
+								src={photos[0].src}
+								alt={photos[0].alt}
+								width={photos[0].w}
+								height={photos[0].h}
+								class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+							/>
+						</button>
+					</div>
+
+					<!-- Bottom text row -->
+					<div class="flex items-start justify-between px-8 lg:px-12">
+						<p
+							class="font-serif italic leading-none"
+							style="font-size: clamp(3rem, 8vw, 8rem)"
+						>
+							the moment.
+						</p>
+						<p class="mt-3 text-sm tracking-[0.15em] text-dim/50">/35mm</p>
+					</div>
+				</div>
+
+				<!-- 30% — full-height second image -->
+				<button
+					type="button"
+					onclick={() => show(1)}
+					class="group w-[30%] cursor-zoom-in overflow-hidden"
+					aria-label="View featured photo: {photos[1].caption}"
+				>
+					<img
+						src={photos[1].src}
+						alt={photos[1].alt}
+						width={photos[1].w}
+						height={photos[1].h}
+						class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+					/>
+				</button>
+			</div>
 		</div>
 	</div>
 </section>
@@ -138,7 +233,9 @@
 		</figcaption>
 	</figure>
 
-	<div class="pointer-events-none absolute inset-x-2 top-1/2 flex -translate-y-1/2 justify-between sm:-inset-x-2">
+	<div
+		class="pointer-events-none absolute inset-x-2 top-1/2 flex -translate-y-1/2 justify-between sm:-inset-x-2"
+	>
 		<button
 			type="button"
 			onclick={() => step(-1)}
@@ -168,6 +265,50 @@
 </dialog>
 
 <style>
+	/* ── Track & panel sizing ────────────────────────────── */
+	.photo-track {
+		width: 100%; /* mobile: no horizontal overflow */
+	}
+	.photo-mosaic {
+		width: 100%; /* mobile: photos fill viewport */
+	}
+
+	@media (min-width: 768px) {
+		.photo-track {
+			width: 210vw; /* left (30) + gap (5) + photos (70) + gap (5) + right (100) */
+		}
+		.photo-panel-left {
+			width: 30vw;
+		}
+		.photo-mosaic {
+			width: 70vw;
+		}
+		.photo-panel-right {
+			width: 100vw; /* fills viewport at end: 70% text + 30% image */
+		}
+		/* Grid ensures text rows get guaranteed height, image fills the middle */
+		.magazine-spread {
+			display: grid;
+			grid-template-rows: minmax(18vh, auto) 1fr minmax(18vh, auto);
+			padding-top: 5rem; /* clear the fixed nav */
+			padding-bottom: 2rem;
+			gap: 0.5rem;
+		}
+	}
+
+	/* ── Reduced-motion fallback ─────────────────────────── */
+	@media (prefers-reduced-motion: reduce) {
+		.photo-section {
+			height: auto !important;
+		}
+		.photo-frame {
+			position: relative;
+			height: auto;
+			min-height: 80vh;
+		}
+	}
+
+	/* ── Lightbox ────────────────────────────────────────── */
 	.lightbox[open] {
 		animation: lightbox-in 0.25s ease-out;
 	}

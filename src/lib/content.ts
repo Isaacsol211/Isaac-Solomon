@@ -80,6 +80,10 @@ export type Project = {
 	image?: string;
 	/** Internal path to a case study / writing page, e.g. '/writing/novarock' */
 	caseStudy?: string;
+	/** Path to desktop screenshot — used for the editorial/magazine spread */
+	desktopImage?: string;
+	/** Highlighted in the magazine spread instead of the mosaic grid */
+	featured?: boolean;
 };
 
 export const projectsIntro =
@@ -153,6 +157,38 @@ export const projects: Project[] = [
 		frameLabel: 'novarocktools.com',
 		image: '/projects/novarock.png',
 		caseStudy: '/writing/novarock'
+	},
+	{
+		title: 'Godrej Foundation',
+		year: '2024',
+		category: 'Philanthropy',
+		description:
+			'Website and custom CMS for India\'s oldest philanthropic trust. SvelteKit + Tailwind, built twice — once before and once after Godrej\'s full corporate rebrand.',
+		tags: ['SvelteKit', 'Tailwind', 'Custom CMS', 'Rebrand'],
+		href: 'https://www.godrejfoundation.com',
+		theme: 'light',
+		visual: 'image',
+		frameLabel: 'godrejfoundation.com',
+		image: '/projects/godrej.png',
+		desktopImage: '/writing/godrej/hero.png',
+		caseStudy: '/writing/godrej',
+		featured: true
+	},
+	{
+		title: 'Tomorrow Makers',
+		year: '2026',
+		category: 'Philanthropy · EdTech',
+		description:
+			'National talent platform for Godrej Foundation — identifies and supports high-potential students from disadvantaged backgrounds across four pathways. SvelteKit on Cloudflare, with WhatsApp onboarding and 11-language assessment support.',
+		tags: ['SvelteKit', 'Tailwind', 'Cloudflare', 'EdTech'],
+		href: 'https://www.tomorrow-makers.in',
+		theme: 'light',
+		visual: 'image',
+		frameLabel: 'tomorrow-makers.in',
+		image: '/projects/tomorrow-makers.png',
+		desktopImage: '/writing/tomorrow-makers/hero.png',
+		caseStudy: '/writing/tomorrow-makers',
+		featured: true
 	}
 ];
 
