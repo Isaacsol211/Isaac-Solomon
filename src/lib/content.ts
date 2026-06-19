@@ -230,26 +230,33 @@ export const photographyIntro = {
 	note: '35mm & digital — places, people and light. A small selection, updated whenever I remember to.'
 };
 
-/**
- * Replace these generated placeholders with real photos:
- * drop files into static/photos/ and update src/alt/captions below.
- * w/h are the intrinsic dimensions (prevents layout shift).
- */
 export const photos = [
-	{ src: '/photos/01-dusk.svg', alt: 'Warm dusk gradient study', caption: 'Untitled №1 — dusk', w: 1200, h: 1500 },
-	{ src: '/photos/02-forest.svg', alt: 'Deep green forest gradient study', caption: 'Untitled №2 — forest', w: 1200, h: 1600 },
-	{ src: '/photos/03-street.svg', alt: 'Monochrome street gradient study', caption: 'Untitled №3 — street', w: 1200, h: 800 },
-	{ src: '/photos/04-ocean.svg', alt: 'Blue ocean gradient study', caption: 'Untitled №4 — ocean', w: 1200, h: 1200 },
-	{ src: '/photos/05-sand.svg', alt: 'Warm sand gradient study', caption: 'Untitled №5 — sand', w: 1200, h: 1500 },
-	{ src: '/photos/06-neon.svg', alt: 'Neon city gradient study', caption: 'Untitled №6 — neon', w: 1200, h: 1800 },
-	{ src: '/photos/07-fog.svg', alt: 'Soft fog gradient study', caption: 'Untitled №7 — fog', w: 1200, h: 900 },
-	{ src: '/photos/08-ember.svg', alt: 'Ember orange gradient study', caption: 'Untitled №8 — ember', w: 1200, h: 1500 }
+	{ src: '/photos/01-silk-route.jpg', alt: 'Snow-capped Kanchenjunga range rising above clouds and blue ridges', caption: 'Above the Clouds — Sikkim', w: 1600, h: 1200, location: 'Sikkim', place: 'Above the Clouds', description: 'Peaks breaking through the cloud line. Sikkim gives you these views where the mountains feel like they belong to a different planet.' },
+	{ src: '/photos/02-sunrise-peaks.jpg', alt: 'Golden sunrise over snow-capped Kedarkantha peak', caption: 'First Light — Kedarkantha', w: 1600, h: 1200, location: 'Uttarakhand', place: 'First Light', description: 'That narrow window when the sun hits the snow and everything goes gold. Five minutes later it\'s gone.' },
+	{ src: '/photos/03-himalayan-peaks.jpg', alt: 'Mountain ridges glowing warm orange at sunset from Kedarkantha base camp', caption: 'Evening Light — Kedarkantha', w: 1600, h: 1201, location: 'Uttarakhand', place: 'Evening Light', description: 'The view from base camp as the sun drops. Layered ridges catching the last light — every minute the colour shifts.' },
+	{ src: '/photos/04-kanchenjunga.jpg', alt: 'Sunrise over snow-covered summit with mountains stretching to the horizon', caption: 'Summit Sunrise — Kedarkantha', w: 1600, h: 1200, location: 'Uttarakhand', place: 'Summit Sunrise', description: 'The sun cresting over the ridge at twelve thousand feet. You stand there in the cold and nothing else matters.' },
+	{ src: '/photos/05-mountain-ridges.jpg', alt: 'Layered mountain ridges receding into mist at golden hour', caption: 'Ridgelines — Kedarkantha', w: 1600, h: 1200, location: 'Uttarakhand', place: 'Ridgelines', description: 'Layer after layer of ridges dissolving into haze. The depth never gets old.' },
+	{ src: '/photos/06-misty-layers.jpg', alt: 'Misty mountain layers with a bird silhouette against soft light', caption: 'Misty Layers — Kedarkantha', w: 1600, h: 1200, location: 'Uttarakhand', place: 'Misty Layers', description: 'A single bird cutting through the mist between mountain layers. Painterly, almost unreal.' },
+	{ src: '/photos/07-mountain-village.jpg', alt: 'Small village at the base of a massive cloud-shrouded mountain peak', caption: 'Lahaul Valley — Himachal', w: 1600, h: 1200, location: 'Himachal Pradesh', place: 'Lahaul Valley', description: 'A village dwarfed by rock and cloud. The scale of these places doesn\'t come through in photos — but this one gets close.' },
+	{ src: '/photos/08-qutub-arch.jpg', alt: 'Ornate concentric stone dome ceiling inside Qutub Minar complex, Delhi', caption: 'Qutub Minar — Delhi', w: 1600, h: 1200, location: 'Delhi', place: 'Qutub Minar', description: 'Looking straight up inside the Qutub complex. Concentric rings of carved stone spiralling into shadow.' },
+	{ src: '/photos/09-qutub-moon.jpg', alt: 'Starry night sky over snow-capped mountain silhouettes from Sankri village', caption: 'Starlight — Sankri', w: 1600, h: 738, location: 'Uttarakhand', place: 'Starlight', description: 'Mountains and stars from Sankri village. No light pollution, no noise — just the sky doing its thing.' },
+	{ src: '/photos/10-tents-stars.jpg', alt: 'Orange camping tents glowing in snow under a starry night sky', caption: 'Base Camp — Kedarkantha', w: 1600, h: 1200, location: 'Uttarakhand', place: 'Base Camp', description: 'Tents glowing orange in the snow, stars overhead. Minus ten outside but the light makes it feel warm.' },
+	{ src: '/photos/11-streetlight.jpg', alt: 'Empty Cavalry Barracks railway station platform at night with glowing streetlights', caption: 'After Hours — Alwal', w: 1600, h: 1200, location: 'Alwal', place: 'After Hours', description: 'Cavalry Barracks station after the last train. Metal, light, and silence — the city pauses here.' },
+	{ src: '/photos/12-balloon-fog.jpg', alt: 'Tree silhouettes against a warm golden sunset sky over mountain ridges', caption: 'Golden Hour — Kedarkantha', w: 1600, h: 1200, location: 'Uttarakhand', place: 'Golden Hour', description: 'Trees turned to silhouettes as the sun drops behind the ridge. The warmest five minutes of the day.' },
+	{ src: '/photos/13-trees-fog.jpg', alt: 'Tall pine trees disappearing into thick fog enroute to Darjeeling', caption: 'Into the Fog — Darjeeling', w: 1600, h: 1200, location: 'Darjeeling', place: 'Into the Fog', description: 'Somewhere between Bagdogra and Darjeeling. Trees dissolving into nothing — the deeper you go, the quieter it gets.' },
+	{ src: '/photos/14-misty-valley.jpg', alt: 'A winding road through dense deodar forest near Naggar, Himachal Pradesh', caption: 'Forest Road — Naggar', w: 1600, h: 1200, location: 'Naggar', place: 'Forest Road', description: 'A road disappearing into deodar forest near Naggar. Green on green, the kind of drive where you forget where you\'re going.' },
+	{ src: '/photos/15-fisherman-ooty.jpg', alt: 'Misty valley with terraced fields and a village lit by morning sun', caption: 'Morning Light — Uttarakhand', w: 1600, h: 1200, location: 'Uttarakhand', place: 'Morning Light', description: 'Sun cutting through the haze into the valley. The village waking up below, fields glowing green.' },
+	{ src: '/photos/16-ship-ocean.jpg', alt: 'A lone ship on a vast deep-blue ocean', caption: 'Disconnect — Vizag', w: 1600, h: 1200, location: 'Vizag', place: 'Deep Blue', description: 'Miles from the shoreline, miles from the noise. Just a ship and the horizon.' },
+	{ src: '/photos/17-cavalry-stairs.jpg', alt: 'Cavalry Barracks railway platform at night with red digital clock and blue-lit tracks', caption: 'Platform 2 — Cavalry Barracks', w: 1600, h: 1200, location: 'Alwal', place: 'Platform 2', description: 'Cavalry Barracks at midnight. The red clock, the empty platform, the blue glow off the tracks.' },
+	{ src: '/photos/18-taj-mahal.jpg', alt: 'Taj Mahal from the gardens with trees framing the dome', caption: 'Taj Mahal — Agra', w: 1600, h: 1200, location: 'Agra', place: 'Taj Mahal', description: 'Everyone photographs it, but standing in front of it still hits you. The symmetry, the scale, the quiet.' },
+	{ src: '/photos/19-summit-golden.jpg', alt: 'Group of trekkers at a mountain summit during golden hour', caption: 'Summit — Kedarkantha', w: 1600, h: 1201, location: 'Uttarakhand', place: 'The Summit', description: 'Golden hour at the top. Twelve thousand feet, frozen fingers, and the best light of the trip.' },
+	{ src: '/photos/20-tea-plantations.jpg', alt: 'Lush green tea plantation rows stretching across rolling hills in Munnar', caption: 'Tea Country — Munnar', w: 1600, h: 1200, location: 'Munnar', place: 'Tea Country', description: 'Rows of green running over every hill. Munnar\'s tea estates are a different shade of India.' }
 ];
 
 export const socials = [
 	{ label: 'GitHub', href: 'https://github.com/Isaacsol211' },
 	// TODO(Isaac): drop in your real handles
-	{ label: 'Instagram', href: 'https://instagram.com/your-handle' },
+	{ label: 'Instagram', href: 'https://instagram.com/isaac_sol_211' },
 	{ label: 'Behance', href: 'https://behance.net/your-handle' },
 	{ label: 'Twitter / X', href: 'https://x.com/your-handle' },
 	{ label: 'LinkedIn', href: 'https://linkedin.com/in/your-handle' }

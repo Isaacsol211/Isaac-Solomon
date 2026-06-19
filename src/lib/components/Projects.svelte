@@ -14,9 +14,9 @@
 
 	/* Forced aspect ratios — tuned so column heights are roughly equal */
 	const colAspects = [
-		['aspect-[4/5]', 'aspect-[1/1]'],   // col 0: 2 items
-		['aspect-[3/4]', 'aspect-[4/5]'],   // col 1: 2 items
-		['aspect-[9/16]']                     // col 2: 1 item
+		['aspect-[4/5]', 'aspect-[1/1]'],   // col 0
+		['aspect-[3/4]', 'aspect-[4/5]'],   // col 1
+		['aspect-[9/16]']                     // col 2
 	];
 
 	/* ── Horizontal-scroll state ───────────────────────── */
@@ -58,7 +58,7 @@
 	bind:this={sectionEl}
 	class="projects-section relative h-[200vh] md:h-[300vh]"
 >
-	<div class="projects-frame sticky top-0 flex h-screen flex-col overflow-hidden border-t border-line bg-paper">
+	<div class="projects-frame sticky top-0 flex h-svh flex-col overflow-hidden border-t border-line bg-paper pt-[4.5rem]">
 		<!-- Mobile heading (hidden on md+) -->
 		<div use:reveal class="shrink-0 px-5 pt-10 pb-6 sm:px-8 md:hidden">
 			<Eyebrow index="02" title="Recent Projects" />
@@ -93,7 +93,7 @@
 			</div>
 
 			<!-- 3-column project mosaic -->
-			<div class="projects-mosaic flex shrink-0 gap-1.5 overflow-hidden bg-coal p-1.5 md:gap-3 md:p-3">
+			<div class="projects-mosaic flex shrink-0 gap-1.5 overflow-hidden bg-paper p-1.5 md:gap-3 md:p-3">
 				{#each cols as col, c}
 					<div
 						class="flex w-1/3 flex-col gap-1.5 will-change-transform md:gap-3"
@@ -175,7 +175,6 @@
 									loading="lazy"
 									class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
 								/>
-								<!-- Info overlay -->
 								<div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-coal/80 to-transparent p-6 pt-20">
 									<p class="text-[10px] font-medium tracking-[0.2em] uppercase text-cream/60">
 										{fp.year} — {fp.category}
@@ -222,7 +221,6 @@
 							loading="lazy"
 							class="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
 						/>
-						<!-- Info overlay -->
 						<div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-coal/80 to-transparent p-4 pt-14">
 							<p class="text-[10px] font-medium tracking-[0.2em] uppercase text-cream/60">
 								{sp.year} — {sp.category}
@@ -243,17 +241,16 @@
 </section>
 
 <style>
-	/* ── Track & panel sizing ────────────────────────────── */
 	.projects-track {
-		width: 100%; /* mobile: no horizontal overflow */
+		width: 100%;
 	}
 	.projects-mosaic {
-		width: 100%; /* mobile: mosaic fills viewport */
+		width: 100%;
 	}
 
 	@media (min-width: 768px) {
 		.projects-track {
-			width: 210vw; /* left (30) + gap (5) + mosaic (70) + gap (5) + right (100) */
+			width: 210vw;
 		}
 		.projects-panel-left {
 			width: 30vw;
@@ -262,19 +259,17 @@
 			width: 70vw;
 		}
 		.projects-panel-right {
-			width: 100vw; /* fills viewport at end: 70% spread + 30% image */
+			width: 100vw;
 		}
-		/* Grid ensures text rows get guaranteed height, image fills the middle */
 		.magazine-spread {
 			display: grid;
 			grid-template-rows: minmax(18vh, auto) 1fr minmax(18vh, auto);
-			padding-top: 5rem; /* clear the fixed nav */
+			padding-top: 5rem;
 			padding-bottom: 2rem;
 			gap: 0.5rem;
 		}
 	}
 
-	/* ── Reduced-motion fallback ─────────────────────────── */
 	@media (prefers-reduced-motion: reduce) {
 		.projects-section {
 			height: auto !important;

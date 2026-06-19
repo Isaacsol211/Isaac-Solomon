@@ -78,7 +78,20 @@
       "Bash(curl -sL \"https://www.figma.com/api/mcp/asset/06aad214-0019-4b19-959c-7f2cc2cf48ad\" -o novarock.png)",
       "mcp__plugin_figma_figma__get_metadata",
       "Bash(curl -sL \"https://www.figma.com/api/mcp/asset/936c7dd2-169b-400b-8ed2-e99bfa75b3a7\" -o /tmp/figma-aap-2x.png)",
-      "Bash(sips -g pixelWidth -g pixelHeight /tmp/figma-aap-2x.png)"
+      "Bash(sips -g pixelWidth -g pixelHeight /tmp/figma-aap-2x.png)",
+      "Bash(curl -s http://localhost:5174/)",
+      "Bash(grep -iE '\\\\.\\(jpg|jpeg|png|heic|JPG|HEIC\\)$')",
+      "Bash(cp '/Users/isaac/Downloads/images for portfolio/_1170369.ORF.jpg' /Users/isaac/Documents/Personal.nosync/portfolio/static/photos/12-balloon-fog.jpg)",
+      "Bash(sips -Z 1600 /Users/isaac/Documents/Personal.nosync/portfolio/static/photos/12-balloon-fog.jpg)",
+      "Bash(sips -s format jpeg -Z 1600 '/Users/isaac/Downloads/images for portfolio/IMG_1094.HEIC' --out /Users/isaac/Documents/Personal.nosync/portfolio/static/photos/13-trees-fog.jpg)",
+      "Bash(cp '/Users/isaac/Downloads/images for portfolio/IMG_4447.jpg' /Users/isaac/Documents/Personal.nosync/portfolio/static/photos/14-misty-valley.jpg)",
+      "Bash(sips -Z 1600 /Users/isaac/Documents/Personal.nosync/portfolio/static/photos/14-misty-valley.jpg)",
+      "Bash(cp '/Users/isaac/Downloads/images for portfolio/IMG_4449.jpg' /Users/isaac/Documents/Personal.nosync/portfolio/static/photos/15-fisherman-ooty.jpg)",
+      "Bash(sips -Z 1600 /Users/isaac/Documents/Personal.nosync/portfolio/static/photos/15-fisherman-ooty.jpg)",
+      "Bash(sips -s format jpeg -Z 1600 '/Users/isaac/Downloads/images for portfolio/IMG_3651.HEIC' --out /Users/isaac/Documents/Personal.nosync/portfolio/static/photos/16-ship-ocean.jpg)",
+      "Bash(cp '/Users/isaac/Downloads/images for portfolio/_2010418.jpg' /Users/isaac/Documents/Personal.nosync/portfolio/static/photos/17-cavalry-stairs.jpg)",
+      "Bash(sips -Z 1600 /Users/isaac/Documents/Personal.nosync/portfolio/static/photos/17-cavalry-stairs.jpg)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5174/)"
     ]
   }
 }
