@@ -14,7 +14,7 @@
 			class="mt-6 max-w-3xl text-4xl font-medium tracking-tight md:text-6xl"
 		>
 			{experienceHeading.plain}
-			<em class="font-serif font-normal text-dim italic">{experienceHeading.accent}</em>
+			<span class="text-dim">{experienceHeading.accent}</span>
 		</h2>
 
 		<ol class="mt-12 border-b border-line md:mt-16">

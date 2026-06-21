@@ -91,7 +91,23 @@
       "Bash(sips -s format jpeg -Z 1600 '/Users/isaac/Downloads/images for portfolio/IMG_3651.HEIC' --out /Users/isaac/Documents/Personal.nosync/portfolio/static/photos/16-ship-ocean.jpg)",
       "Bash(cp '/Users/isaac/Downloads/images for portfolio/_2010418.jpg' /Users/isaac/Documents/Personal.nosync/portfolio/static/photos/17-cavalry-stairs.jpg)",
       "Bash(sips -Z 1600 /Users/isaac/Documents/Personal.nosync/portfolio/static/photos/17-cavalry-stairs.jpg)",
-      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5174/)"
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5174/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5173)",
+      "WebSearch",
+      "Bash(curl -s -o mivi-desktop-raw.png \"https://www.figma.com/api/mcp/asset/9398e8a3-7022-4cec-a1dd-75ca442f6182\")",
+      "Bash(curl -s -o vibrant-living-desktop-raw.png \"https://www.figma.com/api/mcp/asset/90263269-1ec9-4bbc-9378-a2cff6f8f81f\")",
+      "Bash(curl -s -o aap-desktop-raw.png \"https://www.figma.com/api/mcp/asset/90d1fde0-a446-4357-bf79-db6b00993d36\")",
+      "Bash(sips -g pixelWidth -g pixelHeight mivi-desktop-raw.png vibrant-living-desktop-raw.png aap-desktop-raw.png)",
+      "Bash(sips -c 1800 2880 mivi-desktop-raw.png --out mivi-desktop.png)",
+      "Bash(sips -c 1800 2880 vibrant-living-desktop-raw.png --out vibrant-living-desktop.png)",
+      "Bash(sips -c 1800 2880 aap-desktop-raw.png --out aap-desktop.png)",
+      "Bash(sips -g pixelWidth -g pixelHeight mivi-desktop.png vibrant-living-desktop.png aap-desktop.png)",
+      "Bash(sips -c 1800 2880 --cropOffset 0 0 mivi-desktop-raw.png --out mivi-desktop.png)",
+      "WebFetch(domain:saut-website-demo.able.do)",
+      "Bash(curl -s \"https://saut-website-demo.able.do/_app/immutable/assets/pages/__layout.svelte-c327d2f4.css\")",
+      "Bash(curl:*)",
+      "Bash(find /Users/isaac/Documents/Personal.nosync/portfolio/static/projects/saut -type f -exec ls -lh {} \\\\;)",
+      "Bash(awk '{print $9, \"\\(\" $5 \"\\)\"}')"
     ]
   }
 }

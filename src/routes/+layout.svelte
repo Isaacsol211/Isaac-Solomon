@@ -1,8 +1,20 @@
 <script lang="ts">
 	import '../app.css';
 	import favicon from '$lib/assets/favicon.svg';
+	import { onNavigate } from '$app/navigation';
 
 	let { children } = $props();
+
+	onNavigate((navigation) => {
+		if (!document.startViewTransition) return;
+
+		return new Promise((resolve) => {
+			document.startViewTransition(async () => {
+				resolve();
+				await navigation.complete;
+			});
+		});
+	});
 </script>
 
 <svelte:head>
@@ -16,9 +28,4 @@
 	Skip to content
 </a>
 
-<!-- Reading-progress hairline (CSS scroll-driven; hidden where unsupported) -->
-<div class="scroll-progress" aria-hidden="true"></div>
-
-<div class="grain">
-	{@render children()}
-</div>
+{@render children()}

@@ -1,283 +1,355 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { reveal } from '$lib/actions/reveal';
 	import { projects, projectsIntro } from '$lib/content';
 	import ArrowUpRight from './ArrowUpRight.svelte';
 	import Eyebrow from './Eyebrow.svelte';
 
-	/* Featured → magazine spread; rest → mosaic grid */
 	const featured = projects.filter((p) => p.featured);
-	const grid = projects.filter((p) => !p.featured);
+	const rest = projects.filter((p) => !p.featured);
+	const INITIAL_COUNT = 3;
 
-	/* Distribute grid projects across 3 columns (round-robin) */
-	const cols: { project: (typeof projects)[0]; idx: number }[][] = [[], [], []];
-	grid.forEach((project, i) => cols[i % 3].push({ project, idx: i }));
-
-	/* Forced aspect ratios — tuned so column heights are roughly equal */
-	const colAspects = [
-		['aspect-[4/5]', 'aspect-[1/1]'],   // col 0
-		['aspect-[3/4]', 'aspect-[4/5]'],   // col 1
-		['aspect-[9/16]']                     // col 2
-	];
-
-	/* ── Horizontal-scroll state ───────────────────────── */
 	let sectionEl = $state<HTMLElement>();
-	let progress = $state(0);
-	let isDesktop = $state(false);
+	let listEl = $state<HTMLOListElement>();
+	let showAll = $state(false);
+	let visibleRest = $derived(showAll ? rest : rest.slice(0, INITIAL_COUNT));
+	const hasMore = rest.length > INITIAL_COUNT;
 
-	$effect(() => {
-		if (!sectionEl) return;
+	/* ── Cursor-following image state ──────────────────── */
+	let activeIndex = $state(-1);
+	let mouseX = $state(0);
+	let mouseY = $state(0);
+	let lerpX = $state(0);
+	let lerpY = $state(0);
+	let isTouch = $state(true);
+	let mounted = $state(false);
 
-		const mq = window.matchMedia('(min-width: 768px)');
-		isDesktop = mq.matches;
-		const onMq = (e: MediaQueryListEvent) => { isDesktop = e.matches; };
-		mq.addEventListener('change', onMq);
+	onMount(() => {
+		mounted = true;
+		isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+		const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-			progress = 0.5;
-			return () => mq.removeEventListener('change', onMq);
+		let ctxPromise: Promise<any> | undefined;
+
+		const gsapInit = async () => {
+			const { gsap } = await import('gsap');
+			const { ScrollTrigger } = await import('gsap/ScrollTrigger');
+			gsap.registerPlugin(ScrollTrigger);
+
+			if (!sectionEl) return;
+
+			const ctx = gsap.context(() => {
+				/* ── Featured cards — entrance + clip reveal ───── */
+				const blocks = sectionEl!.querySelectorAll('[data-bleed-block]');
+
+				if (reducedMotion) {
+					gsap.set(blocks, { opacity: 1 });
+				} else {
+					blocks.forEach((block) => {
+						const img = block.querySelector('[data-bleed-img]');
+						const text = block.querySelector('[data-bleed-text]');
+						const tags = block.querySelectorAll('[data-bleed-tag]');
+						const innerImg = block.querySelector('[data-bleed-img] img');
+
+						if (img) {
+							gsap.fromTo(
+								img,
+								{ clipPath: 'inset(100% 0 0 0)' },
+								{
+									clipPath: 'inset(0% 0 0 0)',
+									duration: 1.8,
+									ease: 'power3.inOut',
+									scrollTrigger: { trigger: block, start: 'top 75%', once: true }
+								}
+							);
+						}
+
+						/* Parallax on the inner image — subtle vertical drift */
+						if (innerImg && !isTouch) {
+							gsap.fromTo(
+								innerImg,
+								{ yPercent: -4 },
+								{
+									yPercent: 4,
+									ease: 'none',
+									scrollTrigger: {
+										trigger: block,
+										start: 'top bottom',
+										end: 'bottom top',
+										scrub: true
+									}
+								}
+							);
+						}
+
+						if (text) {
+							gsap.fromTo(
+								text,
+								{ opacity: 0, y: 40 },
+								{
+									opacity: 1, y: 0, duration: 1.2, ease: 'power3.out', delay: 0.8,
+									scrollTrigger: { trigger: block, start: 'top 75%', once: true }
+								}
+							);
+						}
+						if (tags.length) {
+							gsap.fromTo(
+								tags,
+								{ opacity: 0, y: 16 },
+								{
+									opacity: 1, y: 0, duration: 0.6, ease: 'power2.out',
+									stagger: 0.08, delay: 1.4,
+									scrollTrigger: { trigger: block, start: 'top 75%', once: true }
+								}
+							);
+						}
+					});
+				}
+
+				/* ── List items — staggered entrance ──────────── */
+				if (listEl) {
+					const items = listEl.querySelectorAll('li');
+					if (reducedMotion) {
+						gsap.set(items, { opacity: 1, y: 0 });
+					} else {
+						gsap.set(items, { opacity: 0, y: 40 });
+						ScrollTrigger.batch(items, {
+							onEnter: (batch) => {
+								gsap.to(batch, {
+									opacity: 1, y: 0, duration: 0.8,
+									ease: 'power3.out', stagger: 0.1
+								});
+							},
+							start: 'top 90%',
+							once: true
+						});
+					}
+				}
+			}, sectionEl);
+
+			return ctx;
+		};
+
+		ctxPromise = gsapInit();
+
+		/* ── Lerp loop for cursor image ───────────────────── */
+		let rafId = 0;
+		const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+
+		if (!isTouch && !reducedMotion) {
+			const tick = () => {
+				lerpX = lerp(lerpX, mouseX, 0.1);
+				lerpY = lerp(lerpY, mouseY, 0.1);
+				rafId = requestAnimationFrame(tick);
+			};
+			rafId = requestAnimationFrame(tick);
 		}
 
-		function onScroll() {
-			const rect = sectionEl!.getBoundingClientRect();
-			const scrollable = rect.height - window.innerHeight;
-			if (scrollable <= 0) return;
-			progress = Math.max(0, Math.min(1, -rect.top / scrollable));
-		}
-
-		window.addEventListener('scroll', onScroll, { passive: true });
-		onScroll();
 		return () => {
-			window.removeEventListener('scroll', onScroll);
-			mq.removeEventListener('change', onMq);
+			cancelAnimationFrame(rafId);
+			ctxPromise?.then((ctx) => ctx?.revert());
 		};
 	});
 </script>
 
 <section
-	id="projects"
 	bind:this={sectionEl}
-	class="projects-section relative h-[200vh] md:h-[300vh]"
+	id="projects"
+	class="border-t border-line"
 >
-	<div class="projects-frame sticky top-0 flex h-svh flex-col overflow-hidden border-t border-line bg-paper pt-[4.5rem]">
-		<!-- Mobile heading (hidden on md+) -->
-		<div use:reveal class="shrink-0 px-5 pt-10 pb-6 sm:px-8 md:hidden">
-			<Eyebrow index="02" title="Recent Projects" />
-			<h2 class="mt-4 text-3xl font-medium tracking-tight sm:text-4xl">
-				My
-				<em class="font-serif font-normal italic text-dim"> work.</em>
-			</h2>
-		</div>
-
-		<!-- Horizontal track — slides left on scroll -->
-		<div
-			class="projects-track flex min-h-0 flex-1 gap-[5vw] will-change-transform"
-			style="transform: translateX({isDesktop ? progress * -110 : 0}vw)"
-		>
-			<!-- Left typography panel (desktop only) -->
-			<div class="projects-panel-left hidden shrink-0 flex-col justify-center px-[5vw] md:flex">
-				<div use:reveal>
-					<Eyebrow index="02" title="Recent Projects" />
-					<h2
-						class="mt-8 font-medium leading-[0.95] tracking-tight"
-						style="font-size: clamp(3rem, 7vw, 7.5rem)"
-					>
-						My
-						<em class="mt-2 block font-serif font-normal italic text-dim">
-							work.
-						</em>
-					</h2>
-				</div>
-				<p class="mt-8 max-w-[18rem] text-sm leading-relaxed text-dim">
+	<!-- Section header -->
+	<div class="px-5 py-20 sm:px-8 md:py-32">
+		<div class="mx-auto max-w-6xl">
+			<div use:reveal class="max-w-2xl">
+				<Eyebrow index="02" title="Selected Work" />
+				<h2 class="mt-6 text-4xl font-medium tracking-tight md:text-6xl">
+					Selected<br />
+					<span class="text-dim">work.</span>
+				</h2>
+				<p class="mt-6 max-w-md text-sm leading-relaxed text-dim">
 					{projectsIntro}
 				</p>
 			</div>
-
-			<!-- 3-column project mosaic -->
-			<div class="projects-mosaic flex shrink-0 gap-1.5 overflow-hidden bg-paper p-1.5 md:gap-3 md:p-3">
-				{#each cols as col, c}
-					<div
-						class="flex w-1/3 flex-col gap-1.5 will-change-transform md:gap-3"
-						style="transform: translateY({c % 2 === 0 ? progress * -20 : -20 + progress * 20}%)"
-					>
-						{#each col as { project, idx }, i (project.title)}
-							{@const href = project.caseStudy ?? project.href}
-							{@const external = !project.caseStudy}
-							<a
-								{href}
-								target={external ? '_blank' : undefined}
-								rel={external ? 'noopener noreferrer' : undefined}
-								class="group relative shrink-0 overflow-hidden rounded-sm"
-								aria-label="View project: {project.title}"
-							>
-								<img
-									src={project.image}
-									alt="Screenshot of {project.frameLabel}"
-									loading="lazy"
-									class="{colAspects[c][i] ?? 'aspect-[3/4]'} w-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-105"
-								/>
-								<!-- Gradient overlay with project info -->
-								<div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-coal/90 via-coal/50 to-transparent p-3 pt-10 md:p-4 md:pt-14">
-									<p class="text-[9px] font-medium tracking-[0.2em] uppercase text-cream/50">
-										{project.year} — {project.category}
-									</p>
-									<h3 class="mt-1 text-sm font-medium tracking-tight text-cream md:text-base">
-										{project.title}
-									</h3>
-									<div class="mt-2 flex items-center gap-1.5 text-[10px] font-medium text-accent">
-										<span>{project.caseStudy ? 'Case study' : 'Visit site'}</span>
-										<ArrowUpRight class="size-2.5" />
-									</div>
-								</div>
-							</a>
-						{/each}
-					</div>
-				{/each}
-			</div>
-
-			<!-- Right panel: magazine spread — featured projects (desktop only) -->
-			<div class="projects-panel-right hidden shrink-0 md:flex">
-				<!-- 70% — editorial spread: top text / center image / bottom text -->
-				<div class="magazine-spread w-[70%]">
-					<!-- Top text row -->
-					<div class="flex items-end justify-between px-8 lg:px-12">
-						<p
-							class="font-medium leading-none tracking-tight"
-							style="font-size: clamp(3rem, 8vw, 8rem)"
-						>
-							Selected
-						</p>
-						<div class="mb-2 text-right">
-							<p class="text-[10px] tracking-[0.25em] uppercase text-dim/50">
-								Isaac Solomon
-							</p>
-							<p class="mt-1 text-[10px] tracking-[0.25em] uppercase text-dim/40">
-								developer
-							</p>
-						</div>
-					</div>
-
-					<!-- Center featured image -->
-					<div class="min-h-0 px-8 lg:px-12">
-						{#if featured[0]}
-							{@const fp = featured[0]}
-							{@const fpHref = fp.caseStudy ?? fp.href}
-							{@const fpExternal = !fp.caseStudy}
-							<a
-								href={fpHref}
-								target={fpExternal ? '_blank' : undefined}
-								rel={fpExternal ? 'noopener noreferrer' : undefined}
-								class="group relative block h-full w-full overflow-hidden"
-								aria-label="View featured project: {fp.title}"
-							>
-								<img
-									src={fp.desktopImage ?? fp.image}
-									alt="Screenshot of {fp.frameLabel}"
-									loading="lazy"
-									class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-								/>
-								<div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-coal/80 to-transparent p-6 pt-20">
-									<p class="text-[10px] font-medium tracking-[0.2em] uppercase text-cream/60">
-										{fp.year} — {fp.category}
-									</p>
-									<h3 class="mt-1 text-xl font-medium tracking-tight text-cream">
-										{fp.title}
-									</h3>
-									<div class="mt-3 flex items-center gap-2 text-xs font-medium text-accent">
-										<span>{fp.caseStudy ? 'Read case study' : 'Visit site'}</span>
-										<ArrowUpRight class="size-3" />
-									</div>
-								</div>
-							</a>
-						{/if}
-					</div>
-
-					<!-- Bottom text row -->
-					<div class="flex items-start justify-between px-8 lg:px-12">
-						<p
-							class="font-serif italic leading-none"
-							style="font-size: clamp(3rem, 8vw, 8rem)"
-						>
-							work.
-						</p>
-						<p class="mt-3 text-sm tracking-[0.15em] text-dim/50">/{projects.length} projects</p>
-					</div>
-				</div>
-
-				<!-- 30% — full-height second featured project -->
-				{#if featured[1]}
-					{@const sp = featured[1]}
-					{@const spHref = sp.caseStudy ?? sp.href}
-					{@const spExternal = !sp.caseStudy}
-					<a
-						href={spHref}
-						target={spExternal ? '_blank' : undefined}
-						rel={spExternal ? 'noopener noreferrer' : undefined}
-						class="group relative w-[30%] overflow-hidden"
-						aria-label="View featured project: {sp.title}"
-					>
-						<img
-							src={sp.image}
-							alt="Screenshot of {sp.frameLabel}"
-							loading="lazy"
-							class="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
-						/>
-						<div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-coal/80 to-transparent p-4 pt-14">
-							<p class="text-[10px] font-medium tracking-[0.2em] uppercase text-cream/60">
-								{sp.year} — {sp.category}
-							</p>
-							<h3 class="mt-1 text-base font-medium tracking-tight text-cream">
-								{sp.title}
-							</h3>
-							<div class="mt-2 flex items-center gap-1.5 text-[10px] font-medium text-accent">
-								<span>{sp.caseStudy ? 'Case study' : 'Visit site'}</span>
-								<ArrowUpRight class="size-2.5" />
-							</div>
-						</div>
-					</a>
-				{/if}
-			</div>
 		</div>
 	</div>
+
+	<!-- Featured projects — full-bleed alternating sections -->
+	{#each featured as project, i (project.title)}
+		{@const isDark = project.theme === 'dark'}
+		{@const isEven = i % 2 === 0}
+		{@const img = project.desktopImage ?? project.image}
+		<div
+			data-bleed-block
+			class="border-t transition-colors {isDark
+				? 'border-cream/10 bg-coal text-cream'
+				: 'border-line bg-paper-2 text-ink'}"
+		>
+			<a
+				href={project.caseStudy ?? project.href}
+				target={project.caseStudy ? undefined : '_blank'}
+				rel={project.caseStudy ? undefined : 'noopener noreferrer'}
+				class="group block"
+				aria-label="View project: {project.title}"
+			>
+				<div class="mx-auto max-w-7xl px-5 py-16 sm:px-8 md:py-24">
+					<!-- Top row: number + category -->
+					<div class="mb-10 flex items-baseline justify-between gap-4 md:mb-16">
+						<span
+							class="text-7xl font-medium tabular-nums md:text-9xl {isDark
+								? 'text-cream/20'
+								: 'text-ink/10'}"
+						>
+							{String(i + 1).padStart(2, '0')}
+						</span>
+						<span
+							class="text-right text-[10px] font-medium tracking-[0.25em] uppercase {isDark
+								? 'text-cream/40'
+								: 'text-dim'}"
+						>
+							{project.year} — {project.category}
+						</span>
+					</div>
+
+					<!-- Content grid -->
+					<div class="grid items-end gap-8 md:grid-cols-12 md:gap-12">
+						<!-- Image -->
+						<div class="md:col-span-8 {isEven ? '' : 'md:order-2'}">
+							<div data-bleed-img class="overflow-hidden rounded-lg">
+								{#if img}
+									<div class="aspect-[16/10] overflow-hidden">
+										<img
+											src={img}
+											alt="{project.title} screenshot"
+											loading="lazy"
+											class="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.03]"
+										/>
+									</div>
+								{/if}
+							</div>
+						</div>
+
+						<!-- Text -->
+						<div
+							data-bleed-text
+							class="md:col-span-4 {isEven ? '' : 'md:order-1'}"
+						>
+							<h3 class="text-3xl font-medium tracking-tight md:text-4xl">
+								{project.title}
+							</h3>
+							<p class="mt-4 line-clamp-3 text-sm leading-relaxed {isDark ? 'text-cream/60' : 'text-dim'}">
+								{project.description}
+							</p>
+							<div class="mt-6 flex flex-wrap gap-2">
+								{#each project.tags as tag}
+									<span
+										data-bleed-tag
+										class="rounded-full border px-3 py-1 text-[10px] font-medium tracking-[0.15em] uppercase {isDark
+											? 'border-cream/15 text-cream/50'
+											: 'border-line text-dim'}"
+									>
+										{tag}
+									</span>
+								{/each}
+							</div>
+							<span class="mt-8 inline-flex items-center gap-2 text-xs font-medium text-accent">
+								{project.caseStudy ? 'Case study' : 'Visit'}
+								<ArrowUpRight
+									class="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+								/>
+							</span>
+						</div>
+					</div>
+				</div>
+			</a>
+		</div>
+	{/each}
+
+	<!-- Remaining projects — editorial list with hover image -->
+	<div class="border-t border-line px-5 py-16 sm:px-8 md:py-24">
+		<div class="mx-auto max-w-6xl">
+			<ol bind:this={listEl} class="border-b border-line">
+				{#each visibleRest as project, i (project.title)}
+					{@const href = project.caseStudy ?? project.href}
+					{@const external = !project.caseStudy}
+					<li
+						onmouseenter={() => (activeIndex = i)}
+						onmouseleave={() => (activeIndex = -1)}
+						onmousemove={(e) => {
+							mouseX = e.clientX;
+							mouseY = e.clientY;
+						}}
+					>
+						<a
+							{href}
+							target={external ? '_blank' : undefined}
+							rel={external ? 'noopener noreferrer' : undefined}
+							class="group relative grid grid-cols-[auto_1fr_auto] items-baseline gap-x-4 border-t border-line py-6 transition-colors duration-300 before:absolute before:-inset-x-4 before:inset-y-1 before:-z-10 before:rounded-xl before:bg-paper-2 before:opacity-0 before:transition-opacity before:duration-300 hover:before:opacity-60 md:grid-cols-[5rem_1fr_10rem_auto] md:gap-x-6 md:py-8"
+							aria-label="View project: {project.title}"
+						>
+							<span class="text-lg font-medium tabular-nums text-dim transition-colors duration-300 group-hover:text-accent md:text-2xl">
+								{project.year}
+							</span>
+							<span class="text-lg font-medium tracking-tight md:text-2xl">
+								{project.title}
+							</span>
+							<span class="hidden text-sm text-dim md:block">
+								{project.category}
+							</span>
+							<span
+								class="flex items-center gap-1.5 text-xs font-medium {project.caseStudy
+									? 'text-accent'
+									: 'text-dim'}"
+							>
+								<span class="hidden sm:inline">{project.caseStudy ? 'Case study' : 'Visit'}</span>
+								<ArrowUpRight
+									class="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+								/>
+							</span>
+						</a>
+					</li>
+				{/each}
+			</ol>
+
+			<!-- View more button -->
+			{#if hasMore && !showAll}
+				<div class="mt-10 text-center">
+					<button
+						onclick={() => (showAll = true)}
+						class="inline-flex items-center gap-2 rounded-full border border-line px-6 py-3 text-xs font-medium tracking-[0.15em] uppercase text-dim transition-colors duration-300 hover:border-accent hover:text-accent"
+					>
+						View more projects
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-3.5" aria-hidden="true">
+							<path d="m6 9 6 6 6-6" />
+						</svg>
+					</button>
+				</div>
+			{/if}
+		</div>
+	</div>
+
+	<!-- Floating cursor image — desktop only -->
+	{#if mounted && !isTouch}
+		<div
+			aria-hidden="true"
+			class="pointer-events-none fixed top-0 left-0 z-30 h-[220px] w-[360px] overflow-hidden rounded-lg transition-opacity duration-300 md:h-[260px] md:w-[420px]"
+			style="
+				transform: translate3d({lerpX + 24}px, {lerpY - 130}px, 0);
+				opacity: {activeIndex >= 0 ? 1 : 0};
+				will-change: transform;
+			"
+		>
+			{#each visibleRest as project, i (project.title)}
+				{@const img = project.desktopImage ?? project.image}
+				{#if img}
+					<img
+						src={img}
+						alt=""
+						loading="lazy"
+						class="absolute inset-0 h-full w-full object-cover object-top transition-opacity duration-300"
+						style="opacity: {activeIndex === i ? 1 : 0}"
+					/>
+				{/if}
+			{/each}
+		</div>
+	{/if}
 </section>
-
-<style>
-	.projects-track {
-		width: 100%;
-	}
-	.projects-mosaic {
-		width: 100%;
-	}
-
-	@media (min-width: 768px) {
-		.projects-track {
-			width: 210vw;
-		}
-		.projects-panel-left {
-			width: 30vw;
-		}
-		.projects-mosaic {
-			width: 70vw;
-		}
-		.projects-panel-right {
-			width: 100vw;
-		}
-		.magazine-spread {
-			display: grid;
-			grid-template-rows: minmax(18vh, auto) 1fr minmax(18vh, auto);
-			padding-top: 5rem;
-			padding-bottom: 2rem;
-			gap: 0.5rem;
-		}
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		.projects-section {
-			height: auto !important;
-		}
-		.projects-frame {
-			position: relative;
-			height: auto;
-			min-height: 80vh;
-		}
-	}
-</style>

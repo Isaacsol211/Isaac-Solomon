@@ -2,7 +2,6 @@
  * ─────────────────────────────────────────────────────────────────
  *  SITE CONTENT — edit everything about the site from this file.
  *  Components only render what's defined here.
- *  TODO(Isaac): swap the placeholder copy/projects/photos for real ones.
  * ─────────────────────────────────────────────────────────────────
  */
 
@@ -20,7 +19,7 @@ export const site = {
 	title: 'Isaac Solomon — Developer & Photographer',
 	description:
 		'Portfolio of Isaac Solomon — a developer who designs and builds fast, accessible web experiences, and captures the world through a lens on the side.',
-	url: 'https://isaacsolomon.dev' // TODO(Isaac): update once the domain is registered
+	url: 'https://isaacsolomon.dev'
 };
 
 export const nav = [
@@ -30,33 +29,17 @@ export const nav = [
 	{ label: 'Photography', href: '#photography' }
 ];
 
-/** Scrolling strip under the hero */
-export const marquee = [
-	'Svelte',
-	'TypeScript',
-	'Tailwind CSS',
-	'Node.js',
-	'UI Engineering',
-	'Photography',
-	'Cloudflare'
-];
-
 export const about = {
-	lead: 'I design and build things for the web —',
-	leadAccent: 'fast, accessible and a little bit playful.',
+	lead: 'Eight years turning designs into products —',
+	leadAccent: 'not prototypes, not demos. Products.',
 	paragraphs: [
-		"I'm a frontend developer who cares as much about the seams as the surface. I've shipped e-commerce platforms for consumer brands, componentised CMS systems that non-technical teams can actually use, and the odd political website that never saw daylight. My instinct is always to build less but build it right.",
-		'When I\'m not pushing commits I\'m usually out with a camera — 35mm mostly, chasing light and interesting strangers.'
+		"I'm a frontend developer at Able.do, where I've led the build on everything from India's largest audio brand storefront to a national talent platform that screens students across eleven languages. I write the kind of code that ships on Tuesday and still works on Friday — component systems flexible enough for non-technical teams to manage, e-commerce flows that handle real traffic, and scroll-driven animations that don't tank a Lighthouse score.",
+		"The work I'm proudest of sits at the intersection of craft and constraint: a CMS rebuilt twice to survive a corporate rebrand, an animation-heavy site pivoted from image sequences to video mid-build, a campaign site the client loved but never launched. Every project teaches you something — usually that the brief was wrong.",
+		'When I\'m not shipping code I\'m somewhere in the mountains with a camera, chasing light and trying not to overthink the composition.'
 	],
 	imageAlt: 'Generative glitch artwork — a grid of pixels with bursts of red and blue',
 	imageCaption: 'fig. 01 — controlled chaos'
 };
-
-export const stats = [
-	{ value: 3, suffix: '', label: 'Client products live in the market' },
-	{ value: 12, suffix: '+', label: 'Projects designed, built and shipped' },
-	{ value: 4, suffix: '', label: 'Years writing code for the web' }
-];
 
 /**
  * 'image' shows a real project screenshot in a browser frame.
@@ -102,7 +85,25 @@ export const projects: Project[] = [
 		visual: 'image',
 		frameLabel: 'mivi.in',
 		image: '/projects/mivi.png',
-		caseStudy: '/writing/mivi'
+		desktopImage: '/projects/mivi-desktop.png',
+		caseStudy: '/writing/mivi',
+		featured: true
+	},
+	{
+		title: 'SAUT',
+		year: '2019 – 2023',
+		category: 'EdTech · LMS',
+		description:
+			'Four years building a Learning Management System for special educators teaching children with Down syndrome — from Vue.js to SvelteKit, from solo frontend dev to product manager. Bilingual Arabic/English with a live RTL toggle, offline-first assessments, and a drag-and-drop worksheet builder that prints pixel-perfect A4.',
+		tags: ['SvelteKit', 'Vue.js', 'Product Management', 'RTL / LTR'],
+		href: 'https://saut-website-demo.able.do',
+		theme: 'dark',
+		visual: 'image',
+		frameLabel: 'saut-lms.com',
+		image: '/projects/saut/hero-lms-rtl.png',
+		desktopImage: '/projects/saut/landing-hero-devices-right-to-left.png',
+		caseStudy: '/writing/saut',
+		featured: true
 	},
 	{
 		title: 'Keus',
@@ -116,6 +117,7 @@ export const projects: Project[] = [
 		visual: 'image',
 		frameLabel: 'keus.in',
 		image: '/projects/keus.png',
+		desktopImage: '/projects/keus-desktop.png',
 		caseStudy: '/writing/keus'
 	},
 	{
@@ -129,7 +131,8 @@ export const projects: Project[] = [
 		theme: 'light',
 		visual: 'image',
 		frameLabel: 'vibrantliving.in',
-		image: '/projects/vibrant-living.png'
+		image: '/projects/vibrant-living.png',
+		desktopImage: '/projects/vibrant-living-desktop.png'
 	},
 	{
 		title: 'AAP',
@@ -142,7 +145,22 @@ export const projects: Project[] = [
 		theme: 'light',
 		visual: 'image',
 		frameLabel: 'aamaadmiparty.org',
-		image: '/projects/aap.png'
+		image: '/projects/aap.png',
+		desktopImage: '/projects/aap-desktop.png'
+	},
+	{
+		title: 'WOW Club',
+		year: '2018',
+		category: 'Travel',
+		description:
+			"My first client project — built the entire frontend for Women On Wanderlust, an exclusive travel club for women. HTML, SCSS and JS from scratch. Came back years later to build ~65% of the frontend for their 20th anniversary revamp.",
+		tags: ['HTML / SCSS', 'JavaScript', 'UI Engineering', 'Revamp'],
+		href: 'https://www.wowclub.com',
+		theme: 'light',
+		visual: 'image',
+		frameLabel: 'wowclub.com',
+		image: '/projects/wowclub.png',
+		desktopImage: '/projects/wowclub-desktop.png'
 	},
 	{
 		title: 'Nova Rock Tools',
@@ -156,6 +174,7 @@ export const projects: Project[] = [
 		visual: 'image',
 		frameLabel: 'novarocktools.com',
 		image: '/projects/novarock.png',
+		desktopImage: '/projects/novarock-desktop.png',
 		caseStudy: '/writing/novarock'
 	},
 	{
@@ -218,7 +237,7 @@ export const experience = [
 		from: '2016',
 		to: '2017',
 		role: 'Developer (Intern)',
-		company: 'Able.do',
+		company: 'Uncommon',
 		description:
 			'Learned the craft the honest way — code reviews, broken builds and very patient mentors. Left the internship knowing why things work, not just that they do.'
 	}
@@ -255,11 +274,7 @@ export const photos = [
 
 export const socials = [
 	{ label: 'GitHub', href: 'https://github.com/Isaacsol211' },
-	// TODO(Isaac): drop in your real handles
-	{ label: 'Instagram', href: 'https://instagram.com/isaac_sol_211' },
-	{ label: 'Behance', href: 'https://behance.net/your-handle' },
-	{ label: 'Twitter / X', href: 'https://x.com/your-handle' },
-	{ label: 'LinkedIn', href: 'https://linkedin.com/in/your-handle' }
+	{ label: 'Instagram', href: 'https://instagram.com/isaac_sol_211' }
 ];
 
 export const connect = {

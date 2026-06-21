@@ -1,93 +1,80 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { reveal } from '$lib/actions/reveal';
-	import { photographyIntro, photos } from '$lib/content';
-	import ArrowUpRight from './ArrowUpRight.svelte';
+	import { horizontalGallery } from '$lib/actions/horizontal-gallery';
+	import { photos, photographyIntro } from '$lib/content';
 	import Eyebrow from './Eyebrow.svelte';
 
-	let active = $state(0);
+	const strip = photos.slice(0, 10);
+	let isMobile = $state(true);
+	let activePhoto = $state(-1);
 
-	function step(dir: number) {
-		active = (active + dir + photos.length) % photos.length;
-	}
+	onMount(() => {
+		isMobile = window.innerWidth < 768;
+	});
 </script>
 
-<section id="photography" class="border-t border-line bg-paper md:h-svh md:overflow-hidden">
-	<!-- Desktop: fixed viewport height. Mobile: natural flow -->
-	<div use:reveal class="flex flex-col md:h-full md:flex-row md:pt-[4.5rem]">
-		<!-- Left panel — info -->
-		<div class="flex shrink-0 flex-col justify-between px-5 pt-10 pb-8 sm:px-8 md:w-[38%] md:overflow-y-auto md:px-10 md:pt-16 md:pb-10">
-			<!-- Top: eyebrow + counter -->
-			<div>
+<section
+	id="photography"
+	use:horizontalGallery
+	class="border-t border-line"
+>
+	<!-- Header -->
+	<div class="px-5 pt-20 sm:px-8 md:pt-32 {isMobile ? '' : 'pb-10'}">
+		<div class="mx-auto max-w-6xl">
+			<div use:reveal class="max-w-2xl">
 				<Eyebrow index="04" title="Photography" />
-				<div class="mt-4 flex items-center justify-between">
-					<p class="text-[10px] font-medium tracking-[0.25em] uppercase text-dim">
-						Discover {active + 1} / {photos.length}
-					</p>
-					<p class="text-[10px] font-medium tracking-[0.2em] uppercase text-dim">
-						{photos[active].location}
-					</p>
-				</div>
-				<div class="mt-1 flex items-center justify-between">
-					<span class="h-px flex-1 bg-line"></span>
-					<span class="ml-4 font-mono text-2xl font-medium tabular-nums text-dim/30">
-						{String(active + 1).padStart(2, '0')}
-					</span>
-				</div>
-			</div>
-
-			<!-- Center: photo details -->
-			<div class="my-8 md:my-0">
-				<h2
-					class="font-medium leading-[0.95] tracking-tight"
-					style="font-size: clamp(2rem, 4vw, 3.5rem)"
-				>
-					{photos[active].place}
+				<h2 class="mt-6 text-4xl font-medium tracking-tight md:text-6xl">
+					{photographyIntro.plain}
+					<span class="text-dim">{photographyIntro.accent}</span>
 				</h2>
-				<div class="mt-4 flex flex-wrap items-center gap-x-6 gap-y-1 text-[10px] font-medium tracking-[0.2em] uppercase text-dim">
-					<span>{photos[active].location}</span>
-				</div>
-				<p class="mt-5 max-w-sm text-sm leading-relaxed text-dim">
-					{photos[active].description}
+				<p class="mt-4 text-sm leading-relaxed text-dim">
+					{photographyIntro.note}
 				</p>
 			</div>
-
-			<!-- Bottom: navigation + handle -->
-			<div class="flex items-center gap-3">
-				<button
-					type="button"
-					onclick={() => step(-1)}
-					aria-label="Previous photo"
-					class="grid size-10 place-items-center rounded-full border border-line transition-colors hover:border-accent hover:bg-accent hover:text-cream"
-				>
-					<ArrowUpRight class="size-4 -rotate-[135deg]" />
-				</button>
-				<button
-					type="button"
-					onclick={() => step(1)}
-					aria-label="Next photo"
-					class="grid size-10 place-items-center rounded-full border border-line transition-colors hover:border-accent hover:bg-accent hover:text-cream"
-				>
-					<ArrowUpRight class="size-4 rotate-45" />
-				</button>
-				<span class="ml-auto text-[10px] font-medium tracking-[0.2em] uppercase text-dim/50">
-					@isaac_sol_211
-				</span>
-			</div>
 		</div>
+	</div>
 
-		<!-- Right panel — photo -->
-		<div class="relative min-h-[50vh] flex-1 overflow-hidden bg-paper md:min-h-0">
-			{#each photos as photo, i (photo.src)}
-				{#if i === active}
+	<!-- Gallery track -->
+	<div
+		data-gallery-track
+		class="mt-8 flex items-end gap-4 md:gap-6 {isMobile
+			? 'overflow-x-auto px-5 pb-6 sm:px-8'
+			: 'px-16'}"
+		style={isMobile ? '-webkit-overflow-scrolling: touch; scrollbar-width: none;' : ''}
+	>
+		{#each strip as photo, i (photo.src)}
+			{@const isOdd = i % 2 !== 0}
+			<figure
+				data-gallery-item
+				class="group shrink-0 {isOdd ? 'mb-8 md:mb-16' : ''}"
+				onmouseenter={() => (activePhoto = i)}
+				onmouseleave={() => (activePhoto = -1)}
+			>
+				<div class="overflow-hidden rounded-sm">
 					<img
 						src={photo.src}
 						alt={photo.alt}
 						width={photo.w}
 						height={photo.h}
-						class="absolute inset-0 h-full w-full object-contain"
+						loading="lazy"
+						class="h-56 w-auto object-cover transition-transform duration-700 ease-out sm:h-64 md:h-[420px] group-hover:scale-105"
 					/>
-				{/if}
-			{/each}
-		</div>
+				</div>
+				<figcaption class="mt-3 flex items-baseline justify-between gap-4">
+					<span class="text-[10px] font-medium tracking-[0.2em] uppercase text-dim transition-colors duration-300 group-hover:text-accent">
+						{photo.place}
+					</span>
+					<span class="text-[10px] tracking-[0.15em] uppercase text-dim opacity-50">
+						{photo.location}
+					</span>
+				</figcaption>
+			</figure>
+		{/each}
 	</div>
+
+	<!-- Bottom spacing for pinned section -->
+	{#if !isMobile}
+		<div class="h-16"></div>
+	{/if}
 </section>

@@ -21,14 +21,6 @@
 	id="connect"
 	class="relative overflow-hidden bg-coal text-cream dark:border-t dark:border-cream/10"
 >
-	<!-- ghost type, like the cropped letters in the mockup -->
-	<span
-		aria-hidden="true"
-		class="pointer-events-none absolute -right-8 -bottom-20 font-medium select-none text-[16rem] leading-none tracking-[-0.05em] text-cream/[0.04] md:text-[26rem]"
-	>
-		{site.firstName}
-	</span>
-
 	<div class="relative mx-auto max-w-6xl px-5 pt-20 pb-8 sm:px-8 md:pt-32">
 		<div use:reveal>
 			<Eyebrow index="05" title="Contact" tone="dark" />
@@ -109,7 +101,9 @@
 				class="mt-16 flex flex-wrap items-center justify-between gap-4 border-t border-cream/15 py-6 text-xs text-cream/40"
 			>
 				<p>© {year} {site.name}. All rights reserved.</p>
-				<p class="hidden sm:block">Built with SvelteKit <span class="text-accent">✱</span> Deployed on Cloudflare</p>
+				<p class="hidden sm:block">
+					Set in Space Grotesk &amp; Instrument Serif. Built with SvelteKit, deployed on Cloudflare.
+				</p>
 				<a href="#top" class="inline-flex items-center gap-2 text-cream/70 transition-colors hover:text-cream">
 					Back to top <span aria-hidden="true">↑</span>
 				</a>

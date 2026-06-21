@@ -49,10 +49,6 @@
 					Hi, I'm <span class="font-medium text-ink">{site.name}</span>.
 					{site.heroIntro}
 				</p>
-				<p class="mt-5 text-xs font-medium tracking-[0.25em] uppercase text-dim">
-					<span class="motion-safe:animate-bounce inline-block" aria-hidden="true">↓</span>
-					Scroll
-				</p>
 			</div>
 		</div>
 	</div>

@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { reveal } from '$lib/actions/reveal';
-	import { about, stats } from '$lib/content';
+	import { about } from '$lib/content';
 	import Eyebrow from './Eyebrow.svelte';
-	import Stat from './Stat.svelte';
 	import glitch from '$lib/assets/about-glitch.svg';
 </script>
 
@@ -44,11 +43,6 @@
 					</figcaption>
 				</figure>
 
-				<div class="mt-14 grid gap-10 border-t border-line pt-10 sm:grid-cols-3 sm:gap-6">
-					{#each stats as stat, i (stat.label)}
-						<Stat {...stat} delay={i * 100} />
-					{/each}
-				</div>
 			</div>
 		</div>
 	</div>
