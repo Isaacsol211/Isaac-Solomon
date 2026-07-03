@@ -7,10 +7,14 @@
 
 	const strip = photos.slice(0, 10);
 	let isMobile = $state(true);
-	let activePhoto = $state(-1);
 
 	onMount(() => {
-		isMobile = window.innerWidth < 768;
+		// Track the breakpoint reactively so resizes/rotations switch layouts correctly
+		const mq = window.matchMedia('(max-width: 767px)');
+		const update = () => (isMobile = mq.matches);
+		update();
+		mq.addEventListener('change', update);
+		return () => mq.removeEventListener('change', update);
 	});
 </script>
 
@@ -48,8 +52,6 @@
 			<figure
 				data-gallery-item
 				class="group shrink-0 {isOdd ? 'mb-8 md:mb-16' : ''}"
-				onmouseenter={() => (activePhoto = i)}
-				onmouseleave={() => (activePhoto = -1)}
 			>
 				<div class="overflow-hidden rounded-sm">
 					<img

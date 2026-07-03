@@ -16,11 +16,11 @@
 	<meta property="og:title" content={title} />
 	<meta property="og:description" content={description} />
 	<meta property="og:url" content={canonical} />
-	<meta property="og:image" content="{site.url}/writing/mivi/og.png" />
+	<meta property="og:image" content="{site.url}/projects/mivi-desktop.png" />
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content={title} />
 	<meta name="twitter:description" content={description} />
-	<meta name="twitter:image" content="{site.url}/writing/mivi/og.png" />
+	<meta name="twitter:image" content="{site.url}/projects/mivi-desktop.png" />
 </svelte:head>
 
 <!-- back nav -->
@@ -82,6 +82,30 @@
 				because the pace left no room for anything that didn't scale.
 			</p>
 		</div>
+	</div>
+
+	<!-- ── Hero screenshot ─────────────────────────────────────────── -->
+	<div class="mx-auto mt-12 max-w-5xl">
+		<div class="overflow-hidden rounded-xl border border-accent/30 shadow-[0_16px_32px_-16px_rgba(20,19,17,0.15)]">
+			<div class="flex items-center gap-1.5 border-b border-line bg-paper-2 px-3 py-2">
+				<span class="size-2 rounded-full bg-[#ff5f57]"></span>
+				<span class="size-2 rounded-full bg-[#febc2e]"></span>
+				<span class="size-2 rounded-full bg-[#28c840]"></span>
+				<span class="ml-2 rounded bg-paper px-2 py-0.5 font-mono text-[9px] tracking-wider text-dim border border-line">
+					mivi.in
+				</span>
+			</div>
+			<img
+				src="/projects/mivi-desktop.png"
+				alt="Mivi storefront hero — Immerse in Studio Quality Sound, with a model wearing true wireless earbuds"
+				width="1440"
+				height="600"
+				style="view-transition-name: project-mivi"
+				class="w-full object-cover object-top"
+				loading="eager"
+			/>
+		</div>
+		<p class="mt-3 text-center text-xs text-dim">The Mivi storefront — every section CMS-driven, every page componentised.</p>
 	</div>
 
 	<!-- ── Article body ─────────────────────────────────────────────── -->
@@ -247,6 +271,37 @@
 			</div>
 		</div>
 
+		<!-- full-page tour -->
+		<div class="not-prose my-12">
+			<div class="page-tour group overflow-hidden rounded-xl border border-line shadow-[0_16px_32px_-16px_rgba(20,19,17,0.15)]">
+				<div class="flex items-center justify-between border-b border-line bg-paper-2 px-3 py-2">
+					<div class="flex items-center gap-1.5">
+						<span class="size-2 rounded-full bg-[#ff5f57]"></span>
+						<span class="size-2 rounded-full bg-[#febc2e]"></span>
+						<span class="size-2 rounded-full bg-[#28c840]"></span>
+						<span class="ml-2 rounded bg-paper px-2 py-0.5 font-mono text-[9px] tracking-wider text-dim border border-line">
+							mivi.in — homepage
+						</span>
+					</div>
+					<span class="hidden text-[9px] font-medium tracking-[0.2em] uppercase text-dim sm:block">
+						Hover to tour ↓
+					</span>
+				</div>
+				<div class="tour-viewport">
+					<img
+						src="/projects/mivi-page.png"
+						alt="Full Mivi homepage — hero banner, true wireless earbuds, deal of the day, wireless speakers, new launches, smart phone chargers and customer reviews"
+						width="843"
+						height="4096"
+						loading="lazy"
+					/>
+				</div>
+			</div>
+			<p class="mt-3 text-center text-xs text-dim">
+				The whole homepage, one component system — hover (or scroll) to walk the full page.
+			</p>
+		</div>
+
 		<div class="prose">
 
 			<h2>The frontend stack</h2>
@@ -383,16 +438,38 @@
 		color: var(--color-dim);
 	}
 
-	.prose strong {
-		font-weight: 600;
+	/* Full-page tour — tall screenshot pans on hover, scrolls natively on touch */
+	.tour-viewport {
+		height: 32rem;
+		overflow: hidden;
 	}
-
-	.prose code {
-		font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', monospace;
-		font-size: 0.875em;
-		background: var(--color-paper-2);
-		border: 1px solid var(--color-line);
-		border-radius: 4px;
-		padding: 0.15em 0.4em;
+	.tour-viewport img {
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+	@media (hover: hover) {
+		.tour-viewport img {
+			transition: transform 16s linear;
+		}
+		.page-tour:hover .tour-viewport img {
+			transform: translateY(calc(32rem - 100%));
+		}
+	}
+	@media (hover: none) {
+		.tour-viewport {
+			overflow-y: auto;
+			-webkit-overflow-scrolling: touch;
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.tour-viewport {
+			overflow-y: auto;
+		}
+		.tour-viewport img,
+		.page-tour:hover .tour-viewport img {
+			transition: none;
+			transform: none;
+		}
 	}
 </style>

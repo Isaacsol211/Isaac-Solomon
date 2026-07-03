@@ -16,9 +16,11 @@
 	<meta property="og:title" content={title} />
 	<meta property="og:description" content={description} />
 	<meta property="og:url" content={canonical} />
+	<meta property="og:image" content="{site.url}/projects/saut/landing-hero-devices-right-to-left.png" />
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content={title} />
 	<meta name="twitter:description" content={description} />
+	<meta name="twitter:image" content="{site.url}/projects/saut/landing-hero-devices-right-to-left.png" />
 </svelte:head>
 
 <!-- back nav -->
@@ -262,6 +264,7 @@
 			<div class="overflow-hidden rounded-xl border border-line">
 				<video
 					controls
+					playsinline
 					preload="metadata"
 					class="w-full"
 				>
@@ -385,28 +388,6 @@
 		left: -1.5em;
 		color: var(--color-accent);
 		font-weight: 500;
-	}
-
-	.prose a {
-		color: var(--color-accent);
-		text-decoration: underline;
-		text-decoration-color: color-mix(in srgb, var(--color-accent) 35%, transparent);
-		text-underline-offset: 3px;
-		transition: text-decoration-color 0.2s;
-	}
-
-	.prose a:hover {
-		text-decoration-color: var(--color-accent);
-	}
-
-	.prose em {
-		font-family: var(--font-serif);
-		font-style: italic;
-		color: var(--color-dim);
-	}
-
-	.prose strong {
-		font-weight: 600;
 	}
 
 	.prose code {

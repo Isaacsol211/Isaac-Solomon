@@ -100,6 +100,7 @@
 				alt="Tomorrow Makers homepage — Everyone can be great at something, with video hero of students in school"
 				width="1440"
 				height="900"
+				style="view-transition-name: project-tomorrow-makers"
 				class="w-full object-cover object-top"
 				loading="eager"
 			/>
@@ -350,6 +351,37 @@
 			</div>
 		</div>
 
+		<!-- full-page tour -->
+		<div class="not-prose my-12">
+			<div class="page-tour group overflow-hidden rounded-xl border border-line shadow-[0_16px_32px_-16px_rgba(20,19,17,0.15)]">
+				<div class="flex items-center justify-between border-b border-line bg-paper-2 px-3 py-2">
+					<div class="flex items-center gap-1.5">
+						<span class="size-2 rounded-full bg-[#ff5f57]"></span>
+						<span class="size-2 rounded-full bg-[#febc2e]"></span>
+						<span class="size-2 rounded-full bg-[#28c840]"></span>
+						<span class="ml-2 rounded bg-paper px-2 py-0.5 font-mono text-[9px] tracking-wider text-dim border border-line">
+							tomorrow-makers.in — homepage
+						</span>
+					</div>
+					<span class="hidden text-[9px] font-medium tracking-[0.2em] uppercase text-dim sm:block">
+						Hover to tour ↓
+					</span>
+				</div>
+				<div class="tour-viewport">
+					<img
+						src="/projects/godrej-tm-page.png"
+						alt="Full Tomorrow Makers homepage — Everyone Can Be Great At Something hero, four pathways, pathway grade cards, partner logos, FAQs and closing call to action"
+						width="536"
+						height="4096"
+						loading="lazy"
+					/>
+				</div>
+			</div>
+			<p class="mt-3 text-center text-xs text-dim">
+				The full homepage in one pass — hover (or scroll) to walk it top to bottom.
+			</p>
+		</div>
+
 		<div class="prose">
 
 			<h2>The Godrej thread</h2>
@@ -465,22 +497,38 @@
 		text-decoration-color: var(--color-accent);
 	}
 
-	.prose em {
-		font-family: var(--font-serif);
-		font-style: italic;
-		color: var(--color-dim);
+	/* Full-page tour — tall screenshot pans on hover, scrolls natively on touch */
+	.tour-viewport {
+		height: 32rem;
+		overflow: hidden;
 	}
-
-	.prose strong {
-		font-weight: 600;
+	.tour-viewport img {
+		display: block;
+		width: 100%;
+		height: auto;
 	}
-
-	.prose code {
-		font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', monospace;
-		font-size: 0.875em;
-		background: var(--color-paper-2);
-		border: 1px solid var(--color-line);
-		border-radius: 4px;
-		padding: 0.15em 0.4em;
+	@media (hover: hover) {
+		.tour-viewport img {
+			transition: transform 16s linear;
+		}
+		.page-tour:hover .tour-viewport img {
+			transform: translateY(calc(32rem - 100%));
+		}
+	}
+	@media (hover: none) {
+		.tour-viewport {
+			overflow-y: auto;
+			-webkit-overflow-scrolling: touch;
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.tour-viewport {
+			overflow-y: auto;
+		}
+		.tour-viewport img,
+		.page-tour:hover .tour-viewport img {
+			transition: none;
+			transform: none;
+		}
 	}
 </style>

@@ -97,9 +97,10 @@
 			</div>
 			<img
 				src="/writing/godrej/hero.png"
-				alt="Godrej Foundation homepage — Crafting a Prosperous Tomorrow, with hero image of hands reaching toward the sky"
+				alt="Godrej Foundation homepage — Crafting a Prosperous Tomorrow, with hands reaching toward the sky in the hero"
 				width="1440"
 				height="900"
+				style="view-transition-name: project-godrej"
 				class="w-full object-cover object-top"
 				loading="eager"
 			/>
@@ -412,22 +413,7 @@
 		text-decoration-color: var(--color-accent);
 	}
 
-	.prose em {
-		font-family: var(--font-serif);
-		font-style: italic;
-		color: var(--color-dim);
-	}
-
 	.prose strong {
 		font-weight: 600;
-	}
-
-	.prose code {
-		font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', monospace;
-		font-size: 0.875em;
-		background: var(--color-paper-2);
-		border: 1px solid var(--color-line);
-		border-radius: 4px;
-		padding: 0.15em 0.4em;
 	}
 </style>

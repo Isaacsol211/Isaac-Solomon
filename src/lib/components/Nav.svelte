@@ -1,10 +1,14 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
 	import { nav as navLinks, site, socials } from '$lib/content';
 	import ThemeToggle from './ThemeToggle.svelte';
 
 	let scrollY = $state(0);
 	let open = $state(false);
+	let activeSection = $state('');
+	let menuEl = $state<HTMLElement>();
+	let toggleBtn = $state<HTMLButtonElement>();
 	const scrolled = $derived(scrollY > 24);
 
 	// Lock page scroll while the mobile menu is open
@@ -13,8 +17,57 @@
 		return () => document.documentElement.classList.remove('overflow-hidden');
 	});
 
+	// Move focus into the menu when it opens
+	$effect(() => {
+		if (open) menuEl?.querySelector('a')?.focus();
+	});
+
+	// Scroll-spy — highlight the nav link for the section under the viewport's midline
+	onMount(() => {
+		const sections = navLinks
+			.map((link) => document.getElementById(link.href.slice(1)))
+			.filter((el): el is HTMLElement => el !== null);
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				for (const entry of entries) {
+					const href = `#${entry.target.id}`;
+					if (entry.isIntersecting) activeSection = href;
+					else if (activeSection === href) activeSection = '';
+				}
+			},
+			// A thin band around 40% viewport height decides the "current" section
+			{ rootMargin: '-40% 0px -55% 0px' }
+		);
+		sections.forEach((section) => observer.observe(section));
+		return () => observer.disconnect();
+	});
+
 	function onKeydown(event: KeyboardEvent) {
-		if (event.key === 'Escape') open = false;
+		if (event.key === 'Escape' && open) {
+			open = false;
+			toggleBtn?.focus();
+			return;
+		}
+
+		// Trap Tab inside the mobile menu (toggle button + menu links)
+		if (event.key === 'Tab' && open && menuEl && toggleBtn) {
+			const focusables: HTMLElement[] = [toggleBtn, ...menuEl.querySelectorAll<HTMLElement>('a')];
+			const first = focusables[0];
+			const last = focusables[focusables.length - 1];
+			const current = document.activeElement as HTMLElement | null;
+
+			if (event.shiftKey && current === first) {
+				event.preventDefault();
+				last.focus();
+			} else if (!event.shiftKey && current === last) {
+				event.preventDefault();
+				first.focus();
+			} else if (!current || !focusables.includes(current)) {
+				event.preventDefault();
+				first.focus();
+			}
+		}
 	}
 </script>
 
@@ -37,7 +90,11 @@
 			{#each navLinks as link (link.href)}
 				<a
 					href={link.href}
-					class="relative text-sm text-dim transition-colors duration-200 after:absolute after:-bottom-1 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-accent after:transition-transform after:duration-300 after:ease-out hover:text-ink hover:after:scale-x-100"
+					aria-current={activeSection === link.href ? 'true' : undefined}
+					class="relative text-sm transition-colors duration-200 after:absolute after:-bottom-1 after:left-0 after:h-px after:w-full after:origin-left after:bg-accent after:transition-transform after:duration-300 after:ease-out hover:text-ink hover:after:scale-x-100 {activeSection ===
+					link.href
+						? 'text-ink after:scale-x-100'
+						: 'text-dim after:scale-x-0'}"
 				>
 					{link.label}
 				</a>
@@ -56,6 +113,7 @@
 
 			<!-- Mobile menu toggle -->
 			<button
+				bind:this={toggleBtn}
 				type="button"
 				class="relative z-50 -mr-2 grid size-11 place-items-center md:hidden"
 				aria-expanded={open}
@@ -82,6 +140,7 @@
 
 {#if open}
 	<div
+		bind:this={menuEl}
 		id="mobile-menu"
 		transition:fade={{ duration: 180 }}
 		class="fixed inset-0 z-40 flex flex-col justify-between bg-coal px-5 pt-28 pb-10 text-cream md:hidden"

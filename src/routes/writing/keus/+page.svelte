@@ -16,11 +16,11 @@
 	<meta property="og:title" content={title} />
 	<meta property="og:description" content={description} />
 	<meta property="og:url" content={canonical} />
-	<meta property="og:image" content="{site.url}/writing/keus/og.png" />
+	<meta property="og:image" content="{site.url}/writing/keus/hero.png" />
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content={title} />
 	<meta name="twitter:description" content={description} />
-	<meta name="twitter:image" content="{site.url}/writing/keus/og.png" />
+	<meta name="twitter:image" content="{site.url}/writing/keus/hero.png" />
 </svelte:head>
 
 <!-- back nav -->
@@ -554,14 +554,5 @@
 
 	.prose strong {
 		font-weight: 600;
-	}
-
-	.prose code {
-		font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', monospace;
-		font-size: 0.875em;
-		background: var(--color-paper-2);
-		border: 1px solid var(--color-line);
-		border-radius: 4px;
-		padding: 0.15em 0.4em;
 	}
 </style>

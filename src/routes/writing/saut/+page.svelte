@@ -16,9 +16,11 @@
 	<meta property="og:title" content={title} />
 	<meta property="og:description" content={description} />
 	<meta property="og:url" content={canonical} />
+	<meta property="og:image" content="{site.url}/projects/saut/landing-hero-devices-right-to-left.png" />
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content={title} />
 	<meta name="twitter:description" content={description} />
+	<meta name="twitter:image" content="{site.url}/projects/saut/landing-hero-devices-right-to-left.png" />
 </svelte:head>
 
 <!-- back nav -->
@@ -84,6 +86,7 @@
 			alt="SAUT LMS shown across tablet and mobile devices — bilingual Arabic interface with student profiles and skill modules"
 			width="1440"
 			height="900"
+			style="view-transition-name: project-saut"
 			class="w-full rounded-xl object-cover"
 			loading="eager"
 		/>
@@ -267,9 +270,9 @@
 			<div class="overflow-hidden rounded-xl border border-line">
 				<video
 					controls
+					playsinline
 					preload="metadata"
 					class="w-full"
-					poster="/projects/saut/hero-lms-rtl.png"
 				>
 					<source src="/projects/saut/1.mp4" type="video/mp4" />
 				</video>
@@ -310,6 +313,7 @@
 			<div class="overflow-hidden rounded-xl border border-line">
 				<video
 					controls
+					playsinline
 					preload="metadata"
 					class="w-full"
 				>

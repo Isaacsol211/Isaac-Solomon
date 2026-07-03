@@ -172,9 +172,21 @@
 	animation: vt-slide-in 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+/*
+ * Shared-element morphs — featured project images carry a view-transition-name
+ * (project-mivi, project-saut, …) that matches the case study's hero, so the
+ * card image morphs into the article hero instead of cross-fading.
+ */
+::view-transition-group(*) {
+	animation-duration: 0.45s;
+	animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 @media (prefers-reduced-motion: reduce) {
-	::view-transition-old(root),
-	::view-transition-new(root) {
-		animation: none;
+	::view-transition-group(*),
+	::view-transition-image-pair(*),
+	::view-transition-old(*),
+	::view-transition-new(*) {
+		animation: none !important;
 	}
 }

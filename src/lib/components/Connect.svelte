@@ -9,7 +9,12 @@
 	let time = $state('');
 
 	onMount(() => {
-		const format = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit' });
+		// My local time (IST), not the visitor's — that's the point of the label
+		const format = new Intl.DateTimeFormat('en-GB', {
+			hour: '2-digit',
+			minute: '2-digit',
+			timeZone: 'Asia/Kolkata'
+		});
 		const tick = () => (time = format.format(new Date()));
 		tick();
 		const id = setInterval(tick, 30_000);

@@ -87,7 +87,7 @@
 								text,
 								{ opacity: 0, y: 40 },
 								{
-									opacity: 1, y: 0, duration: 1.2, ease: 'power3.out', delay: 0.8,
+									opacity: 1, y: 0, duration: 1.2, ease: 'power3.out', delay: 0.4,
 									scrollTrigger: { trigger: block, start: 'top 75%', once: true }
 								}
 							);
@@ -98,7 +98,7 @@
 								{ opacity: 0, y: 16 },
 								{
 									opacity: 1, y: 0, duration: 0.6, ease: 'power2.out',
-									stagger: 0.08, delay: 1.4,
+									stagger: 0.08, delay: 0.7,
 									scrollTrigger: { trigger: block, start: 'top 75%', once: true }
 								}
 							);
@@ -178,6 +178,7 @@
 		{@const isDark = project.theme === 'dark'}
 		{@const isEven = i % 2 === 0}
 		{@const img = project.desktopImage ?? project.image}
+		{@const vtName = project.caseStudy ? `project-${project.caseStudy.split('/').pop()}` : undefined}
 		<div
 			data-bleed-block
 			class="border-t transition-colors {isDark
@@ -221,6 +222,7 @@
 											src={img}
 											alt="{project.title} screenshot"
 											loading="lazy"
+											style={vtName ? `view-transition-name: ${vtName}` : undefined}
 											class="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.03]"
 										/>
 									</div>
@@ -272,7 +274,14 @@
 					{@const href = project.caseStudy ?? project.href}
 					{@const external = !project.caseStudy}
 					<li
-						onmouseenter={() => (activeIndex = i)}
+						onmouseenter={(e) => {
+							// Snap the lerp position on entry so the preview doesn't fly in from stale coords
+							if (activeIndex === -1) {
+								mouseX = lerpX = e.clientX;
+								mouseY = lerpY = e.clientY;
+							}
+							activeIndex = i;
+						}}
 						onmouseleave={() => (activeIndex = -1)}
 						onmousemove={(e) => {
 							mouseX = e.clientX;

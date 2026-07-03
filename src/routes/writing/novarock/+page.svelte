@@ -61,7 +61,7 @@
 
 		<!-- meta -->
 		<div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-b border-line py-5 text-xs font-medium tracking-[0.2em] uppercase text-dim">
-			<span>June 2025</span>
+			<span>2025</span>
 			<span class="h-3 w-px bg-line"></span>
 			<span>B2B · Industrial</span>
 			<span class="h-3 w-px bg-line"></span>
