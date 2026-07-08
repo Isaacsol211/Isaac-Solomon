@@ -2,10 +2,13 @@
 	import { site } from '$lib/content';
 	import Nav from '$lib/components/Nav.svelte';
 	import Hero from '$lib/components/Hero.svelte';
+	import Manifesto from '$lib/components/Manifesto.svelte';
 	import About from '$lib/components/About.svelte';
+	import Services from '$lib/components/Services.svelte';
 	import Projects from '$lib/components/Projects.svelte';
 	import Experience from '$lib/components/Experience.svelte';
-	import Photography from '$lib/components/Photography.svelte';
+	import Writing from '$lib/components/Writing.svelte';
+	import Testimonials from '$lib/components/Testimonials.svelte';
 	import Connect from '$lib/components/Connect.svelte';
 </script>
 
@@ -27,11 +30,15 @@
 
 <Nav />
 
-<main id="main">
+<main id="main" class="relative z-10 bg-paper">
 	<Hero />
+	<Manifesto />
 	<About />
+	<Services />
 	<Projects />
 	<Experience />
-	<Photography />
-	<Connect />
+	<Writing />
+	<Testimonials />
 </main>
+
+<Connect />

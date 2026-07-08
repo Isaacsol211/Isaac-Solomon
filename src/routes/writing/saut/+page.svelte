@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { site } from '$lib/content';
 	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
+	import NextArticle from '$lib/components/NextArticle.svelte';
 
 	const title = 'Four Years, Two Frameworks, One Mission — Isaac Solomon';
 	const description =
@@ -82,7 +83,7 @@
 	<!-- ── Hero screenshot ─────────────────────────────────────────── -->
 	<div class="mx-auto mt-12 max-w-5xl">
 		<img
-			src="/projects/saut/landing-hero-devices-right-to-left.png"
+			src="/projects/saut/landing-hero-devices-right-to-left.webp"
 			alt="SAUT LMS shown across tablet and mobile devices — bilingual Arabic interface with student profiles and skill modules"
 			width="1440"
 			height="900"
@@ -265,7 +266,7 @@
 		</div>
 
 		<!-- video: onboarding -->
-		<div class="not-prose my-10">
+		<div class="not-prose my-10 lg:relative lg:left-1/2 lg:-translate-x-1/2 lg:w-[min(64rem,100vw-4rem)]">
 			<p class="mb-4 text-xs font-medium tracking-[0.25em] uppercase text-dim">Product demo — Student onboarding & IEP creation</p>
 			<div class="overflow-hidden rounded-xl border border-line">
 				<video
@@ -308,7 +309,7 @@
 		</div>
 
 		<!-- video: daily assessment -->
-		<div class="not-prose my-10">
+		<div class="not-prose my-10 lg:relative lg:left-1/2 lg:-translate-x-1/2 lg:w-[calc(100vw-3rem)] lg:max-w-[100rem]">
 			<p class="mb-4 text-xs font-medium tracking-[0.25em] uppercase text-dim">Product demo — Daily classroom assessment</p>
 			<div class="overflow-hidden rounded-xl border border-line">
 				<video
@@ -422,6 +423,8 @@
 		</div>
 
 		<!-- footer -->
+		<NextArticle href="/writing/saut/three-hats" />
+
 		<div class="mt-16 flex items-center justify-between border-t border-line pt-8">
 			<a
 				href="/"

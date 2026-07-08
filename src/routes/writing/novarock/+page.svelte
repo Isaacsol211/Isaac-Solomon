@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { site } from '$lib/content';
 	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
+	import NextArticle from '$lib/components/NextArticle.svelte';
 
 	const title = 'Building Without a Brief — Isaac Solomon';
 	const description =
@@ -102,7 +103,7 @@
 						</span>
 					</div>
 					<img
-						src="/writing/novarock/wp-concept.png"
+						src="/writing/novarock/wp-concept.webp"
 						alt="WordPress concept site — navy theme, large text, minimal product content"
 						width="1440"
 						height="900"
@@ -127,7 +128,7 @@
 						</span>
 					</div>
 					<img
-						src="/writing/novarock/sk-live.png"
+						src="/writing/novarock/sk-live.webp"
 						alt="SvelteKit production site — product-first hero with DTH hammer specs"
 						width="1440"
 						height="900"
@@ -200,7 +201,7 @@
 		</div>
 
 		<!-- product grid -->
-		<div class="not-prose my-10 grid grid-cols-3 gap-3">
+		<div class="not-prose my-10 grid grid-cols-3 gap-3 lg:relative lg:left-1/2 lg:-translate-x-1/2 lg:w-[calc(100vw-3rem)] lg:max-w-[100rem]">
 			<figure class="overflow-hidden rounded-xl border border-line bg-paper-2">
 				<img
 					src="/writing/novarock/hammer.webp"
@@ -311,7 +312,7 @@
 		</div>
 
 		<!-- WhatsApp preview comparison -->
-		<div class="not-prose my-10">
+		<div class="not-prose my-10 lg:relative lg:left-1/2 lg:-translate-x-1/2 lg:w-[calc(100vw-3rem)] lg:max-w-[100rem]">
 			<p class="mb-4 text-xs font-medium tracking-[0.25em] uppercase text-dim">Before → After: WhatsApp link preview</p>
 			<div class="grid gap-4 sm:grid-cols-2">
 				<!-- BEFORE — SPA, no JS, fallback to homepage OG -->
@@ -410,7 +411,7 @@
 		</div>
 
 		<!-- hammer + fix explanation -->
-		<div class="not-prose my-10 flex flex-col gap-6 sm:flex-row sm:items-start">
+		<div class="not-prose my-10 flex flex-col gap-6 sm:flex-row sm:items-start lg:relative lg:left-1/2 lg:-translate-x-1/2 lg:w-[min(64rem,100vw-4rem)]">
 			<figure class="overflow-hidden rounded-xl border border-line sm:w-1/2">
 				<img
 					src="/writing/novarock/hammer.webp"
@@ -572,6 +573,8 @@
 		</div>
 
 		<!-- footer -->
+		<NextArticle href="/writing/saut" />
+
 		<div class="mt-16 flex items-center justify-between border-t border-line pt-8">
 			<a
 				href="/"

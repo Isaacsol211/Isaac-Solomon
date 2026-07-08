@@ -24,10 +24,91 @@ export const site = {
 
 export const nav = [
 	{ label: 'About', href: '#about' },
+	{ label: 'Services', href: '#services' },
 	{ label: 'Projects', href: '#projects' },
 	{ label: 'Experience', href: '#experience' },
-	{ label: 'Photography', href: '#photography' }
+	{ label: 'Writing', href: '#writing' },
+	{ label: 'Photography', href: '/photography' }
 ];
+
+/** Service names — expanded with details in `serviceDetails` below */
+export const services = [
+	'E-commerce storefronts',
+	'Custom CMS builds',
+	'Scroll-driven animation',
+	'Long-term product work'
+];
+
+export const servicesIntro = {
+	plain: 'what I do,',
+	accent: 'end to end.'
+};
+
+export type Service = {
+	title: string;
+	summary: string;
+	items: string[];
+};
+
+export const serviceDetails: Service[] = [
+	{
+		title: 'E-commerce storefronts',
+		summary:
+			'Fast, componentised storefronts built to survive real traffic and relentless launch schedules.',
+		items: [
+			'Product & category pages',
+			'Live carts and checkout flows',
+			'Transactional mailers',
+			'Performance budgets that hold'
+		]
+	},
+	{
+		title: 'Custom CMS builds',
+		summary:
+			'Component systems flexible enough for non-technical teams to run without touching code.',
+		items: [
+			'Content modelling',
+			'Editor-friendly component systems',
+			'Design-system enforcement',
+			'Rebrand-proof architecture'
+		]
+	},
+	{
+		title: 'Scroll-driven animation',
+		summary:
+			'Scroll choreography that stays smooth on mid-range phones — GSAP, view transitions, video scrubbing.',
+		items: [
+			'GSAP & ScrollTrigger',
+			'Video pause-and-play pipelines',
+			'View-transition morphs',
+			'Reduced-motion fallbacks'
+		]
+	},
+	{
+		title: 'Long-term product work',
+		summary:
+			'Years-long partnerships — from first commit to product management, across rewrites and rebrands.',
+		items: [
+			'Frontend leadership',
+			'Framework migrations',
+			'i18n / RTL support',
+			'Product management'
+		]
+	}
+];
+
+/**
+ * Full-viewport statement between the hero and About — words fill in on scroll.
+ * DRAFT COPY — Isaac has veto rights on this line.
+ */
+export const manifesto = {
+	label: 'the short version',
+	lines: [
+		{ plain: 'make it', key: 'fast' },
+		{ plain: 'make it', key: 'last' },
+		{ plain: 'make it feel', key: 'handmade' }
+	]
+};
 
 export const about = {
 	lead: 'Eight years turning designs into products —',
@@ -37,9 +118,21 @@ export const about = {
 		"The work I'm proudest of sits at the intersection of craft and constraint: a CMS rebuilt twice to survive a corporate rebrand, an animation-heavy site pivoted from image sequences to video mid-build, a campaign site the client loved but never launched. Every project teaches you something — usually that the brief was wrong.",
 		'When I\'m not shipping code I\'m somewhere in the mountains with a camera, chasing light and trying not to overthink the composition.'
 	],
-	imageAlt: 'Generative glitch artwork — a grid of pixels with bursts of red and blue',
-	imageCaption: 'fig. 01 — controlled chaos'
+	portrait: '/isaac.webp',
+	portraitAlt: 'Isaac Solomon smiling, wearing a dark green shirt, greenery behind him'
 };
+
+/** Wordmark strip in About — swap entries for inline SVG logos if you get brand assets */
+export const clients = [
+	'Mivi',
+	'Godrej Foundation',
+	'Keus',
+	'Vibrant Living',
+	'WOW Club',
+	'Nova Rock',
+	'SAUT',
+	'Tomorrow Makers'
+];
 
 /**
  * 'image' shows a real project screenshot in a browser frame.
@@ -84,8 +177,8 @@ export const projects: Project[] = [
 		theme: 'dark',
 		visual: 'image',
 		frameLabel: 'mivi.in',
-		image: '/projects/mivi.png',
-		desktopImage: '/projects/mivi-desktop.png',
+		image: '/projects/mivi.webp',
+		desktopImage: '/projects/mivi-desktop.webp',
 		caseStudy: '/writing/mivi',
 		featured: true
 	},
@@ -100,8 +193,8 @@ export const projects: Project[] = [
 		theme: 'dark',
 		visual: 'image',
 		frameLabel: 'saut-lms.com',
-		image: '/projects/saut/hero-lms-rtl.png',
-		desktopImage: '/projects/saut/landing-hero-devices-right-to-left.png',
+		image: '/projects/saut/hero-lms-rtl.webp',
+		desktopImage: '/projects/saut/landing-hero-devices-right-to-left.webp',
 		caseStudy: '/writing/saut',
 		featured: true
 	},
@@ -116,8 +209,8 @@ export const projects: Project[] = [
 		theme: 'dark',
 		visual: 'image',
 		frameLabel: 'keus.in',
-		image: '/projects/keus.png',
-		desktopImage: '/projects/keus-desktop.png',
+		image: '/projects/keus.webp',
+		desktopImage: '/projects/keus-desktop.webp',
 		caseStudy: '/writing/keus'
 	},
 	{
@@ -131,8 +224,8 @@ export const projects: Project[] = [
 		theme: 'light',
 		visual: 'image',
 		frameLabel: 'vibrantliving.in',
-		image: '/projects/vibrant-living.png',
-		desktopImage: '/projects/vibrant-living-desktop.png'
+		image: '/projects/vibrant-living.webp',
+		desktopImage: '/projects/vibrant-living-desktop.webp'
 	},
 	{
 		title: 'AAP',
@@ -145,8 +238,8 @@ export const projects: Project[] = [
 		theme: 'light',
 		visual: 'image',
 		frameLabel: 'aamaadmiparty.org',
-		image: '/projects/aap.png',
-		desktopImage: '/projects/aap-desktop.png'
+		image: '/projects/aap.webp',
+		desktopImage: '/projects/aap-desktop.webp'
 	},
 	{
 		title: 'WOW Club',
@@ -159,8 +252,8 @@ export const projects: Project[] = [
 		theme: 'light',
 		visual: 'image',
 		frameLabel: 'wowclub.com',
-		image: '/projects/wowclub.png',
-		desktopImage: '/projects/wowclub-desktop.png'
+		image: '/projects/wowclub.webp',
+		desktopImage: '/projects/wowclub-desktop.webp'
 	},
 	{
 		title: 'Nova Rock Tools',
@@ -173,8 +266,8 @@ export const projects: Project[] = [
 		theme: 'light',
 		visual: 'image',
 		frameLabel: 'novarocktools.com',
-		image: '/projects/novarock.png',
-		desktopImage: '/projects/novarock-desktop.png',
+		image: '/projects/novarock.webp',
+		desktopImage: '/projects/novarock-desktop.webp',
 		caseStudy: '/writing/novarock'
 	},
 	{
@@ -188,8 +281,8 @@ export const projects: Project[] = [
 		theme: 'light',
 		visual: 'image',
 		frameLabel: 'godrejfoundation.com',
-		image: '/projects/godrej.png',
-		desktopImage: '/writing/godrej/hero.png',
+		image: '/projects/godrej.webp',
+		desktopImage: '/writing/godrej/hero.webp',
 		caseStudy: '/writing/godrej',
 		featured: true
 	},
@@ -204,10 +297,140 @@ export const projects: Project[] = [
 		theme: 'light',
 		visual: 'image',
 		frameLabel: 'tomorrow-makers.in',
-		image: '/projects/tomorrow-makers.png',
-		desktopImage: '/writing/tomorrow-makers/hero.png',
+		image: '/projects/tomorrow-makers.webp',
+		desktopImage: '/writing/tomorrow-makers/hero.webp',
 		caseStudy: '/writing/tomorrow-makers',
 		featured: true
+	}
+];
+
+export type Article = {
+	title: string;
+	description: string;
+	href: string;
+	/** e.g. 'Case Study · Mivi' */
+	tag: string;
+	readingTime: string;
+	year: string;
+};
+
+export const writingIntro = {
+	plain: 'Notes from',
+	accent: 'the build.',
+	note: 'Case studies and essays — what actually happened on each project, including the parts that went sideways.'
+};
+
+/** Ordered for the homepage & /writing index — strongest pieces first */
+export const writing: Article[] = [
+	{
+		title: 'Four Years, Two Frameworks, One Mission',
+		description:
+			'An LMS for special educators teaching children with Down syndrome — Vue to SvelteKit, bilingual RTL/LTR, and a 5-month rewrite of a live product.',
+		href: '/writing/saut',
+		tag: 'Case Study · SAUT',
+		readingTime: '7 min',
+		year: '2019–23'
+	},
+	{
+		title: 'Wearing Three Hats — Frontend Dev, PM, Designer',
+		description:
+			'How four years on one product turned a frontend developer into a product manager and emergency UI designer — and why each hat made the others better.',
+		href: '/writing/saut/three-hats',
+		tag: 'Essay · SAUT',
+		readingTime: '7 min',
+		year: '2023'
+	},
+	{
+		title: 'Shipping at Launch Speed',
+		description:
+			"India's biggest audio brand, 3–4 product launches a day, a platform migration mid-flight — and the design system that emerged from the pressure.",
+		href: '/writing/mivi',
+		tag: 'Case Study · Mivi',
+		readingTime: '6 min',
+		year: '2018–'
+	},
+	{
+		title: 'The Scroll Problem',
+		description:
+			'Scroll-driven animation for a premium smart home brand — why image-sequence scrubbing failed at 300–500 frames a section, and the video pivot that saved it.',
+		href: '/writing/keus',
+		tag: 'Case Study · Keus',
+		readingTime: '7 min',
+		year: '2024'
+	},
+	{
+		title: 'The Worksheet Builder — A Design Tool Inside an LMS',
+		description:
+			'A drag-and-drop canvas for special educators to build pixel-perfect printable A4 worksheets — flashcards, shapes and multiple artboards, in a browser.',
+		href: '/writing/saut/worksheet-builder',
+		tag: 'Deep Dive · SAUT',
+		readingTime: '6 min',
+		year: '2022'
+	},
+	{
+		title: 'Building Without a Brief',
+		description:
+			'A four-word brief turned into a static, bilingual, WhatsApp-first site for a Lima mining tools company — no designer, no mockups, no brand guide.',
+		href: '/writing/novarock',
+		tag: 'Case Study · Nova Rock',
+		readingTime: '8 min',
+		year: '2025'
+	},
+	{
+		title: 'Every Child Carries a Spark',
+		description:
+			'The national talent platform helping Godrej Foundation find and support high-potential students — WhatsApp onboarding, 11 languages, four pathways.',
+		href: '/writing/tomorrow-makers',
+		tag: 'Case Study · Tomorrow Makers',
+		readingTime: '6 min',
+		year: '2026'
+	},
+	{
+		title: 'Building (and Rebuilding) for Godrej Foundation',
+		description:
+			"A website and CMS for India's oldest philanthropic trust — built once, then rebuilt from scratch when the entire Godrej identity changed mid-project.",
+		href: '/writing/godrej',
+		tag: 'Case Study · Godrej',
+		readingTime: '5 min',
+		year: '2024'
+	}
+];
+
+/**
+ * Homepage-only note for the Writing strip. The case studies are reachable from
+ * the project cards, so the homepage highlights the essays & deep dives instead.
+ */
+export const writingHomeNote =
+	'The case studies live with each project above. These are the essays and deep dives that came out of them.';
+
+/**
+ * PLACEHOLDER QUOTES — replace with real ones as they come in.
+ * Swap quote / name / role; the layout handles any length.
+ */
+export const testimonialsIntro = {
+	plain: 'Proof from',
+	accent: 'the work.',
+	note: 'Not a wall of polished review cards. The recurring signal from messy builds: pace, clarity and care after launch.'
+};
+
+export const testimonials = [
+	{
+		quote:
+			'Isaac is the developer you hand the impossible deadline to. He asks the right questions on day one, pushes back where it matters, and then quietly ships something better than the brief.',
+		name: 'Full Name',
+		role: 'Project Manager, Able.do'
+	},
+	{
+		quote:
+			'We came with four words and no designs. Isaac turned that into a bilingual site our customers actually use — and explained every decision along the way in language we could follow.',
+		name: 'Full Name',
+		role: 'Founder, Nova Rock'
+	},
+	{
+		quote:
+			'What stands out is the care after launch. Nothing was thrown over the wall — he stayed with the product, tuned the details, and left us with a system our own team can run.',
+		name: 'Full Name',
+		role: 'Client, 3 Sided Coin'
 	}
 ];
 

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { page } from '$app/state';
 	import { fade } from 'svelte/transition';
 	import { nav as navLinks, site, socials } from '$lib/content';
 	import ThemeToggle from './ThemeToggle.svelte';
@@ -9,7 +10,18 @@
 	let activeSection = $state('');
 	let menuEl = $state<HTMLElement>();
 	let toggleBtn = $state<HTMLButtonElement>();
+	let viewportHeight = $state(0);
 	const scrolled = $derived(scrollY > 24);
+	const pathname = $derived(page.url.pathname);
+	const activeLabel = $derived(
+		navLinks.find((link) => link.href === activeSection || link.href === pathname)?.label?.toLowerCase() ?? 'intro'
+	);
+	const maxScroll = $derived(
+		typeof document === 'undefined'
+			? 1
+			: Math.max(1, document.documentElement.scrollHeight - viewportHeight)
+	);
+	const scrollProgress = $derived(Math.min(1, scrollY / maxScroll));
 
 	// Lock page scroll while the mobile menu is open
 	$effect(() => {
@@ -25,6 +37,7 @@
 	// Scroll-spy — highlight the nav link for the section under the viewport's midline
 	onMount(() => {
 		const sections = navLinks
+			.filter((link) => link.href.startsWith('#'))
 			.map((link) => document.getElementById(link.href.slice(1)))
 			.filter((el): el is HTMLElement => el !== null);
 
@@ -69,9 +82,20 @@
 			}
 		}
 	}
+
+	function isActiveLink(href: string) {
+		return href.startsWith('#') ? activeSection === href : pathname === href;
+	}
+
+	function resolvedHref(href: string) {
+		if (!href.startsWith('#')) return href;
+		return pathname === '/' ? href : `/${href}`;
+	}
 </script>
 
-<svelte:window bind:scrollY onkeydown={onKeydown} />
+<svelte:window bind:scrollY bind:innerHeight={viewportHeight} onkeydown={onKeydown} />
+
+<div aria-hidden="true" class="fixed inset-x-0 top-0 z-60 h-px origin-left bg-accent" style="transform: scaleX({scrollProgress});"></div>
 
 <header
 	class="fixed inset-x-0 top-0 z-50 transition-colors duration-300 {open
@@ -86,13 +110,19 @@
 			{site.name}
 		</a>
 
-		<nav class="hidden items-center gap-8 md:flex" aria-label="Primary">
-			{#each navLinks as link (link.href)}
+		<div class="hidden items-center gap-4 md:flex">
+			<p class="min-w-[7rem] text-[10px] font-medium tracking-[0.22em] lowercase text-dim">
+				chapter / <span class="text-ink">{activeLabel}</span>
+			</p>
+		<nav class="items-center gap-2.5 md:flex" aria-label="Primary">
+			{#each navLinks as link, i (link.href)}
+				{#if i > 0}<span aria-hidden="true" class="select-none text-dim">,</span>{/if}
 				<a
-					href={link.href}
-					aria-current={activeSection === link.href ? 'true' : undefined}
-					class="relative text-sm transition-colors duration-200 after:absolute after:-bottom-1 after:left-0 after:h-px after:w-full after:origin-left after:bg-accent after:transition-transform after:duration-300 after:ease-out hover:text-ink hover:after:scale-x-100 {activeSection ===
+					href={resolvedHref(link.href)}
+					aria-current={isActiveLink(link.href) ? 'true' : undefined}
+					class="relative text-sm lowercase transition-colors duration-200 after:absolute after:-bottom-1 after:left-0 after:h-px after:w-full after:origin-left after:bg-accent after:transition-transform after:duration-300 after:ease-out hover:text-ink hover:after:scale-x-100 {isActiveLink(
 					link.href
+				)
 						? 'text-ink after:scale-x-100'
 						: 'text-dim after:scale-x-0'}"
 				>
@@ -100,6 +130,7 @@
 				</a>
 			{/each}
 		</nav>
+		</div>
 
 		<div class="flex items-center gap-3">
 			<ThemeToggle tone={open ? 'dark' : 'light'} />
@@ -108,7 +139,7 @@
 				href="#connect"
 				class="hidden rounded-full bg-ink px-5 py-2.5 text-sm text-paper transition-colors duration-300 hover:bg-accent md:inline-block"
 			>
-				Let's Talk
+				let's talk
 			</a>
 
 			<!-- Mobile menu toggle -->
@@ -150,8 +181,8 @@
 				{#each navLinks as link, i (link.href)}
 					<li>
 						<a
-							href={link.href}
-							class="group flex items-baseline gap-4 text-5xl font-medium tracking-tight"
+							href={resolvedHref(link.href)}
+							class="group flex items-baseline gap-4 text-5xl font-medium tracking-tight lowercase"
 							onclick={() => (open = false)}
 						>
 							<span class="text-sm text-cream/40 tabular-nums">0{i + 1}</span>
@@ -162,11 +193,11 @@
 				<li>
 					<a
 						href="#connect"
-						class="group flex items-baseline gap-4 text-5xl font-medium tracking-tight text-accent"
+						class="group flex items-baseline gap-4 text-5xl font-medium tracking-tight lowercase text-accent"
 						onclick={() => (open = false)}
 					>
 						<span class="text-sm text-cream/40 tabular-nums">0{navLinks.length + 1}</span>
-						Let's Talk
+						let's talk
 					</a>
 				</li>
 			</ul>

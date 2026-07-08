@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { site } from '$lib/content';
 	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
+	import NextArticle from '$lib/components/NextArticle.svelte';
 
 	const title = 'Shipping at Launch Speed — Isaac Solomon';
 	const description =
@@ -96,7 +97,7 @@
 				</span>
 			</div>
 			<img
-				src="/projects/mivi-desktop.png"
+				src="/projects/mivi-desktop.webp"
 				alt="Mivi storefront hero — Immerse in Studio Quality Sound, with a model wearing true wireless earbuds"
 				width="1440"
 				height="600"
@@ -272,7 +273,7 @@
 		</div>
 
 		<!-- full-page tour -->
-		<div class="not-prose my-12">
+		<div class="not-prose my-12 lg:relative lg:left-1/2 lg:-translate-x-1/2 lg:w-[min(64rem,100vw-4rem)]">
 			<div class="page-tour group overflow-hidden rounded-xl border border-line shadow-[0_16px_32px_-16px_rgba(20,19,17,0.15)]">
 				<div class="flex items-center justify-between border-b border-line bg-paper-2 px-3 py-2">
 					<div class="flex items-center gap-1.5">
@@ -289,7 +290,7 @@
 				</div>
 				<div class="tour-viewport">
 					<img
-						src="/projects/mivi-page.png"
+						src="/projects/mivi-page.webp"
 						alt="Full Mivi homepage — hero banner, true wireless earbuds, deal of the day, wireless speakers, new launches, smart phone chargers and customer reviews"
 						width="843"
 						height="4096"
@@ -356,6 +357,8 @@
 		</div>
 
 		<!-- footer -->
+		<NextArticle href="/writing/keus" />
+
 		<div class="mt-16 flex items-center justify-between border-t border-line pt-8">
 			<a
 				href="/"
