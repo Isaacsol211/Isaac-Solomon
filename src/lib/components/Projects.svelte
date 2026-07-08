@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { portalToBody } from '$lib/actions/portal-to-body';
+	import { initMotion } from '$lib/motion';
 	import { reveal } from '$lib/actions/reveal';
 	import { projects, projectsIntro } from '$lib/content';
 	import ArrowUpRight from './ArrowUpRight.svelte';
@@ -32,24 +34,25 @@
 		let ctxPromise: Promise<any> | undefined;
 
 		const gsapInit = async () => {
-			const { gsap } = await import('gsap');
-			const { ScrollTrigger } = await import('gsap/ScrollTrigger');
-			gsap.registerPlugin(ScrollTrigger);
+			const { gsap, ScrollTrigger } = await initMotion();
 
 			if (!sectionEl) return;
 
 			const ctx = gsap.context(() => {
-				/* ── Featured cards — entrance + clip reveal ───── */
+				/* ── Featured cards — clip reveal + scrubbed image/text drift ───── */
 				const blocks = sectionEl!.querySelectorAll('[data-bleed-block]');
 
 				if (reducedMotion) {
 					gsap.set(blocks, { opacity: 1 });
 				} else {
-					blocks.forEach((block) => {
+					blocks.forEach((block, i) => {
 						const img = block.querySelector('[data-bleed-img]');
 						const text = block.querySelector('[data-bleed-text]');
 						const tags = block.querySelectorAll('[data-bleed-tag]');
 						const innerImg = block.querySelector('[data-bleed-img] img');
+						const number = block.querySelector('[data-bleed-number]');
+						const meta = block.querySelector('[data-bleed-meta]');
+						const driftX = i % 2 === 0 ? 56 : -56;
 
 						if (img) {
 							gsap.fromTo(
@@ -64,13 +67,14 @@
 							);
 						}
 
-						/* Parallax on the inner image — subtle vertical drift */
+						/* Scale + drift on the inner image as the block moves through view */
 						if (innerImg && !isTouch) {
 							gsap.fromTo(
 								innerImg,
-								{ yPercent: -4 },
+								{ yPercent: -5, scale: 1.12 },
 								{
-									yPercent: 4,
+									yPercent: 5,
+									scale: 1,
 									ease: 'none',
 									scrollTrigger: {
 										trigger: block,
@@ -85,10 +89,58 @@
 						if (text) {
 							gsap.fromTo(
 								text,
-								{ opacity: 0, y: 40 },
+								{ opacity: 0, x: driftX, y: 24 },
 								{
-									opacity: 1, y: 0, duration: 1.2, ease: 'power3.out', delay: 0.4,
+									opacity: 1,
+									x: 0,
+									y: 0,
+									duration: 1.1,
+									ease: 'power3.out',
+									delay: 0.25,
 									scrollTrigger: { trigger: block, start: 'top 75%', once: true }
+								}
+							);
+
+							if (!isTouch) {
+								gsap.to(text, {
+									x: driftX * -0.14,
+									ease: 'none',
+									scrollTrigger: {
+										trigger: block,
+										start: 'top bottom',
+										end: 'bottom top',
+										scrub: true
+									}
+								});
+							}
+						}
+						if (number) {
+							gsap.fromTo(
+								number,
+								{ scale: 1.24, opacity: 0.08 },
+								{
+									scale: 0.98,
+									opacity: 0.24,
+									ease: 'none',
+									scrollTrigger: {
+										trigger: block,
+										start: 'top bottom',
+										end: 'bottom top',
+										scrub: true
+									}
+								}
+							);
+						}
+						if (meta) {
+							gsap.fromTo(
+								meta,
+								{ y: 22, opacity: 0 },
+								{
+									y: 0,
+									opacity: 1,
+									duration: 0.9,
+									ease: 'power3.out',
+									scrollTrigger: { trigger: block, start: 'top 78%', once: true }
 								}
 							);
 						}
@@ -106,21 +158,25 @@
 					});
 				}
 
-				/* ── List items — staggered entrance ──────────── */
+				/* ── List items — line-mask entrance ──────────── */
 				if (listEl) {
-					const items = listEl.querySelectorAll('li');
+					const items = listEl.querySelectorAll('[data-project-row]');
 					if (reducedMotion) {
-						gsap.set(items, { opacity: 1, y: 0 });
+						gsap.set(items, { opacity: 1, yPercent: 0 });
 					} else {
-						gsap.set(items, { opacity: 0, y: 40 });
+						gsap.set(items, { opacity: 0, yPercent: 115 });
 						ScrollTrigger.batch(items, {
 							onEnter: (batch) => {
 								gsap.to(batch, {
-									opacity: 1, y: 0, duration: 0.8,
-									ease: 'power3.out', stagger: 0.1
+									opacity: 1,
+									yPercent: 0,
+									duration: 0.95,
+									ease: 'power3.out',
+									stagger: 0.1,
+									overwrite: true
 								});
 							},
-							start: 'top 90%',
+							start: 'top 88%',
 							once: true
 						});
 					}
@@ -155,15 +211,15 @@
 <section
 	bind:this={sectionEl}
 	id="projects"
-	class="border-t border-line"
+	class="section-transition border-t border-line"
 >
 	<!-- Section header -->
 	<div class="px-5 py-20 sm:px-8 md:py-32">
 		<div class="mx-auto max-w-6xl">
 			<div use:reveal class="max-w-2xl">
-				<Eyebrow index="02" title="Selected Work" />
-				<h2 class="mt-6 text-4xl font-medium tracking-tight md:text-6xl">
-					Selected<br />
+				<Eyebrow index="03" title="Selected Work" />
+				<h2 class="mt-6 text-4xl font-medium tracking-tight lowercase md:text-6xl">
+					selected<br />
 					<span class="text-dim">work.</span>
 				</h2>
 				<p class="mt-6 max-w-md text-sm leading-relaxed text-dim">
@@ -181,7 +237,7 @@
 		{@const vtName = project.caseStudy ? `project-${project.caseStudy.split('/').pop()}` : undefined}
 		<div
 			data-bleed-block
-			class="border-t transition-colors {isDark
+			class="relative border-t transition-colors {isDark
 				? 'border-cream/10 bg-coal text-cream'
 				: 'border-line bg-paper-2 text-ink'}"
 		>
@@ -196,6 +252,7 @@
 					<!-- Top row: number + category -->
 					<div class="mb-10 flex items-baseline justify-between gap-4 md:mb-16">
 						<span
+							data-bleed-number
 							class="text-7xl font-medium tabular-nums md:text-9xl {isDark
 								? 'text-cream/20'
 								: 'text-ink/10'}"
@@ -203,6 +260,7 @@
 							{String(i + 1).padStart(2, '0')}
 						</span>
 						<span
+							data-bleed-meta
 							class="text-right text-[10px] font-medium tracking-[0.25em] uppercase {isDark
 								? 'text-cream/40'
 								: 'text-dim'}"
@@ -269,11 +327,22 @@
 	<!-- Remaining projects — editorial list with hover image -->
 	<div class="border-t border-line px-5 py-16 sm:px-8 md:py-24">
 		<div class="mx-auto max-w-6xl">
+			<!-- Column headers — mirrors the row grid, desktop only -->
+			<div
+				class="hidden pb-4 text-[10px] font-medium tracking-[0.2em] lowercase text-dim md:grid md:grid-cols-[5rem_1fr_10rem_auto] md:gap-x-6"
+				aria-hidden="true"
+			>
+				<span>year</span>
+				<span>brand</span>
+				<span>industry</span>
+				<span>link</span>
+			</div>
 			<ol bind:this={listEl} class="border-b border-line">
 				{#each visibleRest as project, i (project.title)}
 					{@const href = project.caseStudy ?? project.href}
 					{@const external = !project.caseStudy}
 					<li
+						class="overflow-hidden"
 						onmouseenter={(e) => {
 							// Snap the lerp position on entry so the preview doesn't fly in from stale coords
 							if (activeIndex === -1) {
@@ -289,13 +358,14 @@
 						}}
 					>
 						<a
+							data-project-row
 							{href}
 							target={external ? '_blank' : undefined}
 							rel={external ? 'noopener noreferrer' : undefined}
-							class="group relative grid grid-cols-[auto_1fr_auto] items-baseline gap-x-4 border-t border-line py-6 transition-colors duration-300 before:absolute before:-inset-x-4 before:inset-y-1 before:-z-10 before:rounded-xl before:bg-paper-2 before:opacity-0 before:transition-opacity before:duration-300 hover:before:opacity-60 md:grid-cols-[5rem_1fr_10rem_auto] md:gap-x-6 md:py-8"
+							class="group relative grid grid-cols-[auto_1fr_auto] items-baseline gap-x-4 border-t border-line py-6 transition-colors duration-300 md:grid-cols-[5rem_1fr_10rem_auto] md:gap-x-6 md:py-8"
 							aria-label="View project: {project.title}"
 						>
-							<span class="text-lg font-medium tabular-nums text-dim transition-colors duration-300 group-hover:text-accent md:text-2xl">
+							<span class="text-lg font-medium tabular-nums text-dim transition-colors duration-300 group-hover:text-ink md:text-2xl">
 								{project.year}
 							</span>
 							<span class="text-lg font-medium tracking-tight md:text-2xl">
@@ -339,6 +409,7 @@
 	<!-- Floating cursor image — desktop only -->
 	{#if mounted && !isTouch}
 		<div
+			use:portalToBody
 			aria-hidden="true"
 			class="pointer-events-none fixed top-0 left-0 z-30 h-[220px] w-[360px] overflow-hidden rounded-lg transition-opacity duration-300 md:h-[260px] md:w-[420px]"
 			style="

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { site } from '$lib/content';
 	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
+	import NextArticle from '$lib/components/NextArticle.svelte';
 
 	const title = 'The Worksheet Builder — A Design Tool Inside an LMS — Isaac Solomon';
 	const description =
@@ -190,7 +191,7 @@
 		</div>
 
 		<!-- flashcard library image -->
-		<div class="not-prose my-10">
+		<div class="not-prose my-10 lg:relative lg:left-1/2 lg:-translate-x-1/2 lg:w-[min(64rem,100vw-4rem)]">
 			<div class="overflow-hidden rounded-xl border border-line">
 				<img
 					src="/projects/saut/lms-feature-6-right-to-left.jpg"
@@ -259,7 +260,7 @@
 		</div>
 
 		<!-- video: worksheet builder demo -->
-		<div class="not-prose my-10">
+		<div class="not-prose my-10 lg:relative lg:left-1/2 lg:-translate-x-1/2 lg:w-[calc(100vw-3rem)] lg:max-w-[100rem]">
 			<p class="mb-4 text-xs font-medium tracking-[0.25em] uppercase text-dim">Product demo — Worksheet builder in action</p>
 			<div class="overflow-hidden rounded-xl border border-line">
 				<video
@@ -328,6 +329,8 @@
 		</div>
 
 		<!-- footer -->
+		<NextArticle href="/writing/mivi" />
+
 		<div class="mt-16 flex items-center justify-between border-t border-line pt-8">
 			<a
 				href="/writing/saut"

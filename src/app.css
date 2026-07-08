@@ -130,6 +130,47 @@
 	}
 }
 
+/*
+ * Client wordmark marquee — two identical halves, track slides -50% for a
+ * seamless loop. Pauses on hover; reduced-motion gets a static wrapped row.
+ */
+.marquee {
+	overflow: hidden;
+	mask-image: linear-gradient(to right, transparent, black 7%, black 93%, transparent);
+}
+.marquee-track {
+	display: flex;
+	width: max-content;
+	animation: marquee 40s linear infinite;
+}
+.marquee:hover .marquee-track {
+	animation-play-state: paused;
+}
+@keyframes marquee {
+	to {
+		transform: translateX(-50%);
+	}
+}
+@media (prefers-reduced-motion: reduce) {
+	.marquee {
+		mask-image: none;
+		/* static row needs the page gutter the moving version deliberately ignores */
+		padding-inline: 1.25rem;
+	}
+	.marquee-track {
+		animation: none;
+		width: auto;
+	}
+	.marquee-track > ul {
+		flex-wrap: wrap;
+		row-gap: 0.5rem;
+	}
+	/* the duplicate half only exists for the loop — hide it when static */
+	.marquee-track > [aria-hidden='true'] {
+		display: none;
+	}
+}
+
 /* Scroll-reveal (applied by the `reveal` action; visible by default without JS) */
 .reveal {
 	opacity: 0;
@@ -149,6 +190,54 @@
 		transform: none;
 		transition: none;
 	}
+}
+
+/* Section handoff wash — softens the hard cut between big editorial chapters */
+.section-transition::before,
+.section-transition::after {
+	content: '';
+	position: absolute;
+	left: 0;
+	right: 0;
+	height: 5rem;
+	pointer-events: none;
+	z-index: 0;
+	background: linear-gradient(to bottom, transparent, color-mix(in srgb, var(--color-line) 22%, transparent), transparent);
+	opacity: 0.55;
+}
+.section-transition::before {
+	top: -2.5rem;
+}
+.section-transition::after {
+	bottom: -2.5rem;
+}
+.section-transition > * {
+	position: relative;
+	z-index: 1;
+}
+
+.section-transition-dark::before,
+.section-transition-dark::after {
+	content: '';
+	position: absolute;
+	left: 0;
+	right: 0;
+	height: 6rem;
+	pointer-events: none;
+	z-index: 0;
+	background: linear-gradient(to bottom, transparent, rgba(20, 19, 17, 0.92));
+	opacity: 0.9;
+}
+.section-transition-dark::before {
+	top: -3rem;
+}
+.section-transition-dark::after {
+	bottom: -3rem;
+	transform: rotate(180deg);
+}
+.section-transition-dark > * {
+	position: relative;
+	z-index: 1;
 }
 
 /* View Transitions — cross-fade with a slight slide */

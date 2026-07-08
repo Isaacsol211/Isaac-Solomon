@@ -1,12 +1,32 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { page } from '$app/state';
 	import { reveal } from '$lib/actions/reveal';
 	import { connect, nav as navLinks, site, socials } from '$lib/content';
 	import ArrowUpRight from './ArrowUpRight.svelte';
 	import Eyebrow from './Eyebrow.svelte';
 
 	const year = new Date().getFullYear();
+	const pathname = $derived(page.url.pathname);
 	let time = $state('');
+	let copied = $state(false);
+	let copyTimer: ReturnType<typeof setTimeout>;
+
+	async function copyEmail() {
+		try {
+			await navigator.clipboard.writeText(site.email);
+			copied = true;
+			clearTimeout(copyTimer);
+			copyTimer = setTimeout(() => (copied = false), 2000);
+		} catch {
+			// Clipboard unavailable (permissions/insecure context) — the mailto pill still works
+		}
+	}
+
+	function resolvedHref(href: string) {
+		if (!href.startsWith('#')) return href;
+		return pathname === '/' ? href : `/${href}`;
+	}
 
 	onMount(() => {
 		// My local time (IST), not the visitor's — that's the point of the label
@@ -24,11 +44,11 @@
 
 <section
 	id="connect"
-	class="relative overflow-hidden bg-coal text-cream dark:border-t dark:border-cream/10"
+	class="relative overflow-hidden border-t border-cream/10 bg-coal text-cream"
 >
-	<div class="relative mx-auto max-w-6xl px-5 pt-20 pb-8 sm:px-8 md:pt-32">
+	<div class="relative mx-auto max-w-6xl px-5 pt-20 pb-8 sm:px-8 md:pt-32 md:pb-10">
 		<div use:reveal>
-			<Eyebrow index="05" title="Contact" tone="dark" />
+			<Eyebrow index="07" title="Contact" tone="dark" />
 		</div>
 
 		<p use:reveal={{ delay: 80 }} class="mt-10 font-serif text-2xl text-cream/70 italic md:text-3xl">
@@ -38,7 +58,7 @@
 			use:reveal={{ delay: 140 }}
 			class="mt-3 text-[clamp(3.2rem,10vw,9rem)] leading-[0.95] font-medium tracking-[-0.03em]"
 		>
-			Let's <em class="font-serif font-normal text-accent italic">connect.</em>
+			let's <em class="font-serif font-normal text-accent italic">talk.</em>
 		</h2>
 
 		<p use:reveal={{ delay: 200 }} class="mt-8 max-w-xl leading-relaxed text-cream/60">
@@ -54,8 +74,21 @@
 				class="relative size-5 shrink-0 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
 			/>
 		</a>
+		<button
+			use:reveal={{ delay: 320 }}
+			type="button"
+			onclick={copyEmail}
+			class="mt-4 block text-sm text-cream/50 transition-colors hover:text-cream"
+		>
+			{#if copied}
+				<span class="text-accent">Copied to clipboard ✓</span>
+			{:else}
+				or copy the address
+			{/if}
+			<span class="sr-only" aria-live="polite">{copied ? 'Email copied to clipboard' : ''}</span>
+		</button>
 
-		<footer class="relative mt-20 border-t border-cream/15 pt-12 md:mt-28">
+		<footer class="relative mt-20 border-t border-cream/15 pt-12 md:mt-28 md:pb-2">
 			<div class="grid gap-12 md:grid-cols-12">
 				<div class="md:col-span-6">
 					<p class="text-2xl font-medium tracking-tight">
@@ -74,7 +107,7 @@
 					<ul class="mt-4 space-y-2.5">
 						{#each navLinks as link (link.href)}
 							<li>
-								<a href={link.href} class="text-cream/70 transition-colors hover:text-cream">
+							<a href={resolvedHref(link.href)} class="text-cream/70 transition-colors hover:text-cream">
 									{link.label}
 								</a>
 							</li>

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { site } from '$lib/content';
 	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
+	import NextArticle from '$lib/components/NextArticle.svelte';
 
 	const title = 'Building (and Rebuilding) for Godrej Foundation — Isaac Solomon';
 	const description =
@@ -96,7 +97,7 @@
 				</span>
 			</div>
 			<img
-				src="/writing/godrej/hero.png"
+				src="/writing/godrej/hero.webp"
 				alt="Godrej Foundation homepage — Crafting a Prosperous Tomorrow, with hands reaching toward the sky in the hero"
 				width="1440"
 				height="900"
@@ -198,7 +199,7 @@
 		</div>
 
 		<!-- Before / After comparison -->
-		<div class="not-prose my-10">
+		<div class="not-prose my-10 lg:relative lg:left-1/2 lg:-translate-x-1/2 lg:w-[calc(100vw-3rem)] lg:max-w-[100rem]">
 			<p class="mb-4 text-xs font-medium tracking-[0.25em] uppercase text-dim">Before & after — the same site, two identities</p>
 			<div class="grid gap-4 sm:grid-cols-2">
 				<div>
@@ -212,7 +213,7 @@
 							</span>
 						</div>
 						<img
-							src="/writing/godrej/v1-desktop.png"
+							src="/writing/godrej/v1-desktop.webp"
 							alt="Godrej Foundation v1 — old Godrej branding with banyan tree hero"
 							width="1440"
 							height="900"
@@ -233,7 +234,7 @@
 							</span>
 						</div>
 						<img
-							src="/writing/godrej/v2-desktop.png"
+							src="/writing/godrej/v2-desktop.webp"
 							alt="Godrej Foundation v2 — new Godrej branding with Crafting a Prosperous Tomorrow hero"
 							width="1440"
 							height="900"
@@ -337,6 +338,8 @@
 		</div>
 
 		<!-- footer -->
+		<NextArticle href="/writing/tomorrow-makers" />
+
 		<div class="mt-16 flex items-center justify-between border-t border-line pt-8">
 			<a
 				href="/"

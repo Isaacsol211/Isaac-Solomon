@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { site } from '$lib/content';
 	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
+	import NextArticle from '$lib/components/NextArticle.svelte';
 
 	const title = 'Every Child Carries a Spark — Isaac Solomon';
 	const description =
@@ -96,7 +97,7 @@
 				</span>
 			</div>
 			<img
-				src="/writing/tomorrow-makers/hero.png"
+				src="/writing/tomorrow-makers/hero.webp"
 				alt="Tomorrow Makers homepage — Everyone can be great at something, with video hero of students in school"
 				width="1440"
 				height="900"
@@ -159,54 +160,54 @@
 
 		</div>
 
-		<!-- stats section screenshot -->
-		<div class="not-prose my-10">
-			<div class="overflow-hidden rounded-xl border border-line shadow-[0_8px_24px_-8px_rgba(20,19,17,0.12)]">
-				<div class="flex items-center gap-1.5 border-b border-line bg-paper-2 px-3 py-2">
-					<span class="size-2 rounded-full bg-[#ff5f57]"></span>
-					<span class="size-2 rounded-full bg-[#febc2e]"></span>
-					<span class="size-2 rounded-full bg-[#28c840]"></span>
-					<span class="ml-2 rounded bg-paper px-2 py-0.5 font-mono text-[9px] tracking-wider text-dim border border-line">
-						tomorrow-makers.in
-					</span>
+		<!-- stats + pathways screenshots -->
+		<div class="not-prose my-10 grid gap-6 md:grid-cols-2 lg:relative lg:left-1/2 lg:-translate-x-1/2 lg:w-[calc(100vw-3rem)] lg:max-w-[100rem]">
+			<div>
+				<div class="overflow-hidden rounded-xl border border-line shadow-[0_8px_24px_-8px_rgba(20,19,17,0.12)]">
+					<div class="flex items-center gap-1.5 border-b border-line bg-paper-2 px-3 py-2">
+						<span class="size-2 rounded-full bg-[#ff5f57]"></span>
+						<span class="size-2 rounded-full bg-[#febc2e]"></span>
+						<span class="size-2 rounded-full bg-[#28c840]"></span>
+						<span class="ml-2 rounded bg-paper px-2 py-0.5 font-mono text-[9px] tracking-wider text-dim border border-line">
+							tomorrow-makers.in
+						</span>
+					</div>
+					<img
+						src="/writing/tomorrow-makers/stats.webp"
+						alt="India has never lacked talent — what we have lacked is equal access to opportunity"
+						width="1440"
+						height="800"
+						class="h-[24rem] w-full object-cover object-top lg:h-[28rem]"
+						loading="lazy"
+					/>
 				</div>
-				<img
-					src="/writing/tomorrow-makers/stats.png"
-					alt="India has never lacked talent — what we have lacked is equal access to opportunity"
-					width="1440"
-					height="800"
-					class="w-full object-cover object-top"
-					loading="lazy"
-				/>
+				<p class="mt-3 text-xs text-dim">
+					The core message — bold type, green dot-grid, designed to stop you scrolling.
+				</p>
 			</div>
-			<p class="mt-3 text-xs text-dim">
-				The core message — bold type, green dot-grid, designed to stop you scrolling.
-			</p>
-		</div>
-
-		<!-- pathways screenshot -->
-		<div class="not-prose my-10">
-			<div class="overflow-hidden rounded-xl border border-line shadow-[0_8px_24px_-8px_rgba(20,19,17,0.12)]">
-				<div class="flex items-center gap-1.5 border-b border-line bg-paper-2 px-3 py-2">
-					<span class="size-2 rounded-full bg-[#ff5f57]"></span>
-					<span class="size-2 rounded-full bg-[#febc2e]"></span>
-					<span class="size-2 rounded-full bg-[#28c840]"></span>
-					<span class="ml-2 rounded bg-paper px-2 py-0.5 font-mono text-[9px] tracking-wider text-dim border border-line">
-						tomorrow-makers.in
-					</span>
+			<div>
+				<div class="overflow-hidden rounded-xl border border-line shadow-[0_8px_24px_-8px_rgba(20,19,17,0.12)]">
+					<div class="flex items-center gap-1.5 border-b border-line bg-paper-2 px-3 py-2">
+						<span class="size-2 rounded-full bg-[#ff5f57]"></span>
+						<span class="size-2 rounded-full bg-[#febc2e]"></span>
+						<span class="size-2 rounded-full bg-[#28c840]"></span>
+						<span class="ml-2 rounded bg-paper px-2 py-0.5 font-mono text-[9px] tracking-wider text-dim border border-line">
+							tomorrow-makers.in
+						</span>
+					</div>
+					<img
+						src="/writing/tomorrow-makers/pathways.webp"
+						alt="Four pathways section — Science in teal, Arts in magenta, Invention in yellow, Service in dark"
+						width="1440"
+						height="3000"
+						class="h-[24rem] w-full object-cover object-top lg:h-[28rem]"
+						loading="lazy"
+					/>
 				</div>
-				<img
-					src="/writing/tomorrow-makers/pathways.png"
-					alt="Four pathways section — Science in teal, Arts in magenta, Invention in yellow, Service in dark"
-					width="1440"
-					height="3000"
-					class="w-full object-cover object-top"
-					loading="lazy"
-				/>
+				<p class="mt-3 text-xs text-dim">
+					Each pathway — its own colour, its own audience, its own partner organisations.
+				</p>
 			</div>
-			<p class="mt-3 text-xs text-dim">
-				Each pathway — its own colour, its own audience, its own partner organisations.
-			</p>
 		</div>
 
 		<div class="prose">
@@ -281,7 +282,7 @@
 		</div>
 
 		<!-- mission screenshot -->
-		<div class="not-prose my-10">
+		<div class="not-prose my-10 lg:relative lg:left-1/2 lg:-translate-x-1/2 lg:w-[min(64rem,100vw-4rem)]">
 			<div class="overflow-hidden rounded-xl border border-line shadow-[0_8px_24px_-8px_rgba(20,19,17,0.12)]">
 				<div class="flex items-center gap-1.5 border-b border-line bg-paper-2 px-3 py-2">
 					<span class="size-2 rounded-full bg-[#ff5f57]"></span>
@@ -292,7 +293,7 @@
 					</span>
 				</div>
 				<img
-					src="/writing/tomorrow-makers/mission.png"
+					src="/writing/tomorrow-makers/mission.webp"
 					alt="We're trying to change that — mission statement with editorial photography of classrooms"
 					width="1440"
 					height="1350"
@@ -352,7 +353,7 @@
 		</div>
 
 		<!-- full-page tour -->
-		<div class="not-prose my-12">
+		<div class="not-prose my-12 lg:relative lg:left-1/2 lg:-translate-x-1/2 lg:w-[calc(100vw-3rem)] lg:max-w-[100rem]">
 			<div class="page-tour group overflow-hidden rounded-xl border border-line shadow-[0_16px_32px_-16px_rgba(20,19,17,0.15)]">
 				<div class="flex items-center justify-between border-b border-line bg-paper-2 px-3 py-2">
 					<div class="flex items-center gap-1.5">
@@ -369,7 +370,7 @@
 				</div>
 				<div class="tour-viewport">
 					<img
-						src="/projects/godrej-tm-page.png"
+						src="/projects/godrej-tm-page.webp"
 						alt="Full Tomorrow Makers homepage — Everyone Can Be Great At Something hero, four pathways, pathway grade cards, partner logos, FAQs and closing call to action"
 						width="536"
 						height="4096"
@@ -421,6 +422,8 @@
 		</div>
 
 		<!-- footer -->
+		<NextArticle href="/writing/novarock" />
+
 		<div class="mt-16 flex items-center justify-between border-t border-line pt-8">
 			<a
 				href="/"

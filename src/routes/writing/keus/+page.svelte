@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { site } from '$lib/content';
 	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
+	import NextArticle from '$lib/components/NextArticle.svelte';
 
 	const title = 'The Scroll Problem — Isaac Solomon';
 	const description =
@@ -96,7 +97,7 @@
 				</span>
 			</div>
 			<img
-				src="/writing/keus/hero.png"
+				src="/writing/keus/hero.webp"
 				alt="Keus homepage — Smart is the new home, scroll-driven hero with luxury residence backdrop"
 				width="1440"
 				height="900"
@@ -159,7 +160,7 @@
 		</div>
 
 		<!-- product pages grid -->
-		<div class="not-prose my-10">
+		<div class="not-prose my-10 lg:relative lg:left-1/2 lg:-translate-x-1/2 lg:w-[calc(100vw-3rem)] lg:max-w-[100rem]">
 			<p class="mb-4 text-xs font-medium tracking-[0.25em] uppercase text-dim">The product ecosystem — each page its own scroll story</p>
 			<div class="grid gap-4 sm:grid-cols-2">
 				<div>
@@ -173,7 +174,7 @@
 							</span>
 						</div>
 						<img
-							src="/writing/keus/console.png"
+							src="/writing/keus/console.webp"
 							alt="Smart Console page — Beautiful meets beautiful, with warm interior photography"
 							width="1440"
 							height="900"
@@ -194,7 +195,7 @@
 							</span>
 						</div>
 						<img
-							src="/writing/keus/wizard.png"
+							src="/writing/keus/wizard.webp"
 							alt="Scene Wizard page — True mobility, portable room controller floating above a hand"
 							width="1440"
 							height="900"
@@ -325,7 +326,7 @@
 		</div>
 
 		<!-- Ardeo lighting screenshot -->
-		<div class="not-prose my-10">
+		<div class="not-prose my-10 lg:relative lg:left-1/2 lg:-translate-x-1/2 lg:w-[min(64rem,100vw-4rem)]">
 			<div class="overflow-hidden rounded-xl border border-line shadow-[0_8px_24px_-8px_rgba(20,19,17,0.12)]">
 				<div class="flex items-center gap-1.5 border-b border-line bg-paper-2 px-3 py-2">
 					<span class="size-2 rounded-full bg-[#ff5f57]"></span>
@@ -336,7 +337,7 @@
 					</span>
 				</div>
 				<img
-					src="/writing/keus/lighting.png"
+					src="/writing/keus/lighting.webp"
 					alt="Ardeo by Keus — bleeding edge technical lights, dark hero with product render"
 					width="1440"
 					height="900"
@@ -470,6 +471,8 @@
 		</div>
 
 		<!-- footer -->
+		<NextArticle href="/writing/godrej" />
+
 		<div class="mt-16 flex items-center justify-between border-t border-line pt-8">
 			<a
 				href="/"

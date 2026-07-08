@@ -1,4 +1,5 @@
 import type { Action } from 'svelte/action';
+import { initMotion } from '$lib/motion';
 
 /**
  * GSAP-powered pinned horizontal scroll gallery.
@@ -14,9 +15,7 @@ export const horizontalGallery: Action<HTMLElement> = (node) => {
 	let mm: any;
 
 	const init = async () => {
-		const { gsap } = await import('gsap');
-		const { ScrollTrigger } = await import('gsap/ScrollTrigger');
-		gsap.registerPlugin(ScrollTrigger);
+		const { gsap } = await initMotion();
 
 		const track = node.querySelector('[data-gallery-track]') as HTMLElement;
 		const items = node.querySelectorAll('[data-gallery-item]');
@@ -53,14 +52,17 @@ export const horizontalGallery: Action<HTMLElement> = (node) => {
 
 					// Alternate rotation direction for visual variety
 					const rotateStart = i % 2 === 0 ? 3 : -3;
+					const driftStart = i % 2 === 0 ? 10 : -10;
+					const driftEnd = -driftStart;
 
 					// Entrance: scale up + rotate to 0
 					gsap.fromTo(
 						img,
-						{ scale: 0.88, rotate: rotateStart },
+						{ scale: 0.88, rotate: rotateStart, yPercent: driftStart },
 						{
 							scale: 1,
 							rotate: 0,
+							yPercent: 0,
 							ease: 'none',
 							scrollTrigger: {
 								trigger: item,
@@ -76,6 +78,7 @@ export const horizontalGallery: Action<HTMLElement> = (node) => {
 					gsap.to(img, {
 						scale: 0.88,
 						rotate: -rotateStart,
+						yPercent: driftEnd,
 						ease: 'none',
 						scrollTrigger: {
 							trigger: item,
