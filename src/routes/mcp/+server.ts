@@ -5,6 +5,7 @@ import {
 	clients,
 	connect,
 	experience,
+	photographyIntro,
 	photos,
 	projects,
 	serviceDetails,
@@ -46,6 +47,90 @@ const slug = (title: string) =>
 		.replace(/^-|-$/g, '');
 
 const abs = (path: string) => (path.startsWith('http') ? path : `${site.url}${path}`);
+
+/**
+ * Minimal shape of the Workers HTMLRewriter global. Declared locally rather than
+ * pulling @cloudflare/workers-types into the DOM lib, which would clash with the
+ * ambient Response/fetch types this file already relies on.
+ */
+type RewriterHandlers = { element?: () => void; text?: (chunk: { text: string }) => void };
+declare const HTMLRewriter: {
+	new (): {
+		on(selector: string, handlers: RewriterHandlers): { transform(res: Response): Response };
+		transform(res: Response): Response;
+	};
+};
+
+type Ctx = { platform?: App.Platform; origin: string };
+type Block = { tag: string; text: string };
+
+/** '/writing/saut/three-hats' -> 'saut/three-hats' */
+const articleSlug = (href: string) => href.replace(/^\/writing\//, '');
+
+const findArticle = (key: string) => {
+	const k = key.toLowerCase().trim();
+	return writing.find(
+		(a) =>
+			articleSlug(a.href).toLowerCase() === k ||
+			a.href.toLowerCase() === k ||
+			a.title.toLowerCase() === k
+	);
+};
+
+/**
+ * Article prose lives as markup in each +page.svelte, not in content.ts, so the
+ * prerendered page is the source of truth. Read it back through the Pages asset
+ * binding instead of duplicating thousands of words into a data module.
+ */
+async function readArticle(href: string, ctx: Ctx): Promise<Block[]> {
+	const assets = ctx.platform?.env?.ASSETS;
+	if (!assets) throw new Error('Prerendered pages are not reachable in this environment.');
+
+	const res = await assets.fetch(new URL(href, ctx.origin));
+	if (!res.ok) throw new Error(`Could not read ${href} — the page returned ${res.status}.`);
+
+	const blocks: Block[] = [];
+	let current: Block | undefined;
+	const rewriter = new HTMLRewriter();
+	// a <br> carries no text, but it is a word break — without this,
+	// `Frontend Dev.<br />Product Manager.` collapses to `Dev.Product`
+	rewriter.on('main br', {
+		element() {
+			if (current) current.text += ' ';
+		}
+	});
+	for (const tag of ['h1', 'h2', 'h3', 'p', 'li', 'blockquote']) {
+		rewriter.on(`main ${tag}`, {
+			element() {
+				current = { tag, text: '' };
+				blocks.push(current);
+			},
+			text(chunk) {
+				if (current) current.text += chunk.text;
+			}
+		});
+	}
+	await rewriter.transform(res).arrayBuffer();
+
+	return blocks
+		.map((b) => ({ tag: b.tag, text: b.text.replace(/\s+/g, ' ').trim() }))
+		.filter((b) => b.text);
+}
+
+const PREFIX: Record<string, string> = {
+	h1: '# ',
+	h2: '## ',
+	h3: '### ',
+	li: '- ',
+	blockquote: '> ',
+	p: ''
+};
+
+const renderBlocks = (blocks: Block[]) =>
+	blocks.map((b) => `${PREFIX[b.tag] ?? ''}${b.text}`).join('\n\n');
+
+const countWords = (blocks: Block[]) =>
+	blocks.reduce((n, b) => n + b.text.split(/\s+/).filter(Boolean).length, 0);
 
 // ── tools ──────────────────────────────────────────────────────────────────
 
@@ -118,6 +203,57 @@ const TOOLS = [
 		description:
 			'How to get in touch with Isaac — email, social links and current availability for work.',
 		inputSchema: { type: 'object', properties: {}, additionalProperties: false }
+	},
+	{
+		name: 'describe_article',
+		title: 'Describe an article',
+		description:
+			"What one piece of writing actually covers — its section headings in order, opening paragraph, length and reading time — without pulling the full text. Use this to decide whether an article is worth reading in full. Accepts a slug from list_writing (e.g. 'saut' or 'saut/three-hats') or the title.",
+		inputSchema: {
+			type: 'object',
+			properties: {
+				article: {
+					type: 'string',
+					description: "Article slug or title, e.g. 'godrej' or 'saut/three-hats'."
+				}
+			},
+			required: ['article'],
+			additionalProperties: false
+		}
+	},
+	{
+		name: 'get_article',
+		title: 'Read a full article',
+		description:
+			'The complete text of one case study or essay, as markdown-style prose with its headings. Use when you need to quote it or answer detail questions; prefer describe_article first if you only need to know what it covers.',
+		inputSchema: {
+			type: 'object',
+			properties: {
+				article: {
+					type: 'string',
+					description: "Article slug or title, e.g. 'mivi' or 'saut/worksheet-builder'."
+				}
+			},
+			required: ['article'],
+			additionalProperties: false
+		}
+	},
+	{
+		name: 'list_photos',
+		title: 'List photographs',
+		description:
+			"Isaac's photography — each frame with its title, location, description and image URL. Optionally filter by a free-text query matched against title, location and description.",
+		inputSchema: {
+			type: 'object',
+			properties: {
+				query: {
+					type: 'string',
+					description: "Filter by place, location or description, e.g. 'Kedarkantha' or 'stars'."
+				},
+				limit: { type: 'integer', minimum: 1, maximum: 30, description: 'Max results (default 30).' }
+			},
+			additionalProperties: false
+		}
 	}
 ];
 
@@ -138,7 +274,7 @@ const projectSummary = (p: (typeof projects)[number]) => ({
 	caseStudy: p.caseStudy ? abs(p.caseStudy) : undefined
 });
 
-const handlers = new Map<string, (args: Args) => unknown>([
+const handlers = new Map<string, (args: Args, ctx: Ctx) => unknown | Promise<unknown>>([
 	[
 		'get_profile',
 		() =>
@@ -249,6 +385,96 @@ const handlers = new Map<string, (args: Args) => unknown>([
 		}
 	],
 	[
+		'describe_article',
+		async (args, ctx) => {
+			const found = findArticle(String(args.article ?? ''));
+			if (!found)
+				return {
+					...result({
+						error: `No article named "${args.article}".`,
+						available: writing.map((a) => ({ slug: articleSlug(a.href), title: a.title }))
+					}),
+					isError: true
+				};
+
+			const blocks = await readArticle(found.href, ctx);
+			const outline = blocks
+				.filter((b) => b.tag === 'h2' || b.tag === 'h3')
+				.map((b) => ({ level: Number(b.tag.slice(1)), heading: b.text }));
+
+			return result({
+				slug: articleSlug(found.href),
+				title: found.title,
+				tag: found.tag,
+				year: found.year,
+				readingTime: found.readingTime,
+				summary: found.description,
+				url: abs(found.href),
+				wordCount: countWords(blocks),
+				sections: outline.length,
+				outline,
+				// the first <p> is the eyebrow ('Case Study · …'); the lead is the first
+				// paragraph of real length
+				opening:
+					blocks.find((b) => b.tag === 'p' && b.text.length > 100)?.text ??
+					blocks.find((b) => b.tag === 'p')?.text ??
+					''
+			});
+		}
+	],
+	[
+		'get_article',
+		async (args, ctx) => {
+			const found = findArticle(String(args.article ?? ''));
+			if (!found)
+				return {
+					...result({
+						error: `No article named "${args.article}".`,
+						available: writing.map((a) => ({ slug: articleSlug(a.href), title: a.title }))
+					}),
+					isError: true
+				};
+
+			const blocks = await readArticle(found.href, ctx);
+			return result({
+				slug: articleSlug(found.href),
+				title: found.title,
+				tag: found.tag,
+				year: found.year,
+				readingTime: found.readingTime,
+				url: abs(found.href),
+				wordCount: countWords(blocks),
+				text: renderBlocks(blocks)
+			});
+		}
+	],
+	[
+		'list_photos',
+		(args) => {
+			const query = typeof args.query === 'string' ? args.query : '';
+			const limit = Math.min(Math.max(Number(args.limit) || 30, 1), 30);
+			const found = query
+				? photos.filter((p) => matches(query, [p.place, p.caption, p.location, p.description]))
+				: photos;
+
+			return result({
+				note: photographyIntro.note,
+				gallery: abs('/photography'),
+				count: found.length,
+				photos: found.slice(0, limit).map((p) => ({
+					title: p.place,
+					caption: p.caption,
+					location: p.location,
+					description: p.description,
+					alt: p.alt,
+					image: abs(p.src),
+					width: p.w,
+					height: p.h
+				}))
+			});
+		}
+	],
+	[
 		'get_contact',
 		() =>
 			result({
@@ -271,7 +497,7 @@ export const OPTIONS: RequestHandler = async () => new Response(null, { headers:
 export const GET: RequestHandler = async () =>
 	ERR(null, -32600, 'This MCP endpoint speaks JSON-RPC over POST.');
 
-export const POST: RequestHandler = async ({ request }) => {
+export const POST: RequestHandler = async ({ request, platform }) => {
 	let body;
 	try {
 		body = await request.json();
@@ -300,7 +526,8 @@ export const POST: RequestHandler = async ({ request }) => {
 		const handler = handlers.get(params?.name);
 		if (!handler) return ERR(id, -32602, `Unknown tool: ${params?.name}`);
 		try {
-			return reply(await handler(params.arguments ?? {}));
+			const ctx: Ctx = { platform, origin: new URL(request.url).origin };
+			return reply(await handler(params.arguments ?? {}, ctx));
 		} catch (e) {
 			// tool failures belong in the result, not the JSON-RPC error channel
 			return reply({

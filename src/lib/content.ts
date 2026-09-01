@@ -509,7 +509,7 @@ export const mcp = {
 	name: 'isaacsolomon',
 	url: `${site.url}/mcp`,
 	blurb:
-		'This site runs a small MCP server. Point an AI agent at it and it can read my projects, writing, services and contact details directly — no scraping.'
+		'This site runs a small MCP server. Point an AI agent at it and it can read my projects, my writing in full, my photography and my contact details directly — no scraping.'
 };
 
 export const connect = {

@@ -6,7 +6,12 @@ declare global {
 		// interface Locals {}
 		// interface PageData {}
 		// interface PageState {}
-		// interface Platform {}
+		/** Cloudflare Pages bindings — ASSETS lets /mcp read prerendered pages. */
+		interface Platform {
+			env?: {
+				ASSETS?: { fetch: (input: Request | URL | string) => Promise<Response> };
+			};
+		}
 	}
 }
 
