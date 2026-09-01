@@ -500,6 +500,18 @@ export const socials = [
 	{ label: 'Instagram', href: 'https://instagram.com/isaac_sol_211' }
 ];
 
+/**
+ * The MCP server at /mcp — see src/routes/mcp/+server.ts.
+ * Claude has no connector-install deep link, so the UI can only hand over
+ * the command and the URL; `name` is what the server is called once added.
+ */
+export const mcp = {
+	name: 'isaacsolomon',
+	url: `${site.url}/mcp`,
+	blurb:
+		'This site runs a small MCP server. Point an AI agent at it and it can read my projects, writing, services and contact details directly — no scraping.'
+};
+
 export const connect = {
 	eyebrow: 'Have an idea? A role? A roll of film?',
 	blurb:

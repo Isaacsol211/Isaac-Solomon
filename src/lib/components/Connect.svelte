@@ -5,6 +5,7 @@
 	import { connect, nav as navLinks, site, socials } from '$lib/content';
 	import ArrowUpRight from './ArrowUpRight.svelte';
 	import Eyebrow from './Eyebrow.svelte';
+	import McpConnect from './McpConnect.svelte';
 
 	const year = new Date().getFullYear();
 	const pathname = $derived(page.url.pathname);
@@ -87,6 +88,10 @@
 			{/if}
 			<span class="sr-only" aria-live="polite">{copied ? 'Email copied to clipboard' : ''}</span>
 		</button>
+
+		<div use:reveal={{ delay: 360 }}>
+			<McpConnect />
+		</div>
 
 		<footer class="relative mt-20 border-t border-cream/15 pt-12 md:mt-28 md:pb-2">
 			<div class="grid gap-12 md:grid-cols-12">
