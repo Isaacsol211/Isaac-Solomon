@@ -1,4 +1,4 @@
-import adapter from '@sveltejs/adapter-static';
+import adapter from '@sveltejs/adapter-cloudflare';
 import { sveltekit } from '@sveltejs/kit/vite';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vite';
@@ -13,8 +13,12 @@ export default defineConfig({
 					filename.split(/[/\\]/).includes('node_modules') ? undefined : true
 			},
 
-			// Fully static site — output in `build/`, served by Cloudflare.
-			adapter: adapter({ fallback: '404.html' })
+			// Every page is still prerendered into `build/` and served from the CDN.
+			// The Worker exists only for /mcp, which has to answer POSTs at runtime.
+			adapter: adapter({
+				fallback: 'spa',
+				routes: { include: ['/mcp'], exclude: [] }
+			})
 		})
 	]
 });
