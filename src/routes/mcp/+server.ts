@@ -48,21 +48,7 @@ const slug = (title: string) =>
 
 const abs = (path: string) => (path.startsWith('http') ? path : `${site.url}${path}`);
 
-/**
- * Minimal shape of the Workers HTMLRewriter global. Declared locally rather than
- * pulling @cloudflare/workers-types into the DOM lib, which would clash with the
- * ambient Response/fetch types this file already relies on.
- */
-type RewriterHandlers = { element?: () => void; text?: (chunk: { text: string }) => void };
-declare const HTMLRewriter: {
-	new (): {
-		on(selector: string, handlers: RewriterHandlers): { transform(res: Response): Response };
-		transform(res: Response): Response;
-	};
-};
-
 type Ctx = { platform?: App.Platform; origin: string };
-type Block = { tag: string; text: string };
 
 /** '/writing/saut/three-hats' -> 'saut/three-hats' */
 const articleSlug = (href: string) => href.replace(/^\/writing\//, '');
@@ -78,59 +64,31 @@ const findArticle = (key: string) => {
 };
 
 /**
- * Article prose lives as markup in each +page.svelte, not in content.ts, so the
- * prerendered page is the source of truth. Read it back through the Pages asset
- * binding instead of duplicating thousands of words into a data module.
+ * Every page has a markdown twin generated at build time by
+ * scripts/generate-markdown.mjs (see /llms.txt). Reading it back through the
+ * Pages asset binding keeps one extraction path for both the .md files and
+ * these tools — the prose stays authored in the +page.svelte files.
  */
-async function readArticle(href: string, ctx: Ctx): Promise<Block[]> {
+async function readMarkdown(href: string, ctx: Ctx): Promise<string> {
 	const assets = ctx.platform?.env?.ASSETS;
-	if (!assets) throw new Error('Prerendered pages are not reachable in this environment.');
+	if (!assets) throw new Error('Markdown pages are not reachable in this environment.');
 
-	const res = await assets.fetch(new URL(href, ctx.origin));
-	if (!res.ok) throw new Error(`Could not read ${href} — the page returned ${res.status}.`);
+	const res = await assets.fetch(new URL(`${href}.md`, ctx.origin));
+	if (!res.ok) throw new Error(`Could not read ${href}.md — the page returned ${res.status}.`);
 
-	const blocks: Block[] = [];
-	let current: Block | undefined;
-	const rewriter = new HTMLRewriter();
-	// a <br> carries no text, but it is a word break — without this,
-	// `Frontend Dev.<br />Product Manager.` collapses to `Dev.Product`
-	rewriter.on('main br', {
-		element() {
-			if (current) current.text += ' ';
-		}
-	});
-	for (const tag of ['h1', 'h2', 'h3', 'p', 'li', 'blockquote']) {
-		rewriter.on(`main ${tag}`, {
-			element() {
-				current = { tag, text: '' };
-				blocks.push(current);
-			},
-			text(chunk) {
-				if (current) current.text += chunk.text;
-			}
-		});
-	}
-	await rewriter.transform(res).arrayBuffer();
-
-	return blocks
-		.map((b) => ({ tag: b.tag, text: b.text.replace(/\s+/g, ' ').trim() }))
-		.filter((b) => b.text);
+	const body = await res.text();
+	// drop the YAML frontmatter; title and URL are returned as fields already
+	return body.replace(/^---\n[\s\S]*?\n---\n+/, '').trim();
 }
 
-const PREFIX: Record<string, string> = {
-	h1: '# ',
-	h2: '## ',
-	h3: '### ',
-	li: '- ',
-	blockquote: '> ',
-	p: ''
-};
+const countWords = (text: string) => text.split(/\s+/).filter(Boolean).length;
 
-const renderBlocks = (blocks: Block[]) =>
-	blocks.map((b) => `${PREFIX[b.tag] ?? ''}${b.text}`).join('\n\n');
-
-const countWords = (blocks: Block[]) =>
-	blocks.reduce((n, b) => n + b.text.split(/\s+/).filter(Boolean).length, 0);
+/** Markdown paragraphs are blank-line separated. */
+const paragraphs = (text: string) =>
+	text
+		.split(/\n{2,}/)
+		.map((p) => p.trim())
+		.filter(Boolean);
 
 // ── tools ──────────────────────────────────────────────────────────────────
 
@@ -397,10 +355,14 @@ const handlers = new Map<string, (args: Args, ctx: Ctx) => unknown | Promise<unk
 					isError: true
 				};
 
-			const blocks = await readArticle(found.href, ctx);
-			const outline = blocks
-				.filter((b) => b.tag === 'h2' || b.tag === 'h3')
-				.map((b) => ({ level: Number(b.tag.slice(1)), heading: b.text }));
+			const text = await readMarkdown(found.href, ctx);
+			const paras = paragraphs(text);
+			const outline = paras
+				.filter((p) => /^#{2,3} /.test(p))
+				.map((p) => ({
+					level: p.startsWith('### ') ? 3 : 2,
+					heading: p.replace(/^#{2,3} /, '')
+				}));
 
 			return result({
 				slug: articleSlug(found.href),
@@ -410,15 +372,13 @@ const handlers = new Map<string, (args: Args, ctx: Ctx) => unknown | Promise<unk
 				readingTime: found.readingTime,
 				summary: found.description,
 				url: abs(found.href),
-				wordCount: countWords(blocks),
+				wordCount: countWords(text),
 				sections: outline.length,
 				outline,
-				// the first <p> is the eyebrow ('Case Study · …'); the lead is the first
-				// paragraph of real length
+				// the first paragraph is the eyebrow ('Case Study · …'); the lead is the
+				// first prose paragraph of real length
 				opening:
-					blocks.find((b) => b.tag === 'p' && b.text.length > 100)?.text ??
-					blocks.find((b) => b.tag === 'p')?.text ??
-					''
+					paras.find((p) => !p.startsWith('#') && !p.startsWith('!') && p.length > 100) ?? ''
 			});
 		}
 	],
@@ -435,7 +395,7 @@ const handlers = new Map<string, (args: Args, ctx: Ctx) => unknown | Promise<unk
 					isError: true
 				};
 
-			const blocks = await readArticle(found.href, ctx);
+			const text = await readMarkdown(found.href, ctx);
 			return result({
 				slug: articleSlug(found.href),
 				title: found.title,
@@ -443,8 +403,9 @@ const handlers = new Map<string, (args: Args, ctx: Ctx) => unknown | Promise<unk
 				year: found.year,
 				readingTime: found.readingTime,
 				url: abs(found.href),
-				wordCount: countWords(blocks),
-				text: renderBlocks(blocks)
+				wordCount: countWords(text),
+				markdownUrl: `${abs(found.href)}.md`,
+				text
 			});
 		}
 	],

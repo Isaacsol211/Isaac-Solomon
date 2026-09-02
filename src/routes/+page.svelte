@@ -16,6 +16,8 @@
 	<title>{site.title}</title>
 	<meta name="description" content={site.description} />
 	<link rel="canonical" href={site.url} />
+	<!-- markdown twin for agents — see /llms.txt -->
+	<link rel="alternate" type="text/markdown" href="{site.url}/index.md" />
 
 	<meta property="og:type" content="website" />
 	<meta property="og:title" content={site.title} />

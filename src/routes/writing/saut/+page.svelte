@@ -13,6 +13,8 @@
 	<title>{title}</title>
 	<meta name="description" content={description} />
 	<link rel="canonical" href={canonical} />
+	<!-- markdown twin for agents — see /llms.txt -->
+	<link rel="alternate" type="text/markdown" href="{canonical}.md" />
 	<meta property="og:type" content="article" />
 	<meta property="og:title" content={title} />
 	<meta property="og:description" content={description} />

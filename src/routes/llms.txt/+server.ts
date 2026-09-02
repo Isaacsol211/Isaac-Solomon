@@ -31,14 +31,16 @@ ${about.paragraphs[0]}
 
 Clients include ${clients.join(', ')}.
 
-This site runs an MCP server at ${mcp.url} (Streamable HTTP JSON-RPC, no auth required). It exposes read-only tools for this content — including \`get_article\`, which returns the full text of any case study below. Prefer it over scraping these pages.
+This site runs an MCP server at ${mcp.url} (Streamable HTTP JSON-RPC, no auth required). It exposes read-only tools for this content — including \`get_article\`, which returns the full text of any case study below.
+
+Every page also has a markdown twin at the same path with \`.md\` appended — the links below point to those. Prefer either over scraping the HTML.
 
 ## Writing
 
 ${writing
 	.map(
 		(a) =>
-			`- [${a.title}](${abs(a.href)}): ${a.tag}, ${a.year}, ${a.readingTime} read. ${a.description}`
+			`- [${a.title}](${abs(a.href)}.md): ${a.tag}, ${a.year}, ${a.readingTime} read. ${a.description}`
 	)
 	.join('\n')}
 
@@ -46,7 +48,7 @@ ${writing
 
 ${projects
 	.map((a) => {
-		const study = a.caseStudy ? ` Case study: ${abs(a.caseStudy)}` : '';
+		const study = a.caseStudy ? ` Case study: ${abs(a.caseStudy)}.md` : '';
 		return `- [${a.title}](${a.href}): ${a.category}, ${a.year}. ${firstSentence(a.description)}${study}`;
 	})
 	.join('\n')}
@@ -61,7 +63,7 @@ ${experience.map((e) => `- ${e.from}–${e.to} — ${e.role}, ${e.company}. ${fi
 
 ## Optional
 
-- [Photography](${abs('/photography')}): ${photographyIntro.note} ${photos.length} frames, mostly the Indian Himalaya.
+- [Photography](${abs('/photography')}.md): ${photographyIntro.note} ${photos.length} frames, mostly the Indian Himalaya.
 - [Contact](${site.url}#connect): ${site.email}
 `;
 

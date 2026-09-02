@@ -138,6 +138,8 @@
 
 <svelte:head>
 	<title>Photography — {site.name}</title>
+	<!-- markdown twin for agents — see /llms.txt -->
+	<link rel="alternate" type="text/markdown" href="{site.url}/photography.md" />
 	<meta
 		name="description"
 		content="A growing archive of 35mm and digital photography by Isaac Solomon — mountains, cities, light, and quiet moments."
