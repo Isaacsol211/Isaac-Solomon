@@ -163,7 +163,11 @@ const headersFile = join(BUILD, '_headers');
 const rules = written
 	.map(({ slug }) => {
 		const path = slug === 'index' ? '/' : `/${slug}`;
-		return `${path}\n  Link: </${slug}.md>; rel="alternate"; type="text/markdown"`;
+		// Vary: Accept because these paths are content-negotiated by a Cloudflare
+		// Transform Rule (Accept: text/markdown rewrites to the .md twin). Scoped to
+		// the negotiated pages only — on /* it would also land on the immutable
+		// hashed assets, where varying the cache key costs hit rate for nothing.
+		return `${path}\n  Link: </${slug}.md>; rel="alternate"; type="text/markdown"\n  Vary: Accept`;
 	})
 	.join('\n\n');
 
