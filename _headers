@@ -1,6 +1,10 @@
 # HTML pages — never cache, always fresh from origin
 /*
   Cache-Control: no-store, must-revalidate
+  # RFC 8288 — point agents at the site index and the MCP endpoint.
+  # generate-markdown.mjs appends a per-page rel="alternate" for each .md twin;
+  # Cloudflare merges same-name Link headers into one comma-separated value.
+  Link: </llms.txt>; rel="describedby"; type="text/plain", </mcp>; rel="service-desc"; type="application/json"
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   X-Frame-Options: SAMEORIGIN

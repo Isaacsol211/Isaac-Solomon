@@ -2,4 +2,11 @@
 User-agent: *
 Disallow:
 
+# Content Signals — https://contentsignals.org
+# search:   may appear in search results
+# ai-input: may be retrieved at inference time to ground an answer (this site
+#           runs an MCP server at /mcp for exactly that, so yes)
+# ai-train: may be used to train a model — no
+Content-Signal: search=yes, ai-input=yes, ai-train=no
+
 Sitemap: https://isaacsolomon.dev/sitemap.xml

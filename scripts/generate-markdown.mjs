@@ -91,6 +91,7 @@ async function* htmlFiles(dir) {
 }
 
 let count = 0;
+const written = [];
 for await (const file of htmlFiles(BUILD)) {
 	const html = await readFile(file, 'utf8');
 	const root = parse(html);
@@ -115,6 +116,21 @@ for await (const file of htmlFiles(BUILD)) {
 	const body = `---\ntitle: ${title}\nsource: ${url}\n---\n\n${blocks.join('\n\n')}\n`;
 	await writeFile(join(BUILD, `${slug}.md`), body, 'utf8');
 	count++;
+	written.push({ slug });
 }
 
-console.log(`  markdown: wrote ${count} .md files`);
+// RFC 8288: advertise each markdown twin on its HTML page, so an agent learns
+// about it from a HEAD request instead of parsing the <link rel="alternate">.
+// Cloudflare merges these with the global Link rule in the root _headers file.
+const headersFile = join(BUILD, '_headers');
+const rules = written
+	.map(({ slug }) => {
+		const path = slug === 'index' ? '/' : `/${slug}`;
+		return `${path}\n  Link: </${slug}.md>; rel="alternate"; type="text/markdown"`;
+	})
+	.join('\n\n');
+
+const existing = await readFile(headersFile, 'utf8').catch(() => '');
+await writeFile(headersFile, `${existing.trimEnd()}\n\n# markdown twins — generated\n${rules}\n`, 'utf8');
+
+console.log(`  markdown: wrote ${count} .md files, ${written.length} Link rules`);
