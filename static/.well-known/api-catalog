@@ -1,0 +1,21 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://isaacsolomon.dev/mcp",
+      "service-desc": [
+        {
+          "href": "https://isaacsolomon.dev/.well-known/mcp/server-card.json",
+          "type": "application/json",
+          "title": "MCP server card"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://isaacsolomon.dev/docs/mcp.md",
+          "type": "text/markdown",
+          "title": "MCP server documentation"
+        }
+      ]
+    }
+  ]
+}

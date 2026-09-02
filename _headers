@@ -31,3 +31,13 @@
 # WebP images in writing section
 /writing/novarock/*.webp
   Cache-Control: public, max-age=31536000, immutable
+
+# Agent discovery documents
+/.well-known/api-catalog
+  Content-Type: application/linkset+json
+
+/.well-known/ai-catalog.json
+  Access-Control-Allow-Origin: *
+
+/.well-known/mcp/server-card.json
+  Access-Control-Allow-Origin: *

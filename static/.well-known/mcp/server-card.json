@@ -1,0 +1,15 @@
+{
+  "serverInfo": {
+    "name": "isaacsolomon.dev",
+    "version": "1.0.0"
+  },
+  "endpoint": "https://isaacsolomon.dev/mcp",
+  "transport": "streamable-http",
+  "protocolVersion": "2025-06-18",
+  "capabilities": {
+    "tools": true,
+    "resources": false,
+    "prompts": false
+  },
+  "documentation": "https://isaacsolomon.dev/docs/mcp.md"
+}

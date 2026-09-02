@@ -7,7 +7,7 @@
  * second copy to keep in sync — and the output is a static asset, so it costs
  * nothing at runtime.
  */
-import { readdir, readFile, writeFile } from 'node:fs/promises';
+import { copyFile, mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
 import { join, relative } from 'node:path';
 import { parse } from 'node-html-parser';
 
@@ -122,6 +122,11 @@ for await (const file of htmlFiles(BUILD)) {
 // RFC 8288: advertise each markdown twin on its HTML page, so an agent learns
 // about it from a HEAD request instead of parsing the <link rel="alternate">.
 // Cloudflare merges these with the global Link rule in the root _headers file.
+// The api-catalog advertises service-doc — publish the MCP README rather than
+// pointing at a file that only exists in the repo. Copied, not duplicated.
+await mkdir(join(BUILD, 'docs'), { recursive: true });
+await copyFile('src/routes/mcp/README.md', join(BUILD, 'docs/mcp.md'));
+
 const headersFile = join(BUILD, '_headers');
 const rules = written
 	.map(({ slug }) => {

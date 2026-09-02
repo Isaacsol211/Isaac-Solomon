@@ -1,0 +1,32 @@
+{
+  "specVersion": "1.0",
+  "host": {
+    "displayName": "Isaac Solomon",
+    "identifier": "did:web:isaacsolomon.dev"
+  },
+  "entries": [
+    {
+      "identifier": "urn:air:isaacsolomon.dev:server:portfolio",
+      "displayName": "Isaac Solomon — portfolio MCP server",
+      "type": "application/mcp-server-card+json",
+      "url": "https://isaacsolomon.dev/.well-known/mcp/server-card.json",
+      "representativeQueries": [
+        "what projects has Isaac Solomon worked on",
+        "read the SAUT case study in full",
+        "what does Isaac do for e-commerce storefronts",
+        "how do I contact Isaac Solomon"
+      ]
+    },
+    {
+      "identifier": "urn:air:isaacsolomon.dev:index:llms-txt",
+      "displayName": "Site index for agents (llms.txt)",
+      "type": "text/plain",
+      "url": "https://isaacsolomon.dev/llms.txt",
+      "representativeQueries": [
+        "what is on isaacsolomon.dev",
+        "list Isaac Solomon's case studies and essays",
+        "where can I read Isaac's writing as markdown"
+      ]
+    }
+  ]
+}
