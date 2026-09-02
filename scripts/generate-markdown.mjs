@@ -7,6 +7,7 @@
  * second copy to keep in sync — and the output is a static asset, so it costs
  * nothing at runtime.
  */
+import { createHash } from 'node:crypto';
 import { copyFile, mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
 import { join, relative } from 'node:path';
 import { parse } from 'node-html-parser';
@@ -127,6 +128,37 @@ for await (const file of htmlFiles(BUILD)) {
 await mkdir(join(BUILD, 'docs'), { recursive: true });
 await copyFile('src/routes/mcp/README.md', join(BUILD, 'docs/mcp.md'));
 
+// Agent Skills Discovery index. The digest is what makes a skill verifiable —
+// a client can confirm the SKILL.md it fetched is the one listed here — so it is
+// computed from the built file rather than written by hand and left to rot.
+const skillsDir = join(BUILD, '.well-known/agent-skills');
+const skillDirs = await readdir(skillsDir, { withFileTypes: true }).catch(() => []);
+const skills = [];
+for (const entry of skillDirs) {
+	if (!entry.isDirectory()) continue;
+	const file = join(skillsDir, entry.name, 'SKILL.md');
+	const md = await readFile(file, 'utf8').catch(() => null);
+	if (md === null) continue;
+
+	const front = /^---\n([\s\S]*?)\n---/.exec(md)?.[1] ?? '';
+	const field = (k) => new RegExp(`^${k}:\\s*(.+)$`, 'm').exec(front)?.[1]?.trim() ?? '';
+
+	skills.push({
+		name: field('name') || entry.name,
+		type: 'skill-md',
+		description: field('description'),
+		url: `${ORIGIN}/.well-known/agent-skills/${entry.name}/SKILL.md`,
+		digest: `sha256:${createHash('sha256').update(md).digest('hex')}`
+	});
+}
+if (skills.length) {
+	await writeFile(
+		join(skillsDir, 'index.json'),
+		JSON.stringify({ $schema: 'https://schemas.agentskills.io/discovery/0.2.0/schema.json', skills }, null, 2) + '\n',
+		'utf8'
+	);
+}
+
 const headersFile = join(BUILD, '_headers');
 const rules = written
 	.map(({ slug }) => {
@@ -138,4 +170,4 @@ const rules = written
 const existing = await readFile(headersFile, 'utf8').catch(() => '');
 await writeFile(headersFile, `${existing.trimEnd()}\n\n# markdown twins — generated\n${rules}\n`, 'utf8');
 
-console.log(`  markdown: wrote ${count} .md files, ${written.length} Link rules`);
+console.log(`  markdown: wrote ${count} .md files, ${written.length} Link rules, ${skills.length} skills indexed`);
