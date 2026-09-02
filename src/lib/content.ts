@@ -168,7 +168,7 @@ export const projectsIntro =
 export const projects: Project[] = [
 	{
 		title: 'Mivi',
-		year: '2024',
+		year: '2018 – Present',
 		category: 'E-Commerce',
 		description:
 			"India's first audio manufacturing tech brand needed a storefront that moved as fast as their products. I built the entire UI on a custom in-house CMS — componentised from the ground up, with a live cart, transactional mailers and dynamic product pages that the team could manage without touching code.",
