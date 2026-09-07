@@ -64,7 +64,7 @@
 
 		<!-- meta -->
 		<div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-b border-line py-5 text-xs font-medium tracking-[0.2em] uppercase text-dim">
-			<span>2018 – Present</span>
+			<span>2018 – 2022</span>
 			<span class="h-3 w-px bg-line"></span>
 			<span>E-Commerce · Audio</span>
 			<span class="h-3 w-px bg-line"></span>
@@ -116,7 +116,7 @@
 		<div class="prose">
 
 			<p>
-				I've been the frontend developer on Mivi since the beginning. Not "since the redesign"
+				I was the frontend developer on Mivi from the beginning. Not "since the redesign"
 				or "since the migration" — since the first product page went live.
 			</p>
 
@@ -310,8 +310,8 @@
 			<h2>The frontend stack</h2>
 
 			<p>
-				The final system — what Mivi runs on today — is a fully custom frontend on the Apex platform.
-				Every piece was built to solve a real problem that showed up at scale:
+				The final system — what Mivi ran on when I handed it over — was a fully custom frontend on the
+				Apex platform. Every piece was built to solve a real problem that showed up at scale:
 			</p>
 
 			<ul>
@@ -323,8 +323,8 @@
 			</ul>
 
 			<p>
-				The site serves two languages worth of product content across dozens of SKUs, handles
-				campaigns, discount codes, and influencer attribution — and the content team runs it
+				The site served two languages worth of product content across dozens of SKUs, handled
+				campaigns, discount codes, and influencer attribution — and the content team ran it
 				day-to-day without engineering support. That's the real measure of whether a system works:
 				can the people who aren't developers use it without calling one?
 			</p>
@@ -332,7 +332,7 @@
 			<h2>What I learned</h2>
 
 			<p>
-				Eight years on one product teaches you things that project-hopping doesn't.
+				Four years on one product teaches you things that project-hopping doesn't.
 				You see the consequences of your early decisions. You live with the shortcuts.
 				You learn that the component you built in a hurry at 2am is the one you'll be
 				maintaining for the next three years.
@@ -346,11 +346,11 @@
 				Not because anyone mandated it. Because the alternative was drowning.
 			</p>
 
-			<h2>What I'd improve next</h2>
+			<h2>What I'd have improved next</h2>
 
 			<ul>
 				<li>Performance audit on the heaviest product pages — image optimisation, lazy loading, bundle analysis.</li>
-				<li>Structured data (JSON-LD) for every product — Mivi's search presence could be stronger.</li>
+				<li>Structured data (JSON-LD) for every product — Mivi's search presence could have been stronger.</li>
 				<li>A shared animation library with reduced-motion support baked in.</li>
 				<li>Better preview tooling for the content team — let them see exactly what a page looks like before it goes live.</li>
 				<li>Accessibility pass across the full checkout flow — screen readers, keyboard nav, focus management.</li>
