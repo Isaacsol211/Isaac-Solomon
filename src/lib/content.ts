@@ -36,6 +36,7 @@ export const services = [
 	'E-commerce storefronts',
 	'Custom CMS builds',
 	'Scroll-driven animation',
+	'QA automation',
 	'Long-term product work'
 ];
 
@@ -85,6 +86,17 @@ export const serviceDetails: Service[] = [
 		]
 	},
 	{
+		title: 'QA automation',
+		summary:
+			'Smoke lanes that run themselves on request, and leave behind a report someone can actually act on.',
+		items: [
+			'Web, iOS simulator and Android emulator lanes',
+			'Flake isolation and retry policy',
+			'Finding dedupe and regression tracking',
+			'Reports with triage-ready evidence'
+		]
+	},
+	{
 		title: 'Long-term product work',
 		summary:
 			'Years-long partnerships — from first commit to product management, across rewrites and rebrands.',
@@ -116,6 +128,7 @@ export const about = {
 	paragraphs: [
 		"I'm a frontend developer at Able.do, where I've led the build on everything from India's largest audio brand storefront to a national talent platform that screens students across eleven languages. I write the kind of code that ships on Tuesday and still works on Friday — component systems flexible enough for non-technical teams to manage, e-commerce flows that handle real traffic, and scroll-driven animations that don't tank a Lighthouse score.",
 		"The work I'm proudest of sits at the intersection of craft and constraint: a CMS rebuilt twice to survive a corporate rebrand, an animation-heavy site pivoted from image sequences to video mid-build, a campaign site the client loved but never launched. Every project teaches you something — usually that the brief was wrong.",
+		'Lately the work has widened. A subscription-meals admin platform taken fully mobile-responsive, then a sideways move into QA — web, iOS and Android smoke lanes for a community platform, the automation programme that runs them, and the engine underneath it in TypeScript. I write too: the draft of a technical white paper on governed human–agent work, and this site, which is an MCP server as much as a portfolio.',
 		'When I\'m not shipping code I\'m somewhere in the mountains with a camera, chasing light and trying not to overthink the composition.'
 	],
 	portrait: '/isaac.webp',
@@ -454,7 +467,7 @@ export const experience = [
 		role: 'Frontend Developer',
 		company: 'Able.do',
 		description:
-			'Nine years building and shipping client products — e-commerce platforms, custom CMS systems, component libraries and design systems. Led the frontend for Mivi, Vibrant Living and a dozen other builds from first commit to production.'
+			'Nine years building and shipping client products — e-commerce platforms, custom CMS systems, component libraries and design systems. Led the frontend for Mivi, Vibrant Living and a dozen other builds from first commit to production. Since mid-2026 the work has widened into QA automation, governed delivery and technical writing.'
 	},
 	{
 		from: '2016',
