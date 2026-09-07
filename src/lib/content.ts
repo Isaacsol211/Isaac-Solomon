@@ -111,7 +111,7 @@ export const manifesto = {
 };
 
 export const about = {
-	lead: 'Eight years turning designs into products —',
+	lead: 'Nine years turning designs into products —',
 	leadAccent: 'not prototypes, not demos. Products.',
 	paragraphs: [
 		"I'm a frontend developer at Able.do, where I've led the build on everything from India's largest audio brand storefront to a national talent platform that screens students across eleven languages. I write the kind of code that ships on Tuesday and still works on Friday — component systems flexible enough for non-technical teams to manage, e-commerce flows that handle real traffic, and scroll-driven animations that don't tank a Lighthouse score.",
@@ -449,12 +449,12 @@ export const experience = [
 			'Side projects and freelance work alongside the day job — bilingual B2B sites, static builds on Cloudflare, and the odd experiment that never ships.'
 	},
 	{
-		from: '2018',
+		from: '2017',
 		to: 'Now',
 		role: 'Frontend Developer',
 		company: 'Able.do',
 		description:
-			'Eight years building and shipping client products — e-commerce platforms, custom CMS systems, component libraries and design systems. Led the frontend for Mivi, Vibrant Living and a dozen other builds from first commit to production.'
+			'Nine years building and shipping client products — e-commerce platforms, custom CMS systems, component libraries and design systems. Led the frontend for Mivi, Vibrant Living and a dozen other builds from first commit to production.'
 	},
 	{
 		from: '2016',
