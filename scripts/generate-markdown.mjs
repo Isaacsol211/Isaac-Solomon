@@ -167,7 +167,10 @@ const rules = written
 		// Transform Rule (Accept: text/markdown rewrites to the .md twin). Scoped to
 		// the negotiated pages only — on /* it would also land on the immutable
 		// hashed assets, where varying the cache key costs hit rate for nothing.
-		return `${path}\n  Link: </${slug}.md>; rel="alternate"; type="text/markdown"\n  Vary: Accept`;
+		// Cache-Control lives here, not on /*, because Cloudflare merges same-name
+		// headers across matching rules — a global one would corrupt every asset
+		// rule in _headers. These are the only HTML responses on the site.
+		return `${path}\n  Link: </${slug}.md>; rel="alternate"; type="text/markdown"\n  Vary: Accept\n  Cache-Control: no-store, must-revalidate`;
 	})
 	.join('\n\n');
 
