@@ -159,7 +159,10 @@ export type Project = {
 	category: string;
 	description: string;
 	tags: string[];
-	href: string;
+	/** Live URL. Omit when there is nothing public to link to. */
+	href?: string;
+	/** Shown instead of a link when the work never shipped, e.g. 'Unreleased'. */
+	status?: string;
 	/** 'dark' renders the inverted card with the big circle, like the mockup */
 	theme: 'light' | 'dark';
 	visual: ProjectVisualKind;
@@ -247,10 +250,10 @@ export const projects: Project[] = [
 		description:
 			"A static campaign site for the Aam Aadmi Party — editorial, urgent, built to mobilise. Strong typographic hierarchy, video-first news sections and a volunteer sign-up flow. The party loved it; it never went live. Some of the best work I've done for an audience of zero.",
 		tags: ['Static Site', 'Editorial', 'HTML / CSS', 'UI Design'],
-		href: 'https://github.com/Isaacsol211',
+		status: 'Unreleased',
 		theme: 'light',
 		visual: 'image',
-		frameLabel: 'aamaadmiparty.org',
+		frameLabel: 'AAP — campaign concept',
 		image: '/projects/aap.webp',
 		desktopImage: '/projects/aap-desktop.webp'
 	},
@@ -416,36 +419,18 @@ export const writing: Article[] = [
 export const writingHomeNote =
 	'The case studies live with each project above. These are the essays and deep dives that came out of them.';
 
-/**
- * PLACEHOLDER QUOTES — replace with real ones as they come in.
- * Swap quote / name / role; the layout handles any length.
- */
 export const testimonialsIntro = {
 	plain: 'Proof from',
 	accent: 'the work.',
 	note: 'Not a wall of polished review cards. The recurring signal from messy builds: pace, clarity and care after launch.'
 };
 
-export const testimonials = [
-	{
-		quote:
-			'Isaac is the developer you hand the impossible deadline to. He asks the right questions on day one, pushes back where it matters, and then quietly ships something better than the brief.',
-		name: 'Full Name',
-		role: 'Project Manager, Able.do'
-	},
-	{
-		quote:
-			'We came with four words and no designs. Isaac turned that into a bilingual site our customers actually use — and explained every decision along the way in language we could follow.',
-		name: 'Full Name',
-		role: 'Founder, Nova Rock'
-	},
-	{
-		quote:
-			'What stands out is the care after launch. Nothing was thrown over the wall — he stayed with the product, tuned the details, and left us with a system our own team can run.',
-		name: 'Full Name',
-		role: 'Client, 3 Sided Coin'
-	}
-];
+/**
+ * Real, approved quotes only. The section is hidden while this is empty —
+ * see src/routes/+page.svelte. Previous entries were unverified placeholders
+ * attributed to named businesses and were removed on 2026-09-15.
+ */
+export const testimonials: { quote: string; name: string; role: string }[] = [];
 
 export const experienceHeading = {
 	plain: 'A yearly snapshot of',

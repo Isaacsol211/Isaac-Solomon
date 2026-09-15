@@ -105,7 +105,7 @@
 			: ''}"
 >
 	<div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 sm:px-8">
-		<a href="#top" class="flex items-center gap-2 text-base font-medium tracking-tight" onclick={() => (open = false)}>
+		<a href="/" class="flex items-center gap-2 text-base font-medium tracking-tight" onclick={() => (open = false)}>
 			<span class="text-accent" aria-hidden="true">✱</span>
 			{site.name}
 		</a>

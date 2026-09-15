@@ -48,7 +48,7 @@
 	<!-- ── Hero ──────────────────────────────────────────────────────── -->
 	<div class="mx-auto max-w-3xl pt-14 md:pt-20">
 
-		<p class="text-xs font-medium tracking-[0.25em] uppercase text-accent">
+		<p class="text-xs font-medium tracking-[0.25em] uppercase text-accent-text">
 			Case Study · Nova Rock Tools
 		</p>
 
@@ -269,7 +269,7 @@
 		<!-- decision framework callout -->
 		<div class="not-prose my-10 overflow-hidden rounded-xl border border-accent/20 bg-accent/5">
 			<div class="border-b border-accent/15 px-6 py-4">
-				<p class="text-xs font-medium tracking-[0.25em] uppercase text-accent">The Design Rule</p>
+				<p class="text-xs font-medium tracking-[0.25em] uppercase text-accent-text">The Design Rule</p>
 				<p class="mt-1 font-medium tracking-tight">Every decision ran through the same three filters.</p>
 			</div>
 			<div class="divide-y divide-accent/10 px-6">
@@ -364,7 +364,7 @@
 		<!-- image savings callout -->
 		<div class="not-prose my-10 overflow-hidden rounded-2xl border border-line">
 			<div class="border-b border-line bg-paper-2 px-6 py-4">
-				<p class="text-xs font-medium tracking-[0.25em] uppercase text-accent">The Image Problem</p>
+				<p class="text-xs font-medium tracking-[0.25em] uppercase text-accent-text">The Image Problem</p>
 				<p class="mt-1 font-medium tracking-tight">4.2 MB per page load — mostly images no one audited.</p>
 			</div>
 			<div class="p-6">
@@ -426,7 +426,7 @@
 				</figcaption>
 			</figure>
 			<div class="sm:w-1/2">
-				<p class="mb-3 text-xs font-medium tracking-[0.25em] uppercase text-accent">The Fix</p>
+				<p class="mb-3 text-xs font-medium tracking-[0.25em] uppercase text-accent-text">The Fix</p>
 				<p class="text-sm leading-relaxed text-dim">
 					A <code class="rounded border border-line bg-paper-2 px-1.5 py-0.5 text-[11px]">&lt;Picture&gt;</code> component emits a proper
 					<code class="rounded border border-line bg-paper-2 px-1.5 py-0.5 text-[11px]">&lt;picture&gt;</code> element
@@ -466,7 +466,7 @@
 			<div class="border-t border-line bg-paper-2/50 px-4 py-3 text-xs leading-relaxed text-dim">
 				<code class="rounded border border-line bg-paper-2 px-1.5 py-0.5 text-[10px]">mobileSkip</code> emits
 				<code class="rounded border border-line bg-paper-2 px-1.5 py-0.5 text-[10px]">&lt;source media="(max-width: 639px)" srcset=""&gt;</code>
-				as the first source — browsers stop at the first matching source, so mobile never requests the file.
+				as the first source. A source whose parsed source set is empty is skipped rather than honoured, so this is not a guaranteed way to suppress the request — verify the behaviour you actually need on device.
 				<code class="rounded border border-line bg-paper-2 px-1.5 py-0.5 text-[10px]">display:none</code> doesn't do this.
 			</div>
 		</div>
@@ -569,7 +569,7 @@
 				<li>Downloadable PDF spec sheets per product, gated behind the WhatsApp CTA.</li>
 				<li>Track WhatsApp CTA clicks by product to understand which tools drive the most inquiries.</li>
 				<li>Spanish-first SEO landing pages targeting specific drill types and mining regions.</li>
-				<li>A small FAQ section answering "¿Hacen envíos a mina?" and "¿Tiempos de entrega?" — those questions earn rich results.</li>
+				<li>A small FAQ section answering "¿Hacen envíos a mina?" and "¿Tiempos de entrega?" — these are the questions buyers actually ask before enquiring.</li>
 			</ul>
 
 		</div>
@@ -637,20 +637,20 @@
 		content: '—';
 		position: absolute;
 		left: -1.5em;
-		color: var(--color-accent);
+		color: var(--color-accent-text);
 		font-weight: 500;
 	}
 
 	.prose a {
-		color: var(--color-accent);
+		color: var(--color-accent-text);
 		text-decoration: underline;
-		text-decoration-color: color-mix(in srgb, var(--color-accent) 35%, transparent);
+		text-decoration-color: color-mix(in srgb, var(--color-accent-text) 35%, transparent);
 		text-underline-offset: 3px;
 		transition: text-decoration-color 0.2s;
 	}
 
 	.prose a:hover {
-		text-decoration-color: var(--color-accent);
+		text-decoration-color: var(--color-accent-text);
 	}
 
 	.prose em {

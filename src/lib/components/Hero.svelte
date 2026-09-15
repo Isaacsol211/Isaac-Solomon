@@ -104,7 +104,7 @@
 				class="grid gap-3 text-[10px] font-medium tracking-[0.2em] lowercase text-dim sm:grid-cols-3 md:col-span-7"
 			>
 				<div class="border-l border-line pl-3">
-					<span class="block text-ink">8 years</span>
+					<span class="block text-ink">9 years</span>
 					<span>shipping client products</span>
 				</div>
 				<div class="border-l border-line pl-3">

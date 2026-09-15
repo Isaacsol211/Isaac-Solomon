@@ -48,7 +48,7 @@
 	<!-- ── Hero ──────────────────────────────────────────────────────── -->
 	<div class="mx-auto max-w-3xl pt-14 md:pt-20">
 
-		<p class="text-xs font-medium tracking-[0.25em] uppercase text-accent">
+		<p class="text-xs font-medium tracking-[0.25em] uppercase text-accent-text">
 			Case Study · Godrej Foundation
 		</p>
 
@@ -157,7 +157,7 @@
 		<!-- CMS features callout -->
 		<div class="not-prose my-10 overflow-hidden rounded-xl border border-accent/20 bg-accent/5">
 			<div class="border-b border-accent/15 px-6 py-4">
-				<p class="text-xs font-medium tracking-[0.25em] uppercase text-accent">The CMS</p>
+				<p class="text-xs font-medium tracking-[0.25em] uppercase text-accent-text">The CMS</p>
 				<p class="mt-1 font-medium tracking-tight">What the foundation team can manage on their own.</p>
 			</div>
 			<div class="divide-y divide-accent/10 px-6">
@@ -402,20 +402,20 @@
 		content: '—';
 		position: absolute;
 		left: -1.5em;
-		color: var(--color-accent);
+		color: var(--color-accent-text);
 		font-weight: 500;
 	}
 
 	.prose a {
-		color: var(--color-accent);
+		color: var(--color-accent-text);
 		text-decoration: underline;
-		text-decoration-color: color-mix(in srgb, var(--color-accent) 35%, transparent);
+		text-decoration-color: color-mix(in srgb, var(--color-accent-text) 35%, transparent);
 		text-underline-offset: 3px;
 		transition: text-decoration-color 0.2s;
 	}
 
 	.prose a:hover {
-		text-decoration-color: var(--color-accent);
+		text-decoration-color: var(--color-accent-text);
 	}
 
 	.prose strong {

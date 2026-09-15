@@ -22,6 +22,13 @@
 	--color-dim: #6e6a60;
 	--color-line: #dcd8cc;
 	--color-accent: #e8490f;
+	/*
+	 * Small text and links on LIGHT surfaces only. #e8490f is 3.39:1 on paper —
+	 * below the 4.5:1 WCAG AA minimum for normal text. #b5320a is 5.34:1.
+	 * Do NOT use accent-text on always-dark surfaces (cream/coal): it drops to
+	 * 3.03:1 there. Those keep --color-accent, which is 4.77:1 on coal.
+	 */
+	--color-accent-text: #b5320a;
 	--color-cream: #f1efea;
 	--color-coal: #141311;
 
@@ -40,6 +47,7 @@
 		--color-ink: #ece8e0;
 		--color-dim: #a39e92;
 		--color-line: #312d27;
+		--color-accent-text: #e8490f;
 	}
 
 	html {

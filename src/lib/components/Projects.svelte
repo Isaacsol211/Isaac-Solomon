@@ -241,12 +241,13 @@
 				? 'border-cream/10 bg-coal text-cream'
 				: 'border-line bg-paper-2 text-ink'}"
 		>
-			<a
+			<svelte:element
+				this={project.caseStudy ?? project.href ? 'a' : 'div'}
 				href={project.caseStudy ?? project.href}
-				target={project.caseStudy ? undefined : '_blank'}
-				rel={project.caseStudy ? undefined : 'noopener noreferrer'}
+				target={!project.caseStudy && project.href ? '_blank' : undefined}
+				rel={!project.caseStudy && project.href ? 'noopener noreferrer' : undefined}
 				class="group block"
-				aria-label="View project: {project.title}"
+				aria-label={project.caseStudy ?? project.href ? `View project: ${project.title}` : undefined}
 			>
 				<div class="mx-auto max-w-7xl px-5 py-16 sm:px-8 md:py-24">
 					<!-- Top row: number + category -->
@@ -320,7 +321,7 @@
 						</div>
 					</div>
 				</div>
-			</a>
+			</svelte:element>
 		</div>
 	{/each}
 
@@ -341,6 +342,7 @@
 				{#each visibleRest as project, i (project.title)}
 					{@const href = project.caseStudy ?? project.href}
 					{@const external = !project.caseStudy}
+					{@const linked = Boolean(href)}
 					<li
 						class="overflow-hidden"
 						onmouseenter={(e) => {
@@ -357,13 +359,14 @@
 							mouseY = e.clientY;
 						}}
 					>
-						<a
+						<svelte:element
+							this={linked ? 'a' : 'div'}
 							data-project-row
 							{href}
-							target={external ? '_blank' : undefined}
-							rel={external ? 'noopener noreferrer' : undefined}
+							target={linked && external ? '_blank' : undefined}
+							rel={linked && external ? 'noopener noreferrer' : undefined}
 							class="group relative grid grid-cols-[auto_1fr_auto] items-baseline gap-x-4 border-t border-line py-6 transition-colors duration-300 md:grid-cols-[5rem_1fr_10rem_auto] md:gap-x-6 md:py-8"
-							aria-label="View project: {project.title}"
+							aria-label={linked ? `View project: ${project.title}` : undefined}
 						>
 							<span class="text-lg font-medium tabular-nums text-dim transition-colors duration-300 group-hover:text-ink md:text-2xl">
 								{project.year}
@@ -379,12 +382,16 @@
 									? 'text-accent'
 									: 'text-dim'}"
 							>
-								<span class="hidden sm:inline">{project.caseStudy ? 'Case study' : 'Visit'}</span>
-								<ArrowUpRight
-									class="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-								/>
+								<span class="hidden sm:inline"
+									>{project.caseStudy ? 'Case study' : (project.status ?? 'Visit')}</span
+								>
+								{#if linked}
+									<ArrowUpRight
+										class="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+									/>
+								{/if}
 							</span>
-						</a>
+						</svelte:element>
 					</li>
 				{/each}
 			</ol>

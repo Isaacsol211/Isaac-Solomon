@@ -8,7 +8,6 @@
 	import Projects from '$lib/components/Projects.svelte';
 	import Experience from '$lib/components/Experience.svelte';
 	import Writing from '$lib/components/Writing.svelte';
-	import Testimonials from '$lib/components/Testimonials.svelte';
 	import Connect from '$lib/components/Connect.svelte';
 </script>
 
@@ -40,7 +39,6 @@
 	<Projects />
 	<Experience />
 	<Writing />
-	<Testimonials />
 </main>
 
 <Connect />

@@ -48,7 +48,7 @@
 	<!-- ── Hero ──────────────────────────────────────────────────────── -->
 	<div class="mx-auto max-w-3xl pt-14 md:pt-20">
 
-		<p class="text-xs font-medium tracking-[0.25em] uppercase text-accent">
+		<p class="text-xs font-medium tracking-[0.25em] uppercase text-accent-text">
 			Case Study · SAUT — Part 2
 		</p>
 
@@ -146,7 +146,7 @@
 		<!-- requirements callout -->
 		<div class="not-prose my-10 overflow-hidden rounded-xl border border-accent/20 bg-accent/5">
 			<div class="border-b border-accent/15 px-6 py-4">
-				<p class="text-xs font-medium tracking-[0.25em] uppercase text-accent">The Requirements</p>
+				<p class="text-xs font-medium tracking-[0.25em] uppercase text-accent-text">The Requirements</p>
 				<p class="mt-1 font-medium tracking-tight">What "create worksheets" actually meant.</p>
 			</div>
 			<div class="divide-y divide-accent/10 px-6">
@@ -310,7 +310,7 @@
 		<!-- related articles -->
 		<div class="not-prose my-10 overflow-hidden rounded-xl border border-accent/20 bg-accent/5">
 			<div class="border-b border-accent/15 px-6 py-4">
-				<p class="text-xs font-medium tracking-[0.25em] uppercase text-accent">More on SAUT</p>
+				<p class="text-xs font-medium tracking-[0.25em] uppercase text-accent-text">More on SAUT</p>
 			</div>
 			<div class="divide-y divide-accent/10">
 				<a href="/writing/saut" class="group flex items-baseline gap-5 px-6 py-4 transition-colors hover:bg-accent/5">
@@ -391,7 +391,7 @@
 		content: '—';
 		position: absolute;
 		left: -1.5em;
-		color: var(--color-accent);
+		color: var(--color-accent-text);
 		font-weight: 500;
 	}
 

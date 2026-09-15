@@ -169,7 +169,7 @@
 		<div class="relative z-10 mx-auto flex min-h-screen max-w-6xl flex-col justify-end px-5 pt-32 pb-12 sm:px-8 md:pb-16">
 			<div data-photo-hero-title use:reveal>
 				<p class="font-serif text-2xl italic text-cream/70 md:text-3xl">— &amp; {site.tagline}</p>
-				<h1 class="mt-5 max-w-5xl text-[clamp(4.6rem,14vw,13rem)] leading-[0.82] font-medium tracking-[-0.06em] lowercase">
+				<h1 class="mt-5 max-w-5xl text-[clamp(2.6rem,13vw,13rem)] leading-[0.82] font-medium tracking-[-0.06em] lowercase">
 					photography<span class="text-accent">.</span>
 				</h1>
 				<div class="mt-8 grid gap-8 border-t border-cream/20 pt-6 md:grid-cols-12">

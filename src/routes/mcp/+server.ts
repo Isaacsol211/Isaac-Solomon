@@ -11,7 +11,6 @@ import {
 	serviceDetails,
 	site,
 	socials,
-	testimonials,
 	writing
 } from '$lib/content';
 
@@ -444,7 +443,6 @@ const handlers = new Map<string, (args: Args, ctx: Ctx) => unknown | Promise<unk
 				location: site.location,
 				note: connect,
 				socials,
-				testimonials: testimonials.length,
 				photography: abs('/photography'),
 				photoCount: photos.length
 			})
