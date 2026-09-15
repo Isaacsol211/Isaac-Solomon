@@ -4,6 +4,7 @@
 	import { reveal } from '$lib/actions/reveal';
 	import { serviceDetails, servicesIntro } from '$lib/content';
 	import Eyebrow from './Eyebrow.svelte';
+	import ServicesDiagram from './ServicesDiagram.svelte';
 
 	let sectionEl = $state<HTMLElement>();
 	let activeIndex = $state(0);
@@ -15,12 +16,12 @@
 	 * the section clipped them and the snap made it impossible to stop in
 	 * between. Now the list is ordinary page flow — every row is reachable by
 	 * scrolling, at any viewport height, with text zoom, on a phone — and only
-	 * the compact card on the left is sticky. Sticky never clips: if the column
-	 * is taller than the viewport it simply scrolls with the page.
+	 * the diagram on the left is sticky. Sticky never clips: if the column is
+	 * taller than the viewport it simply scrolls with the page.
 	 *
-	 * The card mirrors whichever row is crossing the viewport's midline. Under
-	 * reduced motion the same observation runs with zero-duration transitions;
-	 * observing scroll position is not motion, animating in response to it is.
+	 * The diagram mirrors whichever row is crossing the viewport's midline, or
+	 * whichever row has keyboard focus. Observing scroll position is not motion;
+	 * the diagram's own transitions are CSS and switch off under reduced motion.
 	 */
 	onMount(() => {
 		let mm: ReturnType<(typeof import('gsap'))['gsap']['matchMedia']> | undefined;
@@ -33,26 +34,16 @@
 			mm = gsap.matchMedia(sectionEl);
 			mm.add({ ok: MOTION_OK, reduced: REDUCED_MOTION }, (context) => {
 				const reduced = Boolean(context.conditions?.reduced);
-				const cards = sectionEl!.querySelectorAll('[data-service-card]');
 				const rows = sectionEl!.querySelectorAll('[data-service-row]');
-				const duration = reduced ? 0 : 0.35;
 
+				/* The diagram on the left mirrors whichever row crosses the midline;
+				   its state changes are CSS transitions inside ServicesDiagram. */
 				let current = -1;
 				const show = (next: number) => {
 					if (next === current) return;
 					current = next;
 					activeIndex = next;
-					gsap.to(cards, {
-						opacity: (i) => (i === next ? 1 : 0),
-						yPercent: (i) => (i === next ? 0 : 6),
-						scale: (i) => (i === next ? 1 : 0.97),
-						duration,
-						ease: 'power2.out',
-						overwrite: true
-					});
 				};
-
-				gsap.set(cards, { opacity: 0, yPercent: 6, scale: 0.97 });
 				show(0);
 
 				rows.forEach((row, i) => {
@@ -117,39 +108,23 @@
 				</h2>
 
 				<!--
-					A decorative mirror of the active row, so aria-hidden: the list on the
-					right is the real content and the only copy assistive tech sees. That
-					also keeps five duplicate h3s out of heading navigation.
+					A working diagram of the active service — content into a page, an
+					option into a cart, blocks driven by scroll, checks across devices, a
+					product through versions. Decorative to assistive tech (the list is
+					the content), and labelled as an illustration, not a screenshot.
 				-->
-				<div
-					aria-hidden="true"
-					class="relative mt-8 hidden h-[clamp(18rem,44vh,25rem)] overflow-hidden rounded-[2rem] border border-line bg-paper md:block"
-				>
-					{#each serviceDetails as service, i (service.title)}
-						<div data-service-card class="absolute inset-0 flex flex-col justify-between p-7">
-							<div>
-								<p class="text-[10px] font-medium tracking-[0.24em] lowercase text-dim">chapter 0{i + 1}</p>
-								<p class="mt-4 text-3xl font-medium tracking-tight lowercase text-ink">
-									{service.title}
-								</p>
-								<p class="mt-3 max-w-sm text-sm leading-relaxed text-dim">{service.summary}</p>
-							</div>
-							<div class="space-y-2 border-t border-line pt-5">
-								{#each service.items as item (item)}
-									<div class="flex items-baseline gap-3 text-sm lowercase text-dim">
-										<span class="text-dim">✱</span>
-										<span>{item}</span>
-									</div>
-								{/each}
-							</div>
-						</div>
-					{/each}
+				<div class="mt-8 hidden md:block">
+					<ServicesDiagram index={activeIndex} />
 				</div>
 			</div>
 
 			<ol class="mt-12 border-b border-line md:col-span-7 md:mt-0">
 				{#each serviceDetails as service, i (service.title)}
 					<li class="group overflow-hidden border-t border-line">
+						<div class="mt-6 md:hidden" aria-hidden="true">
+							<ServicesDiagram index={i} compact />
+						</div>
+						<!-- No tabindex: the rows hold no controls, and keyboard scrolling drives the midline trigger like any other scrolling. -->
 						<div data-service-row class="grid gap-2 py-8 md:grid-cols-12 md:gap-6 md:py-9">
 							<span class="text-sm tabular-nums text-dim md:col-span-1">0{i + 1}</span>
 							<h3

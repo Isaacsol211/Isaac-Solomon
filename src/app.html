@@ -10,6 +10,10 @@
 			// Also mark that scripts run, so opening-animation start states can apply
 			// in CSS before hydration without hiding anything from a no-JS page.
 			document.documentElement.classList.add('js');
+			// Fail open: if the motion bundle never runs (blocked, failed, or slow),
+			// the start states expire and everything shows. GSAP normally takes over
+			// long before this; its inline styles win over the class rule either way.
+			setTimeout(() => document.documentElement.classList.add('opened'), 2500);
 			(() => {
 				try {
 					const stored = localStorage.getItem('theme');

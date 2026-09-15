@@ -6,6 +6,7 @@
 	import { projects, projectsIntro } from '$lib/content';
 	import ArrowUpRight from './ArrowUpRight.svelte';
 	import Eyebrow from './Eyebrow.svelte';
+	import CraftInterlude from './CraftInterlude.svelte';
 
 	const featured = projects.filter((p) => p.featured);
 	const rest = projects.filter((p) => !p.featured);
@@ -70,11 +71,15 @@
 					gsap.set(blocks, { opacity: 1 });
 				} else {
 					blocks.forEach((block, i) => {
-						const img = block.querySelector('[data-bleed-img]');
-						const revealAt = i === 0 ? 'top bottom' : 'top 75%';
+						const imgs = [...block.querySelectorAll<HTMLElement>('[data-bleed-img]')];
+						/* The hero stage is in the first viewport on load and follows the title
+						   rise; it is the only block with either behaviour. */
+						const heroStage = block.hasAttribute('data-hero-stage');
+						const revealAt = heroStage ? 'top bottom' : 'top 75%';
+						const lead = heroStage ? 0.55 : 0;
 						const text = block.querySelector('[data-bleed-text]');
 						const tags = block.querySelectorAll('[data-bleed-tag]');
-						const innerImg = block.querySelector('[data-bleed-img] img');
+						const innerImgs = [...block.querySelectorAll<HTMLElement>('[data-bleed-img] img')];
 						const number = block.querySelector('[data-bleed-number]');
 						const meta = block.querySelector('[data-bleed-meta]');
 						/*
@@ -85,41 +90,40 @@
 						 */
 						const driftX = twoColumn ? (i % 2 === 0 ? 56 : -56) : 0;
 
-						if (img) {
-							/* crop opens */
+						/* crop opens, then the image settles inside its fixed frame; a second
+						   frame in the same block follows 120ms behind the first */
+						imgs.forEach((el, k) => {
 							gsap.fromTo(
-								img,
+								el,
 								{ clipPath: 'inset(100% 0 0 0)' },
 								{
 									clipPath: 'inset(0% 0 0 0)',
 									duration: 0.7,
-									/* first block follows the title rise; later ones open as they arrive */
-									delay: i === 0 ? 0.55 : 0,
+									delay: lead + k * 0.12,
 									ease: 'expo.out',
 									scrollTrigger: { trigger: block, start: revealAt, once: true }
 								}
 							);
-						}
-						if (innerImg) {
-							/* image settles inside its fixed frame, a beat after the crop starts */
+						});
+						innerImgs.forEach((el, k) => {
 							gsap.fromTo(
-								innerImg,
+								el,
 								{ scale: 1.04 },
 								{
 									scale: 1,
 									duration: 1.1,
-									delay: (i === 0 ? 0.55 : 0) + 0.1,
+									delay: lead + 0.1 + k * 0.12,
 									ease: 'expo.out',
 									scrollTrigger: { trigger: block, start: revealAt, once: true }
 								}
 							);
-						}
+						});
 
 						/* Vertical drift on the img itself as the block moves through view — a
 						   different element from the settle above, so one transform each. */
-						if (innerImg && !isTouch) {
+						if (innerImgs.length && !isTouch) {
 							gsap.fromTo(
-								innerImg,
+								innerImgs,
 								{ yPercent: -4 },
 								{
 									yPercent: 4,
@@ -282,11 +286,16 @@
 		     creating a scroll container that would break sticky descendants -->
 		<div
 			data-bleed-block
+			data-hero-stage={project.featuredLayout === 'stage' ? '' : undefined}
 			class="relative transition-colors [overflow-x:clip] {project.featuredLayout === 'stage'
 				? 'text-cream'
-				: isDark
-					? 'border-t border-cream/10 bg-coal text-cream'
-					: 'border-t border-line bg-paper-2 text-ink'}"
+				: project.featuredLayout === 'bilingual' || project.featuredLayout === 'portrait'
+					? 'border-t border-line bg-paper-2 text-ink'
+					: project.featuredLayout === 'pair'
+						? 'border-t border-line bg-paper text-ink'
+						: isDark
+							? 'border-t border-cream/10 bg-coal text-cream'
+							: 'border-t border-line bg-paper-2 text-ink'}"
 		>
 			<svelte:element
 				this={project.caseStudy ?? project.href ? 'a' : 'div'}
@@ -373,6 +382,235 @@
 						</div>
 
 					</div>
+					</div>
+				{:else if project.featuredLayout === 'bilingual' && project.gallery}
+					<!--
+						Bilingual: quiet and precise. The text holds the left third; the
+						interface and the bilingual layout sit as two tall frames at their
+						own ratios. Nothing bleeds; the frames are the argument.
+					-->
+					{#snippet frame(g: NonNullable<typeof project.gallery>[number], sizes: string, eager = false)}
+						<figure class="min-w-0">
+							<div data-bleed-img class="overflow-hidden rounded-lg bg-paper">
+								<div data-bleed-frame style="aspect-ratio: {g.width} / {g.height}" class="overflow-hidden">
+									<img
+										src={g.src}
+										srcset="{g.small} 800w, {g.src} {g.width}w"
+										{sizes}
+										alt={g.alt}
+										width={g.width}
+										height={g.height}
+										loading={eager ? 'eager' : 'lazy'}
+										decoding="async"
+										class="block h-full w-full object-cover object-top"
+									/>
+								</div>
+							</div>
+							<figcaption class="mt-3 text-[11px] font-medium tracking-[0.18em] lowercase text-dim">{g.caption}</figcaption>
+						</figure>
+					{/snippet}
+					{#snippet textBlock(nameClass: string)}
+						<h3 class={nameClass}>{project.title}</h3>
+						{#if project.outcome}
+							<p class="mt-4 font-serif text-2xl leading-tight text-ink/90 italic md:text-[1.6rem]">{project.outcome}</p>
+						{/if}
+						<p class="mt-4 max-w-md text-sm leading-relaxed text-dim">{project.description}</p>
+						{#if project.credits}
+							<p class="mt-3 text-xs leading-relaxed text-dim">{project.credits}</p>
+						{/if}
+						<div class="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
+							<span class="inline-flex items-center gap-2 text-xs font-medium text-accent-text">
+								{project.caseStudy ? 'Case study' : 'Visit'}
+								<ArrowUpRight class="size-3.5 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
+							</span>
+							<span class="flex flex-wrap gap-2">
+								{#each project.tags as tag}
+									<span data-bleed-tag class="rounded-full border border-line px-3 py-1 text-[10px] font-medium tracking-[0.15em] text-dim uppercase">{tag}</span>
+								{/each}
+							</span>
+						</div>
+					{/snippet}
+					{#snippet metaRow()}
+						<div class="mb-8 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 md:mb-10">
+							<span data-bleed-meta class="text-[10px] font-medium tracking-[0.25em] text-dim uppercase">
+								{String(i + 1).padStart(2, '0')} — {project.year} — {project.category}
+							</span>
+							<span class="text-[10px] font-medium tracking-[0.25em] text-dim uppercase">{project.status ?? ''}</span>
+						</div>
+					{/snippet}
+					<div class="mx-auto max-w-6xl px-5 py-16 sm:px-8 md:py-24">
+						{@render metaRow()}
+						<div class="grid gap-10 md:grid-cols-12 md:gap-10">
+							<div data-bleed-text class="md:col-span-4">
+								{@render textBlock('text-5xl font-medium tracking-[-0.02em] lowercase lg:text-6xl')}
+							</div>
+							<div class="grid grid-cols-2 items-start gap-4 md:col-span-8 md:gap-6">
+								{#each project.gallery as g, k (g.src)}
+									{@render frame(g, '(min-width: 768px) 30vw, 45vw', false)}
+								{/each}
+							</div>
+						</div>
+					</div>
+				{:else if project.featuredLayout === 'pair' && project.gallery}
+					<!--
+						Pair: the before and the after, side by side, captioned, then the
+						text. The evidence leads because the evidence is the story.
+					-->
+					{#snippet frame(g: NonNullable<typeof project.gallery>[number], sizes: string, eager = false)}
+						<figure class="min-w-0">
+							<div data-bleed-img class="overflow-hidden rounded-lg bg-paper">
+								<div data-bleed-frame style="aspect-ratio: {g.width} / {g.height}" class="overflow-hidden">
+									<img
+										src={g.src}
+										srcset="{g.small} 800w, {g.src} {g.width}w"
+										{sizes}
+										alt={g.alt}
+										width={g.width}
+										height={g.height}
+										loading={eager ? 'eager' : 'lazy'}
+										decoding="async"
+										class="block h-full w-full object-cover object-top"
+									/>
+								</div>
+							</div>
+							<figcaption class="mt-3 text-[11px] font-medium tracking-[0.18em] lowercase text-dim">{g.caption}</figcaption>
+						</figure>
+					{/snippet}
+					{#snippet textBlock(nameClass: string)}
+						<h3 class={nameClass}>{project.title}</h3>
+						{#if project.outcome}
+							<p class="mt-4 font-serif text-2xl leading-tight text-ink/90 italic md:text-[1.6rem]">{project.outcome}</p>
+						{/if}
+						<p class="mt-4 max-w-md text-sm leading-relaxed text-dim">{project.description}</p>
+						{#if project.credits}
+							<p class="mt-3 text-xs leading-relaxed text-dim">{project.credits}</p>
+						{/if}
+						<div class="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
+							<span class="inline-flex items-center gap-2 text-xs font-medium text-accent-text">
+								{project.caseStudy ? 'Case study' : 'Visit'}
+								<ArrowUpRight class="size-3.5 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
+							</span>
+							<span class="flex flex-wrap gap-2">
+								{#each project.tags as tag}
+									<span data-bleed-tag class="rounded-full border border-line px-3 py-1 text-[10px] font-medium tracking-[0.15em] text-dim uppercase">{tag}</span>
+								{/each}
+							</span>
+						</div>
+					{/snippet}
+					{#snippet metaRow()}
+						<div class="mb-8 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 md:mb-10">
+							<span data-bleed-meta class="text-[10px] font-medium tracking-[0.25em] text-dim uppercase">
+								{String(i + 1).padStart(2, '0')} — {project.year} — {project.category}
+							</span>
+							<span class="text-[10px] font-medium tracking-[0.25em] text-dim uppercase">{project.status ?? ''}</span>
+						</div>
+					{/snippet}
+					<div class="mx-auto max-w-6xl px-5 py-16 sm:px-8 md:py-24">
+						{@render metaRow()}
+						<div class="grid gap-6 sm:grid-cols-2 md:gap-8">
+							{#each project.gallery as g (g.src)}
+								{@render frame(g, '(min-width: 768px) 46vw, 100vw', false)}
+							{/each}
+						</div>
+						<div class="mt-12 grid gap-8 md:mt-14 md:grid-cols-12 md:gap-10">
+							<div class="md:col-span-5">
+								<h3 class="text-5xl font-medium tracking-[-0.02em] lowercase lg:text-6xl">{project.title}</h3>
+							</div>
+							<div data-bleed-text class="md:col-span-7">
+								{#if project.outcome}
+									<p class="font-serif text-2xl leading-tight text-ink/90 italic md:text-[1.6rem]">{project.outcome}</p>
+								{/if}
+								<p class="mt-4 max-w-lg text-sm leading-relaxed text-dim">{project.description}</p>
+								{#if project.credits}
+									<p class="mt-3 text-xs leading-relaxed text-dim">{project.credits}</p>
+								{/if}
+								<div class="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
+									<span class="inline-flex items-center gap-2 text-xs font-medium text-accent-text">
+										{project.caseStudy ? 'Case study' : 'Visit'}
+										<ArrowUpRight class="size-3.5 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
+									</span>
+									<span class="flex flex-wrap gap-2">
+										{#each project.tags as tag}
+											<span data-bleed-tag class="rounded-full border border-line px-3 py-1 text-[10px] font-medium tracking-[0.15em] text-dim uppercase">{tag}</span>
+										{/each}
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				{:else if project.featuredLayout === 'portrait' && project.gallery}
+					<!--
+						Portrait: asymmetric editorial. The near-square mission page holds the
+						left, the text the right; the wide opening statement closes the
+						right column beneath the text. Two frames, two ratios, one column
+						each.
+					-->
+					{#snippet frame(g: NonNullable<typeof project.gallery>[number], sizes: string, eager = false)}
+						<figure class="min-w-0">
+							<div data-bleed-img class="overflow-hidden rounded-lg bg-paper">
+								<div data-bleed-frame style="aspect-ratio: {g.width} / {g.height}" class="overflow-hidden">
+									<img
+										src={g.src}
+										srcset="{g.small} 800w, {g.src} {g.width}w"
+										{sizes}
+										alt={g.alt}
+										width={g.width}
+										height={g.height}
+										loading={eager ? 'eager' : 'lazy'}
+										decoding="async"
+										class="block h-full w-full object-cover object-top"
+									/>
+								</div>
+							</div>
+							<figcaption class="mt-3 text-[11px] font-medium tracking-[0.18em] lowercase text-dim">{g.caption}</figcaption>
+						</figure>
+					{/snippet}
+					{#snippet textBlock(nameClass: string)}
+						<h3 class={nameClass}>{project.title}</h3>
+						{#if project.outcome}
+							<p class="mt-4 font-serif text-2xl leading-tight text-ink/90 italic md:text-[1.6rem]">{project.outcome}</p>
+						{/if}
+						<p class="mt-4 max-w-md text-sm leading-relaxed text-dim">{project.description}</p>
+						{#if project.credits}
+							<p class="mt-3 text-xs leading-relaxed text-dim">{project.credits}</p>
+						{/if}
+						<div class="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
+							<span class="inline-flex items-center gap-2 text-xs font-medium text-accent-text">
+								{project.caseStudy ? 'Case study' : 'Visit'}
+								<ArrowUpRight class="size-3.5 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
+							</span>
+							<span class="flex flex-wrap gap-2">
+								{#each project.tags as tag}
+									<span data-bleed-tag class="rounded-full border border-line px-3 py-1 text-[10px] font-medium tracking-[0.15em] text-dim uppercase">{tag}</span>
+								{/each}
+							</span>
+						</div>
+					{/snippet}
+					{#snippet metaRow()}
+						<div class="mb-8 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 md:mb-10">
+							<span data-bleed-meta class="text-[10px] font-medium tracking-[0.25em] text-dim uppercase">
+								{String(i + 1).padStart(2, '0')} — {project.year} — {project.category}
+							</span>
+							<span class="text-[10px] font-medium tracking-[0.25em] text-dim uppercase">{project.status ?? ''}</span>
+						</div>
+					{/snippet}
+					<div class="mx-auto max-w-6xl px-5 py-16 sm:px-8 md:py-24">
+						{@render metaRow()}
+						<div class="grid gap-10 md:grid-cols-12 md:gap-10">
+							<div class="md:col-span-5">
+								{@render frame(project.gallery[0], '(min-width: 768px) 40vw, 100vw', false)}
+							</div>
+							<div class="md:col-span-7">
+								<div data-bleed-text>
+									{@render textBlock('text-5xl font-medium tracking-[-0.02em] lowercase lg:text-6xl')}
+								</div>
+								{#if project.gallery[1]}
+									<div class="mt-10 md:mt-12">
+										{@render frame(project.gallery[1], '(min-width: 768px) 55vw, 100vw', false)}
+									</div>
+								{/if}
+							</div>
+						</div>
 					</div>
 				{:else}
 				<div class="mx-auto max-w-7xl px-5 py-16 sm:px-8 md:py-24">
@@ -483,6 +721,9 @@
 				{/if}
 			</svelte:element>
 		</div>
+		{#if i === 1}
+			<CraftInterlude />
+		{/if}
 	{/each}
 
 	<!-- Remaining projects — editorial list with hover image -->

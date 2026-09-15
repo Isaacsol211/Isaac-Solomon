@@ -205,11 +205,20 @@ export type Project = {
 	 */
 	credits?: string;
 	/**
-	 * Composition for the featured spread. 'stage' is the broad dark image
-	 * stage with the name set large — for work whose own imagery carries the
-	 * energy. Unset means the split image/text layout.
+	 * Composition for the featured spread, each distinct within the same system:
+	 *  - 'stage'     the hero's second act: broad dark image, name set large (Mivi)
+	 *  - 'bilingual' quiet and precise: text beside two tall interface frames (SAUT)
+	 *  - 'pair'      editorial before/after: two frames side by side, text beneath (Godrej)
+	 *  - 'portrait'  asymmetric editorial: near-square image beside text, wide image under it (TM)
+	 * Unset falls back to the split image/text layout.
 	 */
-	featuredLayout?: 'stage';
+	featuredLayout?: 'stage' | 'bilingual' | 'pair' | 'portrait';
+	/**
+	 * Frames for the composition, in order. Alt text and captions are lifted
+	 * from that project's case study; `small` is the 800w variant produced by
+	 * scripts/generate-image-variants.mjs, and width/height are the originals'.
+	 */
+	gallery?: { src: string; small: string; width: number; height: number; alt: string; caption: string }[];
 	/** Highlighted in the magazine spread instead of the mosaic grid */
 	featured?: boolean;
 };
@@ -256,6 +265,25 @@ export const projects: Project[] = [
 		caseStudy: '/writing/saut',
 		outcome: 'A 65-feature roadmap shipped across six releases, through a full framework rewrite.',
 		credits: 'Design by Tropics (Zubin). Built with Surajith on the functional side.',
+		featuredLayout: 'bilingual',
+		gallery: [
+			{
+				src: '/projects/saut/hero-lms-rtl.webp',
+				small: '/projects/saut/hero-lms-rtl-800.webp',
+				width: 1544,
+				height: 1808,
+				alt: 'SAUT learning management system in Arabic, right-to-left layout',
+				caption: 'LMS — Arabic, right-to-left'
+			},
+			{
+				src: '/projects/saut/landing-hero-devices-right-to-left.webp',
+				small: '/projects/saut/landing-hero-devices-right-to-left-800.webp',
+				width: 1605,
+				height: 1762,
+				alt: 'SAUT landing page shown across devices, right-to-left',
+				caption: 'Landing — across devices'
+			}
+		],
 		featured: true
 	},
 	{
@@ -348,6 +376,25 @@ export const projects: Project[] = [
 		caseStudy: '/writing/godrej',
 		outcome: 'A full corporate rebrand absorbed as a frontend rebuild, with zero content migration.',
 		credits: 'Design system by 3 Sided Coin.',
+		featuredLayout: 'pair',
+		gallery: [
+			{
+				src: '/writing/godrej/v1-desktop.webp',
+				small: '/writing/godrej/v1-desktop-800.webp',
+				width: 1440,
+				height: 900,
+				alt: 'Godrej Foundation v1 — old Godrej branding with banyan tree hero',
+				caption: 'v1 — before the rebrand'
+			},
+			{
+				src: '/writing/godrej/v2-desktop.webp',
+				small: '/writing/godrej/v2-desktop-800.webp',
+				width: 1440,
+				height: 900,
+				alt: 'Godrej Foundation v2 — new Godrej branding with Crafting a Prosperous Tomorrow hero',
+				caption: 'v2 — after, on the same content model'
+			}
+		],
 		featured: true
 	},
 	{
@@ -368,6 +415,25 @@ export const projects: Project[] = [
 		caseStudy: '/writing/tomorrow-makers',
 		outcome: 'Four student pathways, with the assessment for the youngest cohort (Classes 6–7) available in 11 languages.',
 		credits: 'Design by 3 Sided Coin.',
+		featuredLayout: 'portrait',
+		gallery: [
+			{
+				src: '/writing/tomorrow-makers/mission.webp',
+				small: '/writing/tomorrow-makers/mission-800.webp',
+				width: 1440,
+				height: 1350,
+				alt: "We're trying to change that — mission statement with editorial photography of classrooms",
+				caption: 'Mission page'
+			},
+			{
+				src: '/writing/tomorrow-makers/stats.webp',
+				small: '/writing/tomorrow-makers/stats-800.webp',
+				width: 1440,
+				height: 800,
+				alt: 'India has never lacked talent — what we have lacked is equal access to opportunity',
+				caption: 'Opening statement'
+			}
+		],
 		featured: true
 	}
 ];
@@ -470,6 +536,42 @@ export const writing: Article[] = [
  */
 export const writingHomeNote =
 	'The case studies live with each project above. These are the essays and deep dives that came out of them.';
+
+/**
+ * Compact craft interlude between the second and third featured projects.
+ * The fragments are projects that otherwise only appear in the list, so the
+ * interlude gives them a face without repeating imagery from the blocks
+ * around it. Each links to its work.
+ */
+export const craftInterlude = {
+	statement: 'Built for the people who use it.',
+	fragments: [
+		{
+			src: '/projects/keus-desktop-800.webp',
+			width: 1440,
+			height: 900,
+			alt: 'Keus smart home site',
+			label: 'Keus',
+			href: '/writing/keus'
+		},
+		{
+			src: '/projects/novarock-desktop-800.webp',
+			width: 1440,
+			height: 900,
+			alt: 'Nova Rock Tools bilingual product site',
+			label: 'Nova Rock Tools',
+			href: '/writing/novarock'
+		},
+		{
+			src: '/projects/vibrant-living-desktop-800.webp',
+			width: 1600,
+			height: 1000,
+			alt: 'Vibrant Living brand and commerce site',
+			label: 'Vibrant Living',
+			href: 'https://vibrantliving.in'
+		}
+	]
+};
 
 export const testimonialsIntro = {
 	plain: 'Proof from',

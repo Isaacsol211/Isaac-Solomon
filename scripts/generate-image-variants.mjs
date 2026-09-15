@@ -38,10 +38,21 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
 /** Featured project previews. They render at ~730px on desktop, ~335px on a phone. */
 const SOURCES = [
+	// featured stage / previews
 	'static/projects/mivi-desktop.webp',
 	'static/projects/saut/landing-hero-devices-right-to-left.webp',
 	'static/writing/godrej/hero.webp',
-	'static/writing/tomorrow-makers/hero.webp'
+	'static/writing/tomorrow-makers/hero.webp',
+	// featured compositions (SAUT bilingual, Godrej before/after, Tomorrow Makers editorial)
+	'static/projects/saut/hero-lms-rtl.webp',
+	'static/writing/godrej/v1-desktop.webp',
+	'static/writing/godrej/v2-desktop.webp',
+	'static/writing/tomorrow-makers/mission.webp',
+	'static/writing/tomorrow-makers/stats.webp',
+	// craft interlude fragments — projects that otherwise only appear in the list
+	'static/projects/keus-desktop.webp',
+	'static/projects/novarock-desktop.webp',
+	'static/projects/vibrant-living-desktop.webp'
 ];
 
 const WIDTH = 800;

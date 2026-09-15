@@ -34,7 +34,9 @@
 				 * 210ms), meta and introduction fade in where they stand, the stage's
 				 * crop opens beneath (Projects, first block, from 0.55s), and the ✱ turns
 				 * a quarter-step as the image lands. Opacity only on text — every box,
-				 * frame and seam is already in its final place before the first frame.
+				 * frame and seam is already in its final place before the first frame,
+				 * and nothing in the hero moves on scroll either; the ✱'s scroll spin is
+				 * the one scroll-linked element, and that is CSS.
 				 */
 				const opening = gsap.timeline({ defaults: { ease: 'power2.out' } });
 				if (meta) opening.fromTo(meta, { opacity: 0 }, { opacity: 1, duration: 0.6 }, 0.1);
@@ -48,12 +50,6 @@
 					);
 				}
 
-				/* Scroll-out: the three bands leave at different speeds. */
-				const scrub = { trigger: sectionEl, start: 'top top', end: 'bottom top', scrub: true };
-				const headline = sectionEl!.querySelector('[data-hero-headline]');
-				if (headline) gsap.to(headline, { yPercent: 14, opacity: 0.35, ease: 'none', scrollTrigger: { ...scrub } });
-				if (intro) gsap.to(intro, { yPercent: 26, opacity: 0.25, ease: 'none', scrollTrigger: { ...scrub } });
-				if (meta) gsap.to(meta, { yPercent: -20, opacity: 0.35, ease: 'none', scrollTrigger: { ...scrub } });
 			});
 		})();
 

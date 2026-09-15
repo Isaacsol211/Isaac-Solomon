@@ -188,11 +188,15 @@
  * inline styles take over from here.
  */
 @media (prefers-reduced-motion: no-preference) {
-	.js [data-hero-meta],
-	.js [data-hero-intro] {
+	/* .js:not(.opened) — the html element gains `opened` 2.5s after paint, so a
+	   page whose script never arrives still shows everything (fail open). */
+	.js:not(.opened) [data-hero-meta],
+	.js:not(.opened) [data-hero-intro] {
 		opacity: 0;
 	}
-	.js [data-bleed-block]:first-child [data-bleed-img] {
+	/* Hero stage only — scoped by attribute, not position, so later project
+	   layouts never inherit the hero's pre-paint clip. */
+	.js:not(.opened) [data-hero-stage] [data-bleed-img] {
 		clip-path: inset(100% 0 0 0);
 	}
 }
