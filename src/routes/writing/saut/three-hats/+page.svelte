@@ -110,7 +110,8 @@
 			<p>
 				When I started on SAUT, I was a frontend developer. 100% coding, 0% opinions about feature
 				prioritisation. Four years later, I was spending 40% of my time on product decisions, 30% coding,
-				and 20% designing screens. The shift wasn't a promotion or a role change — it was the natural
+				20% designing screens, and the last 10% on coordination — daily calls, planning, and keeping
+				three parties pointed the same way. The shift wasn't a promotion or a role change — it was the natural
 				consequence of building every screen in a product for four years straight.
 			</p>
 
@@ -166,12 +167,14 @@
 					{ phase: 'V1 (2019–2022)', coding: '100%', pm: '0%', design: '0%', note: 'Pure frontend — Vue.js components from Figma specs' },
 					{ phase: 'V2 rewrite (early 2023)', coding: '100%', pm: '0%', design: '0%', note: 'Five-month migration sprint — no room for anything else' },
 					{ phase: 'V2 stabilised (mid 2023)', coding: '45%', pm: '45%', design: '10%', note: 'Product decisions creep in — feature prioritisation, client calls' },
-					{ phase: 'V2 mature (late 2023)', coding: '30%', pm: '40%', design: '20%', note: 'Junior devs take over coding — PM and design become primary' },
+					{ phase: 'V2 mature (late 2023)', coding: '30%', pm: '40%', design: '20%', coord: '10%', note: 'Junior devs take over coding — PM and design become primary' },
 				] as row}
 					<div class="px-6 py-4">
 						<div class="flex items-baseline justify-between gap-4">
 							<span class="text-xs font-medium tracking-wide text-cream/50">{row.phase}</span>
-							<span class="font-mono text-xs text-[#86d993]">{row.coding} code · {row.pm} PM · {row.design} design</span>
+							<span class="font-mono text-xs text-[#86d993]">{row.coding} code · {row.pm} PM · {row.design} design{row.coord
+									? ` · ${row.coord} coordination`
+									: ''}</span>
 						</div>
 						<p class="mt-1.5 text-xs text-cream/40">{row.note}</p>
 					</div>

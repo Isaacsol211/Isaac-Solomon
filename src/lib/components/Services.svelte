@@ -7,6 +7,10 @@
 
 	let sectionEl = $state<HTMLElement>();
 	let activeIndex = $state(0);
+	/* Reduced motion drops the pinned stage: the card deck is absolutely stacked,
+	   so revealing every card at once overlaps them into an unreadable pile. The
+	   rows list already carries the same content, so the deck is hidden instead. */
+	let reduced = $state(false);
 
 	onMount(() => {
 		let ctxPromise: Promise<any> | undefined;
@@ -20,8 +24,8 @@
 				const cards = sectionEl!.querySelectorAll('[data-service-card]');
 				const rows = sectionEl!.querySelectorAll('[data-service-row]');
 				if (reducedMotion) {
+					reduced = true;
 					gsap.set(rows, { opacity: 1, yPercent: 0 });
-					gsap.set(cards, { opacity: 1 });
 					return;
 				}
 
@@ -95,10 +99,10 @@
 	});
 </script>
 
-<section bind:this={sectionEl} id="services" class="section-transition relative overflow-hidden border-t border-line px-5 py-20 sm:px-8 md:min-h-[220svh] md:py-0">
-	<div data-services-stage class="mx-auto flex max-w-6xl items-center md:h-screen">
+<section bind:this={sectionEl} id="services" class="section-transition relative border-t border-line px-5 py-20 sm:px-8 {reduced ? '' : 'overflow-hidden md:min-h-[220svh] md:py-0'}">
+	<div data-services-stage class="mx-auto flex max-w-6xl items-center {reduced ? '' : 'md:h-screen'}">
 		<div class="grid w-full gap-12 md:grid-cols-12 md:gap-10">
-			<div class="md:col-span-5 md:sticky md:top-28 md:self-start">
+			<div class="md:col-span-5 {reduced ? '' : 'md:sticky md:top-28 md:self-start'}">
 		<div use:reveal>
 			<Eyebrow index="02" title="Services" />
 		</div>
@@ -110,7 +114,7 @@
 			<em class="font-serif font-normal text-dim italic">{servicesIntro.accent}</em>
 		</h2>
 
-				<div class="relative mt-8 hidden h-[clamp(18rem,44vh,25rem)] overflow-hidden rounded-[2rem] border border-line bg-paper md:block">
+				<div class="relative mt-8 hidden h-[clamp(18rem,44vh,25rem)] overflow-hidden rounded-[2rem] border border-line bg-paper {reduced ? '' : 'md:block'}">
 					{#each serviceDetails as service, i (service.title)}
 						<div
 							data-service-card
