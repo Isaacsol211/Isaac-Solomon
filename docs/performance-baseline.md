@@ -1,85 +1,121 @@
 # Performance baseline — 15 Sep 2026
 
-The review's Pass 4 asks for measured lab baselines before any speed claim goes
-on the site. This is that baseline. It is a lab measurement, not field data —
-see *What this does not cover*.
+Lab measurements of the production build, reproducible from the repo. This
+replaces the earlier version of this document, whose "cold" runs had not
+cleared the HTTP cache and whose harness lived outside the repository. Both
+of those were findings of the follow-up review and are fixed here.
 
 ## Method
 
-Chrome headless via the DevTools Protocol against the production build served by
-`vite preview`, throttled to approximate a mid-range phone on a poor connection:
+`scripts/perf-baseline.mjs` drives headless Chrome over the DevTools Protocol.
 
 | Setting | Value |
 |---|---|
-| CPU throttle | 4× slowdown |
-| Network | 1.6 Mbps down, 750 Kbps up, 150 ms RTT |
-| Viewport | 390 × 844, DPR 2, mobile |
-| Cache | cold — `about:blank` between runs |
+| Chrome | 152.0.7977.84, `--headless=new`, fresh profile per invocation |
+| CPU | 4× throttle |
+| Network | 1.6 Mbps down · 750 Kbps up · 150 ms RTT |
+| Viewport | 390 × 844, DPR 2, `mobile: true` |
+| First visit | `Network.clearBrowserCache` + `setCacheDisabled(true)` before **every** run |
+| Repeat visit | cache enabled, one warm-up load discarded, then measured |
+| Runs | 5 per page per mode; medians reported; every sample kept in the JSON |
 
-Reproduce with `scripts/../` — the harness lives in the session scratchpad, not
-the repo; the numbers matter more than the script. Re-measure the same way after
-any change that touches images, fonts, or the motion bundle.
+Raw outputs, with Chrome version, commit, profile and timestamps, are in
+`docs/perf/`. Reproduce with:
 
-## Results
+```
+npm run build && npm run preview -- --port 4173
+node scripts/perf-baseline.mjs --base http://localhost:4173 --runs 5 --label local
+node scripts/perf-baseline.mjs --base https://isaacsolomon.dev --runs 5 --label deployed
+```
 
-| Page | FCP | LCP | DOMContentLoaded | Load | Requests | Transferred | DOM nodes |
+Use `vite preview`, never `npx serve -s build`: `-s` is SPA mode and serves
+the homepage for every route, so `/photography` and `/writing/saut` would be
+measuring `/`.
+
+## Results — local build, first visit (cold), medians
+
+Three runs of the same harness against three successive builds. The commit
+in each filename is the harness's HEAD when it ran; the build served is
+named in the row.
+
+| Build | Page | FCP | LCP | DCL | Load | Req | KB |
 |---|---|---|---|---|---|---|---|
-| `/` | 876 ms | 876 ms | 873 ms | 3,087 ms | 26 | 483 KB | 597 |
-| `/photography` | 252 ms | 412 ms | 411 ms | 1,931 ms | 26 | 314 KB | 294 |
-| `/writing/saut` | 516 ms | 516 ms | 551 ms | 3,427 ms | 24 | 343 KB | 231 |
+| after defect fixes (`cf98f89` content, tagged `b1b3322`) | `/` | 920 | 920 | 1084 | 1253 | 26 | 484 |
+| + hero composition (`1250ec6`) | `/` | 944 | 1444 | 939 | 3700 | 29 | 662 |
+| + previews on hover (`18d4e01`, **current**) | `/` | 920 | 1424 | 914 | 2393 | 26 | 391 |
+| current | `/photography` | 708 | 708 | 698 | 2815 | 26 | 476 |
+| current | `/writing/saut` | 748 | 748 | 746 | 4284 | 24 | 498 |
 
-LCP is inside the 2.5 s "good" threshold on all three pages under throttling.
+### Reading the homepage row
 
-### Where the bytes go
+- **FCP is unchanged** by the hero composition (920 → 920 ms).
+- **LCP rose from 920 to 1424 ms.** Before the hero, the largest contentful
+  element was the display headline — text. It is now a photograph, the Mivi
+  storefront frame. That is the cost of putting real work imagery in the
+  first viewport, and it is inside the 2.5 s "good" threshold under 4× CPU
+  and a 1.6 Mbps link. It is not a regression to hide; it is the trade the
+  brief asked for, measured.
+- **Transfer went 484 → 662 → 391 KB.** The hero's three frames add ~198 KB.
+  The harness then exposed that the homepage was also fetching ~270 KB of
+  images that only exist for the cursor-hover preview on the project rows,
+  on every first visit from a mouse device, since the portal carried a `src`
+  for every row from mount. Those now load on first hover (`18d4e01`), which
+  is why the current homepage transfers *less* than it did before the hero.
+- **Load** (the `load` event) is dominated by when the last image finishes
+  on a throttled link; it is reported but LCP is the number that matters.
 
-| Page | Images | CSS | JS | Other |
-|---|---|---|---|---|
-| `/` | 293 KB | 65 KB | 51 KB | 75 KB |
-| `/photography` | 309 KB | — | — | 5 KB |
-| `/writing/saut` | 333 KB | 1 KB | — | 10 KB |
+## Results — deployed site, medians
 
-Images dominate every page, which is expected for this site and is where any
-future work should go. The 800w variants added for the featured project
-previews took those four images from 555 KB to 151 KB on a phone.
+Measured against `https://isaacsolomon.dev` on 15 Sep, when the live build
+was `b1b3322` (before the follow-up's fixes and the hero). Same profile.
+`docs/perf/2026-09-15-deployed-cf98f89.json`.
 
-## What this does not cover
+| Page | Visit | FCP | LCP | DCL | Load | Req | KB |
+|---|---|---|---|---|---|---|---|
+| `/` | first | 1328 | 1328 | 1325 | 1816 | 32 | 613 |
+| `/` | repeat | 628 | 628 | 847 | 849 | 30 | 14 |
+| `/photography` | first | 1132 | 1132 | 1132 | 2981 | 30 | 492 |
+| `/photography` | repeat | 348 | 348 | 511 | 512 | 30 | 14 |
+| `/writing/saut` | first | 1224 | 1224 | 1243 | 4494 | 27 | 514 |
+| `/writing/saut` | repeat | 384 | 384 | 515 | 566 | 27 | 14 |
 
-- **This is lab data, not field data.** It says what a throttled headless
-  Chrome experiences, not what real visitors on real networks and devices do.
+Deployed adds real edge TTFB and Cloudflare's own beacon (+4–6 requests, the
+14 KB on repeat visits is its POSTs). Re-run this after the next deploy to
+get the deployed number for the current build.
 
-  Field data does exist: **Cloudflare Web Analytics is already running** on
-  isaacsolomon.dev. It is enabled through Cloudflare's automatic setup, so the
-  beacon is injected at the edge and appears nowhere in this repository —
-  which is exactly why an earlier pass of this document wrongly recorded the
-  site as having no monitoring. `grep` over the source finds nothing, and so
-  does `curl` with a default user agent, because the injection only happens
-  for browser-like requests. Confirmed by fetching the live page with a
-  browser user agent:
+## Caveats — read before quoting a number
 
-  ```
-  data-cf-beacon='{"version":"2024.11.0","token":"f83b...b41d","r":1,"spa":2}'
-  ```
+- **Repeat-visit KB on `local` runs is not trustworthy for images.**
+  `vite preview` sends no `Cache-Control`, so freshness is heuristic — a
+  fraction of the file's age. Files generated the same day (the hero's 800w
+  frames) are stale within minutes and re-download in full; older photos are
+  served from cache. Production is different: `_headers` gives `/photos/*`,
+  `/projects/*` and the case-study image folders `max-age=604800`, so real
+  repeat visits cache them for a week. The deployed run's 14 KB repeat is
+  the honest figure.
+- **The "phone" profile has a mouse.** CDP's `mobile: true` sets touch points
+  but does not change the `hover`/`pointer` media features, and
+  `setEmulatedMedia` does not accept them, so `(hover: hover) and (pointer:
+  fine)` is true in every run. Anything gated on a fine pointer is included.
+  This is why the hover previews were caught — and why the site-side fix
+  was the right one.
+- **Single machine, one day.** Medians of five, not a distribution.
+- **Static load numbers say nothing about scroll smoothness.** The brief
+  asks for traces during the expressive scenes; none are recorded here.
 
-  `spa: 2` means SPA mode is on, so SvelteKit's client-side navigations are
-  counted as page views rather than only the first hard load. The dashboard is
-  under Cloudflare → Analytics & Logs → Web Analytics.
+## Field data
 
-  **Do not add a second beacon to the source.** Two beacons on one page double
-  every page view and corrupt the Core Web Vitals sample. If repo-controlled
-  analytics is ever wanted instead, turn the automatic injection off first.
-- **Localhost serving.** Network conditions are emulated but the server responds
-  instantly. Real TTFB from Cloudflare's edge is not represented.
-- **One run per page.** These are single cold-load samples, not medians over
-  repeated runs. Treat them as an order-of-magnitude baseline.
+Cloudflare Web Analytics is running on the site through Cloudflare's
+automatic setup; the beacon is injected at the edge and appears nowhere in
+this repository. `spa: 2` is on, so client-side navigations count as page
+views. Dashboard: Cloudflare → Analytics & Logs → Web Analytics. Do not add
+a second beacon in source.
 
 ## Claims on the site that depend on measurement
 
-The About copy says scroll-driven animation "doesn't cost a Lighthouse score".
-That is backed by the Keus case study, which publishes a real Lighthouse desktop
-audit — Performance 97 — with the screenshot, and says plainly that a
-scroll-driven video site will not score 100. The claim is sourced; leave it
-alone unless that audit is re-run and changes.
-
-Everything else in the copy describes a practice ("performance budgets that
-hold", "motion with a performance budget") rather than asserting a number, and
-needs no measurement to stand.
+About says scroll-driven animation "doesn't cost a Lighthouse score". The
+Keus case study renders a hardcoded metrics table with Performance 97 — an
+earlier version of this document called it a screenshot, which it is not.
+A stated 97 does not demonstrate zero cost. The sentence should be read as
+a description of practice; if it is to stand as a claim, attach a dated
+audit to the article.
