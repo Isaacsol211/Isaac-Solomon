@@ -69,7 +69,14 @@
 
 <section bind:this={sectionEl} id="about" class="section-transition relative py-20 md:py-32">
 	<div class="mx-auto max-w-6xl px-5 sm:px-8">
-		<div class="grid gap-12 md:grid-cols-12 md:gap-16">
+		<!--
+			The column gap is capped in vw, not left as a plain rem. gap-16 is 4rem, so
+			at a 200% root font size the eleven gaps wanted 1408px inside a 1312px grid
+			and the columns were squeezed past the viewport — 32px of horizontal scroll
+			for anyone using text zoom. min() keeps 64px at normal size and lets the gap
+			stop growing once the grid cannot afford it.
+		-->
+		<div class="grid gap-12 md:grid-cols-12 md:gap-[min(4rem,4.5vw)]">
 			<div class="md:col-span-4">
 				<div use:reveal class="md:sticky md:top-28">
 					<Eyebrow title="About Me" />
