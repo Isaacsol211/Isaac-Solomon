@@ -392,7 +392,7 @@
 
 			<ul>
 				<li>A three-person team can ship a complex product if the communication loop is tight enough. Daily calls with the client removed ambiguity faster than any specification document.</li>
-				<li>Data architecture decisions made in year one define what's possible in year four. V1's copy-based model worked until it didn't — and "until it didn't" cost us a five-month rewrite.</li>
+				<li>Data architecture decisions made in year one define what's possible in year four. V1's copy-based model held while the curriculum was small, and stopped holding the moment it was not — a five-month rewrite.</li>
 				<li>RTL support isn't a feature you bolt on at the end. It's an architectural decision that shapes every component, every animation, every layout decision from day one.</li>
 				<li>Building the same product twice — first in Vue, then in Svelte — teaches you what the framework gave you and what was always just your code. Most of the hard problems were domain problems, not framework problems.</li>
 				<li>The best product knowledge comes from building every screen yourself. By V2, I could answer product questions faster than checking the spec because I'd already built the flows that the spec described.</li>

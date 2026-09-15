@@ -5,7 +5,7 @@
 
 	const title = 'The Scroll Problem — Isaac Solomon';
 	const description =
-		'How we built a scroll-driven animation site for India\'s fastest-growing smart home brand — and why we threw away the first approach at 3 AM.';
+		'How we built a scroll-driven animation site for India\'s fastest-growing smart home brand — and why we threw away the first approach.';
 	const canonical = `${site.url}/writing/keus`;
 </script>
 
@@ -59,7 +59,7 @@
 
 		<p class="mt-6 max-w-xl text-lg leading-relaxed text-dim md:text-xl">
 			How we built a scroll-driven animation site for India's fastest-growing smart home brand —
-			and why we threw away the first approach at 3 AM.
+			and why we threw away the first approach after the proof of concept.
 		</p>
 
 		<!-- meta -->
@@ -154,9 +154,9 @@
 				<a href="https://www.able.do" target="_blank" rel="noopener noreferrer">Able.do</a>
 				brought years of design expertise to the table and worked directly with Keus's in-house
 				design team to rethink the approach. Not to water down the vision, but to make it work
-				in a browser — at any size, on any device. That collaboration meant late-night calls,
-				sometimes running past 3 AM, iterating on layouts and scroll sequences until
-				they felt right at every breakpoint.
+				in a browser — at any size, on any device. That meant working through layouts and scroll
+				sequences together, breakpoint by breakpoint, rather than trading files and waiting a
+				day for each answer.
 			</p>
 
 		</div>
@@ -437,7 +437,7 @@
 				what keeps it manageable instead of catastrophic.
 			</p>
 
-			<h2>Working at 3 AM</h2>
+			<h2>One conversation, not a handoff</h2>
 
 			<p>
 				The Keus project wasn't just a technical challenge — it was a collaboration challenge.
@@ -448,10 +448,10 @@
 			</p>
 
 			<p>
-				Some of the best decisions came out of the late-night calls. When you're on a call
-				at 3 AM, nobody's performing. There's no posturing. You're just trying to solve the
-				problem — does this transition feel right? Is this scroll section too long? Does the
-				video need to be trimmed, or does the trigger point need to move?
+				The best decisions came out of working through the detail together instead of trading
+				files. Does this transition feel right? Is this scroll section too long? Does the video
+				need trimming, or does the trigger point need to move? Those are quick questions to
+				settle in a shared review and expensive ones to settle over a week of comments.
 			</p>
 
 			<p>

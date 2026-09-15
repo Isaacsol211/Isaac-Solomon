@@ -54,7 +54,7 @@
 
 		<h1 class="mt-4 text-4xl font-medium leading-[1.1] tracking-tight md:text-6xl">
 			Frontend Dev.<br />Product Manager.
-			<em class="font-serif font-normal italic text-dim">Emergency Designer.</em>
+			<em class="font-serif font-normal italic text-dim">Stand-in Designer.</em>
 		</h1>
 
 		<p class="mt-6 max-w-xl text-lg leading-relaxed text-dim md:text-xl">
@@ -209,7 +209,7 @@
 				making the decision.
 			</p>
 
-			<h2>Emergency design</h2>
+			<h2>Designing from the system</h2>
 
 			<p>
 				Tropics — the design studio — handled the visual design. They set the design language,
