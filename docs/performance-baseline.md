@@ -44,11 +44,29 @@ previews took those four images from 555 KB to 151 KB on a phone.
 
 ## What this does not cover
 
-- **No field data.** There is no real-user monitoring on the site, so nothing
-  here says what actual visitors experience on real networks and devices.
-  Cloudflare Web Analytics would provide this with no third-party tracker and
-  no cookie banner, but installing it is a privacy decision, not a technical
-  one — it has not been added.
+- **This is lab data, not field data.** It says what a throttled headless
+  Chrome experiences, not what real visitors on real networks and devices do.
+
+  Field data does exist: **Cloudflare Web Analytics is already running** on
+  isaacsolomon.dev. It is enabled through Cloudflare's automatic setup, so the
+  beacon is injected at the edge and appears nowhere in this repository —
+  which is exactly why an earlier pass of this document wrongly recorded the
+  site as having no monitoring. `grep` over the source finds nothing, and so
+  does `curl` with a default user agent, because the injection only happens
+  for browser-like requests. Confirmed by fetching the live page with a
+  browser user agent:
+
+  ```
+  data-cf-beacon='{"version":"2024.11.0","token":"f83b...b41d","r":1,"spa":2}'
+  ```
+
+  `spa: 2` means SPA mode is on, so SvelteKit's client-side navigations are
+  counted as page views rather than only the first hard load. The dashboard is
+  under Cloudflare → Analytics & Logs → Web Analytics.
+
+  **Do not add a second beacon to the source.** Two beacons on one page double
+  every page view and corrupt the Core Web Vitals sample. If repo-controlled
+  analytics is ever wanted instead, turn the automatic injection off first.
 - **Localhost serving.** Network conditions are emulated but the server responds
   instantly. Real TTFB from Cloudflare's edge is not represented.
 - **One run per page.** These are single cold-load samples, not medians over
