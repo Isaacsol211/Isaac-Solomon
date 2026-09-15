@@ -204,6 +204,12 @@ export type Project = {
 	 * article credits no one beyond Able.do.
 	 */
 	credits?: string;
+	/**
+	 * Composition for the featured spread. 'stage' is the broad dark image
+	 * stage with the name set large — for work whose own imagery carries the
+	 * energy. Unset means the split image/text layout.
+	 */
+	featuredLayout?: 'stage';
 	/** Highlighted in the magazine spread instead of the mosaic grid */
 	featured?: boolean;
 };
@@ -229,6 +235,7 @@ export const projects: Project[] = [
 		previewWidth: 1600,
 		caseStudy: '/writing/mivi',
 		outcome: '100,000+ customers and 10,000+ orders managed natively after the migration.',
+		featuredLayout: 'stage',
 		featured: true
 	},
 	{

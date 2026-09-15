@@ -1,0 +1,404 @@
+{
+  "generated": "2026-09-15T14:47:59.971Z",
+  "label": "local",
+  "base": "http://localhost:4173",
+  "commit": "b1b3322",
+  "chrome": "Google Chrome 152.0.7977.84",
+  "runs": 5,
+  "profile": {
+    "cpuThrottle": 4,
+    "network": {
+      "latency": 150,
+      "downloadThroughput": 209715.2,
+      "uploadThroughput": 96000
+    },
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "deviceScaleFactor": 2,
+      "mobile": true
+    }
+  },
+  "summary": {
+    "/": {
+      "first": {
+        "fcp": 920,
+        "lcp": 920,
+        "dcl": 1084,
+        "load": 1253,
+        "ttfb": 3,
+        "requests": 26,
+        "transferKB": 484
+      },
+      "repeat": {
+        "fcp": 544,
+        "lcp": 576,
+        "dcl": 206,
+        "load": 424,
+        "ttfb": 3,
+        "requests": 26,
+        "transferKB": 0
+      }
+    },
+    "/photography": {
+      "first": {
+        "fcp": 712,
+        "lcp": 712,
+        "dcl": 710,
+        "load": 2807,
+        "ttfb": 4,
+        "requests": 26,
+        "transferKB": 475
+      },
+      "repeat": {
+        "fcp": 368,
+        "lcp": 368,
+        "dcl": 203,
+        "load": 490,
+        "ttfb": 4,
+        "requests": 26,
+        "transferKB": 0
+      }
+    },
+    "/writing/saut": {
+      "first": {
+        "fcp": 740,
+        "lcp": 740,
+        "dcl": 753,
+        "load": 4290,
+        "ttfb": 3,
+        "requests": 24,
+        "transferKB": 498
+      },
+      "repeat": {
+        "fcp": 352,
+        "lcp": 352,
+        "dcl": 296,
+        "load": 486,
+        "ttfb": 2,
+        "requests": 24,
+        "transferKB": 0
+      }
+    }
+  },
+  "samples": {
+    "/": {
+      "first": [
+        {
+          "fcp": 936,
+          "dcl": 1096,
+          "load": 1281,
+          "ttfb": 4,
+          "requests": 26,
+          "transferKB": 484,
+          "fromCache": 0,
+          "lcp": 936
+        },
+        {
+          "fcp": 892,
+          "dcl": 869,
+          "load": 1238,
+          "ttfb": 3,
+          "requests": 26,
+          "transferKB": 484,
+          "fromCache": 0,
+          "lcp": 892
+        },
+        {
+          "fcp": 924,
+          "dcl": 1229,
+          "load": 1253,
+          "ttfb": 3,
+          "requests": 26,
+          "transferKB": 484,
+          "fromCache": 0,
+          "lcp": 924
+        },
+        {
+          "fcp": 896,
+          "dcl": 894,
+          "load": 1230,
+          "ttfb": 3,
+          "requests": 26,
+          "transferKB": 484,
+          "fromCache": 0,
+          "lcp": 896
+        },
+        {
+          "fcp": 920,
+          "dcl": 1084,
+          "load": 1258,
+          "ttfb": 3,
+          "requests": 26,
+          "transferKB": 484,
+          "fromCache": 0,
+          "lcp": 920
+        }
+      ],
+      "repeat": [
+        {
+          "fcp": 576,
+          "dcl": 206,
+          "load": 559,
+          "ttfb": 3,
+          "requests": 26,
+          "transferKB": 0,
+          "fromCache": 26,
+          "lcp": 576
+        },
+        {
+          "fcp": 544,
+          "dcl": 206,
+          "load": 235,
+          "ttfb": 2,
+          "requests": 26,
+          "transferKB": 0,
+          "fromCache": 26,
+          "lcp": 544
+        },
+        {
+          "fcp": 580,
+          "dcl": 207,
+          "load": 563,
+          "ttfb": 3,
+          "requests": 26,
+          "transferKB": 0,
+          "fromCache": 26,
+          "lcp": 580
+        },
+        {
+          "fcp": 544,
+          "dcl": 204,
+          "load": 230,
+          "ttfb": 7,
+          "requests": 26,
+          "transferKB": 0,
+          "fromCache": 26,
+          "lcp": 544
+        },
+        {
+          "fcp": 404,
+          "dcl": 407,
+          "load": 424,
+          "ttfb": 2,
+          "requests": 26,
+          "transferKB": 0,
+          "fromCache": 26,
+          "lcp": 680
+        }
+      ]
+    },
+    "/photography": {
+      "first": [
+        {
+          "fcp": 724,
+          "dcl": 719,
+          "load": 2814,
+          "ttfb": 7,
+          "requests": 26,
+          "transferKB": 475,
+          "fromCache": 0,
+          "lcp": 724
+        },
+        {
+          "fcp": 712,
+          "dcl": 710,
+          "load": 2809,
+          "ttfb": 6,
+          "requests": 26,
+          "transferKB": 475,
+          "fromCache": 0,
+          "lcp": 712
+        },
+        {
+          "fcp": 684,
+          "dcl": 679,
+          "load": 2807,
+          "ttfb": 2,
+          "requests": 26,
+          "transferKB": 475,
+          "fromCache": 0,
+          "lcp": 684
+        },
+        {
+          "fcp": 692,
+          "dcl": 688,
+          "load": 2807,
+          "ttfb": 3,
+          "requests": 26,
+          "transferKB": 475,
+          "fromCache": 0,
+          "lcp": 692
+        },
+        {
+          "fcp": 764,
+          "dcl": 768,
+          "load": 2807,
+          "ttfb": 4,
+          "requests": 26,
+          "transferKB": 475,
+          "fromCache": 0,
+          "lcp": 764
+        }
+      ],
+      "repeat": [
+        {
+          "fcp": 468,
+          "dcl": 210,
+          "load": 226,
+          "ttfb": 3,
+          "requests": 26,
+          "transferKB": 0,
+          "fromCache": 26,
+          "lcp": 468
+        },
+        {
+          "fcp": 368,
+          "dcl": 202,
+          "load": 533,
+          "ttfb": 4,
+          "requests": 26,
+          "transferKB": 0,
+          "fromCache": 26,
+          "lcp": 368
+        },
+        {
+          "fcp": 348,
+          "dcl": 203,
+          "load": 490,
+          "ttfb": 3,
+          "requests": 26,
+          "transferKB": 0,
+          "fromCache": 26,
+          "lcp": 348
+        },
+        {
+          "fcp": 336,
+          "dcl": 196,
+          "load": 322,
+          "ttfb": 4,
+          "requests": 26,
+          "transferKB": 0,
+          "fromCache": 26,
+          "lcp": 336
+        },
+        {
+          "fcp": 400,
+          "dcl": 211,
+          "load": 583,
+          "ttfb": 5,
+          "requests": 26,
+          "transferKB": 0,
+          "fromCache": 26,
+          "lcp": 400
+        }
+      ]
+    },
+    "/writing/saut": {
+      "first": [
+        {
+          "fcp": 784,
+          "dcl": 792,
+          "load": 4288,
+          "ttfb": 6,
+          "requests": 24,
+          "transferKB": 498,
+          "fromCache": 0,
+          "lcp": 784
+        },
+        {
+          "fcp": 740,
+          "dcl": 753,
+          "load": 4293,
+          "ttfb": 3,
+          "requests": 24,
+          "transferKB": 498,
+          "fromCache": 0,
+          "lcp": 740
+        },
+        {
+          "fcp": 732,
+          "dcl": 743,
+          "load": 4279,
+          "ttfb": 3,
+          "requests": 24,
+          "transferKB": 498,
+          "fromCache": 0,
+          "lcp": 732
+        },
+        {
+          "fcp": 752,
+          "dcl": 767,
+          "load": 4290,
+          "ttfb": 5,
+          "requests": 24,
+          "transferKB": 498,
+          "fromCache": 0,
+          "lcp": 752
+        },
+        {
+          "fcp": 728,
+          "dcl": 736,
+          "load": 4295,
+          "ttfb": 2,
+          "requests": 24,
+          "transferKB": 498,
+          "fromCache": 0,
+          "lcp": 728
+        }
+      ],
+      "repeat": [
+        {
+          "fcp": 324,
+          "dcl": 296,
+          "load": 486,
+          "ttfb": 2,
+          "requests": 24,
+          "transferKB": 0,
+          "fromCache": 22,
+          "lcp": 324
+        },
+        {
+          "fcp": 324,
+          "dcl": 385,
+          "load": 477,
+          "ttfb": 1,
+          "requests": 24,
+          "transferKB": 0,
+          "fromCache": 22,
+          "lcp": 324
+        },
+        {
+          "fcp": 360,
+          "dcl": 329,
+          "load": 503,
+          "ttfb": 2,
+          "requests": 24,
+          "transferKB": 0,
+          "fromCache": 22,
+          "lcp": 360
+        },
+        {
+          "fcp": 380,
+          "dcl": 198,
+          "load": 496,
+          "ttfb": 2,
+          "requests": 24,
+          "transferKB": 0,
+          "fromCache": 22,
+          "lcp": 380
+        },
+        {
+          "fcp": 352,
+          "dcl": 194,
+          "load": 417,
+          "ttfb": 2,
+          "requests": 24,
+          "transferKB": 0,
+          "fromCache": 22,
+          "lcp": 352
+        }
+      ]
+    }
+  }
+}

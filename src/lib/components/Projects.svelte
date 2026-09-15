@@ -63,6 +63,7 @@
 				} else {
 					blocks.forEach((block, i) => {
 						const img = block.querySelector('[data-bleed-img]');
+						const frame = block.querySelector('[data-bleed-frame]');
 						const text = block.querySelector('[data-bleed-text]');
 						const tags = block.querySelectorAll('[data-bleed-tag]');
 						const innerImg = block.querySelector('[data-bleed-img] img');
@@ -77,26 +78,41 @@
 						const driftX = twoColumn ? (i % 2 === 0 ? 56 : -56) : 0;
 
 						if (img) {
+							/* crop opens */
 							gsap.fromTo(
 								img,
 								{ clipPath: 'inset(100% 0 0 0)' },
 								{
 									clipPath: 'inset(0% 0 0 0)',
-									duration: 1.8,
-									ease: 'power3.inOut',
+									duration: 0.7,
+									ease: 'expo.out',
+									scrollTrigger: { trigger: block, start: 'top 75%', once: true }
+								}
+							);
+						}
+						if (frame) {
+							/* image settles, a beat after the crop starts */
+							gsap.fromTo(
+								frame,
+								{ scale: 1.04 },
+								{
+									scale: 1,
+									duration: 1.1,
+									delay: 0.1,
+									ease: 'expo.out',
 									scrollTrigger: { trigger: block, start: 'top 75%', once: true }
 								}
 							);
 						}
 
-						/* Scale + drift on the inner image as the block moves through view */
+						/* Vertical drift on the img itself as the block moves through view — a
+						   different element from the settle above, so one transform each. */
 						if (innerImg && !isTouch) {
 							gsap.fromTo(
 								innerImg,
-								{ yPercent: -5, scale: 1.12 },
+								{ yPercent: -4 },
 								{
-									yPercent: 5,
-									scale: 1,
+									yPercent: 4,
 									ease: 'none',
 									scrollTrigger: {
 										trigger: block,
@@ -245,18 +261,17 @@
 	class="section-transition border-t border-line"
 >
 	<!-- Section header -->
-	<div class="px-5 py-20 sm:px-8 md:py-32">
-		<div class="mx-auto max-w-6xl">
-			<div use:reveal class="max-w-2xl">
+	<div class="px-5 py-14 sm:px-8 md:py-16">
+		<div class="mx-auto grid max-w-6xl gap-6 md:grid-cols-12 md:items-end">
+			<div use:reveal class="md:col-span-7">
 				<Eyebrow title="Selected Work" />
-				<h2 class="mt-6 text-4xl font-medium tracking-tight lowercase md:text-6xl">
-					selected<br />
-					<span class="text-dim">work.</span>
+				<h2 class="mt-5 text-4xl font-medium tracking-tight lowercase md:text-6xl">
+					selected <span class="text-dim">work.</span>
 				</h2>
-				<p class="mt-6 max-w-md text-sm leading-relaxed text-dim">
-					{projectsIntro}
-				</p>
 			</div>
+			<p use:reveal={{ delay: 120 }} class="max-w-md text-sm leading-relaxed text-dim md:col-span-5 md:justify-self-end">
+				{projectsIntro}
+			</p>
 		</div>
 	</div>
 
@@ -282,6 +297,72 @@
 				class="group block"
 				aria-label={project.caseStudy ?? project.href ? `View project: ${project.title}` : undefined}
 			>
+				{#if project.featuredLayout === 'stage'}
+					<!--
+						Stage layout: the image is the whole width and the name is set at
+						display size beneath it. The product's own colour supplies the
+						energy, so the chrome around it stays quiet — no coloured rule on
+						the outcome, which is set in the serif instead.
+					-->
+					<div class="mx-auto max-w-7xl px-5 py-16 sm:px-8 md:py-24">
+						<div class="mb-8 flex items-baseline justify-between gap-4 md:mb-12">
+							<span data-bleed-number class="text-7xl font-medium tabular-nums text-cream/20 md:text-9xl">
+								{String(i + 1).padStart(2, '0')}
+							</span>
+							<span data-bleed-meta class="text-right text-[10px] font-medium tracking-[0.25em] uppercase text-cream/40">
+								{project.year} — {project.category}
+							</span>
+						</div>
+
+						<div data-bleed-img class="overflow-hidden rounded-lg">
+							{#if img}
+								<!-- 21/9 against a 2.4:1 source: a sliver off each side, not a crop into the UI -->
+								<div data-bleed-frame class="aspect-[16/10] overflow-hidden sm:aspect-[21/9]">
+									<img
+										src={img}
+										srcset={project.previewSmall && project.previewWidth
+											? `${project.previewSmall} 800w, ${img} ${project.previewWidth}w`
+											: undefined}
+										sizes={project.previewSmall && project.previewWidth ? '(min-width: 1280px) 1216px, 100vw' : undefined}
+										alt="{project.title} screenshot"
+										loading="lazy"
+										decoding="async"
+										style={vtName ? `view-transition-name: ${vtName}` : undefined}
+										class="h-full w-full object-cover object-top"
+									/>
+								</div>
+							{/if}
+						</div>
+
+						<div class="mt-8 grid gap-6 md:mt-10 md:grid-cols-12 md:items-end md:gap-10">
+							<h3 class="text-6xl font-medium tracking-[-0.03em] lowercase md:col-span-6 md:text-[7.5rem] md:leading-[0.9]">
+								{project.title}
+							</h3>
+							<div data-bleed-text class="md:col-span-6">
+								{#if project.outcome}
+									<p class="font-serif text-2xl leading-tight text-cream/90 italic md:text-[1.75rem]">
+										{project.outcome}
+									</p>
+								{/if}
+								<p class="mt-4 max-w-lg text-sm leading-relaxed text-cream/60">{project.description}</p>
+								{#if project.credits}
+									<p class="mt-3 text-xs leading-relaxed text-cream/55">{project.credits}</p>
+								{/if}
+								<div class="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
+									<span class="inline-flex items-center gap-2 text-xs font-medium text-accent">
+										{project.caseStudy ? 'Case study' : 'Visit'}
+										<ArrowUpRight class="size-3.5 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
+									</span>
+									<span class="flex flex-wrap gap-2">
+										{#each project.tags as tag}
+											<span data-bleed-tag class="rounded-full border border-cream/15 px-3 py-1 text-[10px] font-medium tracking-[0.15em] text-cream/50 uppercase">{tag}</span>
+										{/each}
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				{:else}
 				<div class="mx-auto max-w-7xl px-5 py-16 sm:px-8 md:py-24">
 					<!-- Top row: number + category -->
 					<div class="mb-10 flex items-baseline justify-between gap-4 md:mb-16">
@@ -309,7 +390,7 @@
 						<div class="md:col-span-8 {isEven ? '' : 'md:order-2'}">
 							<div data-bleed-img class="overflow-hidden rounded-lg">
 								{#if img}
-									<div class="aspect-[16/10] overflow-hidden">
+									<div data-bleed-frame class="aspect-[16/10] overflow-hidden">
 										<!--
 											sizes mirrors the layout: md:col-span-8 of a max-w-6xl grid is
 											roughly two thirds of the viewport, full width once it stacks.
@@ -328,7 +409,7 @@
 											loading="lazy"
 											decoding="async"
 											style={vtName ? `view-transition-name: ${vtName}` : undefined}
-											class="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.03]"
+											class="h-full w-full object-cover object-top"
 										/>
 									</div>
 								{/if}
@@ -387,6 +468,7 @@
 						</div>
 					</div>
 				</div>
+				{/if}
 			</svelte:element>
 		</div>
 	{/each}
