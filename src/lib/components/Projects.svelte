@@ -25,6 +25,14 @@
 	let lerpY = $state(0);
 	/** Hover/cursor effects need a fine pointer; mirrors the FINE_POINTER query live. */
 	let finePointer = $state(false);
+	/*
+	 * Rows whose preview image has been requested. The portal used to carry a
+	 * src for every row from mount, so a first visit on a mouse device fetched
+	 * ~270 KB of images that only appear on hover. Now a row's image gets its
+	 * src the first time the pointer enters it; the fade still plays because
+	 * the <img> element itself has always been there.
+	 */
+	let seen = $state<number[]>([]);
 	let reduced = $state(false);
 	let mounted = $state(false);
 
@@ -500,6 +508,7 @@
 								mouseY = lerpY = e.clientY;
 							}
 							activeIndex = i;
+							if (!seen.includes(i)) seen = [...seen, i];
 						}}
 						onmouseleave={() => (activeIndex = -1)}
 						onmousemove={(e) => {
@@ -577,9 +586,9 @@
 				{@const img = project.desktopImage ?? project.image}
 				{#if img}
 					<img
-						src={img}
+						src={seen.includes(i) ? img : undefined}
 						alt=""
-						loading="lazy"
+						decoding="async"
 						class="absolute inset-0 h-full w-full object-cover object-top transition-opacity duration-300"
 						style="opacity: {activeIndex === i ? 1 : 0}"
 					/>
