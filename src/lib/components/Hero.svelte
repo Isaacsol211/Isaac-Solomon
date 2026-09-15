@@ -116,17 +116,20 @@
 					{site.heroLead}
 				</p>
 				<div class="mt-7 flex flex-wrap items-center gap-3">
+					<!-- Responses stay inside the button: an arrow moves 4px, a fill deepens. The hit target is fixed. -->
 					<a
 						href="#projects"
-						class="inline-flex items-center rounded-full bg-ink px-6 py-3 text-sm font-medium text-paper transition-opacity hover:opacity-85"
+						class="group inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3 text-sm font-medium text-paper transition-colors duration-200 hover:bg-accent focus-visible:bg-accent"
 					>
 						View selected work
+						<span class="inline-block transition-transform duration-200 group-hover:translate-x-1 group-focus-visible:translate-x-1" aria-hidden="true">↓</span>
 					</a>
 					<a
 						href="#connect"
-						class="inline-flex items-center rounded-full border border-line px-6 py-3 text-sm font-medium text-ink transition-colors hover:border-ink"
+						class="group inline-flex items-center gap-2 rounded-full border border-line px-6 py-3 text-sm font-medium text-ink transition-colors duration-200 hover:border-ink hover:bg-paper-2 focus-visible:border-ink focus-visible:bg-paper-2"
 					>
 						Get in touch
+						<span class="inline-block transition-transform duration-200 group-hover:translate-x-1 group-focus-visible:translate-x-1" aria-hidden="true">→</span>
 					</a>
 				</div>
 			</div>

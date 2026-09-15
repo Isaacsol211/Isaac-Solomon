@@ -26,9 +26,19 @@
 			?.setAttribute('content', value ? '#161412' : '#f1efea');
 	}
 
+	let transitionTimer: ReturnType<typeof setTimeout> | undefined;
+
 	function toggleTheme() {
+		/* Colour transition for this change only; focus stays on the button and
+		   nothing navigates, so location and focus are preserved by construction. */
+		const root = document.documentElement;
+		root.classList.add('theme-transition');
+		clearTimeout(transitionTimer);
+		transitionTimer = setTimeout(() => root.classList.remove('theme-transition'), 320);
+
 		applyTheme(!dark);
 		localStorage.setItem('theme', dark ? 'dark' : 'light');
+		window.dispatchEvent(new CustomEvent('site:turn'));
 	}
 </script>
 

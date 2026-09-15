@@ -2,10 +2,13 @@
 	import { onMount } from 'svelte';
 	import { initMotion, MOTION_OK } from '$lib/motion';
 	import { reveal } from '$lib/actions/reveal';
-	import { about, clients } from '$lib/content';
+	import { photos, about, clients } from '$lib/content';
 	import Eyebrow from './Eyebrow.svelte';
 
 	let sectionEl = $state<HTMLElement>();
+
+	/** One frame from the archive beside the portrait — the personal detail. */
+	const aside = photos.find((p) => p.place === 'Base Camp') ?? photos[0];
 
 	onMount(() => {
 		let ctxPromise: Promise<any> | undefined;
@@ -20,24 +23,20 @@
 				const portrait = sectionEl!.querySelector('[data-about-portrait]');
 				const lead = sectionEl!.querySelector('[data-about-lead]');
 
-				if (portrait) {
+				/* One clip reveal each, then nothing — the photographs stay put. */
+				sectionEl!.querySelectorAll('[data-about-frame]').forEach((frame, i) => {
 					gsap.fromTo(
-						portrait,
-						{ yPercent: 18, scale: 0.92, rotate: -4 },
+						frame,
+						{ clipPath: 'inset(0 0 100% 0)' },
 						{
-							yPercent: -8,
-							scale: 1,
-							rotate: 0,
-							ease: 'none',
-							scrollTrigger: {
-								trigger: sectionEl,
-								start: 'top bottom',
-								end: 'center center',
-								scrub: true
-							}
+							clipPath: 'inset(0 0 0% 0)',
+							duration: 0.7,
+							delay: i * 0.12,
+							ease: 'expo.out',
+							scrollTrigger: { trigger: frame, start: 'top 85%', once: true }
 						}
 					);
-				}
+				});
 				if (lead) {
 					gsap.fromTo(
 						lead,
@@ -81,15 +80,39 @@
 			<div class="md:col-span-4">
 				<div use:reveal class="md:sticky md:top-28">
 					<Eyebrow title="About Me" />
-					<img
-						data-about-portrait
-						src={about.portrait}
-						alt={about.portraitAlt}
-						width="1200"
-						height="1199"
-						loading="lazy"
-						class="mt-8 w-full max-w-[14rem] rounded-2xl sm:max-w-xs"
-					/>
+					<!--
+						The portrait, and one frame from the archive set against its corner.
+						Restrained: a hairline ring, no shadow, no overlay, a plain caption.
+					-->
+					<div class="relative mt-8 max-w-[15rem] sm:max-w-xs">
+						<div data-about-frame class="overflow-hidden rounded-2xl">
+							<img
+								data-about-portrait
+								src={about.portrait}
+								alt={about.portraitAlt}
+								width="1200"
+								height="1199"
+								loading="lazy"
+								class="block w-full"
+							/>
+						</div>
+						<figure class="absolute -right-6 -bottom-8 w-[46%] sm:-right-10">
+							<div data-about-frame class="overflow-hidden rounded-lg bg-paper-2 ring-1 ring-ink/10">
+								<img
+									src={aside.src.replace('.jpg', '-800.jpg')}
+									alt={aside.alt}
+									width={aside.w}
+									height={aside.h}
+									loading="lazy"
+									decoding="async"
+									class="block h-auto w-full"
+								/>
+							</div>
+							<figcaption class="mt-2 text-[10px] font-medium tracking-[0.18em] lowercase text-dim">
+								{aside.place} — {aside.location}
+							</figcaption>
+						</figure>
+					</div>
 				</div>
 			</div>
 

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { site } from '$lib/content';
 	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
+	import ReadingProgress from '$lib/components/ReadingProgress.svelte';
 	import NextArticle from '$lib/components/NextArticle.svelte';
 
 	const title = 'The Scroll Problem — Isaac Solomon';
@@ -25,6 +26,8 @@
 	<meta name="twitter:description" content={description} />
 	<meta name="twitter:image" content="{site.url}/writing/keus/hero.png" />
 </svelte:head>
+
+<ReadingProgress />
 
 <!-- back nav -->
 <header class="border-b border-line px-5 py-4 sm:px-8">

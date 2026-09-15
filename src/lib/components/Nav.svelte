@@ -18,6 +18,11 @@
 
 	let scrollY = $state(0);
 	let open = $state(false);
+	/* One marker slides between links instead of each link drawing its own. */
+	let navEl = $state<HTMLElement>();
+	let marker = $state({ x: 0, w: 0, visible: false });
+	/* The wordmark ✱ turns a quarter-step on selected deliberate actions. */
+	let turns = $state(0);
 	let activeSection = $state('');
 	let menuEl = $state<HTMLElement>();
 	let headerEl = $state<HTMLElement>();
@@ -52,6 +57,30 @@
 		closeOnDesktop(desktop);
 		desktop.addEventListener('change', closeOnDesktop);
 		return () => desktop.removeEventListener('change', closeOnDesktop);
+	});
+
+	// Marker: measure the active link and slide there (CSS transition, 200ms).
+	$effect(() => {
+		void activeSection;
+		void pathname;
+		if (!navEl) return;
+		const active = navEl.querySelector<HTMLElement>('a[aria-current="true"]');
+		if (!active) {
+			/* Written, never read, inside this effect — reading `marker` here would
+			   make the effect depend on its own output and loop. */
+			marker = { x: 0, w: 0, visible: false };
+			return;
+		}
+		const nr = navEl.getBoundingClientRect();
+		const ar = active.getBoundingClientRect();
+		marker = { x: ar.left - nr.left, w: ar.width, visible: true };
+	});
+
+	// The wordmark ✱ answers deliberate actions elsewhere (theme switch, copy).
+	$effect(() => {
+		const onTurn = () => (turns += 1);
+		window.addEventListener('site:turn', onTurn);
+		return () => window.removeEventListener('site:turn', onTurn);
 	});
 
 	// Scroll-spy — highlight the nav link for the section under the viewport's midline
@@ -107,7 +136,7 @@
 >
 	<div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 sm:px-8">
 		<a href="/" class="flex items-center gap-2 text-base font-medium tracking-tight" onclick={() => (open = false)}>
-			<span class="text-accent" aria-hidden="true">✱</span>
+			<span class="asterisk-turn text-accent" aria-hidden="true" style="transform: rotate({turns * 90}deg)">✱</span>
 			{site.name}
 		</a>
 
@@ -119,17 +148,26 @@
 			>
 				chapter / <span class={invert ? 'text-cream' : 'text-ink'}>{activeLabel}</span>
 			</p>
-		<nav class="items-center gap-2.5 md:flex" aria-label="Primary">
+		<nav bind:this={navEl} class="relative items-center gap-2.5 md:flex" aria-label="Primary">
+			<span
+				aria-hidden="true"
+				class="pointer-events-none absolute -bottom-1 left-0 h-px bg-accent transition-[transform,width,opacity] duration-200 ease-out"
+				style="transform: translateX({marker.x}px); width: {marker.w}px; opacity: {marker.visible ? 1 : 0};"
+			></span>
 			{#each navLinks as link, i (link.href)}
 				{#if i > 0}<span aria-hidden="true" class="select-none {invert ? 'text-cream/45' : 'text-dim'}">,</span>{/if}
 				<a
 					href={resolvedHref(link.href)}
 					aria-current={isActiveLink(link.href) ? 'true' : undefined}
-					class="relative text-sm lowercase transition-colors duration-200 after:absolute after:-bottom-1 after:left-0 after:h-px after:w-full after:origin-left after:bg-accent after:transition-transform after:duration-300 after:ease-out hover:after:scale-x-100 {invert
+					class="relative text-sm lowercase transition-colors duration-200 {invert
 						? 'hover:text-cream'
 						: 'hover:text-ink'} {isActiveLink(link.href)
-						? (invert ? 'text-cream' : 'text-ink') + ' after:scale-x-100'
-						: (invert ? 'text-cream/60' : 'text-dim') + ' after:scale-x-0'}"
+						? invert
+							? 'text-cream'
+							: 'text-ink'
+						: invert
+							? 'text-cream/60'
+							: 'text-dim'}"
 				>
 					{link.label}
 				</a>
@@ -142,11 +180,12 @@
 
 			<a
 				href="#connect"
-				class="hidden rounded-full px-5 py-2.5 text-sm transition-colors duration-300 hover:bg-accent hover:text-paper md:inline-block {invert
+				class="group hidden items-center gap-2 rounded-full px-5 py-2.5 text-sm transition-colors duration-300 hover:bg-accent hover:text-paper focus-visible:bg-accent focus-visible:text-paper md:inline-flex {invert
 					? 'bg-cream text-coal'
 					: 'bg-ink text-paper'}"
 			>
 				let's talk
+				<span class="inline-block transition-transform duration-200 group-hover:translate-x-1 group-focus-visible:translate-x-1" aria-hidden="true">→</span>
 			</a>
 
 			<!-- Mobile menu toggle -->

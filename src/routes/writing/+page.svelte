@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { site, writing, writingIntro } from '$lib/content';
 	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
-	import { reveal } from '$lib/actions/reveal';
 
 	const title = 'Writing — Isaac Solomon';
 	const description = writingIntro.note;
@@ -52,25 +51,41 @@
 			{writingIntro.note}
 		</p>
 
-		<ol class="mt-12 border-b border-line md:mt-16">
-			{#each writing as article (article.href)}
-				<li use:reveal class="border-t border-line">
-					<a
-						href={article.href}
-						class="group relative block py-8 transition-colors duration-300 before:absolute before:-inset-x-5 before:inset-y-2 before:-z-10 before:rounded-2xl before:bg-paper-2 before:opacity-0 before:transition-opacity before:duration-300 hover:before:opacity-60 md:py-10"
-					>
-						<div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
-							<p class="text-xs font-medium tracking-[0.15em] uppercase text-dim">
-								{article.tag}
-							</p>
-							<p class="text-xs text-dim tabular-nums">{article.readingTime} · {article.year}</p>
-						</div>
-						<h2
-							class="mt-3 text-xl font-medium tracking-tight transition-colors duration-300 group-hover:text-accent md:text-2xl"
-						>
-							{article.title}
+		<!--
+			A selection, not a feed: the first piece is set as the lead, the rest as
+			compact rows. Hover and focus reveal a 240ms underline under the title;
+			nothing else moves.
+		-->
+		{#if writing.length}
+			{@const lead = writing[0]}
+			<a
+				href={lead.href}
+				class="group mt-12 block border-t border-line pt-8 md:mt-16 md:pt-10"
+			>
+				<div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+					<p class="text-xs font-medium tracking-[0.15em] text-dim uppercase">{lead.tag}</p>
+					<p class="text-xs text-dim tabular-nums">{lead.readingTime} · {lead.year}</p>
+				</div>
+				<h2 class="mt-4 font-serif text-4xl leading-[1.05] italic md:text-6xl">
+					<span class="underline-reveal">{lead.title}</span>
+				</h2>
+				<p class="mt-5 max-w-xl text-base leading-relaxed text-dim md:text-lg">{lead.description}</p>
+				<p class="mt-5 inline-flex items-center gap-2 text-sm font-medium text-accent-text">
+					Read it
+					<span class="inline-block transition-transform duration-200 group-hover:translate-x-1 group-focus-visible:translate-x-1" aria-hidden="true">→</span>
+				</p>
+			</a>
+		{/if}
+
+		<ol class="mt-10 border-b border-line md:mt-14">
+			{#each writing.slice(1) as article (article.href)}
+				<li class="border-t border-line">
+					<a href={article.href} class="group grid gap-x-6 gap-y-1 py-5 md:grid-cols-12 md:items-baseline md:py-6">
+						<p class="text-xs font-medium tracking-[0.15em] text-dim uppercase md:col-span-3">{article.tag}</p>
+						<h2 class="text-lg font-medium tracking-tight md:col-span-7 md:text-xl">
+							<span class="underline-reveal">{article.title}</span>
 						</h2>
-						<p class="mt-2 max-w-xl text-sm leading-relaxed text-dim">{article.description}</p>
+						<p class="text-xs text-dim tabular-nums md:col-span-2 md:text-right">{article.readingTime} · {article.year}</p>
 					</a>
 				</li>
 			{/each}

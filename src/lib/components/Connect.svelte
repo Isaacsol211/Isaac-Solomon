@@ -17,6 +17,7 @@
 		try {
 			await navigator.clipboard.writeText(site.email);
 			copied = true;
+			window.dispatchEvent(new CustomEvent('site:turn'));
 			clearTimeout(copyTimer);
 			copyTimer = setTimeout(() => (copied = false), 2000);
 		} catch {
@@ -79,12 +80,20 @@
 			use:reveal={{ delay: 320 }}
 			type="button"
 			onclick={copyEmail}
-			class="mt-4 block text-sm text-cream/50 transition-colors hover:text-cream"
+			class="mt-4 inline-flex items-center gap-2 text-sm text-cream/50 transition-colors hover:text-cream"
 		>
+			<!-- The icon changes state at once; the label says what happened. -->
+			<svg viewBox="0 0 16 16" class="size-3.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+				{#if copied}
+					<path d="M3 8.5l3 3 7-7" class="text-accent" />
+				{:else}
+					<rect x="5" y="5" width="8" height="9" rx="1.5" /><path d="M11 5V3.5A1.5 1.5 0 0 0 9.5 2h-5A1.5 1.5 0 0 0 3 3.5v7A1.5 1.5 0 0 0 4.5 12H5" />
+				{/if}
+			</svg>
 			{#if copied}
-				<span class="text-accent">Copied to clipboard ✓</span>
+				<span class="text-accent">Copied</span>
 			{:else}
-				or copy the address
+				<span>or copy the address</span>
 			{/if}
 			<span class="sr-only" aria-live="polite">{copied ? 'Email copied to clipboard' : ''}</span>
 		</button>
