@@ -72,6 +72,7 @@
 					blocks.forEach((block, i) => {
 						const img = block.querySelector('[data-bleed-img]');
 						const frame = block.querySelector('[data-bleed-frame]');
+						const revealAt = i === 0 ? 'top bottom' : 'top 75%';
 						const text = block.querySelector('[data-bleed-text]');
 						const tags = block.querySelectorAll('[data-bleed-tag]');
 						const innerImg = block.querySelector('[data-bleed-img] img');
@@ -94,7 +95,7 @@
 									clipPath: 'inset(0% 0 0 0)',
 									duration: 0.7,
 									ease: 'expo.out',
-									scrollTrigger: { trigger: block, start: 'top 75%', once: true }
+									scrollTrigger: { trigger: block, start: revealAt, once: true }
 								}
 							);
 						}
@@ -108,7 +109,7 @@
 									duration: 1.1,
 									delay: 0.1,
 									ease: 'expo.out',
-									scrollTrigger: { trigger: block, start: 'top 75%', once: true }
+									scrollTrigger: { trigger: block, start: revealAt, once: true }
 								}
 							);
 						}
@@ -263,25 +264,12 @@
 	});
 </script>
 
-<section
-	bind:this={sectionEl}
-	id="projects"
-	class="section-transition border-t border-line"
->
-	<!-- Section header -->
-	<div class="px-5 py-14 sm:px-8 md:py-16">
-		<div class="mx-auto grid max-w-6xl gap-6 md:grid-cols-12 md:items-end">
-			<div use:reveal class="md:col-span-7">
-				<Eyebrow title="Selected Work" />
-				<h2 class="mt-5 text-4xl font-medium tracking-tight lowercase md:text-6xl">
-					selected <span class="text-dim">work.</span>
-				</h2>
-			</div>
-			<p use:reveal={{ delay: 120 }} class="max-w-md text-sm leading-relaxed text-dim md:col-span-5 md:justify-self-end">
-				{projectsIntro}
-			</p>
-		</div>
-	</div>
+<!--
+	No header band. The section opens on the first project's stage, which is
+	the second half of the hero composition; its meta row carries the
+	"Selected Work" heading so heading navigation still finds the section.
+-->
+<section bind:this={sectionEl} id="projects" class="relative">
 
 	<!-- Featured projects — full-bleed alternating sections -->
 	{#each featured as project, i (project.title)}
@@ -293,9 +281,11 @@
 		     creating a scroll container that would break sticky descendants -->
 		<div
 			data-bleed-block
-			class="relative border-t transition-colors [overflow-x:clip] {isDark
-				? 'border-cream/10 bg-coal text-cream'
-				: 'border-line bg-paper-2 text-ink'}"
+			class="relative transition-colors [overflow-x:clip] {project.featuredLayout === 'stage'
+				? 'text-cream'
+				: isDark
+					? 'border-t border-cream/10 bg-coal text-cream'
+					: 'border-t border-line bg-paper-2 text-ink'}"
 		>
 			<svelte:element
 				this={project.caseStudy ?? project.href ? 'a' : 'div'}
@@ -307,22 +297,15 @@
 			>
 				{#if project.featuredLayout === 'stage'}
 					<!--
-						Stage layout: the image is the whole width and the name is set at
-						display size beneath it. The product's own colour supplies the
-						energy, so the chrome around it stays quiet — no coloured rule on
-						the outcome, which is set in the serif instead.
+						Stage: the second act of the hero. The coal panel begins part-way down
+						the image, so the photograph sits across the seam between paper and
+						coal and the two sections read as one surface. No ghost number, no
+						coloured rule — the image and the name carry it.
 					-->
-					<div class="mx-auto max-w-7xl px-5 py-16 sm:px-8 md:py-24">
-						<div class="mb-8 flex items-baseline justify-between gap-4 md:mb-12">
-							<span data-bleed-number class="text-7xl font-medium tabular-nums text-cream/20 md:text-9xl">
-								{String(i + 1).padStart(2, '0')}
-							</span>
-							<span data-bleed-meta class="text-right text-[10px] font-medium tracking-[0.25em] uppercase text-cream/40">
-								{project.year} — {project.category}
-							</span>
-						</div>
-
-						<div data-bleed-img class="overflow-hidden rounded-lg">
+					<div aria-hidden="true" class="absolute inset-x-0 top-[3rem] bottom-0 bg-coal md:top-[10rem]"></div>
+					<div class="relative px-5 sm:px-8">
+					<div class="mx-auto max-w-6xl pb-16 md:pb-24">
+						<div data-bleed-img class="-mt-20 overflow-hidden rounded-lg md:-mt-28">
 							{#if img}
 								<!-- 21/9 against a 2.4:1 source: a sliver off each side, not a crop into the UI -->
 								<div data-bleed-frame class="aspect-[16/10] overflow-hidden sm:aspect-[21/9]">
@@ -333,7 +316,8 @@
 											: undefined}
 										sizes={project.previewSmall && project.previewWidth ? '(min-width: 1280px) 1216px, 100vw' : undefined}
 										alt="{project.title} screenshot"
-										loading="lazy"
+										loading="eager"
+										fetchpriority="high"
 										decoding="async"
 										style={vtName ? `view-transition-name: ${vtName}` : undefined}
 										class="h-full w-full object-cover object-top"
@@ -342,7 +326,7 @@
 							{/if}
 						</div>
 
-						<div class="mt-8 grid gap-6 md:mt-10 md:grid-cols-12 md:items-end md:gap-10">
+						<div class="mt-10 grid gap-8 md:mt-14 md:grid-cols-12 md:items-end md:gap-10">
 							<h3 class="text-6xl font-medium tracking-[-0.03em] lowercase md:col-span-6 md:text-[7.5rem] md:leading-[0.9]">
 								{project.title}
 							</h3>
@@ -369,6 +353,15 @@
 								</div>
 							</div>
 						</div>
+
+						<!-- Section heading lives here, as the stage's own meta row. -->
+						<div class="mt-12 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-t border-cream/10 pt-5 md:mt-16">
+							<Eyebrow title="Selected Work" tone="dark" as="h2" />
+							<span data-bleed-meta class="text-[10px] font-medium tracking-[0.25em] text-cream/40 uppercase">
+								{String(i + 1).padStart(2, '0')} — {project.year} — {project.category}
+							</span>
+						</div>
+					</div>
 					</div>
 				{:else}
 				<div class="mx-auto max-w-7xl px-5 py-16 sm:px-8 md:py-24">
