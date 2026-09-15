@@ -3,7 +3,7 @@
 		index,
 		title,
 		tone = 'light'
-	}: { index: string; title: string; tone?: 'light' | 'dark' } = $props();
+	}: { index?: string; title: string; tone?: 'light' | 'dark' } = $props();
 </script>
 
 <p
@@ -12,5 +12,5 @@
 		: 'text-dim'}"
 >
 	<span class="text-accent" aria-hidden="true">✱</span>
-	<span>( {index} — {title} )</span>
+	<span>( {index ? `${index} — ` : ''}{title} )</span>
 </p>

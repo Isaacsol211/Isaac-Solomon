@@ -90,9 +90,9 @@
 
 		<h1
 			data-hero-headline
-			class="mask-line my-auto py-12 text-[clamp(4.2rem,15vw,13.5rem)] leading-[0.9] font-medium tracking-[-0.045em] lowercase md:py-16"
+			class="mask-line my-auto py-12 text-[clamp(2.9rem,9.5vw,8.5rem)] leading-[0.92] font-medium tracking-[-0.045em] lowercase md:py-16"
 		>
-			<span style="--rise-delay: 120ms">{site.role}<span class="text-accent">.</span></span>
+			<span style="--rise-delay: 120ms">{site.heroHeadline}<span class="text-accent">.</span></span>
 		</h1>
 
 		<div
@@ -101,7 +101,7 @@
 		>
 			<div
 				use:reveal={{ delay: 180 }}
-				class="grid gap-3 text-[10px] font-medium tracking-[0.2em] lowercase text-dim sm:grid-cols-3 md:col-span-7"
+				class="grid gap-3 text-[13px] font-medium tracking-[0.06em] lowercase text-dim sm:grid-cols-3 md:col-span-7"
 			>
 				<div class="border-l border-line pl-3">
 					<span class="block text-ink">9 years</span>
@@ -117,20 +117,24 @@
 				</div>
 			</div>
 
-			<div use:reveal={{ delay: 260 }} class="max-w-sm md:col-span-5 md:ml-auto md:text-right">
-				<p class="text-base leading-relaxed text-dim">
-					Hi, I'm <span class="font-medium text-ink">{site.name}</span>.
-					{site.heroIntro}
+			<div use:reveal={{ delay: 260 }} class="max-w-xl md:col-span-5 md:ml-auto">
+				<p class="text-[1.0625rem] leading-relaxed text-ink md:text-lg">
+					{site.heroLead}
 				</p>
-				<a
-					href="#services"
-					class="group mt-5 inline-flex items-center gap-2 text-xs font-medium tracking-[0.12em] lowercase text-dim transition-colors hover:text-accent"
-				>
-					what i do
-					<span aria-hidden="true" class="transition-transform duration-300 group-hover:translate-x-1"
-						>→</span
+				<div class="mt-7 flex flex-wrap items-center gap-3">
+					<a
+						href="#projects"
+						class="inline-flex items-center rounded-full bg-ink px-6 py-3 text-sm font-medium text-paper transition-opacity hover:opacity-85"
 					>
-				</a>
+						View selected work
+					</a>
+					<a
+						href="#connect"
+						class="inline-flex items-center rounded-full border border-line px-6 py-3 text-sm font-medium text-ink transition-colors hover:border-ink"
+					>
+						Get in touch
+					</a>
+				</div>
 			</div>
 		</div>
 	</div>

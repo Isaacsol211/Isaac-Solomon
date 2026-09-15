@@ -7,7 +7,7 @@
 <section id="experience" class="border-t border-line px-5 py-16 sm:px-8 md:py-24">
 	<div class="mx-auto max-w-6xl">
 		<div use:reveal>
-			<Eyebrow index="04" title="Experience" />
+			<Eyebrow title="Experience" />
 		</div>
 		<h2
 			use:reveal={{ delay: 100 }}

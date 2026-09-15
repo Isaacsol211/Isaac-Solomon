@@ -2,7 +2,6 @@
 	import { site } from '$lib/content';
 	import Nav from '$lib/components/Nav.svelte';
 	import Hero from '$lib/components/Hero.svelte';
-	import Manifesto from '$lib/components/Manifesto.svelte';
 	import About from '$lib/components/About.svelte';
 	import Services from '$lib/components/Services.svelte';
 	import Projects from '$lib/components/Projects.svelte';
@@ -33,11 +32,10 @@
 
 <main id="main" class="relative z-10 bg-paper">
 	<Hero />
-	<Manifesto />
-	<About />
-	<Services />
 	<Projects />
+	<About />
 	<Experience />
+	<Services />
 	<Writing />
 </main>
 

@@ -15,18 +15,23 @@ export const site = {
 	availability: 'Open to new projects',
 	heroIntro:
 		'I build clean, fast things for the web — and photograph the world in between deploys.',
+	/** Display headline. Says the role, not just "developer". */
+	heroHeadline: 'frontend developer',
+	/** The positioning line under the headline — scope, not adjectives. */
+	heroLead:
+		'Nine years building commerce storefronts, custom CMS platforms and multilingual products — for the teams who have to run them after launch.',
 	// Used for <title>, meta description and social cards
-	title: 'Isaac Solomon — Developer & Photographer',
+	title: 'Isaac Solomon — Frontend Developer',
 	description:
-		'Portfolio of Isaac Solomon — a developer who designs and builds fast, accessible web experiences, and captures the world through a lens on the side.',
+		'Frontend developer at Able.do building commerce sites, content systems and multilingual products. Selected projects, technical writing and photography.',
 	url: 'https://isaacsolomon.dev'
 };
 
 export const nav = [
+	{ label: 'Work', href: '#projects' },
 	{ label: 'About', href: '#about' },
-	{ label: 'Services', href: '#services' },
-	{ label: 'Projects', href: '#projects' },
 	{ label: 'Experience', href: '#experience' },
+	{ label: 'Services', href: '#services' },
 	{ label: 'Writing', href: '#writing' },
 	{ label: 'Photography', href: '/photography' }
 ];

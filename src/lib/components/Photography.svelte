@@ -52,7 +52,7 @@
 	<div class="px-5 pt-20 sm:px-8 md:pt-32">
 		<div class="mx-auto max-w-6xl">
 			<div use:reveal class="max-w-2xl">
-				<Eyebrow index="07" title="Photography" />
+				<Eyebrow title="Photography" />
 				<p class="mt-8 font-serif text-2xl italic text-dim md:text-3xl">— &amp; {site.tagline}</p>
 				<h2 class="mt-6 text-4xl font-medium tracking-tight lowercase md:text-6xl">
 					{photographyIntro.plain}

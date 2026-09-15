@@ -104,7 +104,7 @@
 		<div class="grid w-full gap-12 md:grid-cols-12 md:gap-10">
 			<div class="md:col-span-5 {reduced ? '' : 'md:sticky md:top-28 md:self-start'}">
 		<div use:reveal>
-			<Eyebrow index="02" title="Services" />
+			<Eyebrow title="Services" />
 		</div>
 		<h2
 			use:reveal={{ delay: 100 }}

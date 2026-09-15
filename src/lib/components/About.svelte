@@ -72,7 +72,7 @@
 		<div class="grid gap-12 md:grid-cols-12 md:gap-16">
 			<div class="md:col-span-4">
 				<div use:reveal class="md:sticky md:top-28">
-					<Eyebrow index="01" title="About Me" />
+					<Eyebrow title="About Me" />
 					<img
 						data-about-portrait
 						src={about.portrait}

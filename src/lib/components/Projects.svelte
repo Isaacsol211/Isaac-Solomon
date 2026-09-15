@@ -40,6 +40,7 @@
 
 			const ctx = gsap.context(() => {
 				/* ── Featured cards — clip reveal + scrubbed image/text drift ───── */
+				const twoColumn = window.matchMedia('(min-width: 768px)').matches;
 				const blocks = sectionEl!.querySelectorAll('[data-bleed-block]');
 
 				if (reducedMotion) {
@@ -52,7 +53,13 @@
 						const innerImg = block.querySelector('[data-bleed-img] img');
 						const number = block.querySelector('[data-bleed-number]');
 						const meta = block.querySelector('[data-bleed-meta]');
-						const driftX = i % 2 === 0 ? 56 : -56;
+						/*
+						 * Horizontal drift is a two-column device: the text block slides in
+						 * from the side the image is not on. Below md the columns stack and the
+						 * block is full width, so a 56px offset has nowhere to go — it just
+						 * pushes the page 36px wider than the viewport until the trigger fires.
+						 */
+						const driftX = twoColumn ? (i % 2 === 0 ? 56 : -56) : 0;
 
 						if (img) {
 							gsap.fromTo(
@@ -217,7 +224,7 @@
 	<div class="px-5 py-20 sm:px-8 md:py-32">
 		<div class="mx-auto max-w-6xl">
 			<div use:reveal class="max-w-2xl">
-				<Eyebrow index="03" title="Selected Work" />
+				<Eyebrow title="Selected Work" />
 				<h2 class="mt-6 text-4xl font-medium tracking-tight lowercase md:text-6xl">
 					selected<br />
 					<span class="text-dim">work.</span>
@@ -235,9 +242,11 @@
 		{@const isEven = i % 2 === 0}
 		{@const img = project.desktopImage ?? project.image}
 		{@const vtName = project.caseStudy ? `project-${project.caseStudy.split('/').pop()}` : undefined}
+		<!-- clip, not hidden: contains the text block's entrance drift without
+		     creating a scroll container that would break sticky descendants -->
 		<div
 			data-bleed-block
-			class="relative border-t transition-colors {isDark
+			class="relative border-t transition-colors [overflow-x:clip] {isDark
 				? 'border-cream/10 bg-coal text-cream'
 				: 'border-line bg-paper-2 text-ink'}"
 		>

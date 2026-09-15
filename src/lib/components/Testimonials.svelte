@@ -121,7 +121,7 @@
 		<div class="relative z-10 grid w-full gap-12 md:grid-cols-12 md:items-center md:gap-10">
 			<div class="md:col-span-5">
 				<div use:reveal>
-					<Eyebrow index="06" title="Proof of Work" tone="dark" />
+					<Eyebrow title="Proof of Work" tone="dark" />
 				</div>
 				<div use:reveal={{ delay: 100 }} class="mt-6">
 					<p class="font-serif text-2xl text-cream/55 italic md:text-3xl">{testimonialsIntro.plain} {testimonialsIntro.accent}</p>

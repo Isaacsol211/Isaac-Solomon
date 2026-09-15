@@ -49,7 +49,7 @@
 >
 	<div class="relative mx-auto max-w-6xl px-5 pt-20 pb-8 sm:px-8 md:pt-32 md:pb-10">
 		<div use:reveal>
-			<Eyebrow index="07" title="Contact" tone="dark" />
+			<Eyebrow title="Contact" tone="dark" />
 		</div>
 
 		<p use:reveal={{ delay: 80 }} class="mt-10 font-serif text-2xl text-cream/70 italic md:text-3xl">
