@@ -25,11 +25,13 @@
 	let lerpY = $state(0);
 	let isTouch = $state(true);
 	let mounted = $state(false);
+	let prefersReduced = $state(false);
 
 	onMount(() => {
 		mounted = true;
 		isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-		const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+		prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+		const reducedMotion = prefersReduced;
 
 		let ctxPromise: Promise<any> | undefined;
 
@@ -195,23 +197,31 @@
 
 		ctxPromise = gsapInit();
 
-		/* ── Lerp loop for cursor image ───────────────────── */
-		let rafId = 0;
-		const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
-
-		if (!isTouch && !reducedMotion) {
-			const tick = () => {
-				lerpX = lerp(lerpX, mouseX, 0.1);
-				lerpY = lerp(lerpY, mouseY, 0.1);
-				rafId = requestAnimationFrame(tick);
-			};
-			rafId = requestAnimationFrame(tick);
-		}
-
 		return () => {
-			cancelAnimationFrame(rafId);
 			ctxPromise?.then((ctx) => ctx?.revert());
 		};
+	});
+
+	/*
+	 * Lerp loop for the cursor-following preview. Scoped to the hover: the
+	 * preview is only drawn while activeIndex >= 0, so running the loop from
+	 * mount scheduled a frame every 16ms for the whole life of the page to
+	 * smooth a position nothing was reading. onmouseenter re-seeds lerpX/lerpY
+	 * from the cursor when activeIndex is -1, so freezing between hovers cannot
+	 * leave the preview to slide in from a stale position.
+	 */
+	const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+
+	$effect(() => {
+		if (isTouch || prefersReduced || activeIndex < 0) return;
+
+		let rafId = requestAnimationFrame(function tick() {
+			lerpX = lerp(lerpX, mouseX, 0.1);
+			lerpY = lerp(lerpY, mouseY, 0.1);
+			rafId = requestAnimationFrame(tick);
+		});
+
+		return () => cancelAnimationFrame(rafId);
 	});
 </script>
 
@@ -286,10 +296,23 @@
 							<div data-bleed-img class="overflow-hidden rounded-lg">
 								{#if img}
 									<div class="aspect-[16/10] overflow-hidden">
+										<!--
+											sizes mirrors the layout: md:col-span-8 of a max-w-6xl grid is
+											roughly two thirds of the viewport, full width once it stacks.
+											Without it the browser assumes 100vw and picks the 1600w file
+											for a 730px slot.
+										-->
 										<img
 											src={img}
+											srcset={project.previewSmall && project.previewWidth
+												? `${project.previewSmall} 800w, ${img} ${project.previewWidth}w`
+												: undefined}
+											sizes={project.previewSmall && project.previewWidth
+												? '(min-width: 768px) 66vw, 100vw'
+												: undefined}
 											alt="{project.title} screenshot"
 											loading="lazy"
+											decoding="async"
 											style={vtName ? `view-transition-name: ${vtName}` : undefined}
 											class="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.03]"
 										/>

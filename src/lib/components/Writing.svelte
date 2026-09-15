@@ -13,7 +13,7 @@
 		<div class="grid gap-10 md:grid-cols-12">
 			<div class="md:col-span-4">
 				<div use:reveal class="md:sticky md:top-28">
-					<Eyebrow title="Writing" />
+					<Eyebrow title="Writing" as="h2" />
 					<p class="mt-6 max-w-xs text-sm leading-relaxed text-dim">
 						{writingHomeNote}
 					</p>

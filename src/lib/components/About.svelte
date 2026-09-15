@@ -86,10 +86,18 @@
 			</div>
 
 			<div class="md:col-span-8">
-				<p data-about-lead use:reveal class="text-2xl leading-snug font-medium tracking-tight md:text-4xl">
+				<!--
+					h2, not p: this is the section's statement and is already set as one.
+					The eyebrow above it stays a p, so About contributes a single heading.
+				-->
+				<h2
+					data-about-lead
+					use:reveal
+					class="text-2xl leading-snug font-medium tracking-tight md:text-4xl"
+				>
 					{about.lead}
 					<em class="font-serif font-normal text-dim italic">{about.leadAccent}</em>
-				</p>
+				</h2>
 
 				{#each about.paragraphs as paragraph, i (i)}
 					<p

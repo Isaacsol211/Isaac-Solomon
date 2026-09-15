@@ -188,7 +188,12 @@
 		</div>
 	</section>
 
-	<section use:horizontalGallery class="relative overflow-hidden border-y border-line bg-paper py-20 md:h-screen md:py-0">
+	<!--
+		The pinned strip is motion-only. Under reduced motion the gallery must stay a
+		plain scrollable row, so the full-height stage is gated on motion-safe too —
+		otherwise the section collapses to one screen with no animation to move it.
+	-->
+	<section use:horizontalGallery class="relative overflow-hidden border-y border-line bg-paper py-20 motion-safe:md:h-screen motion-safe:md:py-0">
 		<div class="mx-auto flex h-full max-w-6xl flex-col justify-center px-5 sm:px-8">
 			<div class="mb-8 flex flex-wrap items-end justify-between gap-5 md:mb-12">
 				<div use:reveal>
@@ -202,7 +207,14 @@
 				</p>
 			</div>
 
-			<div class="-mx-5 overflow-x-auto px-5 pb-6 sm:-mx-8 sm:px-8 md:overflow-visible md:pb-0">
+			<!--
+				overflow-visible hands the horizontal movement to GSAP. Gated on motion-safe
+				so reduced motion keeps the native scroller: without it the w-max track sits
+				inside a clipped section with nothing to scroll it, and the later frames are
+				unreachable. Expressed as motion-safe rather than a motion-reduce override so
+				the two rules never compete on specificity.
+			-->
+			<div class="-mx-5 overflow-x-auto px-5 pb-6 sm:-mx-8 sm:px-8 motion-safe:md:overflow-visible motion-safe:md:pb-0">
 				<div data-gallery-track class="flex w-max items-stretch gap-4 pr-[18vw] md:gap-6">
 					{#each filmstrip as photo, i (photo.src)}
 						<figure data-gallery-item class="group w-[76vw] shrink-0 sm:w-[25rem] md:w-[34rem]">

@@ -9,6 +9,7 @@
 	let open = $state(false);
 	let activeSection = $state('');
 	let menuEl = $state<HTMLElement>();
+	let headerEl = $state<HTMLElement>();
 	let toggleBtn = $state<HTMLButtonElement>();
 	let viewportHeight = $state(0);
 	const scrolled = $derived(scrollY > 24);
@@ -29,10 +30,47 @@
 		return () => document.documentElement.classList.remove('overflow-hidden');
 	});
 
+	/*
+	 * The overlay covers the page visually, but the page underneath stayed in the
+	 * accessibility tree — a screen reader could still browse straight through it
+	 * while the menu claimed to be modal. `inert` removes it from both the tab
+	 * order and the a11y tree. The header is exempt because it stays visible and
+	 * holds the close button and theme toggle.
+	 */
+	$effect(() => {
+		if (!open || !headerEl) return;
+
+		const siblings = [...(headerEl.parentElement?.children ?? [])].filter(
+			(el): el is HTMLElement =>
+				el instanceof HTMLElement && el !== headerEl && el !== menuEl
+		);
+		const restore = siblings.filter((el) => !el.inert);
+		restore.forEach((el) => (el.inert = true));
+
+		return () => restore.forEach((el) => (el.inert = false));
+	});
+
 	// Move focus into the menu when it opens
 	$effect(() => {
 		if (open) menuEl?.querySelector('a')?.focus();
 	});
+
+	/*
+	 * Everything the menu leaves reachable, in document order. Collected rather
+	 * than hand-listed: the theme toggle and the wordmark sit in the header and
+	 * stay visible over the overlay, so a hard-coded list of the menu's own links
+	 * left them focusable but unreachable by keyboard. getClientRects() drops the
+	 * desktop nav, which is display:none at this breakpoint.
+	 */
+	function trapFocusables(): HTMLElement[] {
+		const selector = 'a[href], button:not([disabled])';
+		const within = (el: HTMLElement | undefined) =>
+			el ? [...el.querySelectorAll<HTMLElement>(selector)] : [];
+
+		return [...within(headerEl), ...within(menuEl)].filter(
+			(el) => el.getClientRects().length > 0
+		);
+	}
 
 	// Scroll-spy — highlight the nav link for the section under the viewport's midline
 	onMount(() => {
@@ -63,9 +101,11 @@
 			return;
 		}
 
-		// Trap Tab inside the mobile menu (toggle button + menu links)
-		if (event.key === 'Tab' && open && menuEl && toggleBtn) {
-			const focusables: HTMLElement[] = [toggleBtn, ...menuEl.querySelectorAll<HTMLElement>('a')];
+		// Trap Tab inside the menu and the header controls that sit above it
+		if (event.key === 'Tab' && open && menuEl) {
+			const focusables = trapFocusables();
+			if (focusables.length === 0) return;
+
 			const first = focusables[0];
 			const last = focusables[focusables.length - 1];
 			const current = document.activeElement as HTMLElement | null;
@@ -98,6 +138,7 @@
 <div aria-hidden="true" class="fixed inset-x-0 top-0 z-60 h-px origin-left bg-accent" style="transform: scaleX({scrollProgress});"></div>
 
 <header
+	bind:this={headerEl}
 	class="fixed inset-x-0 top-0 z-50 transition-colors duration-300 {open
 		? 'text-cream'
 		: scrolled
@@ -173,6 +214,9 @@
 	<div
 		bind:this={menuEl}
 		id="mobile-menu"
+		role="dialog"
+		aria-modal="true"
+		aria-label="Site menu"
 		transition:fade={{ duration: 180 }}
 		class="fixed inset-0 z-40 flex flex-col justify-between bg-coal px-5 pt-28 pb-10 text-cream md:hidden"
 	>

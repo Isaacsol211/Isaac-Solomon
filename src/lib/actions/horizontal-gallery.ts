@@ -9,7 +9,10 @@ import { initMotion } from '$lib/motion';
  *   - Rotation: slight tilt that straightens at center (spreading cards feel)
  * Uses gsap.matchMedia, so resizing across the breakpoint (or toggling
  * reduced-motion) sets up / tears down the pin automatically. On mobile /
- * reduced-motion the section falls back to native overflow scroll.
+ * reduced-motion the section falls back to native overflow scroll — that
+ * fallback lives in the markup, which gates `overflow-visible` and the
+ * full-height stage on `motion-safe:`. Both halves have to agree: dropping
+ * the pin here while the CSS still hides the scrollbar strands the frames.
  */
 export const horizontalGallery: Action<HTMLElement> = (node) => {
 	let mm: any;
