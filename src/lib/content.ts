@@ -205,7 +205,20 @@ export type Project = {
 	 * from that project's case study; `small` is the 800w variant produced by
 	 * scripts/generate-image-variants.mjs, and width/height are the originals'.
 	 */
-	gallery?: { src: string; small: string; width: number; height: number; alt: string; caption: string }[];
+	gallery?: {
+		src: string;
+		small: string;
+		width: number;
+		height: number;
+		alt: string;
+		caption: string;
+		/**
+		 * Show a region of the image instead of the whole: the image is drawn at
+		 * `width` of its frame and shifted by x/y (percent of the image). A way to
+		 * point at one feature in an asset that already exists.
+		 */
+		crop?: { width: string; x: string; y: string };
+	}[];
 	/** Highlighted in the magazine spread instead of the mosaic grid */
 	featured?: boolean;
 };
@@ -259,16 +272,19 @@ export const projects: Project[] = [
 				small: '/projects/saut/hero-lms-rtl-800.webp',
 				width: 1544,
 				height: 1808,
-				alt: 'SAUT learning management system in Arabic, right-to-left layout',
+				alt: 'SAUT learning management system in Arabic, right-to-left layout: skills grid, assessment goals, student progress and a session timeline',
 				caption: 'LMS — Arabic, right-to-left'
 			},
 			{
-				src: '/projects/saut/landing-hero-devices-right-to-left.webp',
-				small: '/projects/saut/landing-hero-devices-right-to-left-800.webp',
-				width: 1605,
-				height: 1762,
-				alt: 'SAUT landing page shown across devices, right-to-left',
-				caption: 'Landing — across devices'
+				/* The same asset, cropped to the assessment goal card and its
+				   achieved / not-achieved controls — the feature, not the presentation. */
+				src: '/projects/saut/hero-lms-rtl.webp',
+				small: '/projects/saut/hero-lms-rtl-800.webp',
+				width: 1544,
+				height: 1808,
+				alt: 'Detail of the SAUT assessment: a skill goal in Arabic marked achieved on 24 October 2022',
+				caption: 'Assessment — a goal marked achieved',
+				crop: { width: '238%', x: '-58%', y: '-12%' }
 			}
 		],
 		featured: true
@@ -531,7 +547,7 @@ export const writingHomeNote =
  * around it. Each links to its work.
  */
 export const craftInterlude = {
-	statement: 'Built for the people who use it.',
+	statement: 'Built to launch. Built to keep running.',
 	fragments: [
 		{
 			src: '/projects/keus-desktop-800.webp',
@@ -539,6 +555,7 @@ export const craftInterlude = {
 			height: 900,
 			alt: 'Keus smart home site',
 			label: 'Keus',
+			year: '2024',
 			href: '/writing/keus'
 		},
 		{
@@ -547,6 +564,7 @@ export const craftInterlude = {
 			height: 900,
 			alt: 'Nova Rock Tools bilingual product site',
 			label: 'Nova Rock Tools',
+			year: '2025',
 			href: '/writing/novarock'
 		},
 		{
@@ -555,6 +573,7 @@ export const craftInterlude = {
 			height: 1000,
 			alt: 'Vibrant Living brand and commerce site',
 			label: 'Vibrant Living',
+			year: '2024',
 			href: 'https://vibrantliving.in'
 		}
 	]

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { initMotion, MOTION_OK } from '$lib/motion';
+	import { initMotion, MOTION_OK, openingAlreadyRevealed } from '$lib/motion';
 	import { site } from '$lib/content';
 
 	const year = new Date().getFullYear();
@@ -25,6 +25,14 @@
 
 			mm = gsap.matchMedia(sectionEl);
 			mm.add(MOTION_OK, () => {
+				/*
+				 * Late initialisation: if app.html's fail-open timer has already
+				 * revealed the page, the visitor is looking at the final state. Running
+				 * the opening now would hide it and play it back in — so skip it. The
+				 * stage in Projects makes the same check.
+				 */
+				if (openingAlreadyRevealed()) return;
+
 				const signature = sectionEl!.querySelector('[data-hero-signature]');
 				const meta = sectionEl!.querySelector('[data-hero-meta]');
 				const intro = sectionEl!.querySelector('[data-hero-intro]');
@@ -116,17 +124,23 @@
 					{site.heroLead}
 				</p>
 				<div class="mt-7 flex flex-wrap items-center gap-3">
-					<!-- Responses stay inside the button: an arrow moves 4px, a fill deepens. The hit target is fixed. -->
+					<!--
+						One filled action, one text link, so the pair keeps to a row at both
+						1440 and 390. Responses stay inside the control: the arrow that points
+						at the work moves down, the other moves along; hit targets never
+						change. The hover fill is accent-text — 5.34:1 under cream on paper,
+						4.77:1 in the dark theme — because plain accent was 3.39:1.
+					-->
 					<a
 						href="#projects"
-						class="group inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3 text-sm font-medium text-paper transition-colors duration-200 hover:bg-accent focus-visible:bg-accent"
+						class="group inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3 text-sm font-medium text-paper transition-colors duration-200 hover:bg-accent-text focus-visible:bg-accent-text"
 					>
 						View selected work
-						<span class="inline-block transition-transform duration-200 group-hover:translate-x-1 group-focus-visible:translate-x-1" aria-hidden="true">↓</span>
+						<span class="inline-block transition-transform duration-200 group-hover:translate-y-0.5 group-focus-visible:translate-y-0.5" aria-hidden="true">↓</span>
 					</a>
 					<a
 						href="#connect"
-						class="group inline-flex items-center gap-2 rounded-full border border-line px-6 py-3 text-sm font-medium text-ink transition-colors duration-200 hover:border-ink hover:bg-paper-2 focus-visible:border-ink focus-visible:bg-paper-2"
+						class="group inline-flex items-center gap-2 py-3 text-sm font-medium text-ink underline-offset-4 transition-colors duration-200 hover:text-accent-text focus-visible:text-accent-text"
 					>
 						Get in touch
 						<span class="inline-block transition-transform duration-200 group-hover:translate-x-1 group-focus-visible:translate-x-1" aria-hidden="true">→</span>

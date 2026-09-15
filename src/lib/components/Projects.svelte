@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { portalToBody } from '$lib/actions/portal-to-body';
-	import { initMotion, MOTION_OK, REDUCED_MOTION, MD, FINE_POINTER } from '$lib/motion';
+	import { initMotion, MOTION_OK, REDUCED_MOTION, MD, FINE_POINTER, openingAlreadyRevealed } from '$lib/motion';
 	import { reveal } from '$lib/actions/reveal';
 	import { projects, projectsIntro } from '$lib/content';
 	import ArrowUpRight from './ArrowUpRight.svelte';
@@ -77,6 +77,9 @@
 						const heroStage = block.hasAttribute('data-hero-stage');
 						const revealAt = heroStage ? 'top bottom' : 'top 75%';
 						const lead = heroStage ? 0.55 : 0;
+						/* If app.html's fallback has already revealed the page, the stage is
+						   visible now; creating its fromTo would clip it and play it back in. */
+						if (heroStage && openingAlreadyRevealed()) return;
 						const text = block.querySelector('[data-bleed-text]');
 						const tags = block.querySelectorAll('[data-bleed-tag]');
 						const innerImgs = [...block.querySelectorAll<HTMLElement>('[data-bleed-img] img')];
@@ -119,24 +122,10 @@
 							);
 						});
 
-						/* Vertical drift on the img itself as the block moves through view — a
-						   different element from the settle above, so one transform each. */
-						if (innerImgs.length && !isTouch) {
-							gsap.fromTo(
-								innerImgs,
-								{ yPercent: -4 },
-								{
-									yPercent: 4,
-									ease: 'none',
-									scrollTrigger: {
-										trigger: block,
-										start: 'top bottom',
-										end: 'bottom top',
-										scrub: true
-									}
-								}
-							);
-						}
+						/* No scroll drift on these images. They are interface screenshots that
+						   fit their frames exactly, so a vertical translation exposed the
+						   frame behind them — ~16px at the end of the range. Crop and settle
+						   are the whole entrance. */
 
 						if (text) {
 							gsap.fromTo(
@@ -389,10 +378,11 @@
 						interface and the bilingual layout sit as two tall frames at their
 						own ratios. Nothing bleeds; the frames are the argument.
 					-->
-					{#snippet frame(g: NonNullable<typeof project.gallery>[number], sizes: string, eager = false)}
+					{#snippet frame(g: NonNullable<typeof project.gallery>[number], sizes: string, eager = false, vt: string | undefined = undefined)}
 						<figure class="min-w-0">
 							<div data-bleed-img class="overflow-hidden rounded-lg bg-paper">
-								<div data-bleed-frame style="aspect-ratio: {g.width} / {g.height}" class="overflow-hidden">
+								<!-- A crop draws the image larger than its frame and shifts it; otherwise the frame is the image's own ratio. -->
+								<div data-bleed-frame style="aspect-ratio: {g.crop ? '4 / 3' : `${g.width} / ${g.height}`}" class="overflow-hidden">
 									<img
 										src={g.src}
 										srcset="{g.small} 800w, {g.src} {g.width}w"
@@ -402,7 +392,8 @@
 										height={g.height}
 										loading={eager ? 'eager' : 'lazy'}
 										decoding="async"
-										class="block h-full w-full object-cover object-top"
+										style="{vt ? `view-transition-name: ${vt};` : ''}{g.crop ? ` width: ${g.crop.width}; max-width: none; transform: translate(${g.crop.x}, ${g.crop.y});` : ''}"
+										class={g.crop ? 'block h-auto' : 'block h-full w-full object-cover object-top'}
 									/>
 								</div>
 							</div>
@@ -444,10 +435,16 @@
 							<div data-bleed-text class="md:col-span-4">
 								{@render textBlock('text-5xl font-medium tracking-[-0.02em] lowercase lg:text-6xl')}
 							</div>
-							<div class="grid grid-cols-2 items-start gap-4 md:col-span-8 md:gap-6">
-								{#each project.gallery as g, k (g.src)}
-									{@render frame(g, '(min-width: 768px) 30vw, 45vw', false)}
-								{/each}
+							<!-- Dominant interface image, then a detail cropped from the same asset. Full width each on phones. -->
+							<div class="grid items-start gap-6 md:col-span-8 md:grid-cols-8 md:gap-6">
+								<div class="md:col-span-5">
+									{@render frame(project.gallery[0], '(min-width: 768px) 40vw, 100vw', false, vtName)}
+								</div>
+								{#if project.gallery[1]}
+									<div class="md:col-span-3 md:pt-16">
+										{@render frame(project.gallery[1], '(min-width: 768px) 24vw, 100vw', false)}
+									</div>
+								{/if}
 							</div>
 						</div>
 					</div>
@@ -456,10 +453,11 @@
 						Pair: the before and the after, side by side, captioned, then the
 						text. The evidence leads because the evidence is the story.
 					-->
-					{#snippet frame(g: NonNullable<typeof project.gallery>[number], sizes: string, eager = false)}
+					{#snippet frame(g: NonNullable<typeof project.gallery>[number], sizes: string, eager = false, vt: string | undefined = undefined)}
 						<figure class="min-w-0">
 							<div data-bleed-img class="overflow-hidden rounded-lg bg-paper">
-								<div data-bleed-frame style="aspect-ratio: {g.width} / {g.height}" class="overflow-hidden">
+								<!-- A crop draws the image larger than its frame and shifts it; otherwise the frame is the image's own ratio. -->
+								<div data-bleed-frame style="aspect-ratio: {g.crop ? '4 / 3' : `${g.width} / ${g.height}`}" class="overflow-hidden">
 									<img
 										src={g.src}
 										srcset="{g.small} 800w, {g.src} {g.width}w"
@@ -469,7 +467,8 @@
 										height={g.height}
 										loading={eager ? 'eager' : 'lazy'}
 										decoding="async"
-										class="block h-full w-full object-cover object-top"
+										style="{vt ? `view-transition-name: ${vt};` : ''}{g.crop ? ` width: ${g.crop.width}; max-width: none; transform: translate(${g.crop.x}, ${g.crop.y});` : ''}"
+										class={g.crop ? 'block h-auto' : 'block h-full w-full object-cover object-top'}
 									/>
 								</div>
 							</div>
@@ -508,8 +507,8 @@
 					<div class="mx-auto max-w-6xl px-5 py-16 sm:px-8 md:py-24">
 						{@render metaRow()}
 						<div class="grid gap-6 sm:grid-cols-2 md:gap-8">
-							{#each project.gallery as g (g.src)}
-								{@render frame(g, '(min-width: 768px) 46vw, 100vw', false)}
+							{#each project.gallery as g, k (g.src)}
+								{@render frame(g, '(min-width: 768px) 46vw, 100vw', false, k === 0 ? vtName : undefined)}
 							{/each}
 						</div>
 						<div class="mt-12 grid gap-8 md:mt-14 md:grid-cols-12 md:gap-10">
@@ -545,10 +544,11 @@
 						right column beneath the text. Two frames, two ratios, one column
 						each.
 					-->
-					{#snippet frame(g: NonNullable<typeof project.gallery>[number], sizes: string, eager = false)}
+					{#snippet frame(g: NonNullable<typeof project.gallery>[number], sizes: string, eager = false, vt: string | undefined = undefined)}
 						<figure class="min-w-0">
 							<div data-bleed-img class="overflow-hidden rounded-lg bg-paper">
-								<div data-bleed-frame style="aspect-ratio: {g.width} / {g.height}" class="overflow-hidden">
+								<!-- A crop draws the image larger than its frame and shifts it; otherwise the frame is the image's own ratio. -->
+								<div data-bleed-frame style="aspect-ratio: {g.crop ? '4 / 3' : `${g.width} / ${g.height}`}" class="overflow-hidden">
 									<img
 										src={g.src}
 										srcset="{g.small} 800w, {g.src} {g.width}w"
@@ -558,7 +558,8 @@
 										height={g.height}
 										loading={eager ? 'eager' : 'lazy'}
 										decoding="async"
-										class="block h-full w-full object-cover object-top"
+										style="{vt ? `view-transition-name: ${vt};` : ''}{g.crop ? ` width: ${g.crop.width}; max-width: none; transform: translate(${g.crop.x}, ${g.crop.y});` : ''}"
+										class={g.crop ? 'block h-auto' : 'block h-full w-full object-cover object-top'}
 									/>
 								</div>
 							</div>
@@ -598,7 +599,7 @@
 						{@render metaRow()}
 						<div class="grid gap-10 md:grid-cols-12 md:gap-10">
 							<div class="md:col-span-5">
-								{@render frame(project.gallery[0], '(min-width: 768px) 40vw, 100vw', false)}
+								{@render frame(project.gallery[0], '(min-width: 768px) 40vw, 100vw', false, vtName)}
 							</div>
 							<div class="md:col-span-7">
 								<div data-bleed-text>

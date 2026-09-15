@@ -71,7 +71,7 @@
 	aria-label="A note on the work"
 	class="relative overflow-hidden border-t border-line bg-paper px-5 py-10 sm:px-8 md:py-12"
 >
-	<div class="relative mx-auto max-w-6xl md:min-h-[18rem]">
+	<div class="relative mx-auto max-w-6xl md:min-h-[20rem]">
 		<!-- Guide lines — the drafting motif, not decoration: they mark the frame the fragments settle into -->
 		<div aria-hidden="true" class="pointer-events-none absolute inset-0 hidden md:block">
 			<div class="absolute inset-x-[6%] top-[18%] h-px bg-line/60"></div>
@@ -87,13 +87,16 @@
 		-->
 		<div class="flex items-start justify-between gap-3 md:contents">
 		{#each craftInterlude.fragments as fragment, i (fragment.src)}
-			<a
+			<figure
 				data-fragment
+				class="fragment relative m-0 md:absolute fragment-{i}"
+				style="--r: {rest[i].r}deg"
+			>
+			<a
 				href={fragment.href}
 				target={fragment.href.startsWith('http') ? '_blank' : undefined}
 				rel={fragment.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-				class="fragment relative block overflow-hidden rounded-md bg-paper-2 ring-1 ring-ink/10 md:absolute fragment-{i}"
-				style="--r: {rest[i].r}deg"
+				class="block overflow-hidden rounded-md bg-paper-2 ring-1 ring-ink/10"
 			>
 				<img
 					src={fragment.src}
@@ -106,6 +109,11 @@
 				/>
 				<span class="sr-only">{fragment.label}</span>
 			</a>
+			<!-- The year each one launched — the line above is about launching and lasting. -->
+			<figcaption class="mt-2 text-[10px] font-medium tracking-[0.18em] lowercase text-dim">
+				{fragment.label} — {fragment.year}
+			</figcaption>
+			</figure>
 		{/each}
 		</div>
 
@@ -133,7 +141,7 @@
 		.fragment-0 {
 			left: 0;
 			top: 0;
-			width: 21%;
+			width: 19%;
 		}
 		.fragment-1 {
 			right: 0;
@@ -141,9 +149,9 @@
 			width: 19%;
 		}
 		.fragment-2 {
-			left: 2%;
+			left: 5%;
 			bottom: 0;
-			width: 13%;
+			width: 12%;
 		}
 	}
 </style>

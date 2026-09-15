@@ -180,7 +180,7 @@
 
 			<a
 				href="#connect"
-				class="group hidden items-center gap-2 rounded-full px-5 py-2.5 text-sm transition-colors duration-300 hover:bg-accent hover:text-paper focus-visible:bg-accent focus-visible:text-paper md:inline-flex {invert
+				class="group hidden items-center gap-2 rounded-full px-5 py-2.5 text-sm transition-colors duration-300 hover:bg-accent-text hover:text-paper focus-visible:bg-accent-text focus-visible:text-paper md:inline-flex {invert
 					? 'bg-cream text-coal'
 					: 'bg-ink text-paper'}"
 			>

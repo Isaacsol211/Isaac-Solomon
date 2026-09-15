@@ -29,6 +29,17 @@ export const MD = '(min-width: 768px)';
 
 let motionPromise: Promise<Motion> | null = null;
 
+/**
+ * True once app.html's fail-open timer has added `opened` to <html> — the
+ * pre-paint hidden states have expired and the page is showing its final
+ * state. Any opening animation that initialises after this must not run:
+ * it would hide what the visitor is already looking at and play it back in.
+ * Hero and Projects both ask this before choreographing the load.
+ */
+export function openingAlreadyRevealed(): boolean {
+	return document.documentElement.classList.contains('opened');
+}
+
 /** Live read — never cache the result across a session. */
 export function prefersReducedMotion(): boolean {
 	return window.matchMedia(REDUCED_MOTION).matches;
