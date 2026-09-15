@@ -5,6 +5,16 @@
 	import { nav as navLinks, site, socials } from '$lib/content';
 	import ThemeToggle from './ThemeToggle.svelte';
 
+	let {
+		/**
+		 * Set on pages whose hero is a full-bleed photograph. Until the header
+		 * picks up its own background on scroll it sits directly on the image,
+		 * where the light-theme ink tokens are dark text on a dark photo. This
+		 * flips the header to its cream tones for that stretch only.
+		 */
+		onDark = false
+	}: { onDark?: boolean } = $props();
+
 	let scrollY = $state(0);
 	let open = $state(false);
 	let activeSection = $state('');
@@ -23,6 +33,8 @@
 			: Math.max(1, document.documentElement.scrollHeight - viewportHeight)
 	);
 	const scrollProgress = $derived(Math.min(1, scrollY / maxScroll));
+	/** Inverted only while the header is transparent over the hero image. */
+	const invert = $derived(onDark && !scrolled && !open);
 
 	// Lock page scroll while the mobile menu is open
 	$effect(() => {
@@ -143,7 +155,9 @@
 		? 'text-cream'
 		: scrolled
 			? 'border-b border-line bg-paper/85 backdrop-blur-md'
-			: ''}"
+			: invert
+				? 'text-cream'
+				: ''}"
 >
 	<div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 sm:px-8">
 		<a href="/" class="flex items-center gap-2 text-base font-medium tracking-tight" onclick={() => (open = false)}>
@@ -152,20 +166,24 @@
 		</a>
 
 		<div class="hidden items-center gap-4 md:flex">
-			<p class="min-w-[7rem] text-[10px] font-medium tracking-[0.22em] lowercase text-dim">
-				chapter / <span class="text-ink">{activeLabel}</span>
+			<p
+				class="min-w-[7rem] text-[10px] font-medium tracking-[0.22em] lowercase {invert
+					? 'text-cream/55'
+					: 'text-dim'}"
+			>
+				chapter / <span class={invert ? 'text-cream' : 'text-ink'}>{activeLabel}</span>
 			</p>
 		<nav class="items-center gap-2.5 md:flex" aria-label="Primary">
 			{#each navLinks as link, i (link.href)}
-				{#if i > 0}<span aria-hidden="true" class="select-none text-dim">,</span>{/if}
+				{#if i > 0}<span aria-hidden="true" class="select-none {invert ? 'text-cream/45' : 'text-dim'}">,</span>{/if}
 				<a
 					href={resolvedHref(link.href)}
 					aria-current={isActiveLink(link.href) ? 'true' : undefined}
-					class="relative text-sm lowercase transition-colors duration-200 after:absolute after:-bottom-1 after:left-0 after:h-px after:w-full after:origin-left after:bg-accent after:transition-transform after:duration-300 after:ease-out hover:text-ink hover:after:scale-x-100 {isActiveLink(
-					link.href
-				)
-						? 'text-ink after:scale-x-100'
-						: 'text-dim after:scale-x-0'}"
+					class="relative text-sm lowercase transition-colors duration-200 after:absolute after:-bottom-1 after:left-0 after:h-px after:w-full after:origin-left after:bg-accent after:transition-transform after:duration-300 after:ease-out hover:after:scale-x-100 {invert
+						? 'hover:text-cream'
+						: 'hover:text-ink'} {isActiveLink(link.href)
+						? (invert ? 'text-cream' : 'text-ink') + ' after:scale-x-100'
+						: (invert ? 'text-cream/60' : 'text-dim') + ' after:scale-x-0'}"
 				>
 					{link.label}
 				</a>
@@ -174,11 +192,13 @@
 		</div>
 
 		<div class="flex items-center gap-3">
-			<ThemeToggle tone={open ? 'dark' : 'light'} />
+			<ThemeToggle tone={open || invert ? 'dark' : 'light'} />
 
 			<a
 				href="#connect"
-				class="hidden rounded-full bg-ink px-5 py-2.5 text-sm text-paper transition-colors duration-300 hover:bg-accent md:inline-block"
+				class="hidden rounded-full px-5 py-2.5 text-sm transition-colors duration-300 hover:bg-accent hover:text-paper md:inline-block {invert
+					? 'bg-cream text-coal'
+					: 'bg-ink text-paper'}"
 			>
 				let's talk
 			</a>

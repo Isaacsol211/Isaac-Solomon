@@ -7,14 +7,41 @@
 	import { initMotion } from '$lib/motion';
 	import Nav from '$lib/components/Nav.svelte';
 	import Connect from '$lib/components/Connect.svelte';
+	import Lightbox from '$lib/components/Lightbox.svelte';
+
+	/*
+	 * Sections are series, not positions in the array. The old slices put Qutub
+	 * Minar in a strip headed "mountain weather" and labelled the sections
+	 * "act 01 / pinned strip" — the implementation showing through the design.
+	 */
+	const bySeries = (name: string) => photos.filter((photo) => photo.series === name);
+
+	const mountains = bySeries('Mountains');
+	const afterDark = bySeries('After Dark');
+	const places = bySeries('Places');
 
 	const heroPhoto = photos[0];
-	const filmstrip = photos.slice(0, 10);
-	const reveals = photos.slice(10, 15);
-	const ocean = photos[15];
-	const mosaic = photos.slice(16, 20);
+	/** The full-bleed breaker, pulled out of Places so it is not shown twice. */
+	const breaker = places.find((photo) => photo.place === 'Deep Blue') ?? places[0];
+	const placesGrid = places.filter((photo) => photo !== breaker);
+
+	/* One flat order so the lightbox's previous/next walks the whole archive. */
+	const ordered = [...mountains, ...afterDark, ...places];
 
 	let pageEl = $state<HTMLElement>();
+	let lightboxIndex = $state(-1);
+	let lastOpener: HTMLElement | null = null;
+
+	function openPhoto(photo: (typeof photos)[number], event: MouseEvent) {
+		lastOpener = event.currentTarget as HTMLElement;
+		lightboxIndex = ordered.indexOf(photo);
+	}
+
+	/** Focus goes back to the thumbnail that opened the dialog, not to the body. */
+	function restoreFocus() {
+		lastOpener?.focus();
+		lastOpener = null;
+	}
 
 	function imageSrc(photo: (typeof photos)[number], size = 800) {
 		return photo.src.replace('.jpg', `-${size}.jpg`);
@@ -147,7 +174,7 @@
 	<link rel="canonical" href="{site.url}/photography" />
 </svelte:head>
 
-<Nav />
+<Nav onDark />
 
 <main bind:this={pageEl} id="main" class="relative z-10 bg-paper">
 	<section data-photo-hero id="top" class="relative isolate min-h-screen overflow-hidden bg-coal text-cream">
@@ -159,29 +186,38 @@
 			alt={heroPhoto.alt}
 			width={heroPhoto.w}
 			height={heroPhoto.h}
-			class="absolute inset-0 h-full w-full object-cover opacity-70"
+			class="absolute inset-0 h-full w-full object-cover"
 		/>
-		<div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(14,13,12,0.52),rgba(14,13,12,0.18)_42%,rgba(14,13,12,0.78))]"></div>
+		<!--
+			The overlay exists to keep text legible, not to tint the picture. It was
+			dimming the image to 70% and then laying a 0.52-0.78 gradient over that,
+			which is most of the photograph. Now it is a scrim weighted to the bottom,
+			under the type, and the top two thirds stay at full contrast.
+		-->
+		<div
+			class="absolute inset-0 bg-[linear-gradient(180deg,rgba(14,13,12,0.34)_0%,rgba(14,13,12,0.06)_28%,rgba(14,13,12,0.10)_52%,rgba(14,13,12,0.72)_100%)]"
+		></div>
 		<div class="absolute inset-x-5 top-28 z-10 flex items-center justify-between gap-4 text-[10px] font-medium tracking-[0.24em] lowercase text-cream/70 sm:inset-x-8 md:top-32">
 			<span>visual archive / 20 frames</span>
 			<span>{heroPhoto.location}</span>
 		</div>
 		<div class="relative z-10 mx-auto flex min-h-screen max-w-6xl flex-col justify-end px-5 pt-32 pb-12 sm:px-8 md:pb-16">
 			<div data-photo-hero-title use:reveal>
-				<p class="font-serif text-2xl italic text-cream/70 md:text-3xl">— &amp; {site.tagline}</p>
-				<h1 class="mt-5 max-w-5xl text-[clamp(2.6rem,13vw,13rem)] leading-[0.82] font-medium tracking-[-0.06em] lowercase">
+				<!--
+					The title was clamped up to 13rem, which left the photograph as a
+					backdrop for a word. At a third of that it still opens the page and
+					the image is the thing you see first.
+				-->
+				<h1 class="max-w-3xl text-[clamp(2.4rem,7vw,5.5rem)] leading-[0.9] font-medium tracking-[-0.04em] lowercase">
 					photography<span class="text-accent">.</span>
 				</h1>
-				<div class="mt-8 grid gap-8 border-t border-cream/20 pt-6 md:grid-cols-12">
-					<p class="text-xs font-medium tracking-[0.22em] lowercase text-cream/55 md:col-span-3">
+				<div class="mt-6 grid gap-6 border-t border-cream/20 pt-5 md:grid-cols-12">
+					<p class="max-w-xl text-base leading-relaxed text-cream/75 md:col-span-7">
+						A separate archive for the part of the work that is not shipped in a browser:
+						mountains, stations, roads, low light, and the odd quiet frame worth keeping.
+					</p>
+					<p class="text-xs font-medium tracking-[0.22em] lowercase text-cream/55 md:col-span-5 md:text-right">
 						{heroPhoto.caption}
-					</p>
-					<p class="max-w-xl text-base leading-relaxed text-cream/72 md:col-span-5">
-						A separate archive for the part of the work that is not shipped in a browser: mountains,
-						stations, roads, low light, and the odd quiet frame worth keeping.
-					</p>
-					<p class="text-xs font-medium tracking-[0.22em] lowercase text-cream/55 md:col-span-4 md:text-right">
-						scroll for the contact sheet
 					</p>
 				</div>
 			</div>
@@ -197,7 +233,9 @@
 		<div class="mx-auto flex h-full max-w-6xl flex-col justify-center px-5 sm:px-8">
 			<div class="mb-8 flex flex-wrap items-end justify-between gap-5 md:mb-12">
 				<div use:reveal>
-					<p class="text-xs font-medium tracking-[0.24em] lowercase text-dim">act 01 / pinned strip</p>
+					<p class="text-xs font-medium tracking-[0.24em] lowercase text-dim">
+						series / mountains — {mountains.length} frames
+					</p>
 					<h2 class="mt-3 text-4xl font-medium tracking-tight lowercase md:text-6xl">
 						mountain weather, frame by frame<span class="text-accent">.</span>
 					</h2>
@@ -216,9 +254,17 @@
 			-->
 			<div class="-mx-5 overflow-x-auto px-5 pb-6 sm:-mx-8 sm:px-8 motion-safe:md:overflow-visible motion-safe:md:pb-0">
 				<div data-gallery-track class="flex w-max items-stretch gap-4 pr-[18vw] md:gap-6">
-					{#each filmstrip as photo, i (photo.src)}
+					{#each mountains as photo, i (photo.src)}
 						<figure data-gallery-item class="group w-[76vw] shrink-0 sm:w-[25rem] md:w-[34rem]">
-							<div class="overflow-hidden rounded-sm bg-paper-2">
+							<!--
+								Every mountain frame is 4:3, so the strip's own ratio crops none of
+								them while still giving the row a single height to align on.
+							-->
+							<button
+								type="button"
+								onclick={(event) => openPhoto(photo, event)}
+								class="block w-full cursor-zoom-in overflow-hidden rounded-sm bg-paper-2"
+							>
 								<img
 									src={imageSrc(photo)}
 									srcset="{imageSrc(photo)} 800w, {photo.src} 1600w"
@@ -227,9 +273,9 @@
 									width={photo.w}
 									height={photo.h}
 									loading={i < 2 ? 'eager' : 'lazy'}
-									class="h-[26rem] w-full object-cover transition-transform duration-700 group-hover:scale-105 md:h-[31rem]"
+									class="aspect-[4/3] w-full object-cover transition-transform duration-700 group-hover:scale-105"
 								/>
-							</div>
+							</button>
 							<figcaption class="mt-4 flex items-baseline justify-between gap-4">
 								<span class="text-[10px] font-medium tracking-[0.22em] lowercase text-dim transition-colors group-hover:text-accent">
 									{String(i + 1).padStart(2, '0')} / {photo.place}
@@ -246,32 +292,45 @@
 	<section class="relative px-5 py-24 sm:px-8 md:py-36">
 		<div class="mx-auto max-w-6xl">
 			<div use:reveal class="max-w-3xl">
-				<p class="text-xs font-medium tracking-[0.24em] lowercase text-dim">act 02 / edited fragments</p>
-				<h2 class="mt-3 text-[clamp(3rem,8vw,7.5rem)] leading-[0.9] font-medium tracking-[-0.04em] lowercase">
-					the quieter frames survive the cut<span class="text-accent">.</span>
+				<p class="text-xs font-medium tracking-[0.24em] lowercase text-dim">
+					series / after dark — {afterDark.length} frames
+				</p>
+				<h2 class="mt-3 text-[clamp(2.6rem,7vw,6rem)] leading-[0.9] font-medium tracking-[-0.04em] lowercase">
+					what is left once the light goes<span class="text-accent">.</span>
 				</h2>
 			</div>
 
 			<div class="mt-16 space-y-20 md:mt-24 md:space-y-28">
-				{#each reveals as photo, i (photo.src)}
+				{#each afterDark as photo, i (photo.src)}
 					<article
 						class="grid items-end gap-6 md:grid-cols-12 {i % 2 === 1 ? 'md:[&>*:first-child]:col-start-7' : ''}"
 					>
-						<figure data-clip-reveal class="group overflow-hidden rounded-sm bg-paper-2 md:col-span-6">
-							<img
-								src={imageSrc(photo)}
-								srcset="{imageSrc(photo)} 800w, {photo.src} 1600w"
-								sizes="(min-width: 768px) 50vw, 100vw"
-								alt={photo.alt}
-								width={photo.w}
-								height={photo.h}
-								loading="lazy"
-								class="h-[28rem] w-full object-cover transition-transform duration-700 group-hover:scale-105 md:h-[38rem]"
-							/>
+						<figure data-clip-reveal class="group md:col-span-6">
+							<!--
+								h-auto, not a fixed 28-38rem box: this series holds the one
+								panoramic frame in the archive, and object-cover was cutting it
+								to the same portrait shape as everything else.
+							-->
+							<button
+								type="button"
+								onclick={(event) => openPhoto(photo, event)}
+								class="block w-full cursor-zoom-in overflow-hidden rounded-sm bg-paper-2"
+							>
+								<img
+									src={imageSrc(photo)}
+									srcset="{imageSrc(photo)} 800w, {photo.src} 1600w"
+									sizes="(min-width: 768px) 50vw, 100vw"
+									alt={photo.alt}
+									width={photo.w}
+									height={photo.h}
+									loading="lazy"
+									class="h-auto w-full transition-transform duration-700 group-hover:scale-105"
+								/>
+							</button>
 						</figure>
 						<div class="max-w-md md:col-span-4 {i % 2 === 1 ? 'md:col-start-2 md:row-start-1' : ''}">
 							<p class="text-[10px] font-medium tracking-[0.24em] lowercase text-accent">
-								{String(i + 11).padStart(2, '0')} / {photo.location}
+								{String(i + 1).padStart(2, '0')} / {photo.location}
 							</p>
 							<h3 class="mt-3 font-serif text-4xl leading-none italic text-ink/80 md:text-5xl">{photo.place}</h3>
 							<p class="mt-5 text-sm leading-relaxed text-dim">{photo.description}</p>
@@ -285,23 +344,25 @@
 	<section data-ocean-breaker class="relative min-h-screen overflow-hidden bg-coal text-cream">
 		<img
 			data-ocean-image
-			src={ocean.src}
-			srcset="{imageSrc(ocean)} 800w, {ocean.src} 1600w"
+			src={breaker.src}
+			srcset="{imageSrc(breaker)} 800w, {breaker.src} 1600w"
 			sizes="100vw"
-			alt={ocean.alt}
-			width={ocean.w}
-			height={ocean.h}
+			alt={breaker.alt}
+			width={breaker.w}
+			height={breaker.h}
 			loading="lazy"
 			class="absolute inset-0 h-full w-full object-cover opacity-85"
 		/>
 		<div class="absolute inset-0 bg-[linear-gradient(90deg,rgba(14,13,12,0.72),rgba(14,13,12,0.18)_55%,rgba(14,13,12,0.58))]"></div>
 		<div class="relative z-10 mx-auto flex min-h-screen max-w-6xl items-end px-5 py-16 sm:px-8 md:py-24">
 			<div use:reveal class="max-w-2xl">
-				<p class="text-xs font-medium tracking-[0.24em] lowercase text-cream/60">act 03 / full bleed</p>
+				<p class="text-xs font-medium tracking-[0.24em] lowercase text-cream/60">
+					{breaker.place} — {breaker.location}
+				</p>
 				<h2 class="mt-4 text-[clamp(3.5rem,10vw,9rem)] leading-[0.88] font-medium tracking-[-0.05em] lowercase">
 					disconnect<span class="text-accent">.</span>
 				</h2>
-				<p class="mt-6 max-w-lg text-base leading-relaxed text-cream/72">{ocean.description}</p>
+				<p class="mt-6 max-w-lg text-base leading-relaxed text-cream/72">{breaker.description}</p>
 			</div>
 		</div>
 	</section>
@@ -310,7 +371,9 @@
 		<div class="mx-auto max-w-6xl">
 			<div class="grid gap-10 md:grid-cols-12 md:items-start">
 				<div use:reveal class="md:sticky md:top-32 md:col-span-4">
-					<p class="text-xs font-medium tracking-[0.24em] lowercase text-dim">act 04 / mosaic</p>
+					<p class="text-xs font-medium tracking-[0.24em] lowercase text-dim">
+						series / places — {places.length} frames
+					</p>
 					<h2 class="mt-4 text-5xl leading-[0.95] font-medium tracking-tight lowercase md:text-7xl">
 						cities, summits, gardens, green hills<span class="text-accent">.</span>
 					</h2>
@@ -320,9 +383,14 @@
 				</div>
 
 				<div class="grid gap-5 md:col-span-8 md:grid-cols-2 md:gap-6">
-					{#each mosaic as photo, i (photo.src)}
+					{#each placesGrid as photo, i (photo.src)}
 						<figure data-mosaic-card class="group {i % 2 === 0 ? 'md:translate-y-16' : ''}">
-							<div class="overflow-hidden rounded-sm bg-paper-2">
+							<!-- Natural proportions: this is the overview grid, so nothing is cropped. -->
+							<button
+								type="button"
+								onclick={(event) => openPhoto(photo, event)}
+								class="block w-full cursor-zoom-in overflow-hidden rounded-sm bg-paper-2"
+							>
 								<img
 									src={imageSrc(photo)}
 									srcset="{imageSrc(photo)} 800w, {photo.src} 1600w"
@@ -331,9 +399,9 @@
 									width={photo.w}
 									height={photo.h}
 									loading="lazy"
-									class="h-[30rem] w-full object-cover transition-transform duration-700 group-hover:scale-105"
+									class="h-auto w-full transition-transform duration-700 group-hover:scale-105"
 								/>
-							</div>
+							</button>
 							<figcaption class="mt-4 flex items-baseline justify-between gap-4">
 								<span class="text-[10px] font-medium tracking-[0.22em] lowercase text-dim transition-colors group-hover:text-accent">
 									{photo.place}
@@ -347,5 +415,7 @@
 		</div>
 	</section>
 </main>
+
+<Lightbox items={ordered} bind:index={lightboxIndex} onclose={restoreFocus} />
 
 <Connect />
