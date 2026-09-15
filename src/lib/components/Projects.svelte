@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { portalToBody } from '$lib/actions/portal-to-body';
-	import { initMotion } from '$lib/motion';
+	import { initMotion, MOTION_OK, REDUCED_MOTION, MD, FINE_POINTER } from '$lib/motion';
 	import { reveal } from '$lib/actions/reveal';
 	import { projects, projectsIntro } from '$lib/content';
 	import ArrowUpRight from './ArrowUpRight.svelte';
@@ -23,15 +23,13 @@
 	let mouseY = $state(0);
 	let lerpX = $state(0);
 	let lerpY = $state(0);
-	let isTouch = $state(true);
+	/** Hover/cursor effects need a fine pointer; mirrors the FINE_POINTER query live. */
+	let finePointer = $state(false);
+	let reduced = $state(false);
 	let mounted = $state(false);
-	let prefersReduced = $state(false);
 
 	onMount(() => {
 		mounted = true;
-		isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-		prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-		const reducedMotion = prefersReduced;
 
 		let ctxPromise: Promise<any> | undefined;
 
@@ -40,9 +38,24 @@
 
 			if (!sectionEl) return;
 
-			const ctx = gsap.context(() => {
+			/*
+			 * One matchMedia block owns every scene in this section. It re-runs
+			 * (after reverting) whenever reduced-motion, pointer capability or the
+			 * md breakpoint changes, so the answers below are never stale. Both
+			 * motion queries are listed so the callback always has a match.
+			 */
+			const mm = gsap.matchMedia(sectionEl);
+			mm.add(
+				{ motion: MOTION_OK, reducedQ: REDUCED_MOTION, twoColumn: MD, fine: FINE_POINTER },
+				(context) => {
+				const c = context.conditions ?? {};
+				const reducedMotion = Boolean(c.reducedQ);
+				const twoColumn = Boolean(c.twoColumn);
+				const isTouch = !c.fine;
+				reduced = reducedMotion;
+				finePointer = !isTouch;
+
 				/* ── Featured cards — clip reveal + scrubbed image/text drift ───── */
-				const twoColumn = window.matchMedia('(min-width: 768px)').matches;
 				const blocks = sectionEl!.querySelectorAll('[data-bleed-block]');
 
 				if (reducedMotion) {
@@ -190,9 +203,10 @@
 						});
 					}
 				}
-			}, sectionEl);
+				}
+			);
 
-			return ctx;
+			return mm;
 		};
 
 		ctxPromise = gsapInit();
@@ -213,7 +227,7 @@
 	const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
 	$effect(() => {
-		if (isTouch || prefersReduced || activeIndex < 0) return;
+		if (!finePointer || reduced || activeIndex < 0) return;
 
 		let rafId = requestAnimationFrame(function tick() {
 			lerpX = lerp(lerpX, mouseX, 0.1);
@@ -344,6 +358,11 @@
 									{project.outcome}
 								</p>
 							{/if}
+							{#if project.credits}
+								<p class="mt-3 text-xs leading-relaxed {isDark ? 'text-cream/55' : 'text-dim'}">
+									{project.credits}
+								</p>
+							{/if}
 
 							<div class="mt-6 flex flex-wrap gap-2">
 								{#each project.tags as tag}
@@ -357,7 +376,9 @@
 									</span>
 								{/each}
 							</div>
-							<span class="mt-8 inline-flex items-center gap-2 text-xs font-medium text-accent">
+							<!-- 12px label: the bright accent is 3.12:1 on paper-2, so light cards use accent-text.
+							     Dark cards keep it — #e8490f is 4.77:1 on coal and accent-text would drop to 3.03:1. -->
+							<span class="mt-8 inline-flex items-center gap-2 text-xs font-medium {isDark ? 'text-accent' : 'text-accent-text'}">
 								{project.caseStudy ? 'Case study' : 'Visit'}
 								<ArrowUpRight
 									class="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
@@ -459,7 +480,7 @@
 	</div>
 
 	<!-- Floating cursor image — desktop only -->
-	{#if mounted && !isTouch}
+	{#if mounted && finePointer}
 		<div
 			use:portalToBody
 			aria-hidden="true"

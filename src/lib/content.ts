@@ -132,7 +132,7 @@ export const about = {
 	leadAccent: 'that teams keep running long after launch.',
 	paragraphs: [
 		"I'm a frontend developer at Able.do, where I've led the build on everything from India's largest audio brand storefront to a national talent platform that screens students across eleven languages. I build interfaces teams can maintain and extend after launch — component systems non-technical teams manage themselves, commerce flows that hold up under real traffic, and scroll-driven animation that doesn't cost a Lighthouse score.",
-		"The work I'm proudest of sits at the intersection of craft and constraint: a CMS rebuilt twice to survive a corporate rebrand, an animation-heavy site pivoted from image sequences to video mid-build, a campaign site that was approved and never released. The strongest solutions came from testing the brief against real users and real technical limits.",
+		"The work I'm proudest of sits at the intersection of craft and constraint: a CMS whose content model carried straight through a corporate rebrand while the frontend was rebuilt around it, an animation-heavy site pivoted from image sequences to video mid-build, a campaign site that was approved and never released. The strongest solutions came from testing the brief against real users and real technical limits.",
 		'Lately the work has widened. A subscription-meals admin platform taken fully mobile-responsive, then a sideways move into QA — automated checks across web, iOS and Android for a community platform, the programme that schedules them, and the TypeScript engine underneath. I write too: the draft of a technical white paper on human–agent work, and this site, which is an MCP server as much as a portfolio.',
 		'When I\'m not shipping code I\'m somewhere in the mountains with a camera, chasing light and trying not to overthink the composition.'
 	],
@@ -198,6 +198,12 @@ export type Project = {
 	 * a card is the wrong place to introduce a number the article cannot back.
 	 */
 	outcome?: string;
+	/**
+	 * Team credit shown with the outcome. Only names already published in that
+	 * project's case study — nothing is inferred. Mivi has none because the
+	 * article credits no one beyond Able.do.
+	 */
+	credits?: string;
 	/** Highlighted in the magazine spread instead of the mosaic grid */
 	featured?: boolean;
 };
@@ -242,6 +248,7 @@ export const projects: Project[] = [
 		previewWidth: 1605,
 		caseStudy: '/writing/saut',
 		outcome: 'A 65-feature roadmap shipped across six releases, through a full framework rewrite.',
+		credits: 'Design by Tropics (Zubin). Built with Surajith on the functional side.',
 		featured: true
 	},
 	{
@@ -333,6 +340,7 @@ export const projects: Project[] = [
 		previewWidth: 1440,
 		caseStudy: '/writing/godrej',
 		outcome: 'A full corporate rebrand absorbed as a frontend rebuild, with zero content migration.',
+		credits: 'Design system by 3 Sided Coin.',
 		featured: true
 	},
 	{
@@ -351,7 +359,8 @@ export const projects: Project[] = [
 		previewSmall: '/writing/tomorrow-makers/hero-800.webp',
 		previewWidth: 2880,
 		caseStudy: '/writing/tomorrow-makers',
-		outcome: 'Assessments running in 11 languages across four student pathways.',
+		outcome: 'Four student pathways, with the assessment for the youngest cohort (Classes 6–7) available in 11 languages.',
+		credits: 'Design by 3 Sided Coin.',
 		featured: true
 	}
 ];

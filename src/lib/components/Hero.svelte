@@ -112,7 +112,8 @@
 					<span>systems that teams can run</span>
 				</div>
 				<div class="border-l border-line pl-3">
-					<span class="block text-accent">scroll craft</span>
+					<!-- accent-text, not accent: 13px on paper needs 4.5:1, and #e8490f is 3.39:1 -->
+					<span class="block text-accent-text">scroll craft</span>
 					<span>motion with a performance budget</span>
 				</div>
 			</div>

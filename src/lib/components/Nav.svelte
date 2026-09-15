@@ -4,6 +4,7 @@
 	import { fade } from 'svelte/transition';
 	import { nav as navLinks, site, socials } from '$lib/content';
 	import ThemeToggle from './ThemeToggle.svelte';
+	import { modal } from '$lib/actions/modal';
 
 	let {
 		/**
@@ -36,53 +37,22 @@
 	/** Inverted only while the header is transparent over the hero image. */
 	const invert = $derived(onDark && !scrolled && !open);
 
-	// Lock page scroll while the mobile menu is open
-	$effect(() => {
-		document.documentElement.classList.toggle('overflow-hidden', open);
-		return () => document.documentElement.classList.remove('overflow-hidden');
-	});
-
 	/*
-	 * The overlay covers the page visually, but the page underneath stayed in the
-	 * accessibility tree — a screen reader could still browse straight through it
-	 * while the menu claimed to be modal. `inert` removes it from both the tab
-	 * order and the a11y tree. The header is exempt because it stays visible and
-	 * holds the close button and theme toggle.
+	 * The menu only exists below md. If it is open when the viewport crosses the
+	 * breakpoint — a phone rotating, a tablet window resizing — the overlay goes
+	 * display:none via its md:hidden class but the state stays true, which used
+	 * to leave the page inert and scroll-locked behind an invisible dialog.
+	 * Close it on the media query instead, so the modal action tears down.
 	 */
 	$effect(() => {
-		if (!open || !headerEl) return;
-
-		const siblings = [...(headerEl.parentElement?.children ?? [])].filter(
-			(el): el is HTMLElement =>
-				el instanceof HTMLElement && el !== headerEl && el !== menuEl
-		);
-		const restore = siblings.filter((el) => !el.inert);
-		restore.forEach((el) => (el.inert = true));
-
-		return () => restore.forEach((el) => (el.inert = false));
+		const desktop = window.matchMedia('(min-width: 768px)');
+		const closeOnDesktop = (e: MediaQueryListEvent | MediaQueryList) => {
+			if (e.matches) open = false;
+		};
+		closeOnDesktop(desktop);
+		desktop.addEventListener('change', closeOnDesktop);
+		return () => desktop.removeEventListener('change', closeOnDesktop);
 	});
-
-	// Move focus into the menu when it opens
-	$effect(() => {
-		if (open) menuEl?.querySelector('a')?.focus();
-	});
-
-	/*
-	 * Everything the menu leaves reachable, in document order. Collected rather
-	 * than hand-listed: the theme toggle and the wordmark sit in the header and
-	 * stay visible over the overlay, so a hard-coded list of the menu's own links
-	 * left them focusable but unreachable by keyboard. getClientRects() drops the
-	 * desktop nav, which is display:none at this breakpoint.
-	 */
-	function trapFocusables(): HTMLElement[] {
-		const selector = 'a[href], button:not([disabled])';
-		const within = (el: HTMLElement | undefined) =>
-			el ? [...el.querySelectorAll<HTMLElement>(selector)] : [];
-
-		return [...within(headerEl), ...within(menuEl)].filter(
-			(el) => el.getClientRects().length > 0
-		);
-	}
 
 	// Scroll-spy — highlight the nav link for the section under the viewport's midline
 	onMount(() => {
@@ -107,32 +77,8 @@
 	});
 
 	function onKeydown(event: KeyboardEvent) {
-		if (event.key === 'Escape' && open) {
-			open = false;
-			toggleBtn?.focus();
-			return;
-		}
-
-		// Trap Tab inside the menu and the header controls that sit above it
-		if (event.key === 'Tab' && open && menuEl) {
-			const focusables = trapFocusables();
-			if (focusables.length === 0) return;
-
-			const first = focusables[0];
-			const last = focusables[focusables.length - 1];
-			const current = document.activeElement as HTMLElement | null;
-
-			if (event.shiftKey && current === first) {
-				event.preventDefault();
-				last.focus();
-			} else if (!event.shiftKey && current === last) {
-				event.preventDefault();
-				first.focus();
-			} else if (!current || !focusables.includes(current)) {
-				event.preventDefault();
-				first.focus();
-			}
-		}
+		// Escape and the Tab trap are owned by the modal action while the menu is open.
+		void event;
 	}
 
 	function isActiveLink(href: string) {
@@ -237,9 +183,31 @@
 		role="dialog"
 		aria-modal="true"
 		aria-label="Site menu"
+		use:modal={{ onclose: () => (open = false), restoreFocusTo: toggleBtn, initialFocus: 'nav a' }}
 		transition:fade={{ duration: 180 }}
-		class="fixed inset-0 z-40 flex flex-col justify-between bg-coal px-5 pt-28 pb-10 text-cream md:hidden"
+		class="fixed inset-0 z-60 flex flex-col justify-between bg-coal px-5 pt-24 pb-10 text-cream md:hidden"
 	>
+		<!--
+			Dialog chrome lives inside the dialog. The header's hamburger and toggle
+			are underneath the overlay and inert while this is open; these are the
+			reachable ones. The close button mirrors the hamburger's position so the
+			gesture is the same either way.
+		-->
+		<div class="absolute inset-x-5 top-4 flex items-center justify-end gap-3">
+			<ThemeToggle tone="dark" />
+			<button
+				type="button"
+				onclick={() => (open = false)}
+				class="relative -mr-2 grid size-11 place-items-center"
+			>
+				<span class="sr-only">Close menu</span>
+				<span class="relative block h-4 w-6" aria-hidden="true">
+					<span class="absolute top-1/2 left-0 block h-0.5 w-6 -translate-y-1/2 rotate-45 bg-current"></span>
+					<span class="absolute top-1/2 left-0 block h-0.5 w-6 -translate-y-1/2 -rotate-45 bg-current"></span>
+				</span>
+			</button>
+		</div>
+
 		<nav aria-label="Mobile">
 			<ul class="space-y-2">
 				{#each navLinks as link, i (link.href)}

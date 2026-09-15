@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { initMotion } from '$lib/motion';
+	import { initMotion, prefersReducedMotion } from '$lib/motion';
 	import { reveal } from '$lib/actions/reveal';
 	import { photos, photographyIntro, site } from '$lib/content';
 	import Eyebrow from './Eyebrow.svelte';
@@ -12,8 +12,8 @@
 		let ctxPromise: Promise<any> | undefined;
 
 		const init = async () => {
-			const { gsap, reducedMotion } = await initMotion();
-			if (!sectionEl || reducedMotion) return;
+			const { gsap } = await initMotion();
+			if (!sectionEl || prefersReducedMotion()) return;
 
 			const ctx = gsap.context(() => {
 				sectionEl!.querySelectorAll('[data-photo-card]').forEach((card, i) => {

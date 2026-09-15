@@ -4,7 +4,7 @@
 	import { photos } from '$lib/content';
 	import { horizontalGallery } from '$lib/actions/horizontal-gallery';
 	import { reveal } from '$lib/actions/reveal';
-	import { initMotion } from '$lib/motion';
+	import { initMotion, MOTION_OK } from '$lib/motion';
 	import Nav from '$lib/components/Nav.svelte';
 	import Connect from '$lib/components/Connect.svelte';
 	import Lightbox from '$lib/components/Lightbox.svelte';
@@ -51,10 +51,13 @@
 		let ctxPromise: Promise<any> | undefined;
 
 		const init = async () => {
-			const { gsap, reducedMotion } = await initMotion();
-			if (!pageEl || reducedMotion) return;
+			const { gsap } = await initMotion();
+			if (!pageEl) return;
 
-			return gsap.context(() => {
+			// Every scene here is motion-only, so one matchMedia block owns the lot
+			// and reverts it if the preference changes while the page is open.
+			const mm = gsap.matchMedia(pageEl);
+			mm.add(MOTION_OK, () => {
 				const heroImage = pageEl!.querySelector('[data-photo-hero-image]');
 				const heroTitle = pageEl!.querySelector('[data-photo-hero-title]');
 
@@ -152,7 +155,9 @@
 						}
 					);
 				});
-			}, pageEl);
+			});
+
+			return mm;
 		};
 
 		ctxPromise = init();

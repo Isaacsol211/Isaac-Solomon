@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { photos } from '$lib/content';
+	import { modal } from '$lib/actions/modal';
 
 	type Photo = (typeof photos)[number];
 
@@ -19,8 +20,6 @@
 	const open = $derived(index >= 0 && index < items.length);
 	const photo = $derived(open ? items[index] : undefined);
 
-	let dialogEl = $state<HTMLElement>();
-	let closeBtn = $state<HTMLButtonElement>();
 
 	function close() {
 		index = -1;
@@ -32,57 +31,20 @@
 		index = (index + delta + items.length) % items.length;
 	}
 
-	// Focus the close button on open so the keyboard starts inside the dialog.
-	$effect(() => {
-		if (open) closeBtn?.focus();
-	});
-
-	// The page behind must not scroll or be reachable while the dialog is up.
-	$effect(() => {
-		if (!open) return;
-		document.documentElement.classList.add('overflow-hidden');
-		return () => document.documentElement.classList.remove('overflow-hidden');
-	});
-
+	/*
+	 * Escape, the Tab trap, scroll lock, background inert and focus restore all
+	 * belong to the modal action. Only the arrow keys are this dialog's own.
+	 * The previous version had aria-modal and a trap but never made the page
+	 * behind inert — a screen reader could read straight past the dialog.
+	 */
 	function onkeydown(event: KeyboardEvent) {
 		if (!open) return;
-
-		if (event.key === 'Escape') {
-			event.preventDefault();
-			close();
-			return;
-		}
 		if (event.key === 'ArrowRight') {
 			event.preventDefault();
 			step(1);
-			return;
-		}
-		if (event.key === 'ArrowLeft') {
+		} else if (event.key === 'ArrowLeft') {
 			event.preventDefault();
 			step(-1);
-			return;
-		}
-
-		if (event.key === 'Tab' && dialogEl) {
-			const focusables = [...dialogEl.querySelectorAll<HTMLElement>('button:not([disabled])')].filter(
-				(el) => el.getClientRects().length > 0
-			);
-			if (focusables.length === 0) return;
-
-			const first = focusables[0];
-			const last = focusables[focusables.length - 1];
-			const current = document.activeElement as HTMLElement | null;
-
-			if (event.shiftKey && current === first) {
-				event.preventDefault();
-				last.focus();
-			} else if (!event.shiftKey && current === last) {
-				event.preventDefault();
-				first.focus();
-			} else if (!current || !focusables.includes(current)) {
-				event.preventDefault();
-				first.focus();
-			}
 		}
 	}
 </script>
@@ -96,10 +58,10 @@
 		is never cropped here — this is the one place every frame is shown whole.
 	-->
 	<div
-		bind:this={dialogEl}
 		role="dialog"
 		aria-modal="true"
 		aria-label="{photo.place} — {photo.location}"
+		use:modal={{ onclose: close, initialFocus: '[data-close]' }}
 		class="fixed inset-0 z-[70] flex flex-col bg-coal/95 backdrop-blur-sm"
 	>
 		<div class="flex items-center justify-between gap-4 px-5 py-4 text-cream sm:px-8">
@@ -107,7 +69,7 @@
 				{index + 1} / {items.length}
 			</p>
 			<button
-				bind:this={closeBtn}
+				data-close
 				type="button"
 				onclick={close}
 				class="rounded-full border border-cream/25 px-4 py-2 text-xs font-medium lowercase transition-colors hover:border-cream/70"

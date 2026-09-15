@@ -4,7 +4,7 @@
 	import favicon from '$lib/assets/favicon.svg';
 	import { afterNavigate, onNavigate } from '$app/navigation';
 	import { onMount } from 'svelte';
-	import { initMotion, prefersReducedMotion } from '$lib/motion';
+	import { initMotion, onReducedMotionChange, prefersReducedMotion } from '$lib/motion';
 
 	let { children } = $props();
 
@@ -17,17 +17,23 @@
 	 * native by Lenis default.
 	 */
 	onMount(() => {
-		if (prefersReducedMotion()) return;
-
 		let destroyed = false;
-		let cleanup: (() => void) | undefined;
+		let stop: (() => void) | undefined;
 
-		(async () => {
+		/*
+		 * Lenis follows the live preference, not the value at mount. Previously
+		 * a visitor who turned reduced motion on mid-session kept smooth scrolling
+		 * until reload, and one who turned it off never got it. Now the smoother
+		 * is torn down when the preference switches on and rebuilt when it
+		 * switches off — the same policy the GSAP scenes get from matchMedia.
+		 */
+		const start = async () => {
 			const [{ default: Lenis }, { gsap, ScrollTrigger }] = await Promise.all([
 				import('lenis'),
 				initMotion()
 			]);
-			if (destroyed) return;
+			// The preference may have flipped while the imports were in flight.
+			if (destroyed || stop || prefersReducedMotion()) return;
 
 			// anchor offset matches the sections' scroll-margin-top (5.5rem fixed nav)
 			const lenis = new Lenis({ anchors: { offset: -88 }, autoRaf: false });
@@ -37,16 +43,26 @@
 			gsap.ticker.add(raf);
 			gsap.ticker.lagSmoothing(0);
 
-			cleanup = () => {
+			stop = () => {
 				gsap.ticker.remove(raf);
 				lenis.destroy();
 				lenisInstance = undefined;
+				stop = undefined;
 			};
-		})();
+		};
+
+		const apply = (reduced: boolean) => {
+			if (reduced) stop?.();
+			else if (!stop) void start();
+		};
+
+		apply(prefersReducedMotion());
+		const unsubscribe = onReducedMotionChange(apply);
 
 		return () => {
 			destroyed = true;
-			cleanup?.();
+			unsubscribe();
+			stop?.();
 		};
 	});
 

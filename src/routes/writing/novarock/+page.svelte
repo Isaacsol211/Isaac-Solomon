@@ -433,8 +433,9 @@
 					with <code class="rounded border border-line bg-paper-2 px-1.5 py-0.5 text-[11px]">srcset + sizes</code>,
 					explicit dimensions to kill CLS, <code class="rounded border border-line bg-paper-2 px-1.5 py-0.5 text-[11px]">fetchpriority="high"</code> on the LCP image,
 					and a <code class="rounded border border-line bg-paper-2 px-1.5 py-0.5 text-[11px]">mobileSkip</code> prop that emits
-					an empty source on small screens — so the hero is <em class="font-serif italic">genuinely</em> never
-					downloaded on mobile, not just hidden.
+					a mobile-first source on small screens. The intent was for the hero to be skipped on a phone
+					outright rather than merely hidden — the note under the snippet explains why an empty source
+					alone does not deliver that, and what does.
 				</p>
 			</div>
 		</div>
@@ -445,7 +446,7 @@
 				<span class="font-mono text-[10px] tracking-wider text-dim">Picture.svelte — usage</span>
 				<span class="text-[10px] font-medium tracking-[0.15em] uppercase text-dim/60">Svelte 5</span>
 			</div>
-			<pre class="overflow-x-auto p-5 text-[12px] leading-relaxed"><code><span class="text-dim">&lt;!-- Hero — preloaded, never downloaded on mobile --&gt;</span>
+			<pre class="overflow-x-auto p-5 text-[12px] leading-relaxed"><code><span class="text-dim">&lt;!-- Hero — preloaded; mobileSkip meant to skip the phone download (see note) --&gt;</span>
 <span class="text-accent">&lt;Picture</span>
   <span class="text-[#86d993]">src</span>=<span class="text-[#e8c57d]">"/img/dth-hammer.png"</span>
   <span class="text-[#86d993]">alt</span>=<span class="text-[#e8c57d]">"DTH hammer NRT45DH"</span>
@@ -466,7 +467,8 @@
 			<div class="border-t border-line bg-paper-2/50 px-4 py-3 text-xs leading-relaxed text-dim">
 				<code class="rounded border border-line bg-paper-2 px-1.5 py-0.5 text-[10px]">mobileSkip</code> emits
 				<code class="rounded border border-line bg-paper-2 px-1.5 py-0.5 text-[10px]">&lt;source media="(max-width: 639px)" srcset=""&gt;</code>
-				as the first source. A source whose parsed source set is empty is skipped rather than honoured, so this is not a guaranteed way to suppress the request — verify the behaviour you actually need on device.
+				as the first source. Per the HTML spec, a source whose parsed source set is empty is <em>skipped</em>, not honoured — the browser moves on to the next candidate and downloads the hero anyway. On its own this does not suppress the request. What does: point the mobile source at a real, tiny placeholder, or leave the element out of the mobile markup entirely. Hiding it with
+				<code class="rounded border border-line bg-paper-2 px-1.5 py-0.5 text-[10px]">display:none</code> doesn't help either; hidden images are still fetched.
 				<code class="rounded border border-line bg-paper-2 px-1.5 py-0.5 text-[10px]">display:none</code> doesn't do this.
 			</div>
 		</div>

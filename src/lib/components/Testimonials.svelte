@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { initMotion } from '$lib/motion';
+	import { initMotion, prefersReducedMotion } from '$lib/motion';
 	import { reveal } from '$lib/actions/reveal';
 	import { testimonials, testimonialsIntro } from '$lib/content';
 	import Eyebrow from './Eyebrow.svelte';
@@ -37,7 +37,8 @@
 		let ctxPromise: Promise<any> | undefined;
 
 		const init = async () => {
-			const { gsap, ScrollTrigger, reducedMotion } = await initMotion();
+			const { gsap, ScrollTrigger } = await initMotion();
+			const reducedMotion = prefersReducedMotion();
 			if (!sectionEl) return;
 
 			const ctx = gsap.context(() => {

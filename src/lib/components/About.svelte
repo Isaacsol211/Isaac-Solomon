@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { initMotion } from '$lib/motion';
+	import { initMotion, MOTION_OK } from '$lib/motion';
 	import { reveal } from '$lib/actions/reveal';
 	import { about, clients } from '$lib/content';
 	import Eyebrow from './Eyebrow.svelte';
@@ -11,13 +11,14 @@
 		let ctxPromise: Promise<any> | undefined;
 
 		const init = async () => {
-			const { gsap, reducedMotion } = await initMotion();
+			const { gsap } = await initMotion();
 			if (!sectionEl) return;
 
-			const ctx = gsap.context(() => {
+			// matchMedia, not a cached boolean: reverts if the preference changes mid-session.
+			const ctx = gsap.matchMedia(sectionEl);
+			ctx.add(MOTION_OK, () => {
 				const portrait = sectionEl!.querySelector('[data-about-portrait]');
 				const lead = sectionEl!.querySelector('[data-about-lead]');
-				if (reducedMotion) return;
 
 				if (portrait) {
 					gsap.fromTo(
@@ -54,7 +55,7 @@
 						}
 					);
 				}
-			}, sectionEl);
+			});
 
 			return ctx;
 		};
