@@ -179,6 +179,24 @@
 	}
 }
 
+/*
+ * Opening start states. GSAP animates these elements *from* hidden on load; if
+ * the hidden state only arrived with the script, the page painted them once in
+ * their final state and then blanked them — a flash lasting as long as the
+ * bundle took. Applied here so first paint already matches frame zero, gated
+ * on .js (a no-JS page shows everything) and on motion being allowed. GSAP's
+ * inline styles take over from here.
+ */
+@media (prefers-reduced-motion: no-preference) {
+	.js [data-hero-meta],
+	.js [data-hero-intro] {
+		opacity: 0;
+	}
+	.js [data-bleed-block]:first-child [data-bleed-img] {
+		clip-path: inset(100% 0 0 0);
+	}
+}
+
 /* Scroll-reveal (applied by the `reveal` action; visible by default without JS) */
 .reveal {
 	opacity: 0;

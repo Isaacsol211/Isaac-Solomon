@@ -7,6 +7,9 @@
 		<meta name="theme-color" content="#f1efea" />
 		<script>
 			// Set theme before first paint: stored choice wins, otherwise follow the OS.
+			// Also mark that scripts run, so opening-animation start states can apply
+			// in CSS before hydration without hiding anything from a no-JS page.
+			document.documentElement.classList.add('js');
 			(() => {
 				try {
 					const stored = localStorage.getItem('theme');

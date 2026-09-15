@@ -71,7 +71,6 @@
 				} else {
 					blocks.forEach((block, i) => {
 						const img = block.querySelector('[data-bleed-img]');
-						const frame = block.querySelector('[data-bleed-frame]');
 						const revealAt = i === 0 ? 'top bottom' : 'top 75%';
 						const text = block.querySelector('[data-bleed-text]');
 						const tags = block.querySelectorAll('[data-bleed-tag]');
@@ -94,20 +93,22 @@
 								{
 									clipPath: 'inset(0% 0 0 0)',
 									duration: 0.7,
+									/* first block follows the title rise; later ones open as they arrive */
+									delay: i === 0 ? 0.55 : 0,
 									ease: 'expo.out',
 									scrollTrigger: { trigger: block, start: revealAt, once: true }
 								}
 							);
 						}
-						if (frame) {
-							/* image settles, a beat after the crop starts */
+						if (innerImg) {
+							/* image settles inside its fixed frame, a beat after the crop starts */
 							gsap.fromTo(
-								frame,
+								innerImg,
 								{ scale: 1.04 },
 								{
 									scale: 1,
 									duration: 1.1,
-									delay: 0.1,
+									delay: (i === 0 ? 0.55 : 0) + 0.1,
 									ease: 'expo.out',
 									scrollTrigger: { trigger: block, start: revealAt, once: true }
 								}
@@ -302,10 +303,21 @@
 						coal and the two sections read as one surface. No ghost number, no
 						coloured rule — the image and the name carry it.
 					-->
-					<div aria-hidden="true" class="absolute inset-x-0 top-[3rem] bottom-0 bg-coal md:top-[10rem]"></div>
 					<div class="relative px-5 sm:px-8">
-					<div class="mx-auto max-w-6xl pb-16 md:pb-24">
-						<div data-bleed-img class="-mt-20 overflow-hidden rounded-lg md:-mt-28">
+					<div class="mx-auto -mt-20 max-w-6xl md:-mt-28">
+						<!-- Identification sits on paper, just above the image: heading + number + year + category. -->
+						<div
+							data-stage-id
+							class="mb-5 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 text-ink"
+						>
+							<Eyebrow title="Selected Work" as="h2" />
+							<span data-bleed-meta class="text-[10px] font-medium tracking-[0.25em] text-dim uppercase">
+								{String(i + 1).padStart(2, '0')} — {project.year} — {project.category}
+							</span>
+						</div>
+						<div class="relative">
+						<div aria-hidden="true" class="absolute top-1/3 bottom-0 left-1/2 -z-10 w-screen -translate-x-1/2 bg-coal"></div>
+						<div data-bleed-img class="overflow-hidden rounded-lg">
 							{#if img}
 								<!-- 21/9 against a 2.4:1 source: a sliver off each side, not a crop into the UI -->
 								<div data-bleed-frame class="aspect-[16/10] overflow-hidden sm:aspect-[21/9]">
@@ -325,8 +337,14 @@
 								</div>
 							{/if}
 						</div>
+						</div>
+					</div>
+					</div>
 
-						<div class="mt-10 grid gap-8 md:mt-14 md:grid-cols-12 md:items-end md:gap-10">
+					<!-- Everything under the image is on coal: a full-bleed band with the 6xl column inside. -->
+					<div class="relative left-1/2 w-screen -translate-x-1/2 bg-coal">
+					<div class="mx-auto max-w-6xl px-5 pt-10 pb-16 sm:px-8 md:pt-14 md:pb-24">
+						<div class="grid gap-8 md:grid-cols-12 md:items-end md:gap-10">
 							<h3 class="text-6xl font-medium tracking-[-0.03em] lowercase md:col-span-6 md:text-[7.5rem] md:leading-[0.9]">
 								{project.title}
 							</h3>
@@ -354,13 +372,6 @@
 							</div>
 						</div>
 
-						<!-- Section heading lives here, as the stage's own meta row. -->
-						<div class="mt-12 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-t border-cream/10 pt-5 md:mt-16">
-							<Eyebrow title="Selected Work" tone="dark" as="h2" />
-							<span data-bleed-meta class="text-[10px] font-medium tracking-[0.25em] text-cream/40 uppercase">
-								{String(i + 1).padStart(2, '0')} — {project.year} — {project.category}
-							</span>
-						</div>
 					</div>
 					</div>
 				{:else}

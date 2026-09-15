@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { initMotion, MOTION_OK } from '$lib/motion';
-	import { reveal } from '$lib/actions/reveal';
 	import { site } from '$lib/content';
 
 	const year = new Date().getFullYear();
@@ -27,20 +26,31 @@
 			mm = gsap.matchMedia(sectionEl);
 			mm.add(MOTION_OK, () => {
 				const signature = sectionEl!.querySelector('[data-hero-signature]');
+				const meta = sectionEl!.querySelector('[data-hero-meta]');
+				const intro = sectionEl!.querySelector('[data-hero-intro]');
+
+				/*
+				 * Opening, in order: title rises through its line masks (CSS, 120ms /
+				 * 210ms), meta and introduction fade in where they stand, the stage's
+				 * crop opens beneath (Projects, first block, from 0.55s), and the ✱ turns
+				 * a quarter-step as the image lands. Opacity only on text — every box,
+				 * frame and seam is already in its final place before the first frame.
+				 */
+				const opening = gsap.timeline({ defaults: { ease: 'power2.out' } });
+				if (meta) opening.fromTo(meta, { opacity: 0 }, { opacity: 1, duration: 0.6 }, 0.1);
+				if (intro) opening.fromTo(intro, { opacity: 0 }, { opacity: 1, duration: 0.7 }, 0.42);
 				if (signature) {
-					/* one quarter-step as the title lands — the site's motion signature */
-					gsap.fromTo(
+					opening.fromTo(
 						signature,
 						{ rotate: -90, scale: 0.9 },
-						{ rotate: 0, scale: 1, duration: 0.8, ease: 'power3.out', delay: 0.55 }
+						{ rotate: 0, scale: 1, duration: 0.8, ease: 'power3.out' },
+						0.95
 					);
 				}
 
 				/* Scroll-out: the three bands leave at different speeds. */
 				const scrub = { trigger: sectionEl, start: 'top top', end: 'bottom top', scrub: true };
 				const headline = sectionEl!.querySelector('[data-hero-headline]');
-				const intro = sectionEl!.querySelector('[data-hero-intro]');
-				const meta = sectionEl!.querySelector('[data-hero-meta]');
 				if (headline) gsap.to(headline, { yPercent: 14, opacity: 0.35, ease: 'none', scrollTrigger: { ...scrub } });
 				if (intro) gsap.to(intro, { yPercent: 26, opacity: 0.25, ease: 'none', scrollTrigger: { ...scrub } });
 				if (meta) gsap.to(meta, { yPercent: -20, opacity: 0.35, ease: 'none', scrollTrigger: { ...scrub } });
@@ -54,7 +64,7 @@
 	});
 </script>
 
-<section bind:this={sectionEl} id="top" class="relative overflow-hidden px-5 pt-32 sm:px-8 md:pt-36">
+<section bind:this={sectionEl} id="top" class="relative overflow-hidden px-5 pt-32 pb-20 sm:px-8 md:pt-36 md:pb-28">
 	<!--
 		Signature ✱ — two spans because two systems want its transform: the outer
 		carries the CSS scroll-driven rotation, the inner the GSAP entrance.
@@ -69,7 +79,6 @@
 	<div class="relative mx-auto max-w-6xl">
 		<div
 			data-hero-meta
-			use:reveal
 			class="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-b border-line pb-5 text-xs font-medium tracking-[0.25em] lowercase text-dim"
 		>
 			<span class="flex items-center gap-3">
@@ -92,7 +101,7 @@
 			empty column between them as the gutter. Both bottom-aligned so the
 			lead's last line and the title's baseline share a rule.
 		-->
-		<div class="grid gap-y-10 pt-12 pb-14 md:grid-cols-12 md:items-end md:gap-x-10 md:pt-16 md:pb-20">
+		<div class="grid gap-y-10 pt-12 pb-12 md:grid-cols-12 md:items-end md:gap-x-10 md:pt-16 md:pb-16">
 			<h1
 				data-hero-headline
 				class="text-[clamp(3rem,10.5vw,8.75rem)] leading-[0.9] font-medium tracking-[-0.045em] lowercase md:col-span-7"
@@ -106,7 +115,7 @@
 				{/each}
 			</h1>
 
-			<div data-hero-intro use:reveal={{ delay: 240 }} class="md:col-span-4 md:col-start-9">
+			<div data-hero-intro class="md:col-span-4 md:col-start-9">
 				<p class="max-w-md text-[1.0625rem] leading-relaxed text-ink md:text-lg">
 					{site.heroLead}
 				</p>
@@ -127,24 +136,5 @@
 			</div>
 		</div>
 
-		<!-- Three quiet facts along the seam; the stage image below overlaps the space under them. -->
-		<div
-			use:reveal={{ delay: 180 }}
-			class="grid gap-3 border-t border-line pt-5 pb-28 text-[13px] font-medium tracking-[0.06em] lowercase text-dim sm:grid-cols-3 md:pb-36"
-		>
-			<div>
-				<span class="block text-ink">9 years</span>
-				<span>shipping client products</span>
-			</div>
-			<div>
-				<span class="block text-ink">cms / commerce</span>
-				<span>systems that teams can run</span>
-			</div>
-			<div>
-				<!-- accent-text, not accent: 13px on paper needs 4.5:1, and #e8490f is 3.39:1 -->
-				<span class="block text-accent-text">scroll craft</span>
-				<span>motion with a performance budget</span>
-			</div>
-		</div>
 	</div>
 </section>
