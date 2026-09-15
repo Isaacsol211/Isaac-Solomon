@@ -7,8 +7,9 @@
 
 	/*
 	 * Compact craft interlude — after the second featured project, before the
-	 * third. One statement, three fragments of real work, the guide-line motif
-	 * from the old Manifesto scene. The fragments assemble from a loose scatter
+	 * third. One statement, three fragments of real work, and the guide-line
+	 * motif — layered assembly and small rotations carried over from the
+	 * pinned manifesto scene this replaced. The fragments assemble from a loose scatter
 	 * to their resting tilt as the section scrolls through the viewport; no pin,
 	 * no barrier, done by the time the statement is fully on screen. Resting
 	 * positions are the CSS default, so reduced motion and no-JS get the

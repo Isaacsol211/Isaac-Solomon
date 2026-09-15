@@ -114,19 +114,6 @@ export const serviceDetails: Service[] = [
 	}
 ];
 
-/**
- * Full-viewport statement between the hero and About — words fill in on scroll.
- * DRAFT COPY — Isaac has veto rights on this line.
- */
-export const manifesto = {
-	label: 'the short version',
-	lines: [
-		{ plain: 'make it', key: 'fast' },
-		{ plain: 'make it', key: 'last' },
-		{ plain: 'make it feel', key: 'handmade' }
-	]
-};
-
 export const about = {
 	lead: 'Nine years turning designs into products',
 	leadAccent: 'that teams keep running long after launch.',
