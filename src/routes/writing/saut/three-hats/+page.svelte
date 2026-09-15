@@ -64,6 +64,8 @@
 
 		<!-- meta -->
 		<div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-b border-line py-5 text-xs font-medium tracking-[0.2em] uppercase text-dim">
+			<span>2023</span>
+			<span class="h-3 w-px bg-line"></span>
 			<span>SAUT · 2019 – 2023</span>
 			<span class="h-3 w-px bg-line"></span>
 			<span>Product · Design · Engineering</span>

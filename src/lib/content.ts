@@ -192,6 +192,12 @@ export type Project = {
 	 * and a descriptor that misstates the width makes the browser pick badly.
 	 */
 	previewWidth?: number;
+	/**
+	 * One verifiable result, shown on the featured card. Every value here is
+	 * lifted from that project's own case study rather than written fresh —
+	 * a card is the wrong place to introduce a number the article cannot back.
+	 */
+	outcome?: string;
 	/** Highlighted in the magazine spread instead of the mosaic grid */
 	featured?: boolean;
 };
@@ -216,6 +222,7 @@ export const projects: Project[] = [
 		previewSmall: '/projects/mivi-desktop-800.webp',
 		previewWidth: 1600,
 		caseStudy: '/writing/mivi',
+		outcome: '100,000+ customers and 10,000+ orders managed natively after the migration.',
 		featured: true
 	},
 	{
@@ -234,6 +241,7 @@ export const projects: Project[] = [
 		previewSmall: '/projects/saut/landing-hero-devices-right-to-left-800.webp',
 		previewWidth: 1605,
 		caseStudy: '/writing/saut',
+		outcome: 'A 65-feature roadmap shipped across six releases, through a full framework rewrite.',
 		featured: true
 	},
 	{
@@ -324,6 +332,7 @@ export const projects: Project[] = [
 		previewSmall: '/writing/godrej/hero-800.webp',
 		previewWidth: 1440,
 		caseStudy: '/writing/godrej',
+		outcome: 'A full corporate rebrand absorbed as a frontend rebuild, with zero content migration.',
 		featured: true
 	},
 	{
@@ -342,6 +351,7 @@ export const projects: Project[] = [
 		previewSmall: '/writing/tomorrow-makers/hero-800.webp',
 		previewWidth: 2880,
 		caseStudy: '/writing/tomorrow-makers',
+		outcome: 'Assessments running in 11 languages across four student pathways.',
 		featured: true
 	}
 ];

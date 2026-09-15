@@ -334,6 +334,17 @@
 							<p class="mt-4 text-sm leading-relaxed {isDark ? 'text-cream/60' : 'text-dim'}">
 								{project.description}
 							</p>
+							{#if project.outcome}
+								<!-- The result, stated once, sourced from the case study. -->
+								<p
+									class="mt-5 border-l-2 pl-4 text-sm leading-relaxed {isDark
+										? 'border-accent/60 text-cream/80'
+										: 'border-accent/70 text-ink/80'}"
+								>
+									{project.outcome}
+								</p>
+							{/if}
+
 							<div class="mt-6 flex flex-wrap gap-2">
 								{#each project.tags as tag}
 									<span
