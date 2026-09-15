@@ -93,11 +93,11 @@ export const serviceDetails: Service[] = [
 	{
 		title: 'QA automation',
 		summary:
-			'Smoke lanes that run themselves on request, and leave behind a report someone can actually act on.',
+			'Automated checks across web, iOS and Android that run on request and leave a report someone can act on.',
 		items: [
 			'Web, iOS simulator and Android emulator lanes',
 			'Flake isolation and retry policy',
-			'Finding dedupe and regression tracking',
+			'Deduplicated findings and regression tracking',
 			'Reports with triage-ready evidence'
 		]
 	},
@@ -128,12 +128,12 @@ export const manifesto = {
 };
 
 export const about = {
-	lead: 'Nine years turning designs into products —',
-	leadAccent: 'not prototypes, not demos. Products.',
+	lead: 'Nine years turning designs into products',
+	leadAccent: 'that teams keep running long after launch.',
 	paragraphs: [
-		"I'm a frontend developer at Able.do, where I've led the build on everything from India's largest audio brand storefront to a national talent platform that screens students across eleven languages. I write the kind of code that ships on Tuesday and still works on Friday — component systems flexible enough for non-technical teams to manage, e-commerce flows that handle real traffic, and scroll-driven animations that don't tank a Lighthouse score.",
-		"The work I'm proudest of sits at the intersection of craft and constraint: a CMS rebuilt twice to survive a corporate rebrand, an animation-heavy site pivoted from image sequences to video mid-build, a campaign site the client loved but never launched. Every project teaches you something — usually that the brief was wrong.",
-		'Lately the work has widened. A subscription-meals admin platform taken fully mobile-responsive, then a sideways move into QA — web, iOS and Android smoke lanes for a community platform, the automation programme that runs them, and the engine underneath it in TypeScript. I write too: the draft of a technical white paper on governed human–agent work, and this site, which is an MCP server as much as a portfolio.',
+		"I'm a frontend developer at Able.do, where I've led the build on everything from India's largest audio brand storefront to a national talent platform that screens students across eleven languages. I build interfaces teams can maintain and extend after launch — component systems non-technical teams manage themselves, commerce flows that hold up under real traffic, and scroll-driven animation that doesn't cost a Lighthouse score.",
+		"The work I'm proudest of sits at the intersection of craft and constraint: a CMS rebuilt twice to survive a corporate rebrand, an animation-heavy site pivoted from image sequences to video mid-build, a campaign site that was approved and never released. The strongest solutions came from testing the brief against real users and real technical limits.",
+		'Lately the work has widened. A subscription-meals admin platform taken fully mobile-responsive, then a sideways move into QA — automated checks across web, iOS and Android for a community platform, the programme that schedules them, and the TypeScript engine underneath. I write too: the draft of a technical white paper on human–agent work, and this site, which is an MCP server as much as a portfolio.',
 		'When I\'m not shipping code I\'m somewhere in the mountains with a camera, chasing light and trying not to overthink the composition.'
 	],
 	portrait: '/isaac.webp',
@@ -205,7 +205,7 @@ export const projects: Project[] = [
 		year: '2018 – 2022',
 		category: 'E-Commerce',
 		description:
-			"India's first audio manufacturing tech brand needed a storefront that moved as fast as their products. I built the entire UI on a custom in-house CMS — componentised from the ground up, with a live cart, transactional mailers and dynamic product pages that the team could manage without touching code.",
+			"Built the full storefront UI for India's first audio manufacturing brand, on a custom in-house CMS. Componentised from the ground up, with a live cart, transactional mailers, and product pages the marketing team updates without a developer.",
 		tags: ['Custom CMS', 'E-Commerce', 'UI Engineering', 'Mailers'],
 		href: 'https://www.mivi.in',
 		theme: 'dark',
@@ -223,7 +223,7 @@ export const projects: Project[] = [
 		year: '2019 – 2023',
 		category: 'EdTech · LMS',
 		description:
-			'Four years building a Learning Management System for special educators teaching children with Down syndrome — from Vue.js to SvelteKit, from solo frontend dev to product manager. Bilingual Arabic/English with a live RTL toggle, offline-first assessments, and a drag-and-drop worksheet builder that prints pixel-perfect A4.',
+			'Four years on a learning platform for special educators teaching children with Down syndrome — Vue to SvelteKit, solo developer to product manager. Bilingual Arabic/English with a live RTL toggle, offline-first assessments, and a worksheet builder that prints pixel-perfect A4.',
 		tags: ['SvelteKit', 'Vue.js', 'Product Management', 'RTL / LTR'],
 		href: 'https://saut-website-demo.able.do',
 		theme: 'dark',
@@ -270,7 +270,7 @@ export const projects: Project[] = [
 		year: '2023',
 		category: 'Political Web',
 		description:
-			"A static campaign site for the Aam Aadmi Party — editorial, urgent, built to mobilise. Strong typographic hierarchy, video-first news sections and a volunteer sign-up flow. The party loved it; it never went live. Some of the best work I've done for an audience of zero.",
+			'A static campaign site for the Aam Aadmi Party — editorial, urgent, built to mobilise. Strong typographic hierarchy, video-first news sections and a volunteer sign-up flow. Approved by the party, never released.',
 		tags: ['Static Site', 'Editorial', 'HTML / CSS', 'UI Design'],
 		status: 'Unreleased',
 		theme: 'light',
@@ -313,7 +313,7 @@ export const projects: Project[] = [
 		year: '2024',
 		category: 'Philanthropy',
 		description:
-			'Website and custom CMS for India\'s oldest philanthropic trust. SvelteKit + Tailwind, built twice — once before and once after Godrej\'s full corporate rebrand.',
+			'Website and custom CMS for India\'s oldest philanthropic trust, in SvelteKit and Tailwind. Built twice — the corporate rebrand landed mid-project — and the content model carried across so the foundation team never re-entered a thing.',
 		tags: ['SvelteKit', 'Tailwind', 'Custom CMS', 'Rebrand'],
 		href: 'https://www.godrejfoundation.com',
 		theme: 'light',
@@ -331,7 +331,7 @@ export const projects: Project[] = [
 		year: '2026',
 		category: 'Philanthropy · EdTech',
 		description:
-			'National talent platform for Godrej Foundation — identifies and supports high-potential students from disadvantaged backgrounds across four pathways. SvelteKit on Cloudflare, with WhatsApp onboarding and 11-language assessment support.',
+			'National talent platform for Godrej Foundation, identifying and supporting high-potential students from disadvantaged backgrounds across four pathways. SvelteKit on Cloudflare, with WhatsApp onboarding and assessments in eleven languages.',
 		tags: ['SvelteKit', 'Tailwind', 'Cloudflare', 'EdTech'],
 		href: 'https://www.tomorrow-makers.in',
 		theme: 'light',
@@ -376,7 +376,7 @@ export const writing: Article[] = [
 	{
 		title: 'Wearing Three Hats — Frontend Dev, PM, Designer',
 		description:
-			'How four years on one product turned a frontend developer into a product manager and emergency UI designer — and why each hat made the others better.',
+			'How four years on one product turned a frontend developer into a product manager, and into the person extending the design system when no designer was on it — and why each role made the others better.',
 		href: '/writing/saut/three-hats',
 		tag: 'Essay · SAUT',
 		readingTime: '7 min',
@@ -478,7 +478,7 @@ export const experience = [
 		role: 'Frontend Developer',
 		company: 'Able.do',
 		description:
-			'Nine years building and shipping client products — e-commerce platforms, custom CMS systems, component libraries and design systems. Led the frontend for Mivi, Vibrant Living and a dozen other builds from first commit to production. Since mid-2026 the work has widened into QA automation, governed delivery and technical writing.'
+			'Nine years building and shipping client products — e-commerce platforms, custom CMS systems, component libraries and design systems. Led the frontend for Mivi, Vibrant Living and a dozen other builds from first commit to production. Since mid-2026 the work has widened into QA automation, the processes that keep delivery accountable, and technical writing.'
 	},
 	{
 		from: '2016',
@@ -539,5 +539,5 @@ export const mcp = {
 export const connect = {
 	eyebrow: 'Have an idea? A role? A roll of film?',
 	blurb:
-		'I am always happy to talk about interesting work, weird side projects or where to get good coffee. The fastest way to reach me:'
+		'Happy to talk about interesting work, side projects, or where to get good coffee. If it is a project or a role, send the scope, the team and the timing — that is usually enough to start.'
 };

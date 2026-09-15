@@ -329,7 +329,9 @@
 							<h3 class="text-3xl font-medium tracking-tight md:text-4xl">
 								{project.title}
 							</h3>
-							<p class="mt-4 line-clamp-3 text-sm leading-relaxed {isDark ? 'text-cream/60' : 'text-dim'}">
+							<!-- No line-clamp: card summaries are written to fit. Truncating here
+							     cut them mid-sentence, before they finished making the case. -->
+							<p class="mt-4 text-sm leading-relaxed {isDark ? 'text-cream/60' : 'text-dim'}">
 								{project.description}
 							</p>
 							<div class="mt-6 flex flex-wrap gap-2">

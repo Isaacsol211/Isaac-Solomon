@@ -5,7 +5,7 @@
 
 	const title = 'Wearing Three Hats — Frontend Dev, PM, Designer — Isaac Solomon';
 	const description =
-		'How four years on a single product turned a frontend developer into a product manager and emergency UI designer — and why understanding all three disciplines made me better at each one.';
+		'How four years on a single product turned a frontend developer into a product manager and design-system maintainer — and why understanding all three disciplines made me better at each one.';
 	const canonical = `${site.url}/writing/saut/three-hats`;
 </script>
 
@@ -59,7 +59,7 @@
 
 		<p class="mt-6 max-w-xl text-lg leading-relaxed text-dim md:text-xl">
 			How four years on one product turned a frontend developer into a product manager
-			and emergency UI designer — and why understanding all three made me better at each.
+			and the person extending its design system — and why understanding all three made me better at each.
 		</p>
 
 		<!-- meta -->

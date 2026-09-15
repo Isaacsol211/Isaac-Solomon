@@ -77,7 +77,7 @@
 				<strong class="font-medium text-ink">The result:</strong> a bilingual Arabic/English platform
 				with offline-first assessments, a drag-and-drop worksheet builder, and a 65-feature release roadmap
 				that shipped in full — built by a three-person dev team with no QA. The project grew my role from
-				pure frontend developer into product manager and emergency UI designer.
+				pure frontend developer into product manager, and into the person extending the design system.
 			</p>
 		</div>
 	</div>
@@ -418,7 +418,7 @@
 					<span class="shrink-0 font-mono text-[10px] tracking-[0.2em] text-accent/60">02</span>
 					<span>
 						<span class="text-sm font-medium group-hover:text-accent transition-colors">Wearing Three Hats</span>
-						<span class="mt-0.5 block text-xs text-dim">How four years on one product turned a frontend developer into a product manager and emergency designer.</span>
+						<span class="mt-0.5 block text-xs text-dim">How four years on one product turned a frontend developer into a product manager and design-system maintainer.</span>
 					</span>
 				</a>
 			</div>
