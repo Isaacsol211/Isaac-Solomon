@@ -7,6 +7,17 @@
 	import Eyebrow from './Eyebrow.svelte';
 	import McpConnect from './McpConnect.svelte';
 
+	let {
+		/**
+		 * The archive's closing. The full section is 1,175px — more than a
+		 * viewport — which is a long sales close to put after someone has just
+		 * looked at twenty photographs. The compact form keeps the branding, the
+		 * address and a route back to the work, and drops the display headline,
+		 * the MCP panel and the sitemap.
+		 */
+		compact = false
+	}: { compact?: boolean } = $props();
+
 	const year = new Date().getFullYear();
 	const pathname = $derived(page.url.pathname);
 	let time = $state('');
@@ -48,7 +59,12 @@
 	id="connect"
 	class="relative overflow-hidden border-t border-cream/10 bg-coal text-cream"
 >
-	<div class="relative mx-auto max-w-6xl px-5 pt-20 pb-8 sm:px-8 md:pt-32 md:pb-10">
+	<div
+		class="relative mx-auto max-w-6xl px-5 sm:px-8 {compact
+			? 'py-12 md:py-14'
+			: 'pt-20 pb-8 md:pt-32 md:pb-10'}"
+	>
+		{#if !compact}
 		<div use:reveal>
 			<Eyebrow title="Contact" tone="dark" />
 		</div>
@@ -101,8 +117,60 @@
 		<div use:reveal={{ delay: 360 }}>
 			<McpConnect />
 		</div>
+		{/if}
 
-		<footer class="relative mt-20 border-t border-cream/15 pt-12 md:mt-28 md:pb-2">
+		<footer
+			class="relative {compact ? '' : 'mt-20 border-t border-cream/15 pt-12 md:mt-28 md:pb-2'}"
+		>
+			{#if compact}
+				<!--
+					The archive's close: the same wordmark, the address, and the two
+					places to go next. Everything the full section says about scope,
+					services and the MCP server is one link away on the work page.
+				-->
+				<div class="flex flex-wrap items-end justify-between gap-x-10 gap-y-6">
+					<div>
+						<p class="text-2xl font-medium tracking-tight">
+							{site.name}<span class="text-accent">.</span>
+						</p>
+						<p class="mt-2 text-sm leading-relaxed text-cream/50">
+							{site.role} &amp; {site.tagline}. {site.location}.
+						</p>
+					</div>
+					<ul class="flex flex-wrap items-center gap-x-7 gap-y-3 text-sm">
+						<li>
+							<a
+								href="/#projects"
+								class="group inline-flex items-center gap-1.5 text-cream/70 transition-colors hover:text-cream"
+							>
+								Work
+								<span class="transition-transform group-hover:translate-x-0.5" aria-hidden="true">→</span>
+							</a>
+						</li>
+						<li>
+							<a
+								href="mailto:{site.email}"
+								class="border-b border-cream/30 pb-0.5 text-cream/70 transition-colors hover:border-cream hover:text-cream"
+							>
+								{site.email}
+							</a>
+						</li>
+						{#each socials.filter((s) => s.label === 'Instagram') as social (social.label)}
+							<li>
+								<a
+									href={social.href}
+									target="_blank"
+									rel="noopener noreferrer"
+									class="group inline-flex items-center gap-1.5 text-cream/70 transition-colors hover:text-cream"
+								>
+									{social.label}
+									<ArrowUpRight class="size-3 opacity-50 transition-opacity group-hover:opacity-100" />
+								</a>
+							</li>
+						{/each}
+					</ul>
+				</div>
+			{:else}
 			<div class="grid gap-12 md:grid-cols-12">
 				<div class="md:col-span-6">
 					<p class="text-2xl font-medium tracking-tight">
@@ -148,14 +216,19 @@
 					</ul>
 				</div>
 			</div>
+			{/if}
 
 			<div
-				class="mt-16 flex flex-wrap items-center justify-between gap-4 border-t border-cream/15 py-6 text-xs text-cream/40"
+				class="flex flex-wrap items-center justify-between gap-4 border-t border-cream/15 text-xs text-cream/40 {compact
+					? 'mt-8 pt-5'
+					: 'mt-16 py-6'}"
 			>
 				<p>© {year} {site.name}. All rights reserved.</p>
-				<p class="hidden sm:block">
-					Set in Space Grotesk &amp; Instrument Serif. Built with SvelteKit, deployed on Cloudflare.
-				</p>
+				{#if !compact}
+					<p class="hidden sm:block">
+						Set in Space Grotesk &amp; Instrument Serif. Built with SvelteKit, deployed on Cloudflare.
+					</p>
+				{/if}
 				<a href="#top" class="inline-flex items-center gap-2 text-cream/70 transition-colors hover:text-cream">
 					Back to top <span aria-hidden="true">↑</span>
 				</a>

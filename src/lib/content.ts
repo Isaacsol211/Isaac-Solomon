@@ -118,10 +118,10 @@ export const about = {
 	lead: 'Nine years turning designs into products',
 	leadAccent: 'that teams keep running long after launch.',
 	paragraphs: [
-		"I'm a frontend developer at Able.do, where I've led the build on everything from India's largest audio brand storefront to a national talent platform that screens students across eleven languages. I build interfaces teams can maintain and extend after launch — component systems non-technical teams manage themselves, commerce flows that hold up under real traffic, and scroll-driven animation that doesn't cost a Lighthouse score.",
-		"The work I'm proudest of sits at the intersection of craft and constraint: a CMS whose content model carried straight through a corporate rebrand while the frontend was rebuilt around it, an animation-heavy site pivoted from image sequences to video mid-build, a campaign site that was approved and never released. The strongest solutions came from testing the brief against real users and real technical limits.",
-		'Lately the work has widened. A subscription-meals admin platform taken fully mobile-responsive, then a sideways move into QA — automated checks across web, iOS and Android for a community platform, the programme that schedules them, and the TypeScript engine underneath. I write too: the draft of a technical white paper on human–agent work, and this site, which is an MCP server as much as a portfolio.',
-		'When I\'m not shipping code I\'m somewhere in the mountains with a camera, chasing light and trying not to overthink the composition.'
+		"I'm a frontend developer at Able.do. Most of what I build is commerce storefronts, content systems and multilingual products — including India's largest audio brand's storefront and a national talent platform that assesses students in eleven languages.",
+		'What I am good at is the part after launch: content models that survive a rebrand, component systems a non-technical team runs without me, and scroll-driven work that is budgeted and measured like any other asset rather than bolted on at the end.',
+		'To work with, I am straightforward about constraints. I would rather test a brief against a real device and a real content editor early than discover the limit late, and I write down what I find — several of those investigations are in the writing below.',
+		'Away from the screen I am usually in the mountains with a camera.'
 	],
 	portrait: '/isaac.webp',
 	portraitAlt: 'Isaac Solomon smiling, wearing a dark green shirt, greenery behind him'
@@ -638,28 +638,65 @@ export const photographyIntro = {
  */
 export type PhotoSeries = 'Mountains' | 'After Dark' | 'Places';
 
+/*
+ * `w`/`h` are the dimensions the BROWSER decodes, which is not always what the
+ * file stores: 16-ship-ocean.jpg is stored 1600x1200 with an EXIF orientation
+ * flag, so it arrives 1200x1600 and is the one portrait frame in the archive.
+ * These two numbers reserve the box before the image lands — get them wrong and
+ * the layout jumps when it does.
+ */
 export const photos = [
-	{ src: '/photos/01-silk-route.jpg', alt: 'Snow-capped Kanchenjunga range rising above clouds and blue ridges', caption: 'Above the Clouds — Sikkim', w: 1600, h: 1200, location: 'Sikkim', place: 'Above the Clouds', description: 'Peaks breaking through the cloud line. Sikkim gives you these views where the mountains feel like they belong to a different planet.', series: 'Mountains' },
-	{ src: '/photos/02-sunrise-peaks.jpg', alt: 'Golden sunrise over snow-capped Kedarkantha peak', caption: 'First Light — Kedarkantha', w: 1600, h: 1200, location: 'Uttarakhand', place: 'First Light', description: 'That narrow window when the sun hits the snow and everything goes gold. Five minutes later it\'s gone.', series: 'Mountains' },
-	{ src: '/photos/03-himalayan-peaks.jpg', alt: 'Mountain ridges glowing warm orange at sunset from Kedarkantha base camp', caption: 'Evening Light — Kedarkantha', w: 1600, h: 1201, location: 'Uttarakhand', place: 'Evening Light', description: 'The view from base camp as the sun drops. Layered ridges catching the last light — every minute the colour shifts.', series: 'Mountains' },
-	{ src: '/photos/04-kanchenjunga.jpg', alt: 'Sunrise over snow-covered summit with mountains stretching to the horizon', caption: 'Summit Sunrise — Kedarkantha', w: 1600, h: 1200, location: 'Uttarakhand', place: 'Summit Sunrise', description: 'The sun cresting over the ridge at twelve thousand feet. You stand there in the cold and nothing else matters.', series: 'Mountains' },
-	{ src: '/photos/05-mountain-ridges.jpg', alt: 'Layered mountain ridges receding into mist at golden hour', caption: 'Ridgelines — Kedarkantha', w: 1600, h: 1200, location: 'Uttarakhand', place: 'Ridgelines', description: 'Layer after layer of ridges dissolving into haze. The depth never gets old.', series: 'Mountains' },
-	{ src: '/photos/06-misty-layers.jpg', alt: 'Misty mountain layers with a bird silhouette against soft light', caption: 'Misty Layers — Kedarkantha', w: 1600, h: 1200, location: 'Uttarakhand', place: 'Misty Layers', description: 'A single bird cutting through the mist between mountain layers. Painterly, almost unreal.', series: 'Mountains' },
-	{ src: '/photos/07-mountain-village.jpg', alt: 'Small village at the base of a massive cloud-shrouded mountain peak', caption: 'Lahaul Valley — Himachal', w: 1600, h: 1200, location: 'Himachal Pradesh', place: 'Lahaul Valley', description: 'A village dwarfed by rock and cloud. The scale of these places doesn\'t come through in photos — but this one gets close.', series: 'Mountains' },
-	{ src: '/photos/08-qutub-arch.jpg', alt: 'Ornate concentric stone dome ceiling inside Qutub Minar complex, Delhi', caption: 'Qutub Minar — Delhi', w: 1600, h: 1200, location: 'Delhi', place: 'Qutub Minar', description: 'Looking straight up inside the Qutub complex. Concentric rings of carved stone spiralling into shadow.', series: 'Places' },
-	{ src: '/photos/09-qutub-moon.jpg', alt: 'Starry night sky over snow-capped mountain silhouettes from Sankri village', caption: 'Starlight — Sankri', w: 1600, h: 738, location: 'Uttarakhand', place: 'Starlight', description: 'Mountains and stars from Sankri village. No light pollution, no noise — just the sky doing its thing.', series: 'After Dark' },
-	{ src: '/photos/10-tents-stars.jpg', alt: 'Orange camping tents glowing in snow under a starry night sky', caption: 'Base Camp — Kedarkantha', w: 1600, h: 1200, location: 'Uttarakhand', place: 'Base Camp', description: 'Tents glowing orange in the snow, stars overhead. Minus ten outside but the light makes it feel warm.', series: 'After Dark' },
-	{ src: '/photos/11-streetlight.jpg', alt: 'Empty Cavalry Barracks railway station platform at night with glowing streetlights', caption: 'After Hours — Alwal', w: 1600, h: 1200, location: 'Alwal', place: 'After Hours', description: 'Cavalry Barracks station after the last train. Metal, light, and silence — the city pauses here.', series: 'After Dark' },
-	{ src: '/photos/12-balloon-fog.jpg', alt: 'Tree silhouettes against a warm golden sunset sky over mountain ridges', caption: 'Golden Hour — Kedarkantha', w: 1600, h: 1200, location: 'Uttarakhand', place: 'Golden Hour', description: 'Trees turned to silhouettes as the sun drops behind the ridge. The warmest five minutes of the day.', series: 'Mountains' },
-	{ src: '/photos/13-trees-fog.jpg', alt: 'Tall pine trees disappearing into thick fog enroute to Darjeeling', caption: 'Into the Fog — Darjeeling', w: 1600, h: 1200, location: 'Darjeeling', place: 'Into the Fog', description: 'Somewhere between Bagdogra and Darjeeling. Trees dissolving into nothing — the deeper you go, the quieter it gets.', series: 'Mountains' },
-	{ src: '/photos/14-misty-valley.jpg', alt: 'A winding road through dense deodar forest near Naggar, Himachal Pradesh', caption: 'Forest Road — Naggar', w: 1600, h: 1200, location: 'Naggar', place: 'Forest Road', description: 'A road disappearing into deodar forest near Naggar. Green on green, the kind of drive where you forget where you\'re going.', series: 'Mountains' },
-	{ src: '/photos/15-fisherman-ooty.jpg', alt: 'Misty valley with terraced fields and a village lit by morning sun', caption: 'Morning Light — Uttarakhand', w: 1600, h: 1200, location: 'Uttarakhand', place: 'Morning Light', description: 'Sun cutting through the haze into the valley. The village waking up below, fields glowing green.', series: 'Places' },
-	{ src: '/photos/16-ship-ocean.jpg', alt: 'A lone ship on a vast deep-blue ocean', caption: 'Disconnect — Vizag', w: 1600, h: 1200, location: 'Vizag', place: 'Deep Blue', description: 'Miles from the shoreline, miles from the noise. Just a ship and the horizon.', series: 'Places' },
-	{ src: '/photos/17-cavalry-stairs.jpg', alt: 'Cavalry Barracks railway platform at night with red digital clock and blue-lit tracks', caption: 'Platform 2 — Cavalry Barracks', w: 1600, h: 1200, location: 'Alwal', place: 'Platform 2', description: 'Cavalry Barracks at midnight. The red clock, the empty platform, the blue glow off the tracks.', series: 'Places' },
-	{ src: '/photos/18-taj-mahal.jpg', alt: 'Taj Mahal from the gardens with trees framing the dome', caption: 'Taj Mahal — Agra', w: 1600, h: 1200, location: 'Agra', place: 'Taj Mahal', description: 'Everyone photographs it, but standing in front of it still hits you. The symmetry, the scale, the quiet.', series: 'Places' },
-	{ src: '/photos/19-summit-golden.jpg', alt: 'Group of trekkers at a mountain summit during golden hour', caption: 'Summit — Kedarkantha', w: 1600, h: 1201, location: 'Uttarakhand', place: 'The Summit', description: 'Golden hour at the top. Twelve thousand feet, frozen fingers, and the best light of the trip.', series: 'Mountains' },
-	{ src: '/photos/20-tea-plantations.jpg', alt: 'Lush green tea plantation rows stretching across rolling hills in Munnar', caption: 'Tea Country — Munnar', w: 1600, h: 1200, location: 'Munnar', place: 'Tea Country', description: 'Rows of green running over every hill. Munnar\'s tea estates are a different shade of India.', series: 'Places' }
+	{ src: '/photos/01-silk-route.jpg', alt: 'Snow-capped Kanchenjunga range rising above clouds and blue ridges', caption: 'Above the Clouds — Sikkim', w: 1600, h: 1200, location: 'Sikkim', place: 'Above the Clouds', description: 'The Kanchenjunga range above the cloud line, with blue ridges running out below it.', series: 'Mountains' },
+	{ src: '/photos/02-sunrise-peaks.jpg', alt: 'Golden sunrise over snow-capped Kedarkantha peak', caption: 'First Light — Kedarkantha', w: 1600, h: 1200, location: 'Uttarakhand', place: 'First Light', description: 'First sun on the snowfields under the Kedarkantha summit.', series: 'Mountains' },
+	{ src: '/photos/03-himalayan-peaks.jpg', alt: 'Mountain ridges glowing warm orange at sunset from Kedarkantha base camp', caption: 'Evening Light — Kedarkantha', w: 1600, h: 1201, location: 'Uttarakhand', place: 'Evening Light', description: 'Layered ridges from the Kedarkantha base camp, holding the last of the sunset.', series: 'Mountains' },
+	{ src: '/photos/04-kanchenjunga.jpg', alt: 'Sunrise over snow-covered summit with mountains stretching to the horizon', caption: 'Summit Sunrise — Kedarkantha', w: 1600, h: 1200, location: 'Uttarakhand', place: 'Summit Sunrise', description: 'Sunrise from the Kedarkantha summit, ridges running out to the horizon.', series: 'Mountains' },
+	{ src: '/photos/05-mountain-ridges.jpg', alt: 'Layered mountain ridges receding into mist at golden hour', caption: 'Ridgelines — Kedarkantha', w: 1600, h: 1200, location: 'Uttarakhand', place: 'Ridgelines', description: 'Ridge behind ridge at golden hour, each one paler than the one in front.', series: 'Mountains' },
+	{ src: '/photos/06-misty-layers.jpg', alt: 'Misty mountain layers with a bird silhouette against soft light', caption: 'Misty Layers — Kedarkantha', w: 1600, h: 1200, location: 'Uttarakhand', place: 'Misty Layers', description: 'A bird crossing the gap between two mist-covered ridges.', series: 'Mountains' },
+	{ src: '/photos/07-mountain-village.jpg', alt: 'Small village at the base of a massive cloud-shrouded mountain peak', caption: 'Lahaul Valley — Himachal', w: 1600, h: 1200, location: 'Himachal Pradesh', place: 'Lahaul Valley', description: 'A village at the foot of a peak in the Lahaul valley, the summit inside the cloud.', series: 'Mountains' },
+	{ src: '/photos/08-qutub-arch.jpg', alt: 'Ornate concentric stone dome ceiling inside Qutub Minar complex, Delhi', caption: 'Qutub Minar — Delhi', w: 1600, h: 1200, location: 'Delhi', place: 'Qutub Minar', description: 'Looking straight up inside the Qutub complex — concentric rings of carved stone turning into shadow.', series: 'Places' },
+	{ src: '/photos/09-qutub-moon.jpg', alt: 'Starry night sky over snow-capped mountain silhouettes from Sankri village', caption: 'Starlight — Sankri', w: 1600, h: 738, location: 'Uttarakhand', place: 'Starlight', description: 'Snow-capped ridges in silhouette under a full field of stars, from Sankri.', series: 'After Dark' },
+	{ src: '/photos/10-tents-stars.jpg', alt: 'Orange camping tents glowing in snow under a starry night sky', caption: 'Base Camp — Kedarkantha', w: 1600, h: 1200, location: 'Uttarakhand', place: 'Base Camp', description: 'Tents lit from the inside, on snow, under the stars at the Kedarkantha camp.', series: 'After Dark' },
+	{ src: '/photos/11-streetlight.jpg', alt: 'Empty Cavalry Barracks railway station platform at night with glowing streetlights', caption: 'After Hours — Alwal', w: 1600, h: 1200, location: 'Alwal', place: 'After Hours', description: 'The empty platform at Cavalry Barracks, lit by the station lamps.', series: 'After Dark' },
+	{ src: '/photos/12-balloon-fog.jpg', alt: 'Tree silhouettes against a warm golden sunset sky over mountain ridges', caption: 'Golden Hour — Kedarkantha', w: 1600, h: 1200, location: 'Uttarakhand', place: 'Golden Hour', description: 'Trees in silhouette against the sky above the ridgeline at Kedarkantha.', series: 'Mountains' },
+	{ src: '/photos/13-trees-fog.jpg', alt: 'Tall pine trees disappearing into thick fog enroute to Darjeeling', caption: 'Into the Fog — Darjeeling', w: 1600, h: 1200, location: 'Darjeeling', place: 'Into the Fog', description: 'Pine trees losing their outlines in fog, on the road up to Darjeeling.', series: 'Mountains' },
+	{ src: '/photos/14-misty-valley.jpg', alt: 'A winding road through dense deodar forest near Naggar, Himachal Pradesh', caption: 'Forest Road — Naggar', w: 1600, h: 1200, location: 'Naggar', place: 'Forest Road', description: 'A road bending out of sight through deodar forest near Naggar.', series: 'Mountains' },
+	{ src: '/photos/15-fisherman-ooty.jpg', alt: 'Misty valley with terraced fields and a village lit by morning sun', caption: 'Morning Light — Uttarakhand', w: 1600, h: 1200, location: 'Uttarakhand', place: 'Morning Light', description: 'Morning sun reaching a terraced valley through the haze.', series: 'Places' },
+	{ src: '/photos/16-ship-ocean.jpg', alt: 'A lone ship on a vast deep-blue ocean', caption: 'Disconnect — Vizag', w: 1200, h: 1600, location: 'Vizag', place: 'Deep Blue', description: 'A single ship on open water off Vizag, and nothing else in the frame.', series: 'Places' },
+	{ src: '/photos/17-cavalry-stairs.jpg', alt: 'Cavalry Barracks railway platform at night with red digital clock and blue-lit tracks', caption: 'Platform 2 — Cavalry Barracks', w: 1600, h: 1200, location: 'Alwal', place: 'Platform 2', description: 'The red platform clock at Cavalry Barracks, and the blue light along the tracks.', series: 'After Dark' },
+	{ src: '/photos/18-taj-mahal.jpg', alt: 'Taj Mahal from the gardens with trees framing the dome', caption: 'Taj Mahal — Agra', w: 1600, h: 1200, location: 'Agra', place: 'Taj Mahal', description: 'The Taj Mahal from the gardens, framed by the trees on the approach.', series: 'Places' },
+	{ src: '/photos/19-summit-golden.jpg', alt: 'Group of trekkers at a mountain summit during golden hour', caption: 'Summit — Kedarkantha', w: 1600, h: 1201, location: 'Uttarakhand', place: 'The Summit', description: 'Trekkers on the Kedarkantha summit in the last of the golden hour.', series: 'Mountains' },
+	{ src: '/photos/20-tea-plantations.jpg', alt: 'Lush green tea plantation rows stretching across rolling hills in Munnar', caption: 'Tea Country — Munnar', w: 1600, h: 1200, location: 'Munnar', place: 'Tea Country', description: 'Tea rows following the contours of the hills at Munnar.', series: 'Places' }
 ];
+
+/**
+ * The opening edit. Eight frames chosen for how far apart they are from one
+ * another — fog, lit tents, forest green, carved stone, a night platform, tea
+ * rows, a panorama, people at altitude — rather than for how many views of one
+ * mountain the archive happens to hold. `size` is the width the frame takes in
+ * the twelve-column stage; below `md` every frame is full width.
+ *
+ * Nothing here is a second copy of a file: the archive further down is the same
+ * twenty photographs at thumbnail size, grouped by series.
+ */
+export type PhotoSize = 'wide' | 'narrow' | 'half' | 'full';
+
+export const photoSelection: { place: string; size: PhotoSize }[] = [
+	{ place: 'Into the Fog', size: 'wide' },
+	{ place: 'Base Camp', size: 'narrow' },
+	{ place: 'Forest Road', size: 'narrow' },
+	{ place: 'Qutub Minar', size: 'wide' },
+	{ place: 'Starlight', size: 'full' },
+	{ place: 'Platform 2', size: 'half' },
+	{ place: 'Tea Country', size: 'half' },
+	{ place: 'The Summit', size: 'full' }
+];
+
+/** Copy for the photography page — one opening line, then the frames. */
+export const photographyPage = {
+	lead: 'A separate archive for the part of the work that never ships in a browser. Twenty frames, three series.',
+	/** Sits under the ocean frame, not over it. */
+	pauseNote: 'A pause, halfway through the archive.'
+};
 
 export const socials = [
 	{ label: 'GitHub', href: 'https://github.com/Isaacsol211' },

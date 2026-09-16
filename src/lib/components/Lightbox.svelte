@@ -45,10 +45,32 @@
 	const d = (ms: number) => (prefersReducedMotion() ? 0 : ms);
 
 	/*
+	 * Swipe, for the phone where there is no keyboard and the Previous/Next
+	 * buttons are a thumb-stretch away. A horizontal run of more than 48px that
+	 * is also clearly more horizontal than vertical pages the archive; anything
+	 * else is left alone, so a vertical drag or a tap still behaves normally.
+	 * The buttons stay: this is an addition, not a replacement.
+	 */
+	let touchX = 0;
+	let touchY = 0;
+
+	function ontouchstart(event: TouchEvent) {
+		const t = event.changedTouches[0];
+		touchX = t.clientX;
+		touchY = t.clientY;
+	}
+
+	function ontouchend(event: TouchEvent) {
+		const t = event.changedTouches[0];
+		const dx = t.clientX - touchX;
+		const dy = t.clientY - touchY;
+		if (Math.abs(dx) < 48 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+		step(dx < 0 ? 1 : -1);
+	}
+
+	/*
 	 * Escape, the Tab trap, scroll lock, background inert and focus restore all
 	 * belong to the modal action. Only the arrow keys are this dialog's own.
-	 * The previous version had aria-modal and a trap but never made the page
-	 * behind inert — a screen reader could read straight past the dialog.
 	 */
 	function onkeydown(event: KeyboardEvent) {
 		if (!open) return;
@@ -73,9 +95,12 @@
 	<div
 		role="dialog"
 		aria-modal="true"
+		tabindex="-1"
 		aria-label="{photo.place} — {photo.location}"
 		use:modal={{ onclose: close, initialFocus: '[data-close]' }}
 		transition:fade={{ duration: d(180) }}
+		{ontouchstart}
+		{ontouchend}
 		class="fixed inset-0 z-[70] flex flex-col bg-coal/95 backdrop-blur-sm"
 	>
 		<div class="flex items-center justify-between gap-4 px-5 py-4 text-cream sm:px-8">
