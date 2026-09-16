@@ -82,6 +82,32 @@
 		<p use:reveal={{ delay: 200 }} class="mt-8 max-w-xl leading-relaxed text-cream/60">
 			{connect.blurb}
 		</p>
+
+		<!--
+			The two reasons people write, as two routes rather than a clause inside
+			one sentence. Same address underneath — a client and a hiring manager
+			want different things in the first message, and each has somewhere on
+			this page that already answers the rest.
+		-->
+		<div
+			use:reveal={{ delay: 230 }}
+			class="mt-10 grid max-w-3xl gap-x-12 gap-y-8 border-t border-cream/15 pt-8 sm:grid-cols-2"
+		>
+			{#each connect.routes as route (route.href)}
+				<div>
+					<p class="text-xs font-medium tracking-[0.22em] lowercase text-cream/45">{route.label}</p>
+					<p class="mt-3 text-sm leading-relaxed text-cream/70">{route.body}</p>
+					<a
+						href={resolvedHref(route.href)}
+						class="group mt-3 inline-flex items-center gap-1.5 text-sm text-cream/80 underline-offset-4 transition-colors hover:text-cream focus-visible:text-cream"
+					>
+						{route.linkLabel}
+						<!-- Both targets sit above the contact block, so the arrow points back up the page. -->
+						<span class="transition-transform group-hover:-translate-y-0.5 group-focus-visible:-translate-y-0.5" aria-hidden="true">↑</span>
+					</a>
+				</div>
+			{/each}
+		</div>
 		<a
 			use:reveal={{ delay: 260 }}
 			href="mailto:{site.email}"

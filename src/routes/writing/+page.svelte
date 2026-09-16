@@ -69,7 +69,13 @@
 				<h2 class="mt-4 font-serif text-4xl leading-[1.05] italic md:text-6xl">
 					<span class="underline-reveal">{lead.title}</span>
 				</h2>
-				<p class="mt-5 max-w-xl text-base leading-relaxed text-dim md:text-lg">{lead.description}</p>
+				<!--
+					The subject under the title, not inside it. Several of these titles are
+					literary, and a reader scanning the index cannot tell which piece is
+					about performance and which is about eleven languages.
+				-->
+				<p class="mt-3 text-sm text-dim">{lead.subject}</p>
+				<p class="mt-4 max-w-xl text-base leading-relaxed text-dim md:text-lg">{lead.description}</p>
 				<p class="mt-5 inline-flex items-center gap-2 text-sm font-medium text-accent-text">
 					Read it
 					<span class="inline-block transition-transform duration-200 group-hover:translate-x-1 group-focus-visible:translate-x-1" aria-hidden="true">→</span>
@@ -82,9 +88,12 @@
 				<li class="border-t border-line">
 					<a href={article.href} class="group grid gap-x-6 gap-y-1 py-5 md:grid-cols-12 md:items-baseline md:py-6">
 						<p class="text-xs font-medium tracking-[0.15em] text-dim uppercase md:col-span-3">{article.tag}</p>
-						<h2 class="text-lg font-medium tracking-tight md:col-span-7 md:text-xl">
-							<span class="underline-reveal">{article.title}</span>
-						</h2>
+						<div class="md:col-span-7">
+							<h2 class="text-lg font-medium tracking-tight md:text-xl">
+								<span class="underline-reveal">{article.title}</span>
+							</h2>
+							<p class="mt-1 text-xs text-dim">{article.subject}</p>
+						</div>
 						<p class="text-xs text-dim tabular-nums md:col-span-2 md:text-right">{article.readingTime} · {article.year}</p>
 					</a>
 				</li>

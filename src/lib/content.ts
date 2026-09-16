@@ -467,6 +467,14 @@ export type Article = {
 	href: string;
 	/** e.g. 'Case Study · Mivi' */
 	tag: string;
+	/**
+	 * What the piece is about, in the words someone would search for. Several of
+	 * these titles are literary — "The Scroll Problem", "Every Child Carries a
+	 * Spark" — and a reader scanning the index cannot tell which one is about
+	 * performance and which is about eleven languages. Taken from what the
+	 * article actually covers, not invented to widen its reach.
+	 */
+	subject: string;
 	readingTime: string;
 	year: string;
 };
@@ -485,6 +493,7 @@ export const writing: Article[] = [
 			'An LMS for special educators teaching children with Down syndrome — Vue to SvelteKit, bilingual RTL/LTR, and a 5-month rewrite of a live product.',
 		href: '/writing/saut',
 		tag: 'Case Study · SAUT',
+		subject: 'Framework migration',
 		readingTime: '7 min',
 		year: '2019–23'
 	},
@@ -494,6 +503,7 @@ export const writing: Article[] = [
 			'How four years on one product turned a frontend developer into a product manager, and into the person extending the design system when no designer was on it — and why each role made the others better.',
 		href: '/writing/saut/three-hats',
 		tag: 'Essay · SAUT',
+		subject: 'Product ownership',
 		readingTime: '7 min',
 		year: '2023'
 	},
@@ -503,6 +513,7 @@ export const writing: Article[] = [
 			"India's biggest audio brand, 3–4 product launches a day, a platform migration mid-flight — and the design system that emerged from the pressure.",
 		href: '/writing/mivi',
 		tag: 'Case Study · Mivi',
+		subject: 'Design systems',
 		readingTime: '6 min',
 		year: '2018–22'
 	},
@@ -512,6 +523,7 @@ export const writing: Article[] = [
 			'Scroll-driven animation for a premium smart home brand — why image-sequence scrubbing failed at 300–500 frames a section, and the video pivot that saved it.',
 		href: '/writing/keus',
 		tag: 'Case Study · Keus',
+		subject: 'Scroll performance',
 		readingTime: '7 min',
 		year: '2024'
 	},
@@ -521,6 +533,7 @@ export const writing: Article[] = [
 			'A drag-and-drop canvas for special educators to build pixel-perfect printable A4 worksheets — flashcards, shapes and multiple artboards, in a browser.',
 		href: '/writing/saut/worksheet-builder',
 		tag: 'Deep Dive · SAUT',
+		subject: 'Editor tooling',
 		readingTime: '6 min',
 		year: '2022'
 	},
@@ -530,6 +543,7 @@ export const writing: Article[] = [
 			'A four-word brief turned into a static, bilingual, WhatsApp-first site for a Lima mining tools company — no designer, no mockups, no brand guide.',
 		href: '/writing/novarock',
 		tag: 'Case Study · Nova Rock',
+		subject: 'Product definition',
 		readingTime: '8 min',
 		year: '2025'
 	},
@@ -539,6 +553,7 @@ export const writing: Article[] = [
 			'The national talent platform helping Godrej Foundation find and support high-potential students — WhatsApp onboarding, 11 languages, four pathways.',
 		href: '/writing/tomorrow-makers',
 		tag: 'Case Study · Tomorrow Makers',
+		subject: 'Multilingual interfaces',
 		readingTime: '6 min',
 		year: '2026'
 	},
@@ -548,6 +563,7 @@ export const writing: Article[] = [
 			"A website and CMS for India's oldest philanthropic trust — built once, then rebuilt from scratch when the entire Godrej identity changed mid-project.",
 		href: '/writing/godrej',
 		tag: 'Case Study · Godrej',
+		subject: 'Content architecture',
 		readingTime: '5 min',
 		year: '2024'
 	}
@@ -737,6 +753,25 @@ export const mcp = {
 
 export const connect = {
 	eyebrow: 'Have an idea? A role? A roll of film?',
-	blurb:
-		'Happy to talk about interesting work, side projects, or where to get good coffee. If it is a project or a role, send the scope, the team and the timing — that is usually enough to start.'
+	blurb: 'Happy to talk about interesting work, side projects, or where to get good coffee.',
+	/**
+	 * One address, two routes. Both reach the same inbox — what differs is what
+	 * is useful to send and where the supporting material already sits. Neither
+	 * line claims anything about availability: the status in the hero says
+	 * "open to new projects" and that is the only claim the site makes.
+	 */
+	routes: [
+		{
+			label: 'About a project',
+			body: 'Send the scope, the team and the timing — that is usually enough to start.',
+			linkLabel: 'What I take on',
+			href: '#services'
+		},
+		{
+			label: 'About a role',
+			body: 'Send the team and the stack. What I did on each build is on every project above.',
+			linkLabel: 'Experience',
+			href: '#experience'
+		}
+	]
 };
