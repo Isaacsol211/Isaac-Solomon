@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import { initMotion, MOTION_OK, REDUCED_MOTION } from '$lib/motion';
 	import { reveal } from '$lib/actions/reveal';
-	import { serviceDetails, servicesIntro } from '$lib/content';
+	import { serviceDetails, servicesEngagement, servicesIntro } from '$lib/content';
 	import Eyebrow from './Eyebrow.svelte';
 	import ServicesDiagram from './ServicesDiagram.svelte';
 
@@ -173,6 +173,24 @@
 					</li>
 				{/each}
 			</ol>
+
+			<!--
+				The list says what the work is; this says how it is taken on. Both
+				facts are already in the experience section further down — full-time
+				at Able.do since 2017, freelance part-time alongside it since 2026 —
+				but a client reading the services has no reason to scroll for them.
+			-->
+			<div use:reveal class="mt-8 md:col-start-6 md:col-span-7 md:mt-10">
+				<p class="max-w-lg text-sm leading-relaxed text-dim">{servicesEngagement.note}</p>
+				<a
+					href={servicesEngagement.href}
+					class="group mt-4 inline-flex items-center gap-2 text-sm font-medium text-accent-text underline-offset-4 transition-colors hover:text-ink focus-visible:text-ink"
+				>
+					{servicesEngagement.linkLabel}
+					<!-- Contact is below this section, so the arrow points down the page. -->
+					<span class="transition-transform group-hover:translate-y-0.5 group-focus-visible:translate-y-0.5" aria-hidden="true">↓</span>
+				</a>
+			</div>
 		</div>
 	</div>
 </section>

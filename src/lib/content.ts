@@ -50,6 +50,18 @@ export const servicesIntro = {
 	accent: 'end to end.'
 };
 
+/**
+ * How the work is actually taken on, next to the list of what it is. Every fact
+ * here is already published in `experience` below — full-time at Able.do since
+ * 2017, freelance part-time alongside it since 2026 — and nothing is added
+ * about availability beyond the status the hero already shows.
+ */
+export const servicesEngagement = {
+	note: 'Most of this was built at Able.do, where I have been a frontend developer since 2017. Since 2026 I also take freelance work part-time, alongside that role — so a project starts with a conversation about scope and timing.',
+	linkLabel: 'Send a scope',
+	href: '#connect'
+};
+
 export type Service = {
 	title: string;
 	summary: string;
