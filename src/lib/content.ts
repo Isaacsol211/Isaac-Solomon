@@ -180,6 +180,18 @@ export type Project = {
 	 */
 	previewWidth?: number;
 	/**
+	 * What I did on it, in one factual line. Scope and ownership, taken from the
+	 * case study's own account — never widened. Where the article says a team
+	 * made a call, the line says the team made it.
+	 */
+	role?: string;
+	/**
+	 * The call the project turned on, paired with `outcome` as its consequence.
+	 * Clients read this for scope and handover, hiring managers for judgment;
+	 * both were previously having to find it inside a paragraph.
+	 */
+	decision?: string;
+	/**
 	 * One verifiable result, shown on the featured card. Every value here is
 	 * lifted from that project's own case study rather than written fresh —
 	 * a card is the wrong place to introduce a number the article cannot back.
@@ -243,8 +255,51 @@ export const projects: Project[] = [
 		previewSmall: '/projects/mivi-desktop-800.webp',
 		previewWidth: 1600,
 		caseStudy: '/writing/mivi',
+		role: 'Frontend developer from the first build to the platform migration — storefront UI, live cart and transactional mailers.',
+		decision: 'Built componentised from the start under three to four product launches a day, so the design system came out of the launch cadence instead of a later redesign.',
 		outcome: '100,000+ customers and 10,000+ orders managed natively after the migration.',
 		featuredLayout: 'stage',
+		featured: true
+	},
+	{
+		title: 'Tomorrow Makers',
+		year: '2026',
+		category: 'Philanthropy · EdTech',
+		description:
+			'National talent platform for Godrej Foundation, identifying and supporting high-potential students from disadvantaged backgrounds across four pathways. SvelteKit on Cloudflare, with WhatsApp onboarding and assessments in eleven languages.',
+		tags: ['SvelteKit', 'Tailwind', 'Cloudflare', 'EdTech'],
+		href: 'https://www.tomorrow-makers.in',
+		theme: 'light',
+		visual: 'image',
+		frameLabel: 'tomorrow-makers.in',
+		image: '/projects/tomorrow-makers.webp',
+		desktopImage: '/writing/tomorrow-makers/hero.webp',
+		previewSmall: '/writing/tomorrow-makers/hero-800.webp',
+		previewWidth: 2880,
+		caseStudy: '/writing/tomorrow-makers',
+		role: 'Frontend developer — assessment flow, WhatsApp onboarding, eleven-language support and partner routing, on SvelteKit and Cloudflare.',
+		decision: 'Onboarding runs through WhatsApp as well as the website, because for the students this platform is for, the channel they already use is more reachable than a browser.',
+		outcome: 'Four student pathways, with the assessment for the youngest cohort (Classes 6–7) available in 11 languages.',
+		credits: 'Design by 3 Sided Coin.',
+		featuredLayout: 'portrait',
+		gallery: [
+			{
+				src: '/writing/tomorrow-makers/mission.webp',
+				small: '/writing/tomorrow-makers/mission-800.webp',
+				width: 1440,
+				height: 1350,
+				alt: "We're trying to change that — mission statement with editorial photography of classrooms",
+				caption: 'Mission page'
+			},
+			{
+				src: '/writing/tomorrow-makers/stats.webp',
+				small: '/writing/tomorrow-makers/stats-800.webp',
+				width: 1440,
+				height: 800,
+				alt: 'India has never lacked talent — what we have lacked is equal access to opportunity',
+				caption: 'Opening statement'
+			}
+		],
 		featured: true
 	},
 	{
@@ -263,6 +318,8 @@ export const projects: Project[] = [
 		previewSmall: '/projects/saut/landing-hero-devices-right-to-left-800.webp',
 		previewWidth: 1605,
 		caseStudy: '/writing/saut',
+		role: 'Day one to handoff across four years — frontend on V1, then product manager and the person extending the design system on V2.',
+		decision: 'V1 copied curriculum into every student record, so V2 was rebuilt on one central database of linked references — a five-month rewrite rather than an incremental migration.',
 		outcome: 'A 65-feature roadmap shipped across six releases, through a full framework rewrite.',
 		credits: 'Design by Tropics (Zubin). Built with Surajith on the functional side.',
 		featuredLayout: 'bilingual',
@@ -377,6 +434,8 @@ export const projects: Project[] = [
 		previewSmall: '/writing/godrej/hero-800.webp',
 		previewWidth: 1440,
 		caseStudy: '/writing/godrej',
+		role: 'Frontend developer — the whole frontend from their designs, wired to a custom CMS built for their editors.',
+		decision: 'The CMS was modelled on the content rather than the visual design, which is why an overnight change of brand identity became a frontend rebuild and not a data migration.',
 		outcome: 'A full corporate rebrand absorbed as a frontend rebuild, with zero content migration.',
 		credits: 'Design system by 3 Sided Coin.',
 		featuredLayout: 'pair',
@@ -396,45 +455,6 @@ export const projects: Project[] = [
 				height: 900,
 				alt: 'Godrej Foundation v2 — new Godrej branding with Crafting a Prosperous Tomorrow hero',
 				caption: 'v2 — after, on the same content model'
-			}
-		],
-		featured: true
-	},
-	{
-		title: 'Tomorrow Makers',
-		year: '2026',
-		category: 'Philanthropy · EdTech',
-		description:
-			'National talent platform for Godrej Foundation, identifying and supporting high-potential students from disadvantaged backgrounds across four pathways. SvelteKit on Cloudflare, with WhatsApp onboarding and assessments in eleven languages.',
-		tags: ['SvelteKit', 'Tailwind', 'Cloudflare', 'EdTech'],
-		href: 'https://www.tomorrow-makers.in',
-		theme: 'light',
-		visual: 'image',
-		frameLabel: 'tomorrow-makers.in',
-		image: '/projects/tomorrow-makers.webp',
-		desktopImage: '/writing/tomorrow-makers/hero.webp',
-		previewSmall: '/writing/tomorrow-makers/hero-800.webp',
-		previewWidth: 2880,
-		caseStudy: '/writing/tomorrow-makers',
-		outcome: 'Four student pathways, with the assessment for the youngest cohort (Classes 6–7) available in 11 languages.',
-		credits: 'Design by 3 Sided Coin.',
-		featuredLayout: 'portrait',
-		gallery: [
-			{
-				src: '/writing/tomorrow-makers/mission.webp',
-				small: '/writing/tomorrow-makers/mission-800.webp',
-				width: 1440,
-				height: 1350,
-				alt: "We're trying to change that — mission statement with editorial photography of classrooms",
-				caption: 'Mission page'
-			},
-			{
-				src: '/writing/tomorrow-makers/stats.webp',
-				small: '/writing/tomorrow-makers/stats-800.webp',
-				width: 1440,
-				height: 800,
-				alt: 'India has never lacked talent — what we have lacked is equal access to opportunity',
-				caption: 'Opening statement'
 			}
 		],
 		featured: true

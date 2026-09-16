@@ -347,12 +347,27 @@
 								{project.title}
 							</h3>
 							<div data-bleed-text class="md:col-span-6">
-								{#if project.outcome}
-									<p class="font-serif text-2xl leading-tight text-cream/90 italic md:text-[1.75rem]">
-										{project.outcome}
-									</p>
+								<!-- Same order as the other layouts, in the cream tones the coal band needs. -->
+								{#if project.role}
+									<p class="max-w-lg text-sm leading-relaxed font-medium text-cream/80">{project.role}</p>
 								{/if}
-								<p class="mt-4 max-w-lg text-sm leading-relaxed text-cream/60">{project.description}</p>
+								{#if project.decision || project.outcome}
+									<div class="mt-5 max-w-lg border-t border-cream/15 pt-4">
+										{#if project.decision}
+											<p class="text-sm leading-relaxed text-cream/60">{project.decision}</p>
+										{/if}
+										{#if project.outcome}
+											<p
+												class="font-serif text-2xl leading-tight text-cream/90 italic md:text-[1.75rem] {project.decision
+													? 'mt-3'
+													: ''}"
+											>
+												{project.outcome}
+											</p>
+										{/if}
+									</div>
+								{/if}
+								<p class="mt-5 max-w-lg text-sm leading-relaxed text-cream/60">{project.description}</p>
 								{#if project.credits}
 									<p class="mt-3 text-xs leading-relaxed text-cream/55">{project.credits}</p>
 								{/if}
@@ -402,10 +417,32 @@
 					{/snippet}
 					{#snippet textBlock(nameClass: string)}
 						<h3 class={nameClass}>{project.title}</h3>
-						{#if project.outcome}
-							<p class="mt-4 font-serif text-2xl leading-tight text-ink/90 italic md:text-[1.6rem]">{project.outcome}</p>
+						<!--
+							Scope first, then the call and what it produced, then the longer
+							description. All three used to be findable only by reading the
+							paragraph: a client wants scope and handover, a hiring manager
+							wants the judgment, and neither should have to go looking.
+						-->
+						{#if project.role}
+							<p class="mt-3 max-w-md text-sm leading-relaxed font-medium text-ink/75">{project.role}</p>
 						{/if}
-						<p class="mt-4 max-w-md text-sm leading-relaxed text-dim">{project.description}</p>
+						{#if project.decision || project.outcome}
+							<div class="mt-5 max-w-md border-t border-line pt-4">
+								{#if project.decision}
+									<p class="text-sm leading-relaxed text-dim">{project.decision}</p>
+								{/if}
+								{#if project.outcome}
+									<p
+										class="font-serif text-2xl leading-tight text-ink/90 italic md:text-[1.6rem] {project.decision
+											? 'mt-3'
+											: ''}"
+									>
+										{project.outcome}
+									</p>
+								{/if}
+							</div>
+						{/if}
+						<p class="mt-5 max-w-md text-sm leading-relaxed text-dim">{project.description}</p>
 						{#if project.credits}
 							<p class="mt-3 text-xs leading-relaxed text-dim">{project.credits}</p>
 						{/if}
@@ -475,27 +512,6 @@
 							<figcaption class="mt-3 text-[11px] font-medium tracking-[0.18em] lowercase text-dim">{g.caption}</figcaption>
 						</figure>
 					{/snippet}
-					{#snippet textBlock(nameClass: string)}
-						<h3 class={nameClass}>{project.title}</h3>
-						{#if project.outcome}
-							<p class="mt-4 font-serif text-2xl leading-tight text-ink/90 italic md:text-[1.6rem]">{project.outcome}</p>
-						{/if}
-						<p class="mt-4 max-w-md text-sm leading-relaxed text-dim">{project.description}</p>
-						{#if project.credits}
-							<p class="mt-3 text-xs leading-relaxed text-dim">{project.credits}</p>
-						{/if}
-						<div class="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
-							<span class="inline-flex items-center gap-2 text-xs font-medium text-accent-text">
-								{project.caseStudy ? 'Case study' : 'Visit'}
-								<ArrowUpRight class="size-3.5 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
-							</span>
-							<span class="flex flex-wrap gap-2">
-								{#each project.tags as tag}
-									<span data-bleed-tag class="rounded-full border border-line px-3 py-1 text-[10px] font-medium tracking-[0.15em] text-dim uppercase">{tag}</span>
-								{/each}
-							</span>
-						</div>
-					{/snippet}
 					{#snippet metaRow()}
 						<div class="mb-8 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 md:mb-10">
 							<span data-bleed-meta class="text-[10px] font-medium tracking-[0.25em] text-dim uppercase">
@@ -516,10 +532,27 @@
 								<h3 class="text-5xl font-medium tracking-[-0.02em] lowercase lg:text-6xl">{project.title}</h3>
 							</div>
 							<div data-bleed-text class="md:col-span-7">
-								{#if project.outcome}
-									<p class="font-serif text-2xl leading-tight text-ink/90 italic md:text-[1.6rem]">{project.outcome}</p>
+								<!-- Same order as the other three layouts: scope, the call, its result. -->
+								{#if project.role}
+									<p class="max-w-lg text-sm leading-relaxed font-medium text-ink/75">{project.role}</p>
 								{/if}
-								<p class="mt-4 max-w-lg text-sm leading-relaxed text-dim">{project.description}</p>
+								{#if project.decision || project.outcome}
+									<div class="mt-5 max-w-lg border-t border-line pt-4">
+										{#if project.decision}
+											<p class="text-sm leading-relaxed text-dim">{project.decision}</p>
+										{/if}
+										{#if project.outcome}
+											<p
+												class="font-serif text-2xl leading-tight text-ink/90 italic md:text-[1.6rem] {project.decision
+													? 'mt-3'
+													: ''}"
+											>
+												{project.outcome}
+											</p>
+										{/if}
+									</div>
+								{/if}
+								<p class="mt-5 max-w-lg text-sm leading-relaxed text-dim">{project.description}</p>
 								{#if project.credits}
 									<p class="mt-3 text-xs leading-relaxed text-dim">{project.credits}</p>
 								{/if}
@@ -568,10 +601,32 @@
 					{/snippet}
 					{#snippet textBlock(nameClass: string)}
 						<h3 class={nameClass}>{project.title}</h3>
-						{#if project.outcome}
-							<p class="mt-4 font-serif text-2xl leading-tight text-ink/90 italic md:text-[1.6rem]">{project.outcome}</p>
+						<!--
+							Scope first, then the call and what it produced, then the longer
+							description. All three used to be findable only by reading the
+							paragraph: a client wants scope and handover, a hiring manager
+							wants the judgment, and neither should have to go looking.
+						-->
+						{#if project.role}
+							<p class="mt-3 max-w-md text-sm leading-relaxed font-medium text-ink/75">{project.role}</p>
 						{/if}
-						<p class="mt-4 max-w-md text-sm leading-relaxed text-dim">{project.description}</p>
+						{#if project.decision || project.outcome}
+							<div class="mt-5 max-w-md border-t border-line pt-4">
+								{#if project.decision}
+									<p class="text-sm leading-relaxed text-dim">{project.decision}</p>
+								{/if}
+								{#if project.outcome}
+									<p
+										class="font-serif text-2xl leading-tight text-ink/90 italic md:text-[1.6rem] {project.decision
+											? 'mt-3'
+											: ''}"
+									>
+										{project.outcome}
+									</p>
+								{/if}
+							</div>
+						{/if}
+						<p class="mt-5 max-w-md text-sm leading-relaxed text-dim">{project.description}</p>
 						{#if project.credits}
 							<p class="mt-3 text-xs leading-relaxed text-dim">{project.credits}</p>
 						{/if}
