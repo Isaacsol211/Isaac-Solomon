@@ -110,8 +110,11 @@
 				<!--
 					A working diagram of the active service — content into a page, an
 					option into a cart, blocks driven by scroll, checks across devices, a
-					product through versions. Decorative to assistive tech (the list is
-					the content), and labelled as an illustration, not a screenshot.
+					product through versions. Decorative to assistive tech: the list
+					beside it is the content. It carried a caption explaining that it was
+					an illustration rather than a screenshot; a drawing that has to say
+					so is not drawn clearly enough, so the caption went and the linework
+					got the contrast instead.
 				-->
 				<div class="mt-8 hidden md:block">
 					<ServicesDiagram index={activeIndex} />
@@ -124,28 +127,48 @@
 						<div class="mt-6 md:hidden" aria-hidden="true">
 							<ServicesDiagram index={i} compact />
 						</div>
-						<!-- No tabindex: the rows hold no controls, and keyboard scrolling drives the midline trigger like any other scrolling. -->
-						<div data-service-row class="grid gap-2 py-8 md:grid-cols-12 md:gap-6 md:py-9">
-							<span class="text-sm tabular-nums text-dim md:col-span-1">0{i + 1}</span>
-							<h3
-								class="text-2xl font-medium tracking-tight lowercase transition-colors duration-300 group-hover:text-accent md:col-span-4 {activeIndex ===
-								i
-									? 'text-ink'
-									: ''}"
-							>
-								{service.title}
-							</h3>
-							<p class="text-sm leading-relaxed text-dim md:col-span-4">
-								{service.summary}
-							</p>
-							<ul class="mt-2 space-y-1.5 md:col-span-3 md:mt-0">
-								{#each service.items as item (item)}
-									<li class="text-sm lowercase text-dim">
-										<span class="text-dim" aria-hidden="true">—</span>
-										{item}
-									</li>
-								{/each}
-							</ul>
+						<!--
+							Two columns, not four. Title, number and deliverables in the left
+							column; the summary gets the rest of the row. Split three ways the
+							summary measured 202px at 14px — about 29 characters a line, which
+							is a column of hyphenation, not prose.
+
+							No tabindex: the rows hold no controls, and keyboard scrolling
+							drives the midline trigger like any other scrolling.
+						-->
+						<!--
+							Two explicit tracks, not twelve. A nested grid-cols-12 with a
+							gap-x-10 spent 440px of a 655px row on gutters and left the
+							summary 366px; a fixed title rail plus the remainder gives it
+							about 450.
+						-->
+						<div
+							data-service-row
+							class="grid gap-3 py-8 md:grid-cols-[11rem_minmax(0,1fr)] md:gap-x-8 md:py-9"
+						>
+							<div>
+								<p class="text-sm tabular-nums text-dim">0{i + 1}</p>
+								<h3
+									class="mt-2 text-2xl leading-tight font-medium tracking-tight lowercase transition-colors duration-300 group-hover:text-accent {activeIndex ===
+									i
+										? 'text-ink'
+										: ''}"
+								>
+									{service.title}
+								</h3>
+							</div>
+							<div>
+								<p class="text-base leading-relaxed text-dim">{service.summary}</p>
+								<!-- The deliverables, beneath the sentence they belong to and wide enough to pair up. -->
+								<ul class="mt-4 grid gap-x-8 gap-y-2.5 sm:grid-cols-2">
+									{#each service.items as item (item)}
+										<li class="text-sm lowercase text-dim">
+											<span class="text-dim" aria-hidden="true">—</span>
+											{item}
+										</li>
+									{/each}
+								</ul>
+							</div>
 						</div>
 					</li>
 				{/each}
