@@ -137,6 +137,8 @@
 		padding: 1rem 1rem 1rem;
 	}
 	.diagram--compact {
+		width: 184px;
+		max-width: 100%;
 		padding: 0.5rem;
 		border-radius: 0.75rem;
 	}

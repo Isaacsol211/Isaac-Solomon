@@ -317,10 +317,12 @@
 						<div aria-hidden="true" class="absolute top-1/3 bottom-0 left-1/2 -z-10 w-screen -translate-x-1/2 bg-coal"></div>
 						<div data-bleed-img class="overflow-hidden rounded-lg">
 							{#if img}
-								<!-- 21/9 against a 2.4:1 source: a sliver off each side, not a crop into the UI -->
-								<div data-bleed-frame class="aspect-[16/10] overflow-hidden sm:aspect-[21/9]">
+								<!-- Preserve the complete screenshot on phones; the desktop stage keeps its wide crop. -->
+								<div data-bleed-frame class="overflow-hidden sm:aspect-[21/9]">
 									<img
 										src={img}
+										width="1600"
+										height="667"
 										srcset={project.previewSmall && project.previewWidth
 											? `${project.previewSmall} 800w, ${img} ${project.previewWidth}w`
 											: undefined}
@@ -330,7 +332,7 @@
 										fetchpriority="high"
 										decoding="async"
 										style={vtName ? `view-transition-name: ${vtName}` : undefined}
-										class="h-full w-full object-cover object-top"
+										class="block h-auto w-full object-cover object-top sm:h-full"
 									/>
 								</div>
 							{/if}
@@ -348,8 +350,9 @@
 							</h3>
 							<div data-bleed-text class="md:col-span-6">
 								<!-- Same order as the other layouts, in the cream tones the coal band needs. -->
+								<p class="max-w-lg text-sm leading-relaxed text-cream/60">{project.description}</p>
 								{#if project.role}
-									<p class="max-w-lg text-sm leading-relaxed font-medium text-cream/80">{project.role}</p>
+									<p class="mt-3 max-w-lg text-sm leading-relaxed font-medium text-cream/80">{project.role}</p>
 								{/if}
 								{#if project.decision || project.outcome}
 									<div class="mt-5 max-w-lg border-t border-cream/15 pt-4">
@@ -367,7 +370,6 @@
 										{/if}
 									</div>
 								{/if}
-								<p class="mt-5 max-w-lg text-sm leading-relaxed text-cream/60">{project.description}</p>
 								{#if project.credits}
 									<p class="mt-3 text-xs leading-relaxed text-cream/55">{project.credits}</p>
 								{/if}
@@ -423,6 +425,7 @@
 							paragraph: a client wants scope and handover, a hiring manager
 							wants the judgment, and neither should have to go looking.
 						-->
+						<p class="mt-3 max-w-md text-sm leading-relaxed text-dim">{project.description}</p>
 						{#if project.role}
 							<p class="mt-3 max-w-md text-sm leading-relaxed font-medium text-ink/75">{project.role}</p>
 						{/if}
@@ -442,7 +445,6 @@
 								{/if}
 							</div>
 						{/if}
-						<p class="mt-5 max-w-md text-sm leading-relaxed text-dim">{project.description}</p>
 						{#if project.credits}
 							<p class="mt-3 text-xs leading-relaxed text-dim">{project.credits}</p>
 						{/if}
@@ -533,8 +535,9 @@
 							</div>
 							<div data-bleed-text class="md:col-span-7">
 								<!-- Same order as the other three layouts: scope, the call, its result. -->
+								<p class="max-w-lg text-sm leading-relaxed text-dim">{project.description}</p>
 								{#if project.role}
-									<p class="max-w-lg text-sm leading-relaxed font-medium text-ink/75">{project.role}</p>
+									<p class="mt-3 max-w-lg text-sm leading-relaxed font-medium text-ink/75">{project.role}</p>
 								{/if}
 								{#if project.decision || project.outcome}
 									<div class="mt-5 max-w-lg border-t border-line pt-4">
@@ -552,7 +555,6 @@
 										{/if}
 									</div>
 								{/if}
-								<p class="mt-5 max-w-lg text-sm leading-relaxed text-dim">{project.description}</p>
 								{#if project.credits}
 									<p class="mt-3 text-xs leading-relaxed text-dim">{project.credits}</p>
 								{/if}
@@ -607,6 +609,7 @@
 							paragraph: a client wants scope and handover, a hiring manager
 							wants the judgment, and neither should have to go looking.
 						-->
+						<p class="mt-3 max-w-md text-sm leading-relaxed text-dim">{project.description}</p>
 						{#if project.role}
 							<p class="mt-3 max-w-md text-sm leading-relaxed font-medium text-ink/75">{project.role}</p>
 						{/if}
@@ -626,7 +629,6 @@
 								{/if}
 							</div>
 						{/if}
-						<p class="mt-5 max-w-md text-sm leading-relaxed text-dim">{project.description}</p>
 						{#if project.credits}
 							<p class="mt-3 text-xs leading-relaxed text-dim">{project.credits}</p>
 						{/if}

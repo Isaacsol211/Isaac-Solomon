@@ -66,30 +66,31 @@ export type Service = {
 	title: string;
 	summary: string;
 	items: string[];
+	proof: { label: string; href: string };
 };
 
 export const serviceDetails: Service[] = [
 	{
 		title: 'E-commerce storefronts',
 		summary:
-			'Fast, componentised storefronts built to survive real traffic and relentless launch schedules.',
+			'Storefronts where product pages, carts and mailers come from one component system, so launch days do not need a rebuild.',
 		items: [
 			'Product & category pages',
 			'Live carts and checkout flows',
-			'Transactional mailers',
-			'Performance budgets that hold'
-		]
+			'Transactional mailers'
+		],
+		proof: { label: 'Mivi — built for daily product launches', href: '/writing/mivi' }
 	},
 	{
 		title: 'Custom CMS builds',
 		summary:
-			'Component systems flexible enough for non-technical teams to run without touching code.',
+			'Content models and editor workflows built around the team that maintains them, so a rebrand changes presentation without moving data.',
 		items: [
 			'Content modelling',
 			'Editor-friendly component systems',
-			'Design-system enforcement',
-			'Rebrand-proof architecture'
-		]
+			'Design-system enforcement'
+		],
+		proof: { label: 'Godrej — a rebrand without content migration', href: '/writing/godrej' }
 	},
 	{
 		title: 'Scroll-driven animation',
@@ -98,31 +99,31 @@ export const serviceDetails: Service[] = [
 		items: [
 			'GSAP & ScrollTrigger',
 			'Video pause-and-play pipelines',
-			'View-transition morphs',
 			'Reduced-motion fallbacks'
-		]
+		],
+		proof: { label: 'Keus — adapting scroll stories to real screens', href: '/writing/keus' }
 	},
 	{
 		title: 'QA automation',
 		summary:
 			'Automated checks across web, iOS and Android that run on request and leave a report someone can act on.',
 		items: [
-			'Web, iOS simulator and Android emulator lanes',
+			'Web, iOS and Android checks',
 			'Flake isolation and retry policy',
-			'Deduplicated findings and regression tracking',
-			'Reports with triage-ready evidence'
-		]
+			'Regression reports with evidence'
+		],
+		proof: { label: 'Current QA work at Able.do', href: '#experience' }
 	},
 	{
 		title: 'Long-term product work',
 		summary:
 			'Years-long partnerships — from first commit to product management, across rewrites and rebrands.',
 		items: [
-			'Frontend leadership',
 			'Framework migrations',
 			'i18n / RTL support',
-			'Product management'
-		]
+			'Roadmap and release planning'
+		],
+		proof: { label: 'SAUT — four years, six releases', href: '/writing/saut' }
 	}
 ];
 
@@ -256,7 +257,7 @@ export const projects: Project[] = [
 		year: '2018 – 2022',
 		category: 'E-Commerce',
 		description:
-			"Built the full storefront UI for India's first audio manufacturing brand, on a custom in-house CMS. Componentised from the ground up, with a live cart, transactional mailers, and product pages the marketing team updates without a developer.",
+			"Custom storefront for India's first audio manufacturing brand.",
 		tags: ['Custom CMS', 'E-Commerce', 'UI Engineering', 'Mailers'],
 		href: 'https://www.mivi.in',
 		theme: 'dark',
@@ -278,7 +279,7 @@ export const projects: Project[] = [
 		year: '2026',
 		category: 'Philanthropy · EdTech',
 		description:
-			'National talent platform for Godrej Foundation, identifying and supporting high-potential students from disadvantaged backgrounds across four pathways. SvelteKit on Cloudflare, with WhatsApp onboarding and assessments in eleven languages.',
+			'National talent platform for Godrej Foundation.',
 		tags: ['SvelteKit', 'Tailwind', 'Cloudflare', 'EdTech'],
 		href: 'https://www.tomorrow-makers.in',
 		theme: 'light',
@@ -289,9 +290,9 @@ export const projects: Project[] = [
 		previewSmall: '/writing/tomorrow-makers/hero-800.webp',
 		previewWidth: 2880,
 		caseStudy: '/writing/tomorrow-makers',
-		role: 'Frontend developer — assessment flow, WhatsApp onboarding, eleven-language support and partner routing, on SvelteKit and Cloudflare.',
-		decision: 'Onboarding runs through WhatsApp as well as the website, because for the students this platform is for, the channel they already use is more reachable than a browser.',
-		outcome: 'Four student pathways, with the assessment for the youngest cohort (Classes 6–7) available in 11 languages.',
+		role: 'Frontend developer — assessments, onboarding integrations and partner routing, on SvelteKit and Cloudflare.',
+		decision: 'Onboarding runs through WhatsApp as well as the website, meeting students in a channel they already use.',
+		outcome: 'Four student pathways. Assessment in 11 languages for Classes 6–7.',
 		credits: 'Design by 3 Sided Coin.',
 		featuredLayout: 'portrait',
 		gallery: [
@@ -319,7 +320,7 @@ export const projects: Project[] = [
 		year: '2019 – 2023',
 		category: 'EdTech · LMS',
 		description:
-			'Four years on a learning platform for special educators teaching children with Down syndrome — Vue to SvelteKit, solo developer to product manager. Bilingual Arabic/English with a live RTL toggle, offline-first assessments, and a worksheet builder that prints pixel-perfect A4.',
+			'Learning platform for special educators teaching children with Down syndrome.',
 		tags: ['SvelteKit', 'Vue.js', 'Product Management', 'RTL / LTR'],
 		href: 'https://saut-website-demo.able.do',
 		theme: 'dark',
@@ -435,7 +436,7 @@ export const projects: Project[] = [
 		year: '2024',
 		category: 'Philanthropy',
 		description:
-			'Website and custom CMS for India\'s oldest philanthropic trust, in SvelteKit and Tailwind. Built twice — the corporate rebrand landed mid-project — and the content model carried across so the foundation team never re-entered a thing.',
+			'Website and custom CMS for India\'s oldest philanthropic trust, built in SvelteKit and Tailwind.',
 		tags: ['SvelteKit', 'Tailwind', 'Custom CMS', 'Rebrand'],
 		href: 'https://www.godrejfoundation.com',
 		theme: 'light',
@@ -447,8 +448,8 @@ export const projects: Project[] = [
 		previewWidth: 1440,
 		caseStudy: '/writing/godrej',
 		role: 'Frontend developer — the whole frontend from their designs, wired to a custom CMS built for their editors.',
-		decision: 'The CMS was modelled on the content rather than the visual design, which is why an overnight change of brand identity became a frontend rebuild and not a data migration.',
-		outcome: 'A full corporate rebrand absorbed as a frontend rebuild, with zero content migration.',
+		decision: 'Modelled the CMS around the foundation’s content, with presentation kept separate from the records its editors maintain.',
+		outcome: 'A full corporate rebrand, with zero content migration.',
 		credits: 'Design system by 3 Sided Coin.',
 		featuredLayout: 'pair',
 		gallery: [
@@ -716,34 +717,9 @@ export const photos = [
 	{ src: '/photos/20-tea-plantations.jpg', alt: 'Lush green tea plantation rows stretching across rolling hills in Munnar', caption: 'Tea Country — Munnar', w: 1600, h: 1200, location: 'Munnar', place: 'Tea Country', description: 'Tea rows following the contours of the hills at Munnar.', series: 'Places' }
 ];
 
-/**
- * The opening edit. Eight frames chosen for how far apart they are from one
- * another — fog, lit tents, forest green, carved stone, a night platform, tea
- * rows, a panorama, people at altitude — rather than for how many views of one
- * mountain the archive happens to hold. `size` is the width the frame takes in
- * the twelve-column stage; below `md` every frame is full width.
- *
- * Nothing here is a second copy of a file: the archive further down is the same
- * twenty photographs at thumbnail size, grouped by series.
- */
-export type PhotoSize = 'wide' | 'narrow' | 'half' | 'full';
-
-export const photoSelection: { place: string; size: PhotoSize }[] = [
-	{ place: 'Into the Fog', size: 'wide' },
-	{ place: 'Base Camp', size: 'narrow' },
-	{ place: 'Forest Road', size: 'narrow' },
-	{ place: 'Qutub Minar', size: 'wide' },
-	{ place: 'Starlight', size: 'full' },
-	{ place: 'Platform 2', size: 'half' },
-	{ place: 'Tea Country', size: 'half' },
-	{ place: 'The Summit', size: 'full' }
-];
-
 /** Copy for the photography page — one opening line, then the frames. */
 export const photographyPage = {
-	lead: 'A separate archive for the part of the work that never ships in a browser. Twenty frames, three series.',
-	/** Sits under the ocean frame, not over it. */
-	pauseNote: 'A pause, halfway through the archive.'
+	lead: 'Away from the screen. Photographs from the mountains, the road, and the hours in between.'
 };
 
 export const socials = [

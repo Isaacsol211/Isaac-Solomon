@@ -35,8 +35,9 @@
 			// The preference may have flipped while the imports were in flight.
 			if (destroyed || stop || prefersReducedMotion()) return;
 
-			// anchor offset matches the sections' scroll-margin-top (5.5rem fixed nav)
-			const lenis = new Lenis({ anchors: { offset: -88 }, autoRaf: false });
+			// Lenis already reads CSS scroll-margin-top. An additional offset would
+			// count the fixed header twice and leave a large gap above every anchor.
+			const lenis = new Lenis({ anchors: true, autoRaf: false });
 			lenisInstance = lenis;
 			lenis.on('scroll', ScrollTrigger.update);
 			const raf = (time: number) => lenis.raf(time * 1000);

@@ -43,14 +43,14 @@
 	const invert = $derived(onDark && !scrolled && !open);
 
 	/*
-	 * The menu only exists below md. If it is open when the viewport crosses the
+	 * The menu only exists below lg. If it is open when the viewport crosses the
 	 * breakpoint — a phone rotating, a tablet window resizing — the overlay goes
-	 * display:none via its md:hidden class but the state stays true, which used
+	 * display:none via its lg:hidden class but the state stays true, which used
 	 * to leave the page inert and scroll-locked behind an invisible dialog.
 	 * Close it on the media query instead, so the modal action tears down.
 	 */
 	$effect(() => {
-		const desktop = window.matchMedia('(min-width: 768px)');
+		const desktop = window.matchMedia('(min-width: 1024px)');
 		const closeOnDesktop = (e: MediaQueryListEvent | MediaQueryList) => {
 			if (e.matches) open = false;
 		};
@@ -90,19 +90,29 @@
 			.map((link) => document.getElementById(link.href.slice(1)))
 			.filter((el): el is HTMLElement => el !== null);
 
-		const observer = new IntersectionObserver(
-			(entries) => {
-				for (const entry of entries) {
-					const href = `#${entry.target.id}`;
-					if (entry.isIntersecting) activeSection = href;
-					else if (activeSection === href) activeSection = '';
-				}
-			},
-			// A thin band around 40% viewport height decides the "current" section
-			{ rootMargin: '-40% 0px -55% 0px' }
-		);
-		sections.forEach((section) => observer.observe(section));
-		return () => observer.disconnect();
+		let observer: IntersectionObserver;
+		const observe = () => {
+			observer?.disconnect();
+			observer = new IntersectionObserver(
+				(entries) => {
+					for (const entry of entries) {
+						const href = `#${entry.target.id}`;
+						if (entry.isIntersecting) activeSection = href;
+						else if (activeSection === href) activeSection = '';
+					}
+				},
+				// A thin band around 40% viewport height decides the "current" section
+				// Pixel margins keep this band tied to height on wide desktop screens.
+				{ rootMargin: `-${Math.round(window.innerHeight * .4)}px 0px -${Math.round(window.innerHeight * .55)}px 0px` }
+			);
+			sections.forEach((section) => observer.observe(section));
+		};
+		observe();
+		window.addEventListener('resize', observe);
+		return () => {
+			observer.disconnect();
+			window.removeEventListener('resize', observe);
+		};
 	});
 
 	function onKeydown(event: KeyboardEvent) {
@@ -140,15 +150,15 @@
 			{site.name}
 		</a>
 
-		<div class="hidden items-center gap-4 md:flex">
+		<div class="hidden items-center gap-4 lg:flex">
 			<p
-				class="min-w-[7rem] text-[10px] font-medium tracking-[0.22em] lowercase {invert
+				class="hidden min-w-[7rem] text-[10px] font-medium tracking-[0.22em] lowercase xl:block {invert
 					? 'text-cream/55'
 					: 'text-dim'}"
 			>
 				chapter / <span class={invert ? 'text-cream' : 'text-ink'}>{activeLabel}</span>
 			</p>
-		<nav bind:this={navEl} class="relative items-center gap-2.5 md:flex" aria-label="Primary">
+		<nav bind:this={navEl} class="relative items-center gap-2.5 lg:flex" aria-label="Primary">
 			<span
 				aria-hidden="true"
 				class="pointer-events-none absolute -bottom-1 left-0 h-px bg-accent transition-[transform,width,opacity] duration-200 ease-out"
@@ -180,7 +190,7 @@
 
 			<a
 				href="#connect"
-				class="group hidden items-center gap-2 rounded-full px-5 py-2.5 text-sm transition-colors duration-300 hover:bg-accent-text hover:text-paper focus-visible:bg-accent-text focus-visible:text-paper md:inline-flex {invert
+				class="group hidden items-center gap-2 rounded-full px-5 py-2.5 text-sm transition-colors duration-300 hover:bg-accent-text hover:text-paper focus-visible:bg-accent-text focus-visible:text-paper lg:inline-flex {invert
 					? 'bg-cream text-coal'
 					: 'bg-ink text-paper'}"
 			>
@@ -192,7 +202,7 @@
 			<button
 				bind:this={toggleBtn}
 				type="button"
-				class="relative z-50 -mr-2 grid size-11 place-items-center md:hidden"
+				class="relative z-50 -mr-2 grid size-11 place-items-center lg:hidden"
 				aria-expanded={open}
 				aria-controls="mobile-menu"
 				onclick={() => (open = !open)}
@@ -224,7 +234,7 @@
 		aria-label="Site menu"
 		use:modal={{ onclose: () => (open = false), restoreFocusTo: toggleBtn, initialFocus: 'nav a' }}
 		transition:fade={{ duration: 180 }}
-		class="fixed inset-0 z-60 flex flex-col justify-between bg-coal px-5 pt-24 pb-10 text-cream md:hidden"
+		class="fixed inset-0 z-60 flex flex-col justify-between bg-coal px-5 pt-24 pb-10 text-cream lg:hidden"
 	>
 		<!--
 			Dialog chrome lives inside the dialog. The header's hamburger and toggle
