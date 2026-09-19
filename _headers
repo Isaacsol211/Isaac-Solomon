@@ -52,3 +52,12 @@
 
 /.well-known/mcp/server-card.json
   Access-Control-Allow-Origin: *
+
+# Storybook illustrations — un-hashed, same policy as the other images.
+/story/*
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+# The beta host is a preview of the next design: keep it out of search results.
+# Matches only this hostname, so production is unaffected.
+https://beta.isaacsolomon.dev/*
+  X-Robots-Tag: noindex, nofollow
