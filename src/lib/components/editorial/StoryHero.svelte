@@ -30,18 +30,15 @@
 				a folio,<br />in three chapters.
 			</p>
 
-			<!-- the author, as a painted plate on a cobalt block -->
-			<div class="relative mt-5 w-[min(66vw,19rem)]">
-				<span class="absolute -right-3 -bottom-3 -z-10 h-full w-full bg-cobalt" aria-hidden="true"></span>
-				<img
-					src="/story/hero.webp"
-					alt="Illustrated portrait of Isaac Solomon in a blue beret, looking up"
-					width="900"
-					height="900"
-					class="block w-full rounded-2xl border-2 border-ink"
-				/>
-			</div>
-			<p class="mt-3 font-serif text-sm text-dim italic" aria-hidden="true">fig. 1 — the author, looking up.</p>
+			<!-- the author, floating on the paper -->
+			<img
+				src="/story/hero.webp"
+				alt="Illustrated portrait of Isaac Solomon in a blue beret, looking up"
+				width="671"
+				height="795"
+				class="mt-4 block h-auto w-[min(70vw,22rem)]"
+			/>
+			<p class="mt-1 font-serif text-sm text-dim italic" aria-hidden="true">fig. 1 — the author, looking up.</p>
 
 			<h1 class="mt-3 flex flex-wrap items-baseline justify-center gap-x-4 gap-y-1">
 				<span class="text-[clamp(3.2rem,13vw,9rem)] leading-[0.82] font-medium tracking-[0.04em] uppercase">
