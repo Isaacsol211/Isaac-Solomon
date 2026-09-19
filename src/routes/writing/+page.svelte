@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { site, writing, writingIntro } from '$lib/content';
 	import ArticleHeader from '$lib/components/ArticleHeader.svelte';
+	import StoryDoodle from '$lib/components/editorial/StoryDoodle.svelte';
 
 	const title = 'Writing — Isaac Solomon';
 	const description = writingIntro.note;
@@ -27,8 +28,13 @@
 <ArticleHeader />
 
 <main id="main" class="px-5 pb-24 sm:px-8">
-	<div class="mx-auto max-w-3xl pt-14 md:pt-20">
-		<h1 class="text-4xl font-medium leading-[1.1] tracking-tight lowercase md:text-6xl">
+	<div class="relative mx-auto max-w-3xl pt-14 md:pt-20">
+		<StoryDoodle kind="pen" class="pointer-events-none absolute top-14 right-0 hidden w-16 -rotate-6 md:block" />
+		<p class="flex items-center gap-2 font-serif text-lg text-dim italic">
+			<span class="block size-2.5 bg-mustard" aria-hidden="true"></span>
+			chapter four · the notebook
+		</p>
+		<h1 class="article-title mt-2 text-4xl font-medium leading-[1.1] tracking-tight lowercase md:text-6xl">
 			{writingIntro.plain}
 			<em class="font-serif font-normal italic text-dim">{writingIntro.accent}</em>
 		</h1>
@@ -45,10 +51,10 @@
 			{@const lead = writing[0]}
 			<a
 				href={lead.href}
-				class="group mt-12 block border-t border-line pt-8 md:mt-16 md:pt-10"
+				class="group mt-12 block rounded-3xl border-2 border-ink p-6 transition-colors hover:bg-paper-2/60 md:mt-14 md:p-8"
 			>
 				<div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
-					<p class="text-xs font-medium tracking-[0.15em] text-dim uppercase">{lead.tag}</p>
+					<p class="font-serif text-lg text-dim italic lowercase">{lead.tag}</p>
 					<p class="text-xs text-dim tabular-nums">{lead.readingTime} · {lead.year}</p>
 				</div>
 				<h2 class="mt-4 font-serif text-4xl leading-[1.05] italic md:text-6xl">
@@ -72,7 +78,7 @@
 			{#each writing.slice(1) as article (article.href)}
 				<li class="border-t border-line">
 					<a href={article.href} class="group grid gap-x-6 gap-y-1 py-5 md:grid-cols-12 md:items-baseline md:py-6">
-						<p class="text-xs font-medium tracking-[0.15em] text-dim uppercase md:col-span-3">{article.tag}</p>
+						<p class="font-serif text-base text-dim italic lowercase md:col-span-3">{article.tag}</p>
 						<div class="md:col-span-7">
 							<h2 class="text-lg font-medium tracking-tight md:text-xl">
 								<span class="underline-reveal">{article.title}</span>

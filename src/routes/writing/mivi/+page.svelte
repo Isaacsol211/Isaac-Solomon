@@ -16,11 +16,11 @@
 	<!-- ── Hero ──────────────────────────────────────────────────────── -->
 	<div class="mx-auto max-w-3xl pt-14 md:pt-20">
 
-		<p class="text-xs font-medium tracking-[0.25em] uppercase text-accent-text">
+		<p class="font-serif text-lg italic lowercase text-accent-text">
 			Case Study · Mivi
 		</p>
 
-		<h1 class="mt-4 text-4xl font-medium leading-[1.1] tracking-tight lowercase md:text-6xl">
+		<h1 class="article-title mt-2 text-4xl font-medium leading-[1.1] tracking-tight lowercase md:text-6xl">
 			Shipping at<br />Launch
 			<em class="font-serif font-normal italic text-dim">Speed.</em>
 		</h1>
@@ -98,9 +98,9 @@
 		</div>
 
 		<!-- pace callout -->
-		<div class="not-prose my-10 overflow-hidden rounded-xl border border-accent/20 bg-accent/5">
+		<div class="not-prose my-10 overflow-hidden rounded-3xl border-2 border-ink bg-accent/5">
 			<div class="border-b border-accent/15 px-6 py-4">
-				<p class="text-xs font-medium tracking-[0.25em] uppercase text-accent-text">The Rhythm</p>
+				<p class="font-serif text-lg italic lowercase text-accent-text">The Rhythm</p>
 				<p class="mt-1 font-medium tracking-tight">What "launch speed" actually looked like.</p>
 			</div>
 			<div class="divide-y divide-accent/10 px-6">
@@ -110,7 +110,7 @@
 					{ n: '03', q: 'Every product page distinct — shared components underneath, not a template with swapped images' },
 				] as item}
 					<div class="flex items-baseline gap-5 py-4">
-						<span class="shrink-0 font-mono text-[10px] tracking-[0.2em] text-accent/60">{item.n}</span>
+						<span class="shrink-0 font-serif text-base italic text-accent-text">{item.n}</span>
 						<span class="text-sm font-medium">{item.q}</span>
 					</div>
 				{/each}
@@ -196,9 +196,9 @@
 		</div>
 
 		<!-- evolution milestones -->
-		<div class="not-prose my-10 overflow-hidden rounded-xl border border-accent/20 bg-accent/5">
+		<div class="not-prose my-10 overflow-hidden rounded-3xl border-2 border-ink bg-accent/5">
 			<div class="border-b border-accent/15 px-6 py-4">
-				<p class="text-xs font-medium tracking-[0.25em] uppercase text-accent-text">The Evolutions</p>
+				<p class="font-serif text-lg italic lowercase text-accent-text">The Evolutions</p>
 				<p class="mt-1 font-medium tracking-tight">How the frontend matured — not by plan, but by pressure.</p>
 			</div>
 			<div class="divide-y divide-accent/10 px-6">
@@ -209,7 +209,7 @@
 					{ n: '04', q: 'CMS-driven content — the team could launch pages without touching code' },
 				] as item}
 					<div class="flex items-baseline gap-5 py-4">
-						<span class="shrink-0 font-mono text-[10px] tracking-[0.2em] text-accent/60">{item.n}</span>
+						<span class="shrink-0 font-serif text-base italic text-accent-text">{item.n}</span>
 						<span class="text-sm font-medium">{item.q}</span>
 					</div>
 				{/each}
@@ -218,7 +218,7 @@
 
 		<!-- full-page tour -->
 		<div class="not-prose my-12 lg:relative lg:left-1/2 lg:-translate-x-1/2 lg:w-[min(64rem,100vw-4rem)]">
-			<div class="page-tour group overflow-hidden rounded-xl border border-line shadow-[0_16px_32px_-16px_rgba(20,19,17,0.15)]">
+			<div class="page-tour group overflow-hidden rounded-2xl border-2 border-ink shadow-[0_16px_32px_-16px_rgba(20,19,17,0.15)]">
 				<div class="flex items-center justify-between border-b border-line bg-paper-2 px-3 py-2">
 					<div class="flex items-center gap-1.5">
 						<span class="size-2 rounded-full bg-[#ff5f57]"></span>

@@ -7,18 +7,18 @@
 		'How I built a drag-and-drop canvas for special educators to create pixel-perfect printable worksheets — flashcards, shapes, multiple A4 artboards, all from a browser.';
 </script>
 
-<ArticleChrome {title} {description} path="/writing/saut/worksheet-builder" image="/projects/saut/landing-hero-devices-right-to-left.png" back={{ href: '/writing/saut', label: 'SAUT Case Study', short: 'SAUT' }} />
+<ArticleChrome {title} {description} path="/writing/saut/worksheet-builder" image="/projects/saut/landing-hero-devices-right-to-left.png" back={{ href: '/writing/saut', label: 'SAUT Case Study' }} />
 
 <main id="main" class="px-5 pb-24 sm:px-8">
 
 	<!-- ── Hero ──────────────────────────────────────────────────────── -->
 	<div class="mx-auto max-w-3xl pt-14 md:pt-20">
 
-		<p class="text-xs font-medium tracking-[0.25em] uppercase text-accent-text">
+		<p class="font-serif text-lg italic lowercase text-accent-text">
 			Deep Dive · SAUT
 		</p>
 
-		<h1 class="mt-4 text-4xl font-medium leading-[1.1] tracking-tight lowercase md:text-6xl">
+		<h1 class="article-title mt-2 text-4xl font-medium leading-[1.1] tracking-tight lowercase md:text-6xl">
 			A Design Tool<br />Disguised as
 			<em class="font-serif font-normal italic text-dim">a Feature.</em>
 		</h1>
@@ -29,7 +29,7 @@
 		</p>
 
 		<!-- meta -->
-		<div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-b border-line py-5 text-xs font-medium tracking-[0.2em] uppercase text-dim">
+		<div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-b border-line py-5 font-serif text-base italic text-dim">
 			<span>2022</span>
 			<span class="h-3 w-px bg-line"></span>
 			<span>SAUT · 2019 – 2023</span>
@@ -40,7 +40,7 @@
 
 	<!-- ── Hero screenshot ─────────────────────────────────────────── -->
 	<div class="mx-auto mt-12 max-w-5xl">
-		<div class="overflow-hidden rounded-xl border border-line">
+		<div class="overflow-hidden rounded-2xl border-2 border-ink">
 			<img
 				src="/projects/saut/lms-feature-4-right-to-left.jpg"
 				alt="SAUT worksheet builder — drag-and-drop canvas with shapes and educational content"
@@ -112,9 +112,9 @@
 		</div>
 
 		<!-- requirements callout -->
-		<div class="not-prose my-10 overflow-hidden rounded-xl border border-accent/20 bg-accent/5">
+		<div class="not-prose my-10 overflow-hidden rounded-3xl border-2 border-ink bg-accent/5">
 			<div class="border-b border-accent/15 px-6 py-4">
-				<p class="text-xs font-medium tracking-[0.25em] uppercase text-accent-text">The Requirements</p>
+				<p class="font-serif text-lg italic lowercase text-accent-text">The Requirements</p>
 				<p class="mt-1 font-medium tracking-tight">What "create worksheets" actually meant.</p>
 			</div>
 			<div class="divide-y divide-accent/10 px-6">
@@ -127,7 +127,7 @@
 					{ n: '06', q: 'Multi-page worksheets — multiple A4 artboards, one PDF' },
 				] as item}
 					<div class="flex items-baseline gap-5 py-4">
-						<span class="shrink-0 font-mono text-[10px] tracking-[0.2em] text-accent/60">{item.n}</span>
+						<span class="shrink-0 font-serif text-base italic text-accent-text">{item.n}</span>
 						<span class="text-sm font-medium">{item.q}</span>
 					</div>
 				{/each}
@@ -162,7 +162,7 @@
 
 		<!-- flashcard library image -->
 		<div class="not-prose my-10 lg:relative lg:left-1/2 lg:-translate-x-1/2 lg:w-[min(64rem,100vw-4rem)]">
-			<div class="overflow-hidden rounded-xl border border-line">
+			<div class="overflow-hidden rounded-2xl border-2 border-ink">
 				<img
 					src="/projects/saut/lms-feature-6-right-to-left.jpg"
 					alt="SAUT flashcard content library — categorised visual assets for body parts, vehicles, animals"
@@ -231,8 +231,8 @@
 
 		<!-- video: worksheet builder demo -->
 		<div class="not-prose my-10 lg:relative lg:left-1/2 lg:-translate-x-1/2 lg:w-[calc(100vw-3rem)] lg:max-w-[100rem]">
-			<p class="mb-4 text-xs font-medium tracking-[0.25em] uppercase text-dim">Product demo — Worksheet builder in action</p>
-			<div class="overflow-hidden rounded-xl border border-line">
+			<p class="mb-4 font-serif text-lg italic lowercase text-dim">Product demo — Worksheet builder in action</p>
+			<div class="overflow-hidden rounded-2xl border-2 border-ink">
 				<video
 					controls
 					playsinline
@@ -276,20 +276,20 @@
 		</div>
 
 		<!-- related articles -->
-		<div class="not-prose my-10 overflow-hidden rounded-xl border border-accent/20 bg-accent/5">
+		<div class="not-prose my-10 overflow-hidden rounded-3xl border-2 border-ink bg-accent/5">
 			<div class="border-b border-accent/15 px-6 py-4">
-				<p class="text-xs font-medium tracking-[0.25em] uppercase text-accent-text">More on SAUT</p>
+				<p class="font-serif text-lg italic lowercase text-accent-text">More on SAUT</p>
 			</div>
 			<div class="divide-y divide-accent/10">
 				<a href="/writing/saut" class="group flex items-baseline gap-5 px-6 py-4 transition-colors hover:bg-accent/5">
-					<span class="shrink-0 font-mono text-[10px] tracking-[0.2em] text-accent/60">←</span>
+					<span class="shrink-0 font-serif text-base italic text-accent-text">←</span>
 					<span>
 						<span class="text-sm font-medium group-hover:text-accent transition-colors">Building SAUT</span>
 						<span class="mt-0.5 block text-xs text-dim">The full story — four years, two frameworks, one mission.</span>
 					</span>
 				</a>
 				<a href="/writing/saut/three-hats" class="group flex items-baseline gap-5 px-6 py-4 transition-colors hover:bg-accent/5">
-					<span class="shrink-0 font-mono text-[10px] tracking-[0.2em] text-accent/60">→</span>
+					<span class="shrink-0 font-serif text-base italic text-accent-text">→</span>
 					<span>
 						<span class="text-sm font-medium group-hover:text-accent transition-colors">Wearing Three Hats</span>
 						<span class="mt-0.5 block text-xs text-dim">How four years on one product turned a frontend developer into a product manager and stand-in designer.</span>

@@ -16,11 +16,11 @@
 	<!-- ── Hero ──────────────────────────────────────────────────────── -->
 	<div class="mx-auto max-w-3xl pt-14 md:pt-20">
 
-		<p class="text-xs font-medium tracking-[0.25em] uppercase text-accent-text">
+		<p class="font-serif text-lg italic lowercase text-accent-text">
 			Case Study · Godrej Foundation
 		</p>
 
-		<h1 class="mt-4 text-4xl font-medium leading-[1.1] tracking-tight lowercase md:text-6xl">
+		<h1 class="article-title mt-2 text-4xl font-medium leading-[1.1] tracking-tight lowercase md:text-6xl">
 			Built Twice, Shipped<br />
 			<em class="font-serif font-normal italic text-dim">Better.</em>
 		</h1>
@@ -102,9 +102,9 @@
 		</div>
 
 		<!-- CMS features callout -->
-		<div class="not-prose my-10 overflow-hidden rounded-xl border border-accent/20 bg-accent/5">
+		<div class="not-prose my-10 overflow-hidden rounded-3xl border-2 border-ink bg-accent/5">
 			<div class="border-b border-accent/15 px-6 py-4">
-				<p class="text-xs font-medium tracking-[0.25em] uppercase text-accent-text">The CMS</p>
+				<p class="font-serif text-lg italic lowercase text-accent-text">The CMS</p>
 				<p class="mt-1 font-medium tracking-tight">What the foundation team can manage on their own.</p>
 			</div>
 			<div class="divide-y divide-accent/10 px-6">
@@ -117,7 +117,7 @@
 					{ n: '06', q: 'Areas of work — dynamically structured sections' },
 				] as item}
 					<div class="flex items-baseline gap-5 py-4">
-						<span class="shrink-0 font-mono text-[10px] tracking-[0.2em] text-accent/60">{item.n}</span>
+						<span class="shrink-0 font-serif text-base italic text-accent-text">{item.n}</span>
 						<span class="text-sm font-medium">{item.q}</span>
 					</div>
 				{/each}
@@ -152,10 +152,10 @@
 
 		<!-- Before / After comparison -->
 		<div class="not-prose my-10 lg:relative lg:left-1/2 lg:-translate-x-1/2 lg:w-[calc(100vw-3rem)] lg:max-w-[100rem]">
-			<p class="mb-4 text-xs font-medium tracking-[0.25em] uppercase text-dim">Before & after — the same site, two identities</p>
+			<p class="mb-4 font-serif text-lg italic lowercase text-dim">Before & after — the same site, two identities</p>
 			<div class="grid gap-4 sm:grid-cols-2">
 				<div>
-					<div class="overflow-hidden rounded-xl border border-line">
+					<div class="overflow-hidden rounded-2xl border-2 border-ink">
 						<div class="flex items-center gap-1.5 border-b border-line bg-paper-2 px-3 py-2">
 							<span class="size-2 rounded-full bg-[#ff5f57]"></span>
 							<span class="size-2 rounded-full bg-[#febc2e]"></span>
@@ -176,7 +176,7 @@
 					<p class="mt-2 text-[10px] font-medium tracking-[0.15em] uppercase text-dim/60">v1 — designed by 3 Sided Coin, old Godrej identity</p>
 				</div>
 				<div>
-					<div class="overflow-hidden rounded-xl border border-line">
+					<div class="overflow-hidden rounded-2xl border-2 border-ink">
 						<div class="flex items-center gap-1.5 border-b border-line bg-paper-2 px-3 py-2">
 							<span class="size-2 rounded-full bg-[#ff5f57]"></span>
 							<span class="size-2 rounded-full bg-[#febc2e]"></span>

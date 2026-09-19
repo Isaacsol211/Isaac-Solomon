@@ -16,11 +16,11 @@
 	<!-- ── Hero ──────────────────────────────────────────────────────── -->
 	<div class="mx-auto max-w-3xl pt-14 md:pt-20">
 
-		<p class="text-xs font-medium tracking-[0.25em] uppercase text-accent-text">
+		<p class="font-serif text-lg italic lowercase text-accent-text">
 			Case Study · Nova Rock Tools
 		</p>
 
-		<h1 class="mt-4 text-4xl font-medium leading-[1.1] tracking-tight lowercase md:text-6xl">
+		<h1 class="article-title mt-2 text-4xl font-medium leading-[1.1] tracking-tight lowercase md:text-6xl">
 			Building<br />Without a
 			<em class="font-serif font-normal italic text-dim">Brief.</em>
 		</h1>
@@ -43,7 +43,7 @@
 					<span class="text-[10px] font-medium tracking-[0.2em] uppercase text-dim">Concept (WordPress)</span>
 					<span class="rounded-full bg-paper-2 border border-line px-2.5 py-1 font-mono text-[10px] text-dim">Perf 57</span>
 				</div>
-				<div class="overflow-hidden rounded-xl border border-line opacity-80">
+				<div class="overflow-hidden rounded-2xl border-2 border-ink opacity-80">
 					<div class="flex items-center gap-1.5 border-b border-line bg-paper-2 px-3 py-2">
 						<span class="size-2 rounded-full bg-[#ff5f57]"></span>
 						<span class="size-2 rounded-full bg-[#febc2e]"></span>
@@ -90,7 +90,7 @@
 		</div>
 
 		<!-- Lighthouse comparison strip -->
-		<div class="mt-4 overflow-hidden rounded-xl border border-line">
+		<div class="mt-4 overflow-hidden rounded-2xl border-2 border-ink">
 			<div class="grid grid-cols-5 border-b border-line bg-paper-2 px-5 py-2.5 text-[10px] font-medium tracking-[0.2em] uppercase text-dim">
 				<span>Metric</span>
 				<span class="text-center">Concept</span>
@@ -152,7 +152,7 @@
 
 		<!-- product grid -->
 		<div class="not-prose my-10 grid grid-cols-3 gap-3 lg:relative lg:left-1/2 lg:-translate-x-1/2 lg:w-[calc(100vw-3rem)] lg:max-w-[100rem]">
-			<figure class="overflow-hidden rounded-xl border border-line bg-paper-2">
+			<figure class="overflow-hidden rounded-2xl border-2 border-ink bg-paper-2">
 				<img
 					src="/writing/novarock/hammer.webp"
 					alt="DTH hammer — Nova Rock Tools flagship product"
@@ -163,7 +163,7 @@
 					DTH Hammer
 				</figcaption>
 			</figure>
-			<figure class="overflow-hidden rounded-xl border border-line bg-paper-2">
+			<figure class="overflow-hidden rounded-2xl border-2 border-ink bg-paper-2">
 				<img
 					src="/writing/novarock/triconos.webp"
 					alt="Tricone drill bits"
@@ -174,7 +174,7 @@
 					Tricones
 				</figcaption>
 			</figure>
-			<figure class="overflow-hidden rounded-xl border border-line bg-paper-2">
+			<figure class="overflow-hidden rounded-2xl border-2 border-ink bg-paper-2">
 				<img
 					src="/writing/novarock/brocas.webp"
 					alt="DTH drill bits"
@@ -215,9 +215,9 @@
 		</div>
 
 		<!-- decision framework callout -->
-		<div class="not-prose my-10 overflow-hidden rounded-xl border border-accent/20 bg-accent/5">
+		<div class="not-prose my-10 overflow-hidden rounded-3xl border-2 border-ink bg-accent/5">
 			<div class="border-b border-accent/15 px-6 py-4">
-				<p class="text-xs font-medium tracking-[0.25em] uppercase text-accent-text">The Design Rule</p>
+				<p class="font-serif text-lg italic lowercase text-accent-text">The Design Rule</p>
 				<p class="mt-1 font-medium tracking-tight">Every decision ran through the same three filters.</p>
 			</div>
 			<div class="divide-y divide-accent/10 px-6">
@@ -227,7 +227,7 @@
 					{ n: '03', q: 'Does it move the buyer closer to WhatsApp?' },
 				] as item}
 					<div class="flex items-baseline gap-5 py-4">
-						<span class="shrink-0 font-mono text-[10px] tracking-[0.2em] text-accent/60">{item.n}</span>
+						<span class="shrink-0 font-serif text-base italic text-accent-text">{item.n}</span>
 						<span class="text-sm font-medium">{item.q}</span>
 					</div>
 				{/each}
@@ -263,12 +263,12 @@
 
 		<!-- WhatsApp preview comparison -->
 		<div class="not-prose my-10 lg:relative lg:left-1/2 lg:-translate-x-1/2 lg:w-[calc(100vw-3rem)] lg:max-w-[100rem]">
-			<p class="mb-4 text-xs font-medium tracking-[0.25em] uppercase text-dim">Before → After: WhatsApp link preview</p>
+			<p class="mb-4 font-serif text-lg italic lowercase text-dim">Before → After: WhatsApp link preview</p>
 			<div class="grid gap-4 sm:grid-cols-2">
 				<!-- BEFORE — SPA, no JS, fallback to homepage OG -->
 				<div>
 					<p class="mb-2 text-[10px] font-medium tracking-[0.15em] uppercase text-dim/60">SPA — every page looks like this</p>
-					<div class="overflow-hidden rounded-xl border border-line bg-[#111b21]">
+					<div class="overflow-hidden rounded-2xl border-2 border-ink bg-[#111b21]">
 						<div class="aspect-[16/9] overflow-hidden bg-[#1a2730]">
 							<div class="flex h-full flex-col items-center justify-center gap-2 p-6 text-center">
 								<div class="size-10 rounded-full bg-white/5"></div>
@@ -312,7 +312,7 @@
 		<!-- image savings callout -->
 		<div class="not-prose my-10 overflow-hidden rounded-2xl border border-line">
 			<div class="border-b border-line bg-paper-2 px-6 py-4">
-				<p class="text-xs font-medium tracking-[0.25em] uppercase text-accent-text">The Image Problem</p>
+				<p class="font-serif text-lg italic lowercase text-accent-text">The Image Problem</p>
 				<p class="mt-1 font-medium tracking-tight">4.2 MB per page load — mostly images no one audited.</p>
 			</div>
 			<div class="p-6">
@@ -362,7 +362,7 @@
 
 		<!-- hammer + fix explanation -->
 		<div class="not-prose my-10 flex flex-col gap-6 sm:flex-row sm:items-start lg:relative lg:left-1/2 lg:-translate-x-1/2 lg:w-[min(64rem,100vw-4rem)]">
-			<figure class="overflow-hidden rounded-xl border border-line sm:w-1/2">
+			<figure class="overflow-hidden rounded-2xl border-2 border-ink sm:w-1/2">
 				<img
 					src="/writing/novarock/hammer.webp"
 					alt="DTH hammer — the site's LCP element, before and after optimisation"
@@ -374,7 +374,7 @@
 				</figcaption>
 			</figure>
 			<div class="sm:w-1/2">
-				<p class="mb-3 text-xs font-medium tracking-[0.25em] uppercase text-accent-text">The Fix</p>
+				<p class="mb-3 font-serif text-lg italic lowercase text-accent-text">The Fix</p>
 				<p class="text-sm leading-relaxed text-dim">
 					A <code class="rounded border border-line bg-paper-2 px-1.5 py-0.5 text-[11px]">&lt;Picture&gt;</code> component emits a proper
 					<code class="rounded border border-line bg-paper-2 px-1.5 py-0.5 text-[11px]">&lt;picture&gt;</code> element
@@ -388,7 +388,7 @@
 		</div>
 
 		<!-- Picture component code snippet -->
-		<div class="not-prose my-10 overflow-hidden rounded-xl border border-line">
+		<div class="not-prose my-10 overflow-hidden rounded-2xl border-2 border-ink">
 			<div class="flex items-center justify-between border-b border-line bg-paper-2 px-4 py-2.5">
 				<span class="font-mono text-[10px] tracking-wider text-dim">Picture.svelte — usage</span>
 				<span class="text-[10px] font-medium tracking-[0.15em] uppercase text-dim/60">Svelte 5</span>

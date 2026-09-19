@@ -17,9 +17,9 @@
 	const compare = $derived(rows.some((row) => row.before));
 </script>
 
-<div class="not-prose my-10 overflow-hidden rounded-2xl border border-line bg-paper-2/60">
+<div class="not-prose my-10 overflow-hidden rounded-3xl border-2 border-ink">
 	<div class="border-b border-line px-6 py-4">
-		<p class="text-[11px] font-medium tracking-[0.25em] uppercase text-accent-text">{eyebrow}</p>
+		<p class="font-serif text-lg italic lowercase text-accent-text">{eyebrow}</p>
 		<p class="mt-1 font-medium tracking-tight text-ink">{title}</p>
 	</div>
 	<div class="divide-y divide-line">

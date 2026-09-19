@@ -17,11 +17,11 @@
 	<!-- ── Hero ──────────────────────────────────────────────────────── -->
 	<div class="mx-auto max-w-3xl pt-14 md:pt-20">
 
-		<p class="text-xs font-medium tracking-[0.25em] uppercase text-accent-text">
+		<p class="font-serif text-lg italic lowercase text-accent-text">
 			Case Study · Tomorrow Makers
 		</p>
 
-		<h1 class="mt-4 text-4xl font-medium leading-[1.1] tracking-tight lowercase md:text-6xl">
+		<h1 class="article-title mt-2 text-4xl font-medium leading-[1.1] tracking-tight lowercase md:text-6xl">
 			Every Child Carries<br />
 			a <em class="font-serif font-normal italic text-dim">Spark.</em>
 		</h1>
@@ -112,7 +112,7 @@
 		<!-- stats + pathways screenshots -->
 		<div class="not-prose my-10 grid gap-6 md:grid-cols-2 lg:relative lg:left-1/2 lg:-translate-x-1/2 lg:w-[calc(100vw-3rem)] lg:max-w-[100rem]">
 			<div>
-				<div class="overflow-hidden rounded-xl border border-line shadow-[0_8px_24px_-8px_rgba(20,19,17,0.12)]">
+				<div class="overflow-hidden rounded-2xl border-2 border-ink shadow-[0_8px_24px_-8px_rgba(20,19,17,0.12)]">
 					<div class="flex items-center gap-1.5 border-b border-line bg-paper-2 px-3 py-2">
 						<span class="size-2 rounded-full bg-[#ff5f57]"></span>
 						<span class="size-2 rounded-full bg-[#febc2e]"></span>
@@ -135,7 +135,7 @@
 				</p>
 			</div>
 			<div>
-				<div class="overflow-hidden rounded-xl border border-line shadow-[0_8px_24px_-8px_rgba(20,19,17,0.12)]">
+				<div class="overflow-hidden rounded-2xl border-2 border-ink shadow-[0_8px_24px_-8px_rgba(20,19,17,0.12)]">
 					<div class="flex items-center gap-1.5 border-b border-line bg-paper-2 px-3 py-2">
 						<span class="size-2 rounded-full bg-[#ff5f57]"></span>
 						<span class="size-2 rounded-full bg-[#febc2e]"></span>
@@ -172,9 +172,9 @@
 		</div>
 
 		<!-- pathways callout -->
-		<div class="not-prose my-10 overflow-hidden rounded-xl border border-accent/20 bg-accent/5">
+		<div class="not-prose my-10 overflow-hidden rounded-3xl border-2 border-ink bg-accent/5">
 			<div class="border-b border-accent/15 px-6 py-4">
-				<p class="text-xs font-medium tracking-[0.25em] uppercase text-accent-text">The Pathways</p>
+				<p class="font-serif text-lg italic lowercase text-accent-text">The Pathways</p>
 				<p class="mt-1 font-medium tracking-tight">Four routes, eight partner organisations.</p>
 			</div>
 			<div class="divide-y divide-accent/10 px-6">
@@ -185,7 +185,7 @@
 					{ n: '04', label: 'Service', detail: 'Graduates → Armed forces preparation via Delta Squad Foundation, Yuvatejas' },
 				] as item}
 					<div class="flex items-baseline gap-5 py-4">
-						<span class="shrink-0 font-mono text-[10px] tracking-[0.2em] text-accent/60">{item.n}</span>
+						<span class="shrink-0 font-serif text-base italic text-accent-text">{item.n}</span>
 						<div>
 							<span class="text-sm font-medium">{item.label}</span>
 							<p class="mt-1 text-xs leading-relaxed text-dim">{item.detail}</p>
@@ -232,7 +232,7 @@
 
 		<!-- mission screenshot -->
 		<div class="not-prose my-10 lg:relative lg:left-1/2 lg:-translate-x-1/2 lg:w-[min(64rem,100vw-4rem)]">
-			<div class="overflow-hidden rounded-xl border border-line shadow-[0_8px_24px_-8px_rgba(20,19,17,0.12)]">
+			<div class="overflow-hidden rounded-2xl border-2 border-ink shadow-[0_8px_24px_-8px_rgba(20,19,17,0.12)]">
 				<div class="flex items-center gap-1.5 border-b border-line bg-paper-2 px-3 py-2">
 					<span class="size-2 rounded-full bg-[#ff5f57]"></span>
 					<span class="size-2 rounded-full bg-[#febc2e]"></span>
@@ -302,7 +302,7 @@
 
 		<!-- full-page tour -->
 		<div class="not-prose my-12 lg:relative lg:left-1/2 lg:-translate-x-1/2 lg:w-[calc(100vw-3rem)] lg:max-w-[100rem]">
-			<div class="page-tour group overflow-hidden rounded-xl border border-line shadow-[0_16px_32px_-16px_rgba(20,19,17,0.15)]">
+			<div class="page-tour group overflow-hidden rounded-2xl border-2 border-ink shadow-[0_16px_32px_-16px_rgba(20,19,17,0.15)]">
 				<div class="flex items-center justify-between border-b border-line bg-paper-2 px-3 py-2">
 					<div class="flex items-center gap-1.5">
 						<span class="size-2 rounded-full bg-[#ff5f57]"></span>

@@ -16,11 +16,11 @@
 	<!-- ── Hero ──────────────────────────────────────────────────────── -->
 	<div class="mx-auto max-w-3xl pt-14 md:pt-20">
 
-		<p class="text-xs font-medium tracking-[0.25em] uppercase text-accent-text">
+		<p class="font-serif text-lg italic lowercase text-accent-text">
 			Case Study · SAUT
 		</p>
 
-		<h1 class="mt-4 text-4xl font-medium leading-[1.1] tracking-tight lowercase md:text-6xl">
+		<h1 class="article-title mt-2 text-4xl font-medium leading-[1.1] tracking-tight lowercase md:text-6xl">
 			Four Years, Two<br />Frameworks,
 			<em class="font-serif font-normal italic text-dim">One Mission.</em>
 		</h1>
@@ -95,9 +95,9 @@
 		</div>
 
 		<!-- complexity callout -->
-		<div class="not-prose my-10 overflow-hidden rounded-xl border border-accent/20 bg-accent/5">
+		<div class="not-prose my-10 overflow-hidden rounded-3xl border-2 border-ink bg-accent/5">
 			<div class="border-b border-accent/15 px-6 py-4">
-				<p class="text-xs font-medium tracking-[0.25em] uppercase text-accent-text">The Scale</p>
+				<p class="font-serif text-lg italic lowercase text-accent-text">The Scale</p>
 				<p class="mt-1 font-medium tracking-tight">What the system had to handle.</p>
 			</div>
 			<div class="divide-y divide-accent/10 px-6">
@@ -110,7 +110,7 @@
 					{ n: '06', q: '65 features shipped across 6 phased releases' },
 				] as item}
 					<div class="flex items-baseline gap-5 py-4">
-						<span class="shrink-0 font-mono text-[10px] tracking-[0.2em] text-accent/60">{item.n}</span>
+						<span class="shrink-0 font-serif text-base italic text-accent-text">{item.n}</span>
 						<span class="text-sm font-medium">{item.q}</span>
 					</div>
 				{/each}
@@ -220,8 +220,8 @@
 
 		<!-- video: onboarding -->
 		<div class="not-prose my-10 lg:relative lg:left-1/2 lg:-translate-x-1/2 lg:w-[min(64rem,100vw-4rem)]">
-			<p class="mb-4 text-xs font-medium tracking-[0.25em] uppercase text-dim">Product demo — Student onboarding & IEP creation</p>
-			<div class="overflow-hidden rounded-xl border border-line">
+			<p class="mb-4 font-serif text-lg italic lowercase text-dim">Product demo — Student onboarding & IEP creation</p>
+			<div class="overflow-hidden rounded-2xl border-2 border-ink">
 				<video
 					controls
 					playsinline
@@ -276,8 +276,8 @@
 
 		<!-- video: daily assessment -->
 		<div class="not-prose my-10 lg:relative lg:left-1/2 lg:-translate-x-1/2 lg:w-[calc(100vw-3rem)] lg:max-w-[100rem]">
-			<p class="mb-4 text-xs font-medium tracking-[0.25em] uppercase text-dim">Product demo — Daily classroom assessment</p>
-			<div class="overflow-hidden rounded-xl border border-line">
+			<p class="mb-4 font-serif text-lg italic lowercase text-dim">Product demo — Daily classroom assessment</p>
+			<div class="overflow-hidden rounded-2xl border-2 border-ink">
 				<video
 					controls
 					playsinline
@@ -364,21 +364,21 @@
 		</div>
 
 		<!-- related articles -->
-		<div class="not-prose my-10 overflow-hidden rounded-xl border border-accent/20 bg-accent/5">
+		<div class="not-prose my-10 overflow-hidden rounded-3xl border-2 border-ink bg-accent/5">
 			<div class="border-b border-accent/15 px-6 py-4">
-				<p class="text-xs font-medium tracking-[0.25em] uppercase text-accent-text">More on SAUT</p>
+				<p class="font-serif text-lg italic lowercase text-accent-text">More on SAUT</p>
 				<p class="mt-1 font-medium tracking-tight">Deep dives into specific aspects of the project.</p>
 			</div>
 			<div class="divide-y divide-accent/10">
 				<a href="/writing/saut/worksheet-builder" class="group flex items-baseline gap-5 px-6 py-4 transition-colors hover:bg-accent/5">
-					<span class="shrink-0 font-mono text-[10px] tracking-[0.2em] text-accent/60">01</span>
+					<span class="shrink-0 font-serif text-base italic text-accent-text">01</span>
 					<span>
 						<span class="text-sm font-medium group-hover:text-accent transition-colors">The Worksheet Builder</span>
 						<span class="mt-0.5 block text-xs text-dim">Building a drag-and-drop design tool inside an LMS — pixel-perfect A4 printing from a browser canvas.</span>
 					</span>
 				</a>
 				<a href="/writing/saut/three-hats" class="group flex items-baseline gap-5 px-6 py-4 transition-colors hover:bg-accent/5">
-					<span class="shrink-0 font-mono text-[10px] tracking-[0.2em] text-accent/60">02</span>
+					<span class="shrink-0 font-serif text-base italic text-accent-text">02</span>
 					<span>
 						<span class="text-sm font-medium group-hover:text-accent transition-colors">Wearing Three Hats</span>
 						<span class="mt-0.5 block text-xs text-dim">How four years on one product turned a frontend developer into a product manager and stand-in designer.</span>

@@ -21,16 +21,16 @@
 </script>
 
 {#if s}
-	<dl class="mt-8 grid gap-x-8 gap-y-5 border-y border-line py-6 sm:grid-cols-2 md:grid-cols-3">
+	<dl class="mt-8 grid gap-x-8 gap-y-5 rounded-3xl border-2 border-ink p-6 sm:grid-cols-2 sm:p-7 md:grid-cols-3">
 		{#each cells as cell (cell.label)}
 			<div>
-				<dt class="text-[11px] font-medium tracking-[0.2em] uppercase text-dim">{cell.label}</dt>
+				<dt class="font-serif text-base italic lowercase text-dim">{cell.label}</dt>
 				<dd class="mt-1.5 text-sm leading-relaxed text-ink">{cell.value}</dd>
 			</div>
 		{/each}
 		{#if s.live}
 			<div>
-				<dt class="text-[11px] font-medium tracking-[0.2em] uppercase text-dim">Live</dt>
+				<dt class="font-serif text-base italic lowercase text-dim">Live</dt>
 				<dd class="mt-1.5 text-sm">
 					<a href={s.live.href} target="_blank" rel="noopener noreferrer" class="text-accent-text underline underline-offset-4 hover:text-ink">
 						{s.live.label} <span aria-hidden="true">↗</span>
@@ -40,7 +40,7 @@
 		{/if}
 		<div class="sm:col-span-2 md:col-span-3">
 			<dt class="sr-only">Outcome</dt>
-			<dd class="font-serif text-xl leading-snug text-ink/90 italic md:text-2xl">{s.outcome}</dd>
+			<dd class="border-l-2 border-accent pl-4 font-serif text-xl leading-snug text-ink/90 italic md:text-2xl">{s.outcome}</dd>
 		</div>
 	</dl>
 {/if}

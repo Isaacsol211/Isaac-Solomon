@@ -8,18 +8,18 @@
 		'How four years on a single product turned a frontend developer into a product manager and stand-in designer — and why understanding all three disciplines made me better at each one.';
 </script>
 
-<ArticleChrome {title} {description} path="/writing/saut/three-hats" image="/projects/saut/landing-hero-devices-right-to-left.png" back={{ href: '/writing/saut', label: 'SAUT Case Study', short: 'SAUT' }} />
+<ArticleChrome {title} {description} path="/writing/saut/three-hats" image="/projects/saut/landing-hero-devices-right-to-left.png" back={{ href: '/writing/saut', label: 'SAUT Case Study' }} />
 
 <main id="main" class="px-5 pb-24 sm:px-8">
 
 	<!-- ── Hero ──────────────────────────────────────────────────────── -->
 	<div class="mx-auto max-w-3xl pt-14 md:pt-20">
 
-		<p class="text-xs font-medium tracking-[0.25em] uppercase text-accent-text">
+		<p class="font-serif text-lg italic lowercase text-accent-text">
 			Essay · SAUT
 		</p>
 
-		<h1 class="mt-4 text-4xl font-medium leading-[1.1] tracking-tight lowercase md:text-6xl">
+		<h1 class="article-title mt-2 text-4xl font-medium leading-[1.1] tracking-tight lowercase md:text-6xl">
 			Frontend Dev.<br />Product Manager.
 			<em class="font-serif font-normal italic text-dim">Stand-in Designer.</em>
 		</h1>
@@ -30,7 +30,7 @@
 		</p>
 
 		<!-- meta -->
-		<div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-b border-line py-5 text-xs font-medium tracking-[0.2em] uppercase text-dim">
+		<div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-b border-line py-5 font-serif text-base italic text-dim">
 			<span>2023</span>
 			<span class="h-3 w-px bg-line"></span>
 			<span>SAUT · 2019 – 2023</span>
@@ -42,7 +42,7 @@
 	<!-- ── Hero image ──────────────────────────────────────────────── -->
 	<div class="mx-auto mt-12 max-w-5xl">
 		<div class="grid gap-4 sm:grid-cols-2">
-			<div class="overflow-hidden rounded-xl border border-line">
+			<div class="overflow-hidden rounded-2xl border-2 border-ink">
 				<img
 					src="/projects/saut/sc-feature-2.jpg"
 					alt="Child wearing glasses with school logo shirt, using interactive learning materials"
@@ -52,7 +52,7 @@
 					loading="eager"
 				/>
 			</div>
-			<div class="overflow-hidden rounded-xl border border-line">
+			<div class="overflow-hidden rounded-2xl border-2 border-ink">
 				<img
 					src="/projects/saut/sc-feature-4.jpg"
 					alt="Three children sitting together with books, collaborative learning"
@@ -193,8 +193,8 @@
 
 		<!-- video: admin panel -->
 		<div class="not-prose my-10 lg:relative lg:left-1/2 lg:-translate-x-1/2 lg:w-[min(64rem,100vw-4rem)]">
-			<p class="mb-4 text-xs font-medium tracking-[0.25em] uppercase text-dim">Product demo — Administration and content management</p>
-			<div class="overflow-hidden rounded-xl border border-line">
+			<p class="mb-4 font-serif text-lg italic lowercase text-dim">Product demo — Administration and content management</p>
+			<div class="overflow-hidden rounded-2xl border-2 border-ink">
 				<video
 					controls
 					playsinline
@@ -242,8 +242,8 @@
 
 		<!-- video: parent view -->
 		<div class="not-prose my-10 lg:relative lg:left-1/2 lg:-translate-x-1/2 lg:w-[calc(100vw-3rem)] lg:max-w-[100rem]">
-			<p class="mb-4 text-xs font-medium tracking-[0.25em] uppercase text-dim">Product demo — Parent-facing content</p>
-			<div class="overflow-hidden rounded-xl border border-line">
+			<p class="mb-4 font-serif text-lg italic lowercase text-dim">Product demo — Parent-facing content</p>
+			<div class="overflow-hidden rounded-2xl border-2 border-ink">
 				<video
 					controls
 					playsinline
@@ -287,20 +287,20 @@
 		</div>
 
 		<!-- related articles -->
-		<div class="not-prose my-10 overflow-hidden rounded-xl border border-accent/20 bg-accent/5">
+		<div class="not-prose my-10 overflow-hidden rounded-3xl border-2 border-ink bg-accent/5">
 			<div class="border-b border-accent/15 px-6 py-4">
-				<p class="text-xs font-medium tracking-[0.25em] uppercase text-accent-text">More on SAUT</p>
+				<p class="font-serif text-lg italic lowercase text-accent-text">More on SAUT</p>
 			</div>
 			<div class="divide-y divide-accent/10">
 				<a href="/writing/saut" class="group flex items-baseline gap-5 px-6 py-4 transition-colors hover:bg-accent/5">
-					<span class="shrink-0 font-mono text-[10px] tracking-[0.2em] text-accent/60">←</span>
+					<span class="shrink-0 font-serif text-base italic text-accent-text">←</span>
 					<span>
 						<span class="text-sm font-medium group-hover:text-accent transition-colors">Building SAUT</span>
 						<span class="mt-0.5 block text-xs text-dim">The full story — four years, two frameworks, one mission.</span>
 					</span>
 				</a>
 				<a href="/writing/saut/worksheet-builder" class="group flex items-baseline gap-5 px-6 py-4 transition-colors hover:bg-accent/5">
-					<span class="shrink-0 font-mono text-[10px] tracking-[0.2em] text-accent/60">←</span>
+					<span class="shrink-0 font-serif text-base italic text-accent-text">←</span>
 					<span>
 						<span class="text-sm font-medium group-hover:text-accent transition-colors">The Worksheet Builder</span>
 						<span class="mt-0.5 block text-xs text-dim">Building a drag-and-drop design tool inside an LMS.</span>
