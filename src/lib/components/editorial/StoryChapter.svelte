@@ -39,12 +39,12 @@
 	);
 </script>
 
-<section id={n === '01' ? 'work-intro' : 'about'} class="story bg-story-paper px-5 py-20 sm:px-8 md:py-28">
-	<div class="mx-auto grid max-w-5xl items-center gap-y-12 md:grid-cols-2 md:gap-x-16">
+<section id={n === '01' ? 'work-intro' : 'about'} class="story bg-story-paper px-5 pt-16 pb-12 sm:px-8 md:pt-20 md:pb-14">
+	<div class="mx-auto grid max-w-5xl items-center gap-y-8 md:grid-cols-[16rem_1fr] md:gap-x-12">
 		<!-- illustration on its offset colour block -->
 		<div class="relative flex justify-center {reverse ? 'md:order-2' : ''}">
-			<span class="absolute bottom-4 {reverse ? 'right-6' : 'left-6'} block size-40 {block}" aria-hidden="true"></span>
-			<img src={artSrc[art]} alt="" aria-hidden="true" class="relative block w-[min(60vw,18rem)]" />
+			<span class="absolute bottom-2 {reverse ? 'right-10' : 'left-10'} block size-24 {block}" aria-hidden="true"></span>
+			<img src={artSrc[art]} alt="" aria-hidden="true" class="relative block w-[min(44vw,11rem)]" />
 		</div>
 
 		<!-- the chapter's text -->

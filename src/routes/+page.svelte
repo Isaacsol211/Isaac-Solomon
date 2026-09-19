@@ -3,7 +3,7 @@
 	import Nav from '$lib/components/Nav.svelte';
 	import StoryHero from '$lib/components/editorial/StoryHero.svelte';
 	import StoryChapter from '$lib/components/editorial/StoryChapter.svelte';
-	import StoryProjectsGallery from '$lib/components/editorial/StoryProjectsGallery.svelte';
+	import StoryProjects from '$lib/components/editorial/StoryProjects.svelte';
 	import StoryAbout from '$lib/components/editorial/StoryAbout.svelte';
 	import StoryServices from '$lib/components/editorial/StoryServices.svelte';
 	import StoryWriting from '$lib/components/editorial/StoryWriting.svelte';
@@ -44,7 +44,7 @@
 		accent="grass"
 		art="deskcat"
 	/>
-	<StoryProjectsGallery />
+	<StoryProjects />
 	<StoryDivider />
 	<StoryAbout />
 	<StoryServices />

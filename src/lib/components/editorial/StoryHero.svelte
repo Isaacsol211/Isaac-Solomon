@@ -27,7 +27,7 @@
 		<!-- centre column: the chapter label, the portrait, the loud word -->
 		<div class="flex flex-col items-center text-center">
 			<p class="font-serif text-2xl leading-[1.15] text-ink italic sm:text-3xl">
-				a folio,<br />in three chapters.
+				a folio,<br />in five chapters.
 			</p>
 
 			<!-- the author, floating on the paper -->
@@ -57,6 +57,13 @@
 				>
 					see the work
 					<span class="inline-block transition-transform group-hover:translate-y-0.5" aria-hidden="true">↓</span>
+				</a>
+				<a
+					href="#connect"
+					class="group inline-flex items-center gap-2 text-sm font-medium text-ink transition-colors hover:text-accent-text"
+				>
+					get in touch
+					<span class="inline-block transition-transform group-hover:translate-x-1" aria-hidden="true">→</span>
 				</a>
 				{#if linkedin}
 					<a href={linkedin.href} target="_blank" rel="noopener noreferrer" class="text-sm font-medium text-ink transition-colors hover:text-accent-text">
