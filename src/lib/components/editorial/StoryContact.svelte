@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { connect, site, socials } from '$lib/content';
 	import StoryDeco from './StoryDeco.svelte';
+	import StoryDoodle from './StoryDoodle.svelte';
 
 	const year = new Date().getFullYear();
 	const mailto = (subject: string, body: string) =>
@@ -38,13 +39,16 @@
 			{/each}
 		</div>
 
-		<a
-			href="mailto:{site.email}"
-			class="group mt-10 inline-flex items-center gap-3 rounded-full border-2 border-ink px-6 py-3.5 text-base transition-colors hover:bg-ink hover:text-story-paper sm:text-lg"
-		>
-			{site.email}
-			<span aria-hidden="true" class="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1">↗</span>
-		</a>
+		<div class="mt-10 flex items-center gap-4">
+			<a
+				href="mailto:{site.email}"
+				class="group inline-flex items-center gap-3 rounded-full border-2 border-ink px-6 py-3.5 text-base transition-colors hover:bg-ink hover:text-story-paper sm:text-lg"
+			>
+				{site.email}
+				<span aria-hidden="true" class="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1">↗</span>
+			</a>
+			<StoryDoodle kind="plane" class="hidden w-14 -rotate-6 sm:block" />
+		</div>
 
 		<!-- colophon -->
 		<p class="mt-20 text-center font-serif text-xl text-dim italic md:mt-28" aria-hidden="true">— fin —</p>

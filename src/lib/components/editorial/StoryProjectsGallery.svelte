@@ -3,6 +3,7 @@
 	import { projects } from '$lib/content';
 	import { initMotion, prefersReducedMotion } from '$lib/motion';
 	import ArrowUpRight from '../ArrowUpRight.svelte';
+	import StoryDoodle from './StoryDoodle.svelte';
 
 	const featured = projects.filter((p) => p.featured);
 	const rest = projects.filter((p) => !p.featured);
@@ -209,7 +210,10 @@
 
 	<!-- the rest, as a plain index -->
 	<div class="mx-auto mt-16 max-w-5xl px-5 sm:px-8">
-		<p class="font-serif text-xl text-dim italic">and a few more —</p>
+		<p class="flex items-center gap-3 font-serif text-xl text-dim italic">
+			<StoryDoodle kind="arrow" class="w-10 shrink-0" />
+			and a few more —
+		</p>
 		<ol class="mt-4 border-b border-line">
 			{#each rest as project (project.title)}
 				{@const href = project.caseStudy ?? project.href}

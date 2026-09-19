@@ -2,11 +2,13 @@
 	import { reveal } from '$lib/actions/reveal';
 	import { writing, writingHomeNote } from '$lib/content';
 	import StoryHead from './StoryHead.svelte';
+	import StoryDoodle from './StoryDoodle.svelte';
 
 	const essays = writing.filter((a) => !a.tag.startsWith('Case Study')).slice(0, 2);
 </script>
 
-<section id="writing" class="story bg-story-paper px-5 py-20 sm:px-8 md:py-28">
+<section id="writing" class="story relative overflow-hidden bg-story-paper px-5 py-20 sm:px-8 md:py-28">
+	<StoryDoodle kind="pen" class="pointer-events-none absolute top-24 right-10 hidden w-16 -rotate-6 md:block" />
 	<div class="mx-auto grid max-w-5xl gap-y-10 md:grid-cols-12 md:gap-x-16">
 		<div use:reveal class="md:col-span-4">
 			<StoryHead n="04" label="chapter four" title="Notes" />

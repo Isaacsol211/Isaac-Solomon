@@ -3,6 +3,7 @@
 	import { about, experience, experienceNote } from '$lib/content';
 	import StoryHead from './StoryHead.svelte';
 	import StoryArt from './StoryArt.svelte';
+	import StoryDoodle from './StoryDoodle.svelte';
 </script>
 
 <section id="about" class="story bg-story-paper px-5 py-20 sm:px-8 md:py-28">
@@ -28,7 +29,10 @@
 
 		<!-- a small worklife timeline, kept as the chapter's closing note -->
 		<div id="experience" class="mt-16 scroll-mt-28 md:mt-24">
-			<p use:reveal class="font-serif text-xl text-dim italic">and where the years went —</p>
+			<p use:reveal class="flex items-center gap-3 font-serif text-xl text-dim italic">
+				<StoryDoodle kind="mountain" class="w-10 shrink-0" />
+				and where the years went —
+			</p>
 			<ol use:reveal class="mt-4 border-b border-line">
 				{#each experience as job (job.from + job.role)}
 					<li class="grid gap-1 border-t border-line py-5 sm:grid-cols-[9rem_1fr] sm:gap-6">

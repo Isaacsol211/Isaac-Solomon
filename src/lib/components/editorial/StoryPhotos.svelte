@@ -2,15 +2,19 @@
 	import { reveal } from '$lib/actions/reveal';
 	import { photos, photographyPage, photographyTeaser } from '$lib/content';
 	import StoryHead from './StoryHead.svelte';
+	import StoryDoodle from './StoryDoodle.svelte';
 
 	const frames = photographyTeaser.places.map((place) => photos.find((p) => p.place === place)!);
 </script>
 
-<section id="photography-teaser" class="story bg-story-paper px-5 py-20 sm:px-8 md:py-28">
+<section id="photography-teaser" class="story relative overflow-hidden bg-story-paper px-5 py-20 sm:px-8 md:py-28">
 	<div class="mx-auto grid max-w-5xl gap-y-10 md:grid-cols-12 md:gap-x-16">
 		<div use:reveal class="md:col-span-4">
 			<StoryHead n="05" label="chapter five" title="Photographs" />
-			<p class="mt-8 max-w-xs text-[15px] leading-relaxed text-dim">{photographyPage.lead}</p>
+			<div class="mt-8 flex items-start gap-4">
+				<StoryDoodle kind="camera" class="w-16 shrink-0 -rotate-3" />
+				<p class="max-w-xs text-[15px] leading-relaxed text-dim">{photographyPage.lead}</p>
+			</div>
 			<a
 				href="/photography"
 				class="group mt-6 inline-flex items-center gap-2 text-sm font-medium text-ink transition-colors hover:text-accent-text"
