@@ -7,7 +7,7 @@
 		'How I built a drag-and-drop canvas for special educators to create pixel-perfect printable worksheets — flashcards, shapes, multiple A4 artboards, all from a browser.';
 </script>
 
-<ArticleChrome {title} {description} path="/writing/saut/worksheet-builder" image="/projects/saut/landing-hero-devices-right-to-left.png" back={{ href: '/writing/saut', label: 'SAUT Case Study' }} />
+<ArticleChrome {title} {description} path="/writing/saut/worksheet-builder" image="/projects/saut/landing-hero-devices-right-to-left.png" back={{ href: '/writing/saut', label: 'SAUT Case Study', short: 'SAUT' }} />
 
 <main id="main" class="px-5 pb-24 sm:px-8">
 

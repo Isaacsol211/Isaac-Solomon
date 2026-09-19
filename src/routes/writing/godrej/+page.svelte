@@ -32,15 +32,6 @@
 
 		<CaseSummary href="/writing/godrej" />
 
-		<!-- payoff teaser -->
-		<div class="mt-10 rounded-xl border border-line bg-paper-2/60 px-6 py-5">
-			<p class="text-sm leading-relaxed text-dim">
-				<strong class="font-medium text-ink">The result:</strong> a fully CMS-driven website for Godrej Foundation
-				that survived a complete corporate rebrand — rebuilt from new designs in weeks, not months,
-				because the CMS architecture was built to flex. The foundation team manages all content independently,
-				from grant updates to impact reports, without touching code.
-			</p>
-		</div>
 	</div>
 
 	<!-- ── Hero screenshot ─────────────────────────────────────────── -->

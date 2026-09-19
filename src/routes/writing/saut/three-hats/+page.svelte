@@ -8,7 +8,7 @@
 		'How four years on a single product turned a frontend developer into a product manager and stand-in designer — and why understanding all three disciplines made me better at each one.';
 </script>
 
-<ArticleChrome {title} {description} path="/writing/saut/three-hats" image="/projects/saut/landing-hero-devices-right-to-left.png" back={{ href: '/writing/saut', label: 'SAUT Case Study' }} />
+<ArticleChrome {title} {description} path="/writing/saut/three-hats" image="/projects/saut/landing-hero-devices-right-to-left.png" back={{ href: '/writing/saut', label: 'SAUT Case Study', short: 'SAUT' }} />
 
 <main id="main" class="px-5 pb-24 sm:px-8">
 
@@ -26,7 +26,7 @@
 
 		<p class="mt-6 max-w-xl text-lg leading-relaxed text-dim md:text-xl">
 			How four years on one product turned a frontend developer into a product manager
-			and the person extending its design system — and why understanding all three made me better at each.
+			and stand-in designer — and why understanding all three made me better at each.
 		</p>
 
 		<!-- meta -->

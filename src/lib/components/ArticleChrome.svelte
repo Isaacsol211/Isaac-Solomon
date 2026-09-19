@@ -12,7 +12,7 @@
 		description,
 		path,
 		image,
-		back = { href: '/', label: site.name }
+		back = { href: '/', label: site.name, short: 'Home' }
 	}: {
 		title: string;
 		description: string;
@@ -20,7 +20,7 @@
 		path: string;
 		/** Social preview image, site-relative. */
 		image: string;
-		back?: { href: string; label: string };
+		back?: { href: string; label: string; short?: string };
 	} = $props();
 
 	const canonical = $derived(`${site.url}${path}`);

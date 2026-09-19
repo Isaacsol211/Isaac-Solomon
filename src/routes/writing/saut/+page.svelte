@@ -32,15 +32,6 @@
 
 		<CaseSummary href="/writing/saut" />
 
-		<!-- payoff teaser -->
-		<div class="mt-10 rounded-xl border border-line bg-paper-2/60 px-6 py-5">
-			<p class="text-sm leading-relaxed text-dim">
-				<strong class="font-medium text-ink">The result:</strong> a bilingual Arabic/English platform
-				with offline-first assessments, a drag-and-drop worksheet builder, and a 65-feature release roadmap
-				that shipped in full — built by a three-person dev team with no QA. The project grew my role from
-				pure frontend developer into product manager and stand-in designer.
-			</p>
-		</div>
 	</div>
 
 	<!-- ── Hero screenshot ─────────────────────────────────────────── -->

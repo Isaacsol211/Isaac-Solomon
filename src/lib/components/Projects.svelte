@@ -333,7 +333,7 @@
 								</span>
 							</div>
 							<div class="relative">
-								<div aria-hidden="true" class="absolute top-1/3 bottom-0 left-1/2 -z-10 w-screen -translate-x-1/2 bg-coal"></div>
+								<div aria-hidden="true" class="absolute top-1/3 bottom-0 left-1/2 -z-10 w-screen -translate-x-1/2 bg-coal dark:border-t dark:border-cream/15"></div>
 								<div data-bleed-img class="overflow-hidden rounded-lg ring-1 ring-cream/15">
 									<!-- Whole screenshot on phones; on wider screens a 2:1 crop that keeps the headline and statement and drops the empty strips. -->
 									<div class="overflow-hidden sm:aspect-[2/1]">
@@ -359,7 +359,7 @@
 					</div>
 
 					<!-- Everything under the image is on coal: a full-bleed band with the 6xl column inside. -->
-					<div class="relative left-1/2 w-screen -translate-x-1/2 bg-coal dark:border-t dark:border-cream/10">
+					<div class="relative left-1/2 w-screen -translate-x-1/2 bg-coal">
 						<div class="mx-auto max-w-6xl px-5 pt-10 pb-16 sm:px-8 md:pt-14 md:pb-24">
 							<div class="grid gap-8 md:grid-cols-12 md:items-end md:gap-10">
 								<h3 class="text-6xl font-medium tracking-[-0.03em] lowercase md:col-span-6 md:text-[5.5rem] md:leading-[0.9]">

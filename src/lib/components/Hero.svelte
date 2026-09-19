@@ -1,7 +1,9 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { entranceDelay, initMotion, MOTION_OK, openingAlreadyRevealed } from '$lib/motion';
-	import { site } from '$lib/content';
+	import { site, socials } from '$lib/content';
+
+	const linkedin = socials.find((s) => s.label === 'LinkedIn');
 
 	const words = site.heroHeadline.split(' ');
 
@@ -82,11 +84,13 @@
 	<div class="relative mx-auto max-w-6xl">
 		<div
 			data-hero-meta
-			class="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-b border-line pb-5 text-xs font-medium tracking-[0.25em] lowercase text-dim"
+			class="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-b border-line pb-5 text-xs font-medium tracking-[0.14em] lowercase text-dim sm:tracking-[0.25em]"
 		>
 			<span class="flex items-center gap-3">
 				<span class="text-accent" aria-hidden="true">✱</span>
-				<span><span class="normal-case">{site.name}</span> — {site.role.toLowerCase()}, {site.employer.toLowerCase()}</span>
+				<!-- Phones get the short form, so each side stays on one line. -->
+				<span class="sm:hidden"><span class="normal-case">{site.name}</span> — {site.employer.toLowerCase()}</span>
+				<span class="hidden sm:inline"><span class="normal-case">{site.name}</span> — {site.role.toLowerCase()}, {site.employer.toLowerCase()}</span>
 			</span>
 			<span class="flex items-center gap-2.5">
 				<span class="relative flex size-2" aria-hidden="true">
@@ -95,7 +99,8 @@
 					></span>
 					<span class="relative inline-flex size-2 rounded-full bg-accent"></span>
 				</span>
-				{site.location.toLowerCase()} — {site.availability}
+				<span class="sm:hidden">{site.availability}</span>
+				<span class="hidden sm:inline">{site.location.toLowerCase()} — {site.availability}</span>
 			</span>
 		</div>
 
@@ -141,6 +146,16 @@
 						Get in touch
 						<span class="inline-block transition-transform duration-200 group-hover:translate-x-1 group-focus-visible:translate-x-1" aria-hidden="true">→</span>
 					</a>
+					{#if linkedin}
+						<a
+							href={linkedin.href}
+							target="_blank"
+							rel="noopener noreferrer"
+							class="inline-flex items-center gap-1.5 py-3 text-sm font-medium text-ink transition-colors duration-200 hover:text-accent-text focus-visible:text-accent-text"
+						>
+							LinkedIn <span aria-hidden="true">↗</span>
+						</a>
+					{/if}
 				</div>
 			</div>
 		</div>

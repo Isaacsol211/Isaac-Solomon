@@ -32,15 +32,6 @@
 
 		<CaseSummary href="/writing/mivi" />
 
-		<!-- payoff teaser -->
-		<div class="mt-10 rounded-xl border border-line bg-paper-2/60 px-6 py-5">
-			<p class="text-sm leading-relaxed text-dim">
-				<strong class="font-medium text-ink">The result:</strong> a fully componentised e-commerce storefront
-				serving 100,000+ customers, migrated mid-flight from an open-source platform to a proprietary one,
-				with a design system that evolved through dozens of product launches
-				because the pace left no room for anything that didn't scale.
-			</p>
-		</div>
 	</div>
 
 	<!-- ── Hero screenshot ─────────────────────────────────────────── -->

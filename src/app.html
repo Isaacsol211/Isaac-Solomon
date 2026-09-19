@@ -29,7 +29,7 @@
 					window.removeEventListener('pagehide', dismiss);
 					motion.removeEventListener('change', dismiss);
 				};
-				const timeout = setTimeout(dismiss, 2500);
+				const timeout = setTimeout(dismiss, 2100);
 				for (const event of ['pointerdown', 'keydown', 'wheel', 'touchstart', 'focusin']) {
 					document.addEventListener(event, dismiss, { capture: true, passive: true });
 				}
@@ -43,7 +43,7 @@
 			.site-entering #site-entrance {
 				display: grid; position: fixed; inset: 0; z-index: 110; place-items: center;
 				pointer-events: none; background: #f1efea; color: #181613;
-				animation: entrance-curtain 2400ms cubic-bezier(.76, 0, .24, 1) both;
+				animation: entrance-curtain 2000ms cubic-bezier(.76, 0, .24, 1) both;
 			}
 			.dark.site-entering #site-entrance { background: #161412; color: #ece8e0; }
 			.entrance-signature { display: flex; align-items: center; gap: 20px; padding: 24px; }
@@ -58,8 +58,8 @@
 			@keyframes entrance-turn { from { transform: rotate(-90deg) scale(.75); opacity: 0; } }
 			@keyframes entrance-name { from { transform: translateY(12px); opacity: 0; } }
 			@keyframes entrance-curtain {
-				0%, 65% { clip-path: inset(0); }
-				100% { clip-path: inset(0 0 100%); visibility: hidden; }
+				0%, 62% { clip-path: inset(0); }
+				100% { clip-path: inset(100% 0 0); visibility: hidden; }
 			}
 			@media (prefers-reduced-motion: reduce) { .site-entering #site-entrance { display: none; } }
 		</style>

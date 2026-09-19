@@ -154,7 +154,7 @@
 							<div>
 								<p class="text-base leading-relaxed text-dim">{service.summary}</p>
 								<!-- The deliverables, beneath the sentence they belong to and wide enough to pair up. -->
-								<ul class="mt-4 grid gap-x-8 gap-y-2.5 xl:grid-cols-2">
+								<ul class="mt-4 hidden gap-x-8 gap-y-2.5 lg:grid xl:grid-cols-2">
 									{#each service.items as item (item)}
 										<li class="text-sm lowercase text-dim">
 											<span class="text-dim" aria-hidden="true">—</span>

@@ -32,14 +32,6 @@
 
 		<CaseSummary href="/writing/novarock" />
 
-		<!-- payoff teaser — give readers the result before the deep dive -->
-		<div class="mt-10 rounded-xl border border-line bg-paper-2/60 px-6 py-5">
-			<p class="text-sm leading-relaxed text-dim">
-				<strong class="font-medium text-ink">The result:</strong> a static, bilingual, WhatsApp-first product site
-				that went from an estimated ~4.2 MB per load to about 430 KB, shipped correct Open Graph previews for every product page,
-				and looked like it belonged in industrial procurement — not a template marketplace.
-			</p>
-		</div>
 	</div>
 
 	<!-- ── Before / After screenshots ───────────────────────────────── -->

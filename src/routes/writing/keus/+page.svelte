@@ -32,15 +32,6 @@
 
 		<CaseSummary href="/writing/keus" />
 
-		<!-- payoff teaser -->
-		<div class="mt-10 rounded-xl border border-line bg-paper-2/60 px-6 py-5">
-			<p class="text-sm leading-relaxed text-dim">
-				<strong class="font-medium text-ink">The result:</strong> a scroll-driven product showcase
-				for a premium smart home brand deployed in 1,500+ luxury residences — built on SvelteKit and GSAP,
-				after pivoting from image-sequence scrubbing to a video pause-and-play system that cut
-				page weight from hundreds of megabytes of frames down to about 12 MB, most of it video.
-			</p>
-		</div>
 	</div>
 
 	<!-- ── Hero screenshot ─────────────────────────────────────────── -->

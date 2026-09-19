@@ -4,7 +4,12 @@
 	import ThemeToggle from './ThemeToggle.svelte';
 
 	/* The bar above every article and the writing index: a way back, and a way anywhere. */
-	let { back = { href: '/', label: site.name } }: { back?: { href: string; label: string } } = $props();
+	let {
+		back = { href: '/', label: site.name, short: 'Home' }
+	}: {
+		/** `short` is the phone label, so the bar stays on one line at 390px. */
+		back?: { href: string; label: string; short?: string };
+	} = $props();
 
 	const links = [
 		{ href: '/#projects', label: 'Work', wide: true },
@@ -18,10 +23,11 @@
 	<div class="mx-auto flex max-w-3xl items-center justify-between gap-4">
 		<a
 			href={back.href}
-			class="group flex items-center gap-2 text-xs font-medium tracking-[0.2em] uppercase text-dim transition-colors hover:text-ink"
+			class="group flex items-center gap-2 text-xs font-medium tracking-[0.2em] whitespace-nowrap uppercase text-dim transition-colors hover:text-ink"
 		>
 			<span class="inline-block transition-transform duration-200 group-hover:-translate-x-1" aria-hidden="true">←</span>
-			{back.label}
+			<span class="sm:hidden">{back.short ?? back.label}</span>
+			<span class="hidden sm:inline">{back.label}</span>
 		</a>
 		<nav aria-label="Site" class="flex items-center gap-5 text-xs font-medium tracking-[0.2em] uppercase text-dim">
 			{#each links as link (link.href)}

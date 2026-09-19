@@ -33,15 +33,6 @@
 
 		<CaseSummary href="/writing/tomorrow-makers" />
 
-		<!-- payoff teaser -->
-		<div class="mt-10 rounded-xl border border-line bg-paper-2/60 px-6 py-5">
-			<p class="text-sm leading-relaxed text-dim">
-				<strong class="font-medium text-ink">The result:</strong> the public site for a multi-pathway
-				talent programme — live across India, with WhatsApp onboarding, an assessment in
-				11 languages, and four student pathways. Built on SvelteKit and Cloudflare Pages,
-				on the same stack as the earlier Godrej Foundation site.
-			</p>
-		</div>
 	</div>
 
 	<!-- ── Hero screenshot ─────────────────────────────────────────── -->
