@@ -3,12 +3,13 @@
 	import Nav from '$lib/components/Nav.svelte';
 	import StoryHero from '$lib/components/editorial/StoryHero.svelte';
 	import StoryChapter from '$lib/components/editorial/StoryChapter.svelte';
-	import StoryProjects from '$lib/components/editorial/StoryProjects.svelte';
+	import StoryProjectsGallery from '$lib/components/editorial/StoryProjectsGallery.svelte';
 	import StoryAbout from '$lib/components/editorial/StoryAbout.svelte';
 	import StoryServices from '$lib/components/editorial/StoryServices.svelte';
 	import StoryWriting from '$lib/components/editorial/StoryWriting.svelte';
 	import StoryPhotos from '$lib/components/editorial/StoryPhotos.svelte';
 	import StoryContact from '$lib/components/editorial/StoryContact.svelte';
+	import StoryDivider from '$lib/components/editorial/StoryDivider.svelte';
 </script>
 
 <svelte:head>
@@ -43,10 +44,12 @@
 		accent="grass"
 		art="deskcat"
 	/>
-	<StoryProjects />
+	<StoryProjectsGallery />
+	<StoryDivider />
 	<StoryAbout />
 	<StoryServices />
 	<StoryWriting />
+	<StoryDivider mark="✦" />
 	<StoryPhotos />
 </main>
 

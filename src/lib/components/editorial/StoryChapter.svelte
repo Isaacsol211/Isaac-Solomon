@@ -1,5 +1,6 @@
 <script lang="ts">
 	import StoryArt from './StoryArt.svelte';
+	import StoryDeco from './StoryDeco.svelte';
 
 	let {
 		n,
@@ -52,6 +53,7 @@
 				<div>
 					<p class="font-serif text-xl text-dim italic sm:text-2xl">{label}</p>
 					<h2 class="text-2xl font-medium tracking-[0.02em] uppercase sm:text-3xl">{title}</h2>
+					<StoryDeco kind="squiggle" class="mt-1.5 block h-2 w-24" />
 				</div>
 			</div>
 

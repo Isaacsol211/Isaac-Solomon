@@ -1,12 +1,17 @@
 <script lang="ts">
 	import { site } from '$lib/content';
 	import StoryArt from './StoryArt.svelte';
+	import StoryDeco from './StoryDeco.svelte';
 </script>
 
 <section
 	id="top"
 	class="story relative flex min-h-svh flex-col justify-center overflow-hidden bg-story-paper px-5 pt-28 pb-14 sm:px-8 md:pt-24"
 >
+	<!-- print marginalia -->
+	<StoryDeco kind="dots" class="pointer-events-none absolute top-28 right-8 hidden w-14 md:block" />
+	<StoryDeco kind="cross" class="pointer-events-none absolute bottom-10 left-8 hidden size-5 md:block" />
+
 	<!-- rotated edge line, desktop only — the reference's vertical gag, made functional -->
 	<p
 		class="pointer-events-none absolute top-1/2 right-4 hidden -translate-y-1/2 rotate-90 origin-right text-xs font-medium tracking-[0.4em] text-ink/70 uppercase lg:block"
@@ -22,6 +27,7 @@
 			</p>
 
 			<StoryArt kind="lookup" class="mt-4 h-auto w-[min(78vw,26rem)]" />
+			<p class="-mt-1 font-serif text-sm text-dim italic" aria-hidden="true">fig. 1 — the author, looking up.</p>
 
 			<h1 class="-mt-2 flex flex-wrap items-baseline justify-center gap-x-4 gap-y-1">
 				<span class="text-[clamp(3.2rem,13vw,9rem)] leading-[0.82] font-medium tracking-[0.04em] uppercase">

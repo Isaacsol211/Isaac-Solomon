@@ -1,13 +1,15 @@
 <script lang="ts">
 	import { connect, site, socials } from '$lib/content';
+	import StoryDeco from './StoryDeco.svelte';
 
 	const year = new Date().getFullYear();
 	const mailto = (subject: string, body: string) =>
 		`mailto:${site.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 </script>
 
-<section id="connect" class="story bg-story-paper px-5 pt-20 pb-10 sm:px-8 md:pt-28">
-	<div class="mx-auto max-w-5xl">
+<section id="connect" class="story relative overflow-hidden bg-story-paper px-5 pt-20 pb-10 sm:px-8 md:pt-28">
+	<StoryDeco kind="dots" class="pointer-events-none absolute top-24 right-8 hidden w-14 md:block" />
+	<div class="relative mx-auto max-w-5xl">
 		<!-- the back cover -->
 		<p class="font-serif text-2xl text-dim italic md:text-3xl">{connect.eyebrow}</p>
 		<div class="mt-4 flex items-end gap-5">
@@ -45,7 +47,8 @@
 		</a>
 
 		<!-- colophon -->
-		<footer class="mt-20 border-t border-line pt-8 md:mt-28">
+		<p class="mt-20 text-center font-serif text-xl text-dim italic md:mt-28" aria-hidden="true">— fin —</p>
+		<footer class="mt-8 border-t border-line pt-8">
 			<div class="flex flex-wrap items-end justify-between gap-x-10 gap-y-6">
 				<div>
 					<p class="flex items-center gap-2 text-lg font-medium tracking-tight">

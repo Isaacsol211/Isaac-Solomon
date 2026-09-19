@@ -133,15 +133,16 @@
 	class="fixed inset-x-0 top-0 z-50 transition-colors duration-300 {open
 		? 'text-cream'
 		: scrolled
-			? 'border-b border-line bg-paper/85 backdrop-blur-md'
+			? 'border-b border-line bg-story-paper/80 backdrop-blur-md'
 			: invert
 				? 'text-cream'
 				: ''}"
 >
 	<div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 sm:px-8">
-		<a href="/" class="flex items-center gap-2 text-base font-medium tracking-tight" onclick={() => (open = false)}>
+		<a href="/" class="group flex items-baseline gap-2.5 text-base font-medium tracking-tight" onclick={() => (open = false)}>
 			<span class="asterisk-turn text-accent" aria-hidden="true" style="transform: rotate({turns * 90}deg)">✱</span>
 			{site.name}
+			<span class="hidden font-serif text-sm text-dim italic sm:inline {invert ? 'text-cream/60' : ''}">— a folio</span>
 		</a>
 
 		<div class="hidden items-center gap-4 lg:flex">
@@ -176,9 +177,9 @@
 
 			<a
 				href="#connect"
-				class="group hidden items-center gap-2 rounded-full px-5 py-2.5 text-sm transition-colors duration-300 hover:bg-accent-text hover:text-paper focus-visible:bg-accent-text focus-visible:text-paper lg:inline-flex {invert
-					? 'bg-cream text-coal'
-					: 'bg-ink text-paper'}"
+				class="group hidden items-center gap-2 rounded-full border-2 px-5 py-2 text-sm transition-colors duration-300 lg:inline-flex {invert
+					? 'border-cream/50 text-cream hover:bg-cream hover:text-coal'
+					: 'border-ink text-ink hover:bg-ink hover:text-story-paper'}"
 			>
 				let's talk
 				<span class="inline-block transition-transform duration-200 group-hover:translate-x-1 group-focus-visible:translate-x-1" aria-hidden="true">→</span>

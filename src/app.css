@@ -49,6 +49,13 @@
 		color-scheme: light;
 	}
 
+	/* Storybook sections carry a faint printed dot-grid texture over the paper. */
+	.story {
+		position: relative;
+		background-image: radial-gradient(rgba(24, 22, 19, 0.045) 0.6px, transparent 0.6px);
+		background-size: 22px 22px;
+	}
+
 	/* Dark theme — flip the semantic tokens, keep cream/coal/accent absolute */
 	.dark {
 		color-scheme: dark;
