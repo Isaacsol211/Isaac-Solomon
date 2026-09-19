@@ -106,29 +106,43 @@
  * Unlayered on purpose: it has to beat the bg-story-paper utility.
  */
 .dark body:has(.story) {
-	--color-paper: #0c1331;
-	--color-paper-2: #141d45;
-	--color-story-paper: #0e1637;
+	--color-paper: #070b22;
+	--color-paper-2: #10183d;
+	--color-story-paper: #0a1030;
 	--color-ink: #f2ecda;
 	--color-dim: #a7b2dd;
-	--color-line: #243167;
+	--color-line: #1f2a5a;
 	--color-accent-text: #ff8f55;
 	--color-cobalt: #7f95f2;
 	--color-grass: #56b79c;
 	--color-mustard: #f0dc8c;
-	background-color: #0c1331;
+	background-color: #060a1e;
+}
+/* The painted night itself: one fixed layer behind the content — gradient,
+   moon and lamp glows, an uneven brushed wash, sparse stars and a fine grain. */
+.dark body:has(.story)::before {
+	content: '';
+	position: fixed;
+	inset: 0;
+	z-index: 0;
+	pointer-events: none;
 	background-image:
-		radial-gradient(34rem 26rem at 88% 2%, rgba(243, 226, 160, 0.13), transparent 70%),
-		radial-gradient(40rem 30rem at 6% 100%, rgba(232, 96, 30, 0.11), transparent 70%),
-		linear-gradient(180deg, #111b45 0%, #080d27 100%);
-	background-attachment: fixed;
+		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E"),
+		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='420'%3E%3Cfilter id='s'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='1' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .96 0 0 0 0 .92 0 0 0 0 .8 26 0 0 0 -21.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23s)'/%3E%3C/svg%3E"),
+		radial-gradient(34rem 26rem at 88% 2%, rgba(243, 226, 160, 0.12), transparent 70%),
+		radial-gradient(40rem 30rem at 6% 100%, rgba(232, 96, 30, 0.1), transparent 70%),
+		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1400' height='1400'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.0035' numOctaves='4' seed='9' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .02 0 0 0 0 .03 0 0 0 0 .1 0 0 0 1.3 -.45'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23w)'/%3E%3C/svg%3E"),
+		linear-gradient(180deg, #0b1236 0%, #04071a 100%);
+	background-size: 240px 240px, 420px 420px, auto, auto, 1400px 1400px, auto;
+	opacity: 1;
 }
 .dark .story,
 .dark main.bg-story-paper {
 	background-color: transparent;
 }
+/* stars and grain replace the daytime dot grid */
 .dark .story {
-	background-image: radial-gradient(rgba(242, 236, 218, 0.07) 0.6px, transparent 0.6px);
+	background-image: none;
 }
 /* The watercolour keeps no plate: a faint moonlight halo lifts its black ink off the blue. */
 .dark .story-art {
