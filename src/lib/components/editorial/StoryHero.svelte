@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { site, socials } from '$lib/content';
-	import StoryDeco from './StoryDeco.svelte';
 
 	const linkedin = socials.find((s) => s.label === 'LinkedIn');
 </script>
@@ -9,13 +8,6 @@
 	id="top"
 	class="story relative flex min-h-svh flex-col justify-center overflow-hidden bg-story-paper px-5 pt-28 pb-14 sm:px-8 md:pt-24"
 >
-	<!-- print marginalia -->
-	<StoryDeco kind="dots" class="pointer-events-none absolute top-28 right-8 hidden w-14 md:block" />
-	<StoryDeco kind="cross" class="pointer-events-none absolute bottom-10 left-8 hidden size-5 md:block" />
-	<span class="pointer-events-none absolute top-40 left-[12%] hidden rotate-12 text-sm text-grass select-none md:block" aria-hidden="true">✱</span>
-	<span class="pointer-events-none absolute right-[16%] bottom-28 hidden text-xs text-cobalt select-none lg:block" aria-hidden="true">✦</span>
-	<span class="pointer-events-none absolute top-[38%] right-[9%] hidden size-3 bg-mustard md:block" aria-hidden="true"></span>
-
 	<!-- rotated edge line, desktop only — the reference's vertical gag, made functional -->
 	<p
 		class="pointer-events-none absolute top-1/2 right-4 hidden -translate-y-1/2 rotate-90 origin-right text-xs font-medium tracking-[0.4em] text-ink/70 uppercase lg:block"
