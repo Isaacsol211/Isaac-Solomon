@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { site } from '$lib/content';
 	import Nav from '$lib/components/Nav.svelte';
-	import Hero from '$lib/components/Hero.svelte';
-	import About from '$lib/components/About.svelte';
+	import StoryHero from '$lib/components/editorial/StoryHero.svelte';
+	import StoryChapter from '$lib/components/editorial/StoryChapter.svelte';
 	import Services from '$lib/components/Services.svelte';
 	import Projects from '$lib/components/Projects.svelte';
 	import Writing from '$lib/components/Writing.svelte';
@@ -31,9 +31,31 @@
 <Nav />
 
 <main id="main" class="relative z-10 bg-paper">
-	<Hero />
+	<StoryHero />
+	<StoryChapter
+		n="01"
+		label="chapter one"
+		title="Selected work"
+		body="Client builds and side projects — each one pushed the work further than the brief required. Storefronts, content systems and a national talent platform."
+		href="#projects"
+		linkLabel="see the work"
+		accent="grass"
+		art="deskcat"
+	/>
 	<Projects />
-	<About />
+	<StoryChapter
+		n="02"
+		label="chapter two"
+		title="About me"
+		body="A frontend developer at Able.do since 2017. What a team is left with matters more to me than the launch — content models that survive a rebrand, systems a non-technical team runs without me."
+		href="/writing"
+		linkLabel="more about the work"
+		accent="mustard"
+		art="bust"
+		reverse
+	/>
+	<!-- experiment: About replaced the merged Experience section; keep the nav anchor valid -->
+	<span id="experience" class="sr-only" aria-hidden="true"></span>
 	<Services />
 	<Writing />
 	<PhotoTeaser />

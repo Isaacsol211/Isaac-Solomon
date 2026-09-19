@@ -32,6 +32,16 @@
 	--color-cream: #f1efea;
 	--color-coal: #141311;
 
+	/*
+	 * Storybook accent blocks (experimental editorial homepage) — the reference's
+	 * flat cobalt/grass/mustard rectangles, plus the existing orange. Used as
+	 * solid punctuation, one block per chapter, never as text colour.
+	 */
+	--color-cobalt: #2748c6;
+	--color-grass: #3f9c4a;
+	--color-mustard: #efc03a;
+	--color-story-paper: #f5efe2;
+
 }
 
 @layer base {
