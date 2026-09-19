@@ -66,7 +66,7 @@
 		--color-line: #312d27;
 		--color-accent-text: #e8490f;
 		/* the storybook's night: see "Storybook night" below */
-		--color-story-paper: #182456;
+		--color-story-paper: #0e1637;
 	}
 
 	html {
@@ -106,21 +106,21 @@
  * Unlayered on purpose: it has to beat the bg-story-paper utility.
  */
 .dark body:has(.story) {
-	--color-paper: #16204d;
-	--color-paper-2: #1e2a5e;
-	--color-story-paper: #182456;
+	--color-paper: #0c1331;
+	--color-paper-2: #141d45;
+	--color-story-paper: #0e1637;
 	--color-ink: #f2ecda;
 	--color-dim: #a7b2dd;
-	--color-line: #30407f;
+	--color-line: #243167;
 	--color-accent-text: #ff8f55;
 	--color-cobalt: #7f95f2;
 	--color-grass: #56b79c;
 	--color-mustard: #f0dc8c;
-	background-color: #16204d;
+	background-color: #0c1331;
 	background-image:
-		radial-gradient(34rem 26rem at 88% 2%, rgba(243, 226, 160, 0.17), transparent 70%),
-		radial-gradient(40rem 30rem at 6% 100%, rgba(232, 96, 30, 0.13), transparent 70%),
-		linear-gradient(180deg, #1b2759 0%, #121a42 100%);
+		radial-gradient(34rem 26rem at 88% 2%, rgba(243, 226, 160, 0.13), transparent 70%),
+		radial-gradient(40rem 30rem at 6% 100%, rgba(232, 96, 30, 0.11), transparent 70%),
+		linear-gradient(180deg, #111b45 0%, #080d27 100%);
 	background-attachment: fixed;
 }
 .dark .story,
