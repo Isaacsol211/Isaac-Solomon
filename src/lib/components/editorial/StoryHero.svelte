@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { site, socials } from '$lib/content';
+	import StorySplash from './StorySplash.svelte';
 
 	const linkedin = socials.find((s) => s.label === 'LinkedIn');
 </script>
@@ -16,6 +17,7 @@
 	</p>
 
 	<div class="relative mx-auto w-full max-w-5xl">
+		<StorySplash color="mustard" seed={4} class="top-16 left-1/2 w-[min(90vw,30rem)] -translate-x-[66%]" />
 		<!-- centre column: the chapter label, the portrait, the loud word -->
 		<div class="flex flex-col items-center text-center">
 			<p class="font-serif text-2xl leading-[1.15] text-ink italic sm:text-3xl">

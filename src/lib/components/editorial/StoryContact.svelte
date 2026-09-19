@@ -2,6 +2,7 @@
 	import { connect, site, socials } from '$lib/content';
 	import StoryDeco from './StoryDeco.svelte';
 	import StoryDoodle from './StoryDoodle.svelte';
+	import StorySplash from './StorySplash.svelte';
 
 	const year = new Date().getFullYear();
 	const mailto = (subject: string, body: string) =>
@@ -9,6 +10,7 @@
 </script>
 
 <section id="connect" aria-labelledby="connect-title" class="story relative overflow-hidden bg-story-paper px-5 pt-20 pb-10 sm:px-8 md:pt-28">
+	<StorySplash color="grass" seed={2} class="top-14 right-[6%] hidden w-[24rem] md:block" />
 	<StoryDeco kind="dots" class="pointer-events-none absolute top-24 right-8 hidden w-14 md:block" />
 	<div class="relative mx-auto max-w-5xl">
 		<!-- the back cover -->

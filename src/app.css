@@ -52,6 +52,8 @@
 	/* Storybook sections carry a faint printed dot-grid texture over the paper. */
 	.story {
 		position: relative;
+		/* own stacking context, so paint splashes at -z-10 sit above the paper, below the content */
+		isolation: isolate;
 		background-image: radial-gradient(rgba(24, 22, 19, 0.045) 0.6px, transparent 0.6px);
 		background-size: 22px 22px;
 	}
@@ -94,6 +96,21 @@
 	:focus-visible {
 		@apply outline-2 outline-offset-4 outline-accent;
 	}
+}
+
+/* Paint splashes: multiplied into the paper by day, a faint wash of colour at night. */
+.story-splash {
+	mix-blend-mode: multiply;
+	opacity: 0.26;
+}
+.dark .story-splash {
+	mix-blend-mode: normal;
+	opacity: 0.16;
+}
+/* Warm pigment over navy averages to grey-brown mud; at night only the cool splashes stay. */
+.dark .story-splash.text-mustard,
+.dark .story-splash.text-accent {
+	display: none;
 }
 
 /* Article titles carry the storybook's hand-drawn underline. */

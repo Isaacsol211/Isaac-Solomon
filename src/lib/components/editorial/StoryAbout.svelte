@@ -3,6 +3,7 @@
 	import { about, experience, experienceNote } from '$lib/content';
 	import StoryHead from './StoryHead.svelte';
 	import StoryDoodle from './StoryDoodle.svelte';
+	import StorySplash from './StorySplash.svelte';
 </script>
 
 <section id="about" class="story bg-story-paper px-5 py-20 sm:px-8 md:py-28">
@@ -10,6 +11,7 @@
 		<div use:reveal class="grid items-center gap-y-12 md:grid-cols-2 md:gap-x-16">
 			<!-- the bust, echoing the real green-shirt portrait, on a mustard block -->
 			<div class="relative flex justify-center md:order-2">
+				<StorySplash color="accent" seed={7} class="-top-10 left-1/2 w-[min(80vw,24rem)] -translate-x-[60%]" />
 				<span class="absolute right-6 bottom-4 block size-40 bg-mustard" aria-hidden="true"></span>
 				<img src="/story/about.webp" alt="Illustrated portrait of Isaac Solomon holding a cup of coffee" width="801" height="1007" class="story-art relative block w-[min(60vw,18rem)]" />
 			</div>

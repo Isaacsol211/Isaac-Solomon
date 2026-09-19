@@ -3,6 +3,7 @@
 	import { projects } from '$lib/content';
 	import ArrowUpRight from '../ArrowUpRight.svelte';
 	import StoryDoodle from './StoryDoodle.svelte';
+	import StorySplash from './StorySplash.svelte';
 
 	const featured = projects.filter((p) => p.featured);
 	const [lead, ...others] = featured;
@@ -63,7 +64,8 @@
 	</a>
 {/snippet}
 
-<section id="projects" class="story bg-story-paper px-5 pb-8 sm:px-8">
+<section id="projects" class="story overflow-x-clip bg-story-paper px-5 pb-8 sm:px-8">
+	<StorySplash color="mustard" seed={6} class="top-[42%] -right-40 hidden w-[26rem] xl:block" />
 	<div class="mx-auto max-w-5xl">
 		<!-- the lead project: one wide card, the whole story -->
 		<article use:reveal class="grid items-center gap-x-10 gap-y-7 rounded-3xl border-2 border-ink p-5 sm:p-8 md:grid-cols-[1.3fr_1fr]">

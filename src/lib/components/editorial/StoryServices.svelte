@@ -2,13 +2,15 @@
 	import { reveal } from '$lib/actions/reveal';
 	import { serviceDetails } from '$lib/content';
 	import StoryHead from './StoryHead.svelte';
+	import StorySplash from './StorySplash.svelte';
 	import ServicesDiagram from '../ServicesDiagram.svelte';
 
 	/* A selector, not a stack: pick a capability, its diagram and detail show. */
 	let active = $state(0);
 </script>
 
-<section id="services" class="story bg-story-paper px-5 py-20 sm:px-8 md:py-28">
+<section id="services" class="story overflow-x-clip bg-story-paper px-5 py-20 sm:px-8 md:py-28">
+	<StorySplash color="cobalt" seed={11} class="top-10 -left-36 hidden w-[26rem] lg:block" />
 	<div class="mx-auto max-w-5xl">
 		<div use:reveal>
 			<StoryHead n="03" label="chapter three" title="What I make" />
