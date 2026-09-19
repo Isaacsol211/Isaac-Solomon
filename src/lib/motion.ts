@@ -45,7 +45,7 @@ export function openingAlreadyRevealed(): boolean {
  * entrance curtain is up, the hero plays as it lifts rather than behind it.
  */
 export function entranceDelay(): number {
-	return document.documentElement.classList.contains('site-entering') ? 0.65 : 0;
+	return document.documentElement.classList.contains('site-entering') ? 1.55 : 0;
 }
 
 /** Live read — never cache the result across a session. */

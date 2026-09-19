@@ -55,7 +55,7 @@ test('blocked storage fails open instead of replaying on every visit', () => {
 test('the entrance expires without Svelte hydration or asset loading', () => {
 	const state = visit();
 	const timeout = state.timers.get(1);
-	assert.equal(timeout.delay, 1300);
+	assert.equal(timeout.delay, 2500);
 	timeout.callback();
 	assert.equal(state.classes.size, 0);
 	assert.equal(state.listeners.size, 0);
