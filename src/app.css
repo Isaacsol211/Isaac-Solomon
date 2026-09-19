@@ -55,26 +55,6 @@
 		background-image: radial-gradient(rgba(24, 22, 19, 0.045) 0.6px, transparent 0.6px);
 		background-size: 22px 22px;
 	}
-	.dark .story {
-		background-image: radial-gradient(rgba(236, 232, 224, 0.06) 0.6px, transparent 0.6px);
-	}
-
-	/*
-	 * Watercolour art is painted on cream with black ink (the cat is black), so
-	 * on the night paper each piece sits on a cream plate, like a printed page
-	 * tipped into the book. Light mode needs nothing — the paper is the plate.
-	 */
-	.dark .story-art {
-		background: #f3ecdd;
-		border-radius: 1.25rem;
-		padding: 0.75rem;
-		box-shadow: 0 0 0 2px var(--color-line);
-	}
-	.dark .story-art-sm {
-		background: #f3ecdd;
-		border-radius: 0.5rem;
-		padding: 3px;
-	}
 
 	/* Dark theme — flip the semantic tokens, keep cream/coal/accent absolute */
 	.dark {
@@ -85,8 +65,8 @@
 		--color-dim: #a39e92;
 		--color-line: #312d27;
 		--color-accent-text: #e8490f;
-		/* the storybook's night paper: warm, a shade lighter than the page so the texture reads */
-		--color-story-paper: #1b1815;
+		/* the storybook's night: see "Storybook night" below */
+		--color-story-paper: #182456;
 	}
 
 	html {
@@ -114,6 +94,48 @@
 	:focus-visible {
 		@apply outline-2 outline-offset-4 outline-accent;
 	}
+}
+
+/*
+ * Storybook night. Dark mode on the storybook pages isn't black: it's a painted
+ * night — deep indigo like a moonlit field, a soft moon glow in the top corner
+ * and the orange accent as lamplight, after the two night paintings in the
+ * brief. The wash sits on the body with fixed attachment, so the moon stays put
+ * while the chapters scroll over it; the sections go transparent to show it.
+ * Tokens are re-tuned here so text, lines and the colour blocks read on blue.
+ * Unlayered on purpose: it has to beat the bg-story-paper utility.
+ */
+.dark body:has(.story) {
+	--color-paper: #16204d;
+	--color-paper-2: #1e2a5e;
+	--color-story-paper: #182456;
+	--color-ink: #f2ecda;
+	--color-dim: #a7b2dd;
+	--color-line: #30407f;
+	--color-accent-text: #ff8f55;
+	--color-cobalt: #7f95f2;
+	--color-grass: #56b79c;
+	--color-mustard: #f0dc8c;
+	background-color: #16204d;
+	background-image:
+		radial-gradient(34rem 26rem at 88% 2%, rgba(243, 226, 160, 0.17), transparent 70%),
+		radial-gradient(40rem 30rem at 6% 100%, rgba(232, 96, 30, 0.13), transparent 70%),
+		linear-gradient(180deg, #1b2759 0%, #121a42 100%);
+	background-attachment: fixed;
+}
+.dark .story,
+.dark main.bg-story-paper {
+	background-color: transparent;
+}
+.dark .story {
+	background-image: radial-gradient(rgba(242, 236, 218, 0.07) 0.6px, transparent 0.6px);
+}
+/* The watercolour keeps no plate: a faint moonlight halo lifts its black ink off the blue. */
+.dark .story-art {
+	filter: drop-shadow(0 0 18px rgba(243, 226, 160, 0.28));
+}
+.dark .story-art-sm {
+	filter: drop-shadow(0 0 6px rgba(243, 226, 160, 0.35));
 }
 
 
