@@ -82,9 +82,16 @@
 		</article>
 
 		<!-- the next three side by side; a swipeable row on phones -->
-		<ol
-			class="story-row -mx-5 mt-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-3 sm:-mx-8 sm:px-8 md:mx-0 md:grid md:grid-cols-3 md:gap-6 md:overflow-visible md:px-0 md:pb-0"
+		<p class="mt-6 font-serif text-sm text-dim italic md:hidden" aria-hidden="true">three more — swipe →</p>
+		<!-- A scrollable region must take focus so keyboard users can scroll it (axe: scrollable-region-focusable). -->
+		<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
+		<div
+			role="region"
+			tabindex="0"
+			aria-label="More featured projects"
+			class="story-row -mx-5 mt-3 flex md:mt-6 snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-3 sm:-mx-8 sm:px-8 md:mx-0 md:grid md:grid-cols-3 md:gap-6 md:overflow-visible md:px-0 md:pb-0"
 		>
+			<ol class="contents">
 			{#each others as project, k (project.title)}
 				<li use:reveal={{ delay: 80 * k }} class="w-[82vw] shrink-0 snap-center sm:w-[60vw] md:w-auto">
 					<article class="flex h-full flex-col rounded-3xl border-2 border-ink p-4 sm:p-5">
@@ -102,7 +109,8 @@
 					</article>
 				</li>
 			{/each}
-		</ol>
+			</ol>
+		</div>
 
 		<!-- the rest, as a plain index -->
 		<div use:reveal class="mt-16">

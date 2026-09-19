@@ -39,8 +39,6 @@
 		label="chapter one"
 		title="Selected work"
 		body="Client builds and side projects — each one pushed the work further than the brief required. Storefronts, content systems and a national talent platform."
-		href="#projects"
-		linkLabel="see the work"
 		accent="grass"
 		art="deskcat"
 	/>

@@ -8,8 +8,6 @@
 		label,
 		title,
 		body,
-		href,
-		linkLabel,
 		accent,
 		art,
 		reverse = false
@@ -20,8 +18,6 @@
 		label: string;
 		title: string;
 		body: string;
-		href: string;
-		linkLabel: string;
 		/** Which flat block sits behind the illustration. */
 		accent: 'cobalt' | 'grass' | 'mustard' | 'accent';
 		art: 'lookup' | 'deskcat' | 'bust';
@@ -39,7 +35,7 @@
 	);
 </script>
 
-<section id={n === '01' ? 'work-intro' : 'about'} class="story bg-story-paper px-5 pt-16 pb-12 sm:px-8 md:pt-20 md:pb-14">
+<section id={n === '01' ? 'work-intro' : 'about'} class="story bg-story-paper px-5 pt-8 pb-12 sm:px-8 md:pt-10 md:pb-14">
 	<div class="mx-auto grid max-w-5xl items-center gap-y-8 md:grid-cols-[16rem_1fr] md:gap-x-12">
 		<!-- illustration on its offset colour block -->
 		<div class="relative flex justify-center {reverse ? 'md:order-2' : ''}">
@@ -60,13 +56,6 @@
 
 			<p class="mt-8 max-w-md text-[15px] leading-relaxed text-ink">{body}</p>
 
-			<a
-				href={href}
-				class="group mt-7 inline-flex items-center gap-2 text-sm font-medium text-ink transition-colors hover:text-accent-text focus-visible:text-accent-text"
-			>
-				<span class="underline decoration-line underline-offset-4 group-hover:decoration-accent-text">{linkLabel}</span>
-				<span aria-hidden="true" class="transition-transform group-hover:translate-x-1">→</span>
-			</a>
 		</div>
 	</div>
 </section>

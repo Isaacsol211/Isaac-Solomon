@@ -65,8 +65,8 @@
 		--color-dim: #a39e92;
 		--color-line: #312d27;
 		--color-accent-text: #e8490f;
-		/* the storybook's night: see "Storybook night" below */
-		--color-story-paper: #0e1637;
+		/* warm dark here; the storybook night below turns it indigo everywhere but photography */
+		--color-story-paper: #161412;
 	}
 
 	html {
@@ -97,6 +97,20 @@
 }
 
 /*
+ * Storybook paper, light: every page but photography (which keeps its own
+ * look) sits on the story paper with the printed dot grid.
+ */
+body:not(:has(.photo-hero)) {
+	background-color: var(--color-story-paper);
+	background-image: radial-gradient(rgba(24, 22, 19, 0.045) 0.6px, transparent 0.6px);
+	background-size: 22px 22px;
+}
+/* The phone menu belongs to the night in both themes. */
+body:not(:has(.photo-hero)) #mobile-menu {
+	background-color: #0a1030;
+}
+
+/*
  * Storybook night. Dark mode on the storybook pages isn't black: it's a painted
  * night — deep indigo like a moonlit field, a soft moon glow in the top corner
  * and the orange accent as lamplight, after the two night paintings in the
@@ -105,7 +119,7 @@
  * Tokens are re-tuned here so text, lines and the colour blocks read on blue.
  * Unlayered on purpose: it has to beat the bg-story-paper utility.
  */
-.dark body:has(.story) {
+.dark body:not(:has(.photo-hero)) {
 	--color-paper: #070b22;
 	--color-paper-2: #10183d;
 	--color-story-paper: #0a1030;
@@ -120,17 +134,17 @@
 }
 /* The painted night itself: one fixed layer behind the content — gradient,
    moon and lamp glows, an uneven brushed wash, sparse stars and a fine grain. */
-.dark body:has(.story)::before {
+.dark body:not(:has(.photo-hero))::before {
 	content: '';
 	position: fixed;
 	inset: 0;
-	z-index: 0;
+	z-index: -1;
 	pointer-events: none;
 	background-image:
 		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E"),
 		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='420'%3E%3Cfilter id='s'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='1' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .96 0 0 0 0 .92 0 0 0 0 .8 30 0 0 0 -26.1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23s)'/%3E%3C/svg%3E"),
-		radial-gradient(34rem 26rem at 88% 2%, rgba(243, 226, 160, 0.12), transparent 70%),
-		radial-gradient(40rem 30rem at 6% 100%, rgba(232, 96, 30, 0.1), transparent 70%),
+		radial-gradient(44rem 34rem at 88% 0%, rgba(243, 226, 160, 0.22), transparent 70%),
+		radial-gradient(48rem 36rem at 4% 100%, rgba(232, 96, 30, 0.17), transparent 70%),
 		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 1000' preserveAspectRatio='none'%3E%3Cfilter id='w' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.0028' numOctaves='3' seed='9'/%3E%3CfeColorMatrix values='0 0 0 0 .02 0 0 0 0 .03 0 0 0 0 .1 0 0 0 .75 -.3'/%3E%3C/filter%3E%3Crect width='1600' height='1000' filter='url(%23w)'/%3E%3C/svg%3E"),
 		linear-gradient(180deg, #0b1236 0%, #04071a 100%);
 	background-size: 240px 240px, 420px 420px, auto, auto, 100% 100%, auto;

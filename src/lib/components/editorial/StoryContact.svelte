@@ -8,13 +8,13 @@
 		`mailto:${site.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 </script>
 
-<section id="connect" class="story relative overflow-hidden bg-story-paper px-5 pt-20 pb-10 sm:px-8 md:pt-28">
+<section id="connect" aria-labelledby="connect-title" class="story relative overflow-hidden bg-story-paper px-5 pt-20 pb-10 sm:px-8 md:pt-28">
 	<StoryDeco kind="dots" class="pointer-events-none absolute top-24 right-8 hidden w-14 md:block" />
 	<div class="relative mx-auto max-w-5xl">
 		<!-- the back cover -->
 		<p class="font-serif text-2xl text-dim italic md:text-3xl">{connect.eyebrow}</p>
 		<div class="mt-4 flex items-end gap-5">
-			<h2 class="text-[clamp(3.5rem,12vw,9rem)] leading-[0.85] font-medium tracking-[-0.02em]">
+			<h2 id="connect-title" class="text-[clamp(3.5rem,12vw,9rem)] leading-[0.85] font-medium tracking-[-0.02em]">
 				let's <span class="font-serif font-normal text-accent italic">talk.</span>
 			</h2>
 			<span class="mb-3 hidden size-9 bg-cobalt md:block" aria-hidden="true"></span>

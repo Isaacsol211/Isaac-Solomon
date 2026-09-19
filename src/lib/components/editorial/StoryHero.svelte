@@ -6,7 +6,7 @@
 
 <section
 	id="top"
-	class="story relative flex min-h-svh flex-col justify-center overflow-hidden bg-story-paper px-5 pt-28 pb-14 sm:px-8 md:pt-24"
+	class="story relative flex min-h-svh flex-col justify-center overflow-hidden bg-story-paper px-5 pt-28 pb-8 sm:px-8 md:pt-24"
 >
 	<!-- rotated edge line, desktop only — the reference's vertical gag, made functional -->
 	<p
@@ -65,15 +65,15 @@
 			</div>
 		</div>
 
-		<!-- left meta column, laid over the composition on desktop -->
-		<div class="mt-10 max-w-sm lg:absolute lg:top-24 lg:left-0 lg:mt-0 lg:max-w-[16rem] xl:max-w-[18rem]">
+		<!-- the positioning line, under the actions -->
+		<div class="mx-auto mt-9 max-w-md text-center">
 			<p class="text-[15px] leading-relaxed text-ink">
 				{site.heroLead}
 			</p>
 		</div>
 
 		<!-- wordmark + monogram, bottom row -->
-		<div class="mt-10 flex items-end justify-between md:mt-16">
+		<div class="mt-10 flex items-end justify-between">
 			<p class="text-lg font-medium tracking-tight">
 				{site.name}<span class="text-accent">.</span>
 			</p>
