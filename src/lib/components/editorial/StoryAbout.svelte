@@ -2,7 +2,6 @@
 	import { reveal } from '$lib/actions/reveal';
 	import { about, experience, experienceNote } from '$lib/content';
 	import StoryHead from './StoryHead.svelte';
-	import StoryArt from './StoryArt.svelte';
 	import StoryDoodle from './StoryDoodle.svelte';
 </script>
 
@@ -12,7 +11,7 @@
 			<!-- the bust, echoing the real green-shirt portrait, on a mustard block -->
 			<div class="relative flex justify-center md:order-2">
 				<span class="absolute right-6 bottom-4 block size-40 bg-mustard" aria-hidden="true"></span>
-				<StoryArt kind="bust" class="relative h-auto w-[min(64vw,20rem)]" />
+				<img src="/story/about.webp" alt="Illustrated portrait of Isaac Solomon holding a cup of coffee" width="801" height="1007" class="relative block w-[min(60vw,18rem)]" />
 			</div>
 
 			<div class="md:order-1">

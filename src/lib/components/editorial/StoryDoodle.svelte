@@ -1,6 +1,6 @@
 <script lang="ts">
 	/*
-	 * Small hand-drawn spot doodles — a lighter counterpart to the StoryArt
+	 * Small hand-drawn spot doodles — a lighter counterpart to the portraits
 	 * portraits, for section headers and margins. Line-art with the same wobble
 	 * so they read as drawn. Decorative, hidden from assistive tech.
 	 */
@@ -8,8 +8,14 @@
 		kind: 'camera' | 'pen' | 'book' | 'plane' | 'mountain' | 'arrow';
 		class?: string;
 	} = $props();
+
+	/* These four have painted spot art; arrow/book stay as inline SVG. */
+	const painted = ['camera', 'pen', 'plane', 'mountain'];
 </script>
 
+{#if painted.includes(kind)}
+	<img src="/story/spot-{kind}.webp" alt="" aria-hidden="true" class={className} />
+{:else}
 <svg
 	viewBox="0 0 100 100"
 	class={className}
@@ -56,3 +62,4 @@
 		{/if}
 	</g>
 </svg>
+{/if}

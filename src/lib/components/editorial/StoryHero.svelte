@@ -1,7 +1,8 @@
 <script lang="ts">
-	import { site } from '$lib/content';
-	import StoryArt from './StoryArt.svelte';
+	import { site, socials } from '$lib/content';
 	import StoryDeco from './StoryDeco.svelte';
+
+	const linkedin = socials.find((s) => s.label === 'LinkedIn');
 </script>
 
 <section
@@ -29,10 +30,20 @@
 				a folio,<br />in three chapters.
 			</p>
 
-			<StoryArt kind="lookup" class="mt-4 h-auto w-[min(78vw,26rem)]" />
-			<p class="-mt-1 font-serif text-sm text-dim italic" aria-hidden="true">fig. 1 — the author, looking up.</p>
+			<!-- the author, as a painted plate on a cobalt block -->
+			<div class="relative mt-5 w-[min(66vw,19rem)]">
+				<span class="absolute -right-3 -bottom-3 -z-10 h-full w-full bg-cobalt" aria-hidden="true"></span>
+				<img
+					src="/story/hero.webp"
+					alt="Illustrated portrait of Isaac Solomon in a blue beret, looking up"
+					width="900"
+					height="900"
+					class="block w-full rounded-2xl border-2 border-ink"
+				/>
+			</div>
+			<p class="mt-3 font-serif text-sm text-dim italic" aria-hidden="true">fig. 1 — the author, looking up.</p>
 
-			<h1 class="-mt-2 flex flex-wrap items-baseline justify-center gap-x-4 gap-y-1">
+			<h1 class="mt-3 flex flex-wrap items-baseline justify-center gap-x-4 gap-y-1">
 				<span class="text-[clamp(3.2rem,13vw,9rem)] leading-[0.82] font-medium tracking-[0.04em] uppercase">
 					Frontend
 				</span>
@@ -40,6 +51,22 @@
 					developer<span class="text-accent">.</span>
 				</span>
 			</h1>
+
+			<!-- one clear way in -->
+			<div class="mt-7 flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
+				<a
+					href="#projects"
+					class="group inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3 text-sm font-medium text-story-paper transition-colors hover:bg-accent-text"
+				>
+					see the work
+					<span class="inline-block transition-transform group-hover:translate-y-0.5" aria-hidden="true">↓</span>
+				</a>
+				{#if linkedin}
+					<a href={linkedin.href} target="_blank" rel="noopener noreferrer" class="text-sm font-medium text-ink transition-colors hover:text-accent-text">
+						LinkedIn <span aria-hidden="true">↗</span>
+					</a>
+				{/if}
+			</div>
 		</div>
 
 		<!-- left meta column, laid over the composition on desktop -->

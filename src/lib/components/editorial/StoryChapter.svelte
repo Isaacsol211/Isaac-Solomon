@@ -1,6 +1,7 @@
 <script lang="ts">
-	import StoryArt from './StoryArt.svelte';
 	import StoryDeco from './StoryDeco.svelte';
+
+	const artSrc = { lookup: '/story/hero.webp', deskcat: '/story/cat.webp', bust: '/story/about.webp' };
 
 	let {
 		n,
@@ -43,7 +44,7 @@
 		<!-- illustration on its offset colour block -->
 		<div class="relative flex justify-center {reverse ? 'md:order-2' : ''}">
 			<span class="absolute bottom-4 {reverse ? 'right-6' : 'left-6'} block size-40 {block}" aria-hidden="true"></span>
-			<StoryArt kind={art} class="relative h-auto w-[min(64vw,20rem)]" />
+			<img src={artSrc[art]} alt="" aria-hidden="true" class="relative block w-[min(60vw,18rem)]" />
 		</div>
 
 		<!-- the chapter's text -->
