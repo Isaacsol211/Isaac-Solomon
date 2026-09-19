@@ -3,11 +3,12 @@
 	import Nav from '$lib/components/Nav.svelte';
 	import StoryHero from '$lib/components/editorial/StoryHero.svelte';
 	import StoryChapter from '$lib/components/editorial/StoryChapter.svelte';
-	import Services from '$lib/components/Services.svelte';
-	import Projects from '$lib/components/Projects.svelte';
-	import Writing from '$lib/components/Writing.svelte';
-	import PhotoTeaser from '$lib/components/PhotoTeaser.svelte';
-	import Connect from '$lib/components/Connect.svelte';
+	import StoryProjects from '$lib/components/editorial/StoryProjects.svelte';
+	import StoryAbout from '$lib/components/editorial/StoryAbout.svelte';
+	import StoryServices from '$lib/components/editorial/StoryServices.svelte';
+	import StoryWriting from '$lib/components/editorial/StoryWriting.svelte';
+	import StoryPhotos from '$lib/components/editorial/StoryPhotos.svelte';
+	import StoryContact from '$lib/components/editorial/StoryContact.svelte';
 </script>
 
 <svelte:head>
@@ -30,7 +31,7 @@
 
 <Nav />
 
-<main id="main" class="relative z-10 bg-paper">
+<main id="main" class="relative z-10 bg-story-paper">
 	<StoryHero />
 	<StoryChapter
 		n="01"
@@ -42,23 +43,11 @@
 		accent="grass"
 		art="deskcat"
 	/>
-	<Projects />
-	<StoryChapter
-		n="02"
-		label="chapter two"
-		title="About me"
-		body="A frontend developer at Able.do since 2017. What a team is left with matters more to me than the launch — content models that survive a rebrand, systems a non-technical team runs without me."
-		href="/writing"
-		linkLabel="more about the work"
-		accent="mustard"
-		art="bust"
-		reverse
-	/>
-	<!-- experiment: About replaced the merged Experience section; keep the nav anchor valid -->
-	<span id="experience" class="sr-only" aria-hidden="true"></span>
-	<Services />
-	<Writing />
-	<PhotoTeaser />
+	<StoryProjects />
+	<StoryAbout />
+	<StoryServices />
+	<StoryWriting />
+	<StoryPhotos />
 </main>
 
-<Connect />
+<StoryContact />
