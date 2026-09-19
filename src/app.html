@@ -5,6 +5,64 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="text-scale" content="scale" />
 		<meta name="theme-color" content="#f1efea" />
+		<script id="site-entrance-bootstrap">
+			// Decide before first paint. This never waits for hydration or assets.
+			(() => {
+				const root = document.documentElement;
+				const motion = matchMedia('(prefers-reduced-motion: reduce)');
+				const navigation = performance.getEntriesByType('navigation')[0];
+				if (location.pathname !== '/' || location.hash || motion.matches ||
+					(navigation && navigation.type !== 'navigate')) return;
+				try {
+					if (localStorage.getItem('isaac:entrance-seen')) return;
+					// Mark immediately so a refresh during the entrance cannot replay it.
+					localStorage.setItem('isaac:entrance-seen', '1');
+				} catch { return; } // If persistence is blocked, go straight to the site.
+
+				root.classList.add('site-entering');
+				const dismiss = () => {
+					root.classList.remove('site-entering');
+					clearTimeout(timeout);
+					for (const event of ['pointerdown', 'keydown', 'wheel', 'touchstart', 'focusin']) {
+						document.removeEventListener(event, dismiss, true);
+					}
+					window.removeEventListener('pagehide', dismiss);
+					motion.removeEventListener('change', dismiss);
+				};
+				const timeout = setTimeout(dismiss, 1300);
+				for (const event of ['pointerdown', 'keydown', 'wheel', 'touchstart', 'focusin']) {
+					document.addEventListener(event, dismiss, { capture: true, passive: true });
+				}
+				window.addEventListener('pagehide', dismiss, { once: true });
+				motion.addEventListener('change', dismiss, { once: true });
+			})();
+		</script>
+		<style>
+			/* Hidden by default: no JavaScript, return visits and reduced motion open normally. */
+			#site-entrance { display: none; }
+			.site-entering #site-entrance {
+				display: grid; position: fixed; inset: 0; z-index: 110; place-items: center;
+				pointer-events: none; background: #f1efea; color: #181613;
+				animation: entrance-curtain 1200ms cubic-bezier(.76, 0, .24, 1) both;
+			}
+			.dark.site-entering #site-entrance { background: #161412; color: #ece8e0; }
+			.entrance-signature { display: flex; align-items: center; gap: 20px; padding: 24px; }
+			.entrance-mark {
+				width: clamp(44px, 6vw, 72px); height: auto; flex: none; color: #e8490f;
+				animation: entrance-turn 800ms cubic-bezier(.22, 1, .36, 1) both;
+			}
+			.entrance-name {
+				font: 500 clamp(26px, 4vw, 54px)/1.1 'Space Grotesk Variable', ui-sans-serif, system-ui, sans-serif;
+				letter-spacing: -.045em; animation: entrance-name 500ms 80ms ease-out both;
+			}
+			@keyframes entrance-turn { from { transform: rotate(-90deg) scale(.75); opacity: 0; } }
+			@keyframes entrance-name { from { transform: translateY(12px); opacity: 0; } }
+			@keyframes entrance-curtain {
+				0%, 55% { clip-path: inset(0); }
+				100% { clip-path: inset(0 0 100%); visibility: hidden; }
+			}
+			@media (prefers-reduced-motion: reduce) { .site-entering #site-entrance { display: none; } }
+		</style>
 		<script>
 			// Set theme before first paint: stored choice wins, otherwise follow the OS.
 			// Also mark that scripts run, so opening-animation start states can apply
@@ -32,6 +90,14 @@
 		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover">
+		<div id="site-entrance" aria-hidden="true">
+			<div class="entrance-signature">
+				<svg class="entrance-mark" viewBox="0 0 100 100" fill="currentColor" aria-hidden="true">
+					<path d="M43 4h14v30l26-15 7 12-26 15 26 15-7 12-26-15v30H43V58L17 73 10 61l26-15L10 31l7-12 26 15Z" />
+				</svg>
+				<span class="entrance-name">isaac solomon.</span>
+			</div>
+		</div>
 		<div style="display: contents">%sveltekit.body%</div>
 	</body>
 </html>

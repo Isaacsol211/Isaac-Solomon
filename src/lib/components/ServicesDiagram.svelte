@@ -19,13 +19,12 @@
 	 * they switch off under reduced motion. Everything is decorative to
 	 * assistive tech; the list beside it is the content.
 	 */
-	const states = ['storefront', 'cms', 'scroll', 'qa', 'longterm'] as const;
 </script>
 
 <div class={compact ? 'diagram diagram--compact' : 'diagram'} aria-hidden="true">
 	<svg viewBox="0 0 400 280" class="block h-auto w-full" fill="none" stroke-linecap="round" stroke-linejoin="round">
 		<!-- 1 · Storefront — an option is chosen, the cart updates -->
-		<g class="state" class:is-active={index === 0} data-state={states[0]}>
+		<g class="state" class:is-active={index === 0}>
 			<rect x="34" y="42" width="196" height="196" rx="10" class="ln" />
 			<rect x="50" y="58" width="164" height="96" rx="6" class="fill-2" />
 			<path d="M78 130l28-34 22 26 16-18 26 26" class="ln-soft" />
@@ -51,12 +50,10 @@
 		</g>
 
 		<!-- 2 · CMS — content fields assemble into a page -->
-		<g class="state" class:is-active={index === 1} data-state={states[1]}>
-			<g class="fields">
-				<g class="field field-a"><rect x="30" y="52" width="110" height="26" rx="6" class="ln-key" /><text x="42" y="69" class="lbl">title</text></g>
-				<g class="field field-b"><rect x="30" y="96" width="110" height="56" rx="6" class="ln-key" /><text x="42" y="113" class="lbl">body</text><path d="M42 126h70M42 138h50" class="ln-soft" /></g>
-				<g class="field field-c"><rect x="30" y="170" width="110" height="60" rx="6" class="ln-key" /><text x="42" y="187" class="lbl">image</text><path d="M46 222l22-26 16 18 14-12 20 20" class="ln-soft" /></g>
-			</g>
+		<g class="state" class:is-active={index === 1}>
+			<rect x="30" y="52" width="110" height="26" rx="6" class="ln-key" /><text x="42" y="69" class="lbl">title</text>
+			<rect x="30" y="96" width="110" height="56" rx="6" class="ln-key" /><text x="42" y="113" class="lbl">body</text><path d="M42 126h70M42 138h50" class="ln-soft" />
+			<rect x="30" y="170" width="110" height="60" rx="6" class="ln-key" /><text x="42" y="187" class="lbl">image</text><path d="M46 222l22-26 16 18 14-12 20 20" class="ln-soft" />
 			<path d="M156 140h36" class="ln arrow" /><path d="M186 134l8 6-8 6" class="ln arrow" />
 			<!-- page -->
 			<rect x="212" y="42" width="158" height="196" rx="8" class="ln" />
@@ -73,7 +70,7 @@
 		</g>
 
 		<!-- 3 · Scroll-driven — a scroll position drives the frames -->
-		<g class="state" class:is-active={index === 2} data-state={states[2]}>
+		<g class="state" class:is-active={index === 2}>
 			<rect x="34" y="42" width="12" height="196" rx="6" class="ln" />
 			<rect x="37" y="46" width="6" height="52" rx="3" class="thumb" />
 			<g class="frames">
@@ -96,7 +93,7 @@
 		</g>
 
 		<!-- 4 · QA — the same check, across three devices -->
-		<g class="state" class:is-active={index === 3} data-state={states[3]}>
+		<g class="state" class:is-active={index === 3}>
 			<rect x="30" y="66" width="150" height="100" rx="8" class="ln-key" />
 			<path d="M84 180h42M105 166v14" class="ln-soft" />
 			<rect x="204" y="52" width="66" height="132" rx="12" class="ln-key" />
@@ -114,7 +111,7 @@
 		</g>
 
 		<!-- 5 · Long-term — one product carried through versions -->
-		<g class="state" class:is-active={index === 4} data-state={states[4]}>
+		<g class="state" class:is-active={index === 4}>
 			<path d="M40 150h320" class="ln" />
 			<g class="node node-0"><circle cx="60" cy="150" r="7" class="node-dot" /><text x="60" y="184" text-anchor="middle" class="lbl">v1</text></g>
 			<g class="node node-1"><circle cx="150" cy="150" r="7" class="node-dot" /><text x="150" y="184" text-anchor="middle" class="lbl">rewrite</text></g>
@@ -136,6 +133,10 @@
 		background: var(--color-paper);
 		padding: 1rem 1rem 1rem;
 	}
+	/* At 168px wide the labels would be smudges; the compact form is linework only. */
+	.diagram--compact text {
+		display: none;
+	}
 	.diagram--compact {
 		width: 184px;
 		max-width: 100%;
@@ -156,7 +157,7 @@
 	.ln { stroke: var(--color-line); stroke-width: 1.5; }
 	.ln-soft { stroke: var(--color-line); stroke-width: 1.5; opacity: 0.6; }
 	.fill-2 { fill: var(--color-paper-2); stroke: var(--color-line); stroke-width: 1; }
-	.lbl { fill: var(--color-dim); font: 500 9px/1 'Space Grotesk Variable', system-ui, sans-serif; letter-spacing: 0.08em; }
+	.lbl { fill: var(--color-dim); font: 500 11px/1 'Space Grotesk Variable', system-ui, sans-serif; letter-spacing: 0.08em; }
 	.accent-fill { fill: var(--color-accent); }
 
 	/* states: only the active one is drawn; the rest are held invisible */
@@ -164,9 +165,9 @@
 	.state.is-active { opacity: 1; }
 
 	/* 1 storefront */
-	.chip-on { fill: var(--color-accent); stroke: var(--color-accent); transition: transform var(--dur) ease; transform-origin: 116px 195px; }
+	.chip-on { fill: var(--color-accent); stroke: var(--color-accent); }
 	.btn { fill: var(--color-line); transition: fill var(--dur) ease; }
-	.btn-lbl { fill: var(--color-paper); font: 600 8px/1 'Space Grotesk Variable', system-ui, sans-serif; letter-spacing: 0.12em; }
+	.btn-lbl { fill: var(--color-paper); font: 600 10px/1 'Space Grotesk Variable', system-ui, sans-serif; letter-spacing: 0.12em; }
 	.is-active .btn { fill: var(--color-ink); }
 	.badge-n { fill: var(--color-paper); font: 700 10px/1 'Space Grotesk Variable', system-ui, sans-serif; transition: opacity var(--dur) ease; }
 	.badge-1 { opacity: 0; }
@@ -176,9 +177,7 @@
 	.is-active .badge { transform: scale(1.12); transition-delay: 0.35s; }
 	.arrow { opacity: 0.5; }
 
-	/* 2 cms: fields travel into the page slots */
-	.field { transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease; }
-	.is-active .field-a { transform: translate(0, 0); }
+	/* 2 cms: the page slots fill in order */
 	.slot { fill: var(--color-ink); opacity: 0.16; transition: opacity var(--dur) ease; }
 	.is-active .slot-a { opacity: 0.85; transition-delay: 0.1s; }
 	.is-active .slot-c { opacity: 0.85; transition-delay: 0.2s; }

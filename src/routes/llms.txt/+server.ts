@@ -2,6 +2,7 @@ import {
 	about,
 	clients,
 	experience,
+	experienceNote,
 	mcp,
 	photographyIntro,
 	photos,
@@ -60,6 +61,7 @@ ${serviceDetails.map((s) => `- ${s.title}: ${s.summary}`).join('\n')}
 ## Experience
 
 ${experience.map((e) => `- ${e.from}–${e.to} — ${e.role}, ${e.company}. ${firstSentence(e.description)}`).join('\n')}
+- ${experienceNote}
 
 ## Optional
 

@@ -38,13 +38,7 @@
 
 				/* The diagram on the left mirrors whichever row crosses the midline;
 				   its state changes are CSS transitions inside ServicesDiagram. */
-				let current = -1;
-				const show = (next: number) => {
-					if (next === current) return;
-					current = next;
-					activeIndex = next;
-				};
-				show(0);
+				activeIndex = 0;
 
 				rows.forEach((row, i) => {
 					ScrollTrigger.create({
@@ -52,15 +46,12 @@
 						start: 'top 55%',
 						end: 'bottom 55%',
 						onToggle: (self) => {
-							if (self.isActive) show(i);
+							if (self.isActive) activeIndex = i;
 						}
 					});
 				});
 
-				if (reduced) {
-					gsap.set(rows, { opacity: 1, y: 0 });
-					return;
-				}
+				if (reduced) return;
 
 				// A small rise keeps the trigger near the visible row, including direct anchor visits.
 				gsap.set(rows, { opacity: 0, y: 20 });
@@ -130,7 +121,7 @@
 							summary measured 202px at 14px — about 29 characters a line, which
 							is a column of hyphenation, not prose.
 
-							Proof links keep the row in the keyboard path. Focus selects
+							Proof links, where a row has one, keep it in the keyboard path. Focus selects
 							the corresponding desktop illustration as well as scrolling.
 						-->
 						<!--
@@ -163,7 +154,7 @@
 							<div>
 								<p class="text-base leading-relaxed text-dim">{service.summary}</p>
 								<!-- The deliverables, beneath the sentence they belong to and wide enough to pair up. -->
-								<ul class="mt-4 grid gap-x-8 gap-y-2.5 sm:grid-cols-2">
+								<ul class="mt-4 grid gap-x-8 gap-y-2.5 xl:grid-cols-2">
 									{#each service.items as item (item)}
 										<li class="text-sm lowercase text-dim">
 											<span class="text-dim" aria-hidden="true">—</span>
@@ -171,9 +162,11 @@
 										</li>
 									{/each}
 								</ul>
-								<a href={service.proof.href} class="mt-5 inline-flex min-h-11 items-center gap-2 text-sm font-medium text-accent-text underline decoration-accent-text/40 underline-offset-4 transition-colors hover:text-ink focus-visible:text-ink">
-									{service.proof.label}<span aria-hidden="true">↗</span>
-								</a>
+								{#if service.proof}
+									<a href={service.proof.href} class="mt-5 inline-flex min-h-11 items-center gap-2 text-sm font-medium text-accent-text underline decoration-accent-text/40 underline-offset-4 transition-colors hover:text-ink focus-visible:text-ink">
+										{service.proof.label}<span aria-hidden="true">↗</span>
+									</a>
+								{/if}
 							</div>
 						</div>
 					</li>

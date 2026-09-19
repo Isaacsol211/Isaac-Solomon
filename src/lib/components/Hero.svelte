@@ -1,9 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { initMotion, MOTION_OK, openingAlreadyRevealed } from '$lib/motion';
+	import { entranceDelay, initMotion, MOTION_OK, openingAlreadyRevealed } from '$lib/motion';
 	import { site } from '$lib/content';
 
-	const year = new Date().getFullYear();
 	const words = site.heroHeadline.split(' ');
 
 	let sectionEl = $state<HTMLElement>();
@@ -46,7 +45,7 @@
 				 * and nothing in the hero moves on scroll either; the ✱'s scroll spin is
 				 * the one scroll-linked element, and that is CSS.
 				 */
-				const opening = gsap.timeline({ defaults: { ease: 'power2.out' } });
+				const opening = gsap.timeline({ defaults: { ease: 'power2.out' }, delay: entranceDelay() });
 				if (meta) opening.fromTo(meta, { opacity: 0 }, { opacity: 1, duration: 0.6 }, 0.1);
 				if (intro) opening.fromTo(intro, { opacity: 0 }, { opacity: 1, duration: 0.7 }, 0.42);
 				if (signature) {
@@ -87,7 +86,7 @@
 		>
 			<span class="flex items-center gap-3">
 				<span class="text-accent" aria-hidden="true">✱</span>
-				Folio — {year}
+				<span><span class="normal-case">{site.name}</span> — {site.role.toLowerCase()}, {site.employer.toLowerCase()}</span>
 			</span>
 			<span class="flex items-center gap-2.5">
 				<span class="relative flex size-2" aria-hidden="true">
@@ -96,7 +95,7 @@
 					></span>
 					<span class="relative inline-flex size-2 rounded-full bg-accent"></span>
 				</span>
-				{site.availability}
+				{site.location.toLowerCase()} — {site.availability}
 			</span>
 		</div>
 
@@ -107,7 +106,6 @@
 		-->
 		<div class="grid gap-y-10 pt-12 pb-12 md:grid-cols-12 md:items-end md:gap-x-10 md:pt-16 md:pb-16">
 			<h1
-				data-hero-headline
 				class="text-[clamp(3rem,10.5vw,8.75rem)] leading-[0.9] font-medium tracking-[-0.045em] lowercase md:col-span-7"
 			>
 				{#each words as word, i (word)}
@@ -123,13 +121,11 @@
 				<p class="max-w-md text-[1.0625rem] leading-relaxed text-ink md:text-lg">
 					{site.heroLead}
 				</p>
-				<div class="mt-7 flex flex-wrap items-center gap-3">
+				<div class="mt-7 flex flex-wrap items-center gap-x-5 gap-y-3">
 					<!--
-						One filled action, one text link, so the pair keeps to a row at both
-						1440 and 390. Responses stay inside the control: the arrow that points
-						at the work moves down, the other moves along; hit targets never
-						change. The hover fill is accent-text — 5.34:1 under cream on paper,
-						4.77:1 in the dark theme — because plain accent was 3.39:1.
+						One filled action, then text links. The hover fill is accent-text —
+						5.34:1 under cream on paper, 4.77:1 in the dark theme — because plain
+						accent was 3.39:1.
 					-->
 					<a
 						href="#projects"

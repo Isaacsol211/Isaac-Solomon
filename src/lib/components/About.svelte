@@ -4,6 +4,7 @@
 	import { reveal } from '$lib/actions/reveal';
 	import { photos, about, clients } from '$lib/content';
 	import Eyebrow from './Eyebrow.svelte';
+	import Experience from './Experience.svelte';
 
 	let sectionEl = $state<HTMLElement>();
 
@@ -20,8 +21,6 @@
 			// matchMedia, not a cached boolean: reverts if the preference changes mid-session.
 			const ctx = gsap.matchMedia(sectionEl);
 			ctx.add(MOTION_OK, () => {
-				const portrait = sectionEl!.querySelector('[data-about-portrait]');
-				const lead = sectionEl!.querySelector('[data-about-lead]');
 
 				/* One clip reveal each, then nothing — the photographs stay put. */
 				sectionEl!.querySelectorAll('[data-about-frame]').forEach((frame, i) => {
@@ -37,23 +36,6 @@
 						}
 					);
 				});
-				if (lead) {
-					gsap.fromTo(
-						lead,
-						{ opacity: 0.2, y: 90 },
-						{
-							opacity: 1,
-							y: 0,
-							ease: 'none',
-							scrollTrigger: {
-								trigger: sectionEl,
-								start: 'top 78%',
-								end: 'top 28%',
-								scrub: true
-							}
-						}
-					);
-				}
 			});
 
 			return ctx;
@@ -87,7 +69,6 @@
 					<div class="relative mt-8 max-w-[15rem] sm:max-w-xs">
 						<div data-about-frame class="overflow-hidden rounded-2xl">
 							<img
-								data-about-portrait
 								src={about.portrait}
 								alt={about.portraitAlt}
 								width="1200"
@@ -108,7 +89,7 @@
 									class="block h-auto w-full"
 								/>
 							</div>
-							<figcaption class="mt-2 text-[10px] font-medium tracking-[0.18em] lowercase text-dim">
+							<figcaption class="mt-2 text-[11px] font-medium tracking-[0.18em] lowercase text-dim">
 								{aside.place} — {aside.location}
 							</figcaption>
 						</figure>
@@ -122,7 +103,6 @@
 					The eyebrow above it stays a p, so About contributes a single heading.
 				-->
 				<h2
-					data-about-lead
 					use:reveal
 					class="text-2xl leading-snug font-medium tracking-tight md:text-4xl"
 				>
@@ -138,6 +118,11 @@
 						{paragraph}
 					</p>
 				{/each}
+
+				<div id="experience" class="mt-16 scroll-mt-28">
+					<Eyebrow title="Experience" as="h2" />
+					<Experience />
+				</div>
 			</div>
 		</div>
 	</div>

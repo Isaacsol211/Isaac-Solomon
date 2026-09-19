@@ -19,7 +19,7 @@
 	--color-paper: #f1efea;
 	--color-paper-2: #e9e6dd;
 	--color-ink: #181613;
-	--color-dim: #6e6a60;
+	--color-dim: #5f5b52;
 	--color-line: #dcd8cc;
 	--color-accent: #e8490f;
 	/*
@@ -92,6 +92,10 @@
 	margin-bottom: -0.12em;
 	animation: rise 1.1s cubic-bezier(0.22, 1, 0.36, 1) both;
 	animation-delay: var(--rise-delay, 0ms);
+}
+/* First visit: the entrance curtain (app.html) lifts at ~660ms; the title rises after it, not behind it. */
+.site-entering .mask-line > * {
+	animation-delay: calc(var(--rise-delay, 0ms) + 650ms);
 }
 @keyframes rise {
 	from {
@@ -285,30 +289,6 @@
 	bottom: -2.5rem;
 }
 .section-transition > * {
-	position: relative;
-	z-index: 1;
-}
-
-.section-transition-dark::before,
-.section-transition-dark::after {
-	content: '';
-	position: absolute;
-	left: 0;
-	right: 0;
-	height: 6rem;
-	pointer-events: none;
-	z-index: 0;
-	background: linear-gradient(to bottom, transparent, rgba(20, 19, 17, 0.92));
-	opacity: 0.9;
-}
-.section-transition-dark::before {
-	top: -3rem;
-}
-.section-transition-dark::after {
-	bottom: -3rem;
-	transform: rotate(180deg);
-}
-.section-transition-dark > * {
 	position: relative;
 	z-index: 1;
 }

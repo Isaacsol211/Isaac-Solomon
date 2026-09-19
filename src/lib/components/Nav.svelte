@@ -5,6 +5,7 @@
 	import { nav as navLinks, site, socials } from '$lib/content';
 	import ThemeToggle from './ThemeToggle.svelte';
 	import { modal } from '$lib/actions/modal';
+	import { MOTION_OK } from '$lib/motion';
 
 	let {
 		/**
@@ -24,15 +25,10 @@
 	/* The wordmark ✱ turns a quarter-step on selected deliberate actions. */
 	let turns = $state(0);
 	let activeSection = $state('');
-	let menuEl = $state<HTMLElement>();
-	let headerEl = $state<HTMLElement>();
 	let toggleBtn = $state<HTMLButtonElement>();
 	let viewportHeight = $state(0);
 	const scrolled = $derived(scrollY > 24);
 	const pathname = $derived(page.url.pathname);
-	const activeLabel = $derived(
-		navLinks.find((link) => link.href === activeSection || link.href === pathname)?.label?.toLowerCase() ?? 'intro'
-	);
 	const maxScroll = $derived(
 		typeof document === 'undefined'
 			? 1
@@ -85,6 +81,9 @@
 
 	// Scroll-spy — highlight the nav link for the section under the viewport's midline
 	onMount(() => {
+		// The ✱ turns a quarter-step once on load — the site's one signature gesture.
+		const turn = window.matchMedia(MOTION_OK).matches ? setTimeout(() => (turns += 1), 400) : undefined;
+
 		const sections = navLinks
 			.filter((link) => link.href.startsWith('#'))
 			.map((link) => document.getElementById(link.href.slice(1)))
@@ -110,15 +109,11 @@
 		observe();
 		window.addEventListener('resize', observe);
 		return () => {
+			clearTimeout(turn);
 			observer.disconnect();
 			window.removeEventListener('resize', observe);
 		};
 	});
-
-	function onKeydown(event: KeyboardEvent) {
-		// Escape and the Tab trap are owned by the modal action while the menu is open.
-		void event;
-	}
 
 	function isActiveLink(href: string) {
 		return href.startsWith('#') ? activeSection === href : pathname === href;
@@ -130,12 +125,11 @@
 	}
 </script>
 
-<svelte:window bind:scrollY bind:innerHeight={viewportHeight} onkeydown={onKeydown} />
+<svelte:window bind:scrollY bind:innerHeight={viewportHeight} />
 
 <div aria-hidden="true" class="fixed inset-x-0 top-0 z-60 h-px origin-left bg-accent" style="transform: scaleX({scrollProgress});"></div>
 
 <header
-	bind:this={headerEl}
 	class="fixed inset-x-0 top-0 z-50 transition-colors duration-300 {open
 		? 'text-cream'
 		: scrolled
@@ -151,21 +145,13 @@
 		</a>
 
 		<div class="hidden items-center gap-4 lg:flex">
-			<p
-				class="hidden min-w-[7rem] text-[10px] font-medium tracking-[0.22em] lowercase xl:block {invert
-					? 'text-cream/55'
-					: 'text-dim'}"
-			>
-				chapter / <span class={invert ? 'text-cream' : 'text-ink'}>{activeLabel}</span>
-			</p>
-		<nav bind:this={navEl} class="relative items-center gap-2.5 lg:flex" aria-label="Primary">
+		<nav bind:this={navEl} class="relative items-center gap-6 lg:flex" aria-label="Primary">
 			<span
 				aria-hidden="true"
 				class="pointer-events-none absolute -bottom-1 left-0 h-px bg-accent transition-[transform,width,opacity] duration-200 ease-out"
 				style="transform: translateX({marker.x}px); width: {marker.w}px; opacity: {marker.visible ? 1 : 0};"
 			></span>
-			{#each navLinks as link, i (link.href)}
-				{#if i > 0}<span aria-hidden="true" class="select-none {invert ? 'text-cream/45' : 'text-dim'}">,</span>{/if}
+			{#each navLinks as link (link.href)}
 				<a
 					href={resolvedHref(link.href)}
 					aria-current={isActiveLink(link.href) ? 'true' : undefined}
@@ -227,7 +213,6 @@
 
 {#if open}
 	<div
-		bind:this={menuEl}
 		id="mobile-menu"
 		role="dialog"
 		aria-modal="true"

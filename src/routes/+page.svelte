@@ -5,8 +5,8 @@
 	import About from '$lib/components/About.svelte';
 	import Services from '$lib/components/Services.svelte';
 	import Projects from '$lib/components/Projects.svelte';
-	import Experience from '$lib/components/Experience.svelte';
 	import Writing from '$lib/components/Writing.svelte';
+	import PhotoTeaser from '$lib/components/PhotoTeaser.svelte';
 	import Connect from '$lib/components/Connect.svelte';
 </script>
 
@@ -34,9 +34,9 @@
 	<Hero />
 	<Projects />
 	<About />
-	<Experience />
 	<Services />
 	<Writing />
+	<PhotoTeaser />
 </main>
 
 <Connect />

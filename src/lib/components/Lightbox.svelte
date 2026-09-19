@@ -9,8 +9,7 @@
 	let {
 		items,
 		collectionLabel = '',
-		index = $bindable(-1),
-		onclose
+		index = $bindable(-1)
 	}: {
 		/** The set the lightbox pages through — usually one series. */
 		items: Photo[];
@@ -18,8 +17,6 @@
 		collectionLabel?: string;
 		/** Index into `items`, or -1 when closed. Bindable so the page can open it. */
 		index: number;
-		/** Called after close, so the caller can restore focus to the thumbnail. */
-		onclose?: () => void;
 	} = $props();
 
 	const open = $derived(index >= 0 && index < items.length);
@@ -28,7 +25,6 @@
 
 	function close() {
 		index = -1;
-		onclose?.();
 	}
 
 	/* Which way the last step went, so the next frame arrives from that side. */

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { site, writing, writingIntro } from '$lib/content';
-	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
+	import ArticleHeader from '$lib/components/ArticleHeader.svelte';
 
 	const title = 'Writing — Isaac Solomon';
 	const description = writingIntro.note;
@@ -24,26 +24,11 @@
 	<meta name="twitter:image" content="{site.url}/og.png" />
 </svelte:head>
 
-<!-- back nav -->
-<header class="border-b border-line px-5 py-4 sm:px-8">
-	<div class="mx-auto flex max-w-3xl items-center justify-between">
-		<a
-			href="/"
-			class="group flex items-center gap-2 text-xs font-medium tracking-[0.2em] uppercase text-dim transition-colors hover:text-ink"
-		>
-			<span class="inline-block transition-transform duration-200 group-hover:-translate-x-1" aria-hidden="true">←</span>
-			Isaac Solomon
-		</a>
-		<div class="flex items-center gap-3">
-			<span class="text-xs font-medium tracking-[0.2em] uppercase text-dim">Writing</span>
-			<ThemeToggle />
-		</div>
-	</div>
-</header>
+<ArticleHeader />
 
 <main id="main" class="px-5 pb-24 sm:px-8">
 	<div class="mx-auto max-w-3xl pt-14 md:pt-20">
-		<h1 class="text-4xl font-medium leading-[1.1] tracking-tight md:text-6xl">
+		<h1 class="text-4xl font-medium leading-[1.1] tracking-tight lowercase md:text-6xl">
 			{writingIntro.plain}
 			<em class="font-serif font-normal italic text-dim">{writingIntro.accent}</em>
 		</h1>

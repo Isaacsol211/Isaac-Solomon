@@ -97,7 +97,6 @@
 	<section id="top" class="photo-hero" aria-labelledby="photo-title">
 		<img class="hero-image" src={heroPhoto.src} srcset="{imageSrc(heroPhoto)} 800w, {heroPhoto.src} 1600w" sizes="100vw" alt={heroPhoto.alt} width={heroPhoto.w} height={heroPhoto.h} fetchpriority="high" />
 		<div class="hero-scrim" aria-hidden="true"></div>
-		<div class="hero-meta"><span>Isaac Solomon / photographs</span><span>{heroPhoto.location}, India</span></div>
 		<div class="hero-bottom">
 			<div class="hero-title-mask"><h1 id="photo-title">photography<span>.</span></h1></div>
 			<div class="hero-footer">
@@ -110,7 +109,6 @@
 
 	<nav class="chapter-nav" aria-label="Photography chapters">
 		<div class="photo-container">
-			<span class="chapter-note">Photographs by Isaac Solomon</span>
 			<div class="chapter-links">
 			{#each chapters as chapter (chapter.id)}
 				<a href="#{chapter.id}" aria-current={activeChapter === chapter.id ? 'location' : undefined}>{chapter.label}</a>
@@ -199,7 +197,6 @@
 	.hero-image, .hero-scrim { position: absolute; inset: 0; width: 100%; height: 100%; }
 	.hero-image { object-fit: cover; object-position: 50% 45%; animation: landscape-settle 1.8s cubic-bezier(.2,.65,.3,1) both; }
 	.hero-scrim { background: linear-gradient(180deg, #07121c66, transparent 35%, #07121c20 55%, #07121ce0); }
-	.hero-meta { position: absolute; inset: 120px 4.5% auto; display: flex; justify-content: space-between; gap: 1rem; font-size: 12px; }
 	.hero-bottom { position: absolute; bottom: 90px; inset-inline: 4.5%; }
 	.hero-title-mask { overflow: hidden; padding-bottom: 36px; margin-bottom: -36px; }
 	h1 { font-family: var(--font-serif); font-size: clamp(76px, 18vw, 260px); font-weight: 400; letter-spacing: -.045em; line-height: .95; animation: title-arrive 1.15s .1s cubic-bezier(.2,.65,.3,1) both; }
@@ -210,8 +207,7 @@
 	.hero-credit { position: absolute; bottom: 24px; right: 4.5%; font-size: 12px; cursor: zoom-in; color: #f1efeacc; padding: .5rem 0; }
 	.hero-credit span { margin-left: 1rem; }
 	.chapter-nav { position: sticky; top: 76px; z-index: 30; border-bottom: 1px solid var(--color-line); background: var(--color-paper); }
-	.chapter-nav > div { display: flex; justify-content: space-between; align-items: center; gap: 2rem; }
-	.chapter-note { font-size: 12px; color: var(--color-dim); }
+	.chapter-nav > div { display: flex; justify-content: flex-end; align-items: center; gap: 2rem; }
 	.chapter-links { display: flex; gap: 2rem; }
 	.chapter-links a { position: relative; display: flex; align-items: center; min-height: 52px; font-size: 13px; color: var(--color-dim); transition: color 180ms; }
 	.chapter-links a::after { content: ''; position: absolute; bottom: -1px; inset-inline: 0; height: 2px; background: currentColor; transform: scaleX(0); transition: transform 180ms; }
@@ -262,8 +258,8 @@
 	.archive-series h3 { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid var(--color-line); padding-bottom: 16px; margin-bottom: 24px; font-size: 22px; }
 	.archive-series h3 span { font-size: 12px; color: var(--color-dim); }
 	.archive-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px 24px; align-items: start; }
-	.archive-grid .photo-button { aspect-ratio: 4 / 3; background: var(--color-paper-2); }
-	.archive-grid .photo-button img { height: 100%; object-fit: contain; }
+	.archive-grid .photo-button { aspect-ratio: 4 / 3; }
+	.archive-grid .photo-button img { height: 100%; object-fit: cover; } /* the lightbox shows the full frame */
 	.archive-grid .photo-caption { font-size: 11px; gap: .5rem; }
 	.archive-grid .open-photo { padding: 8px 10px; font-size: 11px; bottom: 8px; right: 8px; }
 	@keyframes landscape-settle { from { transform: scale(1.045); } to { transform: scale(1); } }
@@ -279,14 +275,12 @@
 	@media (max-width: 767px) {
 		.photo-container { width: calc(100% - 40px); }
 		.photo-hero { min-height: 620px; max-height: 900px; }
-		.hero-meta { inset: 100px 20px auto; font-size: 10px; }
-		.hero-bottom { inset-inline: 20px; bottom: 86px; }
+			.hero-bottom { inset-inline: 20px; bottom: 86px; }
 		h1 { font-size: clamp(64px, 20vw, 154px); }
 		.hero-footer { flex-direction: column; align-items: start; gap: 1.2rem; margin-top: 24px; font-size: 14px; }
 		.hero-footer p { max-width: 20rem; }
 		.hero-credit { right: 20px; font-size: 11px; }
-		.chapter-note { display: none; }
-		.chapter-links { width: 100%; justify-content: space-between; gap: 1rem; }
+			.chapter-links { width: 100%; justify-content: space-between; gap: 1rem; }
 		.chapter-links a { font-size: 12px; }
 		.daylight { padding-block: 36px 56px; }
 		.edit-heading { display: block; margin-bottom: 28px; }
@@ -319,6 +313,12 @@
 		.archive-grid .photo-caption span { display: block; text-align: left; }
 		.archive-grid .open-photo { display: none; }
 	}
-	@media (hover: none) { .open-photo { opacity: 1; transform: none; padding: 8px 10px; font-size: 10px; bottom: 10px; right: 10px; } }
+	/* Touch: the pill only on the selected edit; elsewhere the caption carries the cue. */
+	@media (hover: none) {
+		#selected .open-photo { opacity: 1; transform: none; padding: 8px 10px; font-size: 11px; bottom: 10px; right: 10px; }
+		.photo-caption span:first-child::after { content: ' ↗'; color: var(--color-dim); }
+	}
+	/* Dark theme: the night room is close to dark paper, so hairlines mark its edges. */
+	:global(.dark) .night-room { box-shadow: inset 0 1px 0 rgb(241 239 234 / 0.08), inset 0 -1px 0 rgb(241 239 234 / 0.08); }
 	@media (prefers-reduced-motion: reduce) { .hero-image, h1 { animation: none; } .open-photo { transition: none; transform: none; } .chapter-links a, .chapter-links a::after { transition: none; } }
 </style>

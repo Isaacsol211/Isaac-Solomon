@@ -12,7 +12,7 @@
 		<span class="text-accent" aria-hidden="true">✱</span>
 		{page.status} — {page.status === 404 ? 'Page not found' : 'Something went wrong'}
 	</p>
-	<h1 class="mt-6 text-6xl font-medium tracking-tight md:text-8xl">
+	<h1 class="mt-6 text-6xl font-medium tracking-tight lowercase md:text-8xl">
 		Lost in <em class="font-serif font-normal text-dim italic">the frame.</em>
 	</h1>
 	<a

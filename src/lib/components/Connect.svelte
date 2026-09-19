@@ -41,6 +41,9 @@
 		return pathname === '/' ? href : `/${href}`;
 	}
 
+	const mailto = (subject: string, body: string) =>
+		`mailto:${site.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
 	onMount(() => {
 		// My local time (IST), not the visitor's — that's the point of the label
 		const format = new Intl.DateTimeFormat('en-GB', {
@@ -93,17 +96,16 @@
 			use:reveal={{ delay: 230 }}
 			class="mt-10 grid max-w-3xl gap-x-12 gap-y-8 border-t border-cream/15 pt-8 sm:grid-cols-2"
 		>
-			{#each connect.routes as route (route.href)}
+			{#each connect.routes as route (route.label)}
 				<div>
-					<p class="text-xs font-medium tracking-[0.22em] lowercase text-cream/45">{route.label}</p>
+					<p class="text-xs font-medium tracking-[0.22em] lowercase text-cream/60">{route.label}</p>
 					<p class="mt-3 text-sm leading-relaxed text-cream/70">{route.body}</p>
 					<a
-						href={resolvedHref(route.href)}
-						class="group mt-3 inline-flex items-center gap-1.5 text-sm text-cream/80 underline-offset-4 transition-colors hover:text-cream focus-visible:text-cream"
+						href={mailto(route.subject, route.mailBody)}
+						class="group mt-3 inline-flex items-center gap-1.5 text-sm text-cream/80 transition-colors hover:text-cream focus-visible:text-cream"
 					>
-						{route.linkLabel}
-						<!-- Both targets sit above the contact block, so the arrow points back up the page. -->
-						<span class="transition-transform group-hover:-translate-y-0.5 group-focus-visible:-translate-y-0.5" aria-hidden="true">↑</span>
+						<span class="underline decoration-cream/30 underline-offset-4">{route.linkLabel}</span>
+						<span class="transition-transform group-hover:translate-x-1 group-focus-visible:translate-x-1" aria-hidden="true">→</span>
 					</a>
 				</div>
 			{/each}
@@ -139,10 +141,6 @@
 			{/if}
 			<span class="sr-only" aria-live="polite">{copied ? 'Email copied to clipboard' : ''}</span>
 		</button>
-
-		<div use:reveal={{ delay: 360 }}>
-			<McpConnect />
-		</div>
 		{/if}
 
 		<footer
@@ -160,7 +158,7 @@
 							{site.name}<span class="text-accent">.</span>
 						</p>
 						<p class="mt-2 text-sm leading-relaxed text-cream/50">
-							{site.role} &amp; {site.tagline}. {site.location}.
+							{site.role} at {site.employer}. {site.location}.
 						</p>
 					</div>
 					<ul class="flex flex-wrap items-center gap-x-7 gap-y-3 text-sm">
@@ -181,7 +179,7 @@
 								{site.email}
 							</a>
 						</li>
-						{#each socials.filter((s) => s.label === 'Instagram') as social (social.label)}
+						{#each socials.filter((s) => s.label !== 'GitHub') as social (social.label)}
 							<li>
 								<a
 									href={social.href}
@@ -203,15 +201,15 @@
 						{site.name}<span class="text-accent">.</span>
 					</p>
 					<p class="mt-3 max-w-sm text-sm leading-relaxed text-cream/50">
-						{site.role} & {site.tagline}. {site.location}.
+						{site.role} at {site.employer}. {site.location}.
 					</p>
-					<p class="mt-6 text-xs font-medium tracking-[0.25em] uppercase text-cream/40">
+					<p class="mt-6 text-xs font-medium tracking-[0.25em] uppercase text-cream/55">
 						Local time — <span class="text-cream/70 tabular-nums">{time || '··:··'}</span>
 					</p>
 				</div>
 
 				<nav class="md:col-span-3" aria-label="Footer">
-					<h3 class="text-xs font-medium tracking-[0.25em] uppercase text-cream/40">Sitemap</h3>
+					<h3 class="text-xs font-medium tracking-[0.25em] uppercase text-cream/55">Sitemap</h3>
 					<ul class="mt-4 space-y-2.5">
 						{#each navLinks as link (link.href)}
 							<li>
@@ -224,7 +222,7 @@
 				</nav>
 
 				<div class="md:col-span-3">
-					<h3 class="text-xs font-medium tracking-[0.25em] uppercase text-cream/40">Elsewhere</h3>
+					<h3 class="text-xs font-medium tracking-[0.25em] uppercase text-cream/55">Elsewhere</h3>
 					<ul class="mt-4 space-y-2.5">
 						{#each socials as social (social.label)}
 							<li>
@@ -242,10 +240,13 @@
 					</ul>
 				</div>
 			</div>
+			<div class="mt-12">
+				<McpConnect />
+			</div>
 			{/if}
 
 			<div
-				class="flex flex-wrap items-center justify-between gap-4 border-t border-cream/15 text-xs text-cream/40 {compact
+				class="flex flex-wrap items-center justify-between gap-4 border-t border-cream/15 text-xs text-cream/55 {compact
 					? 'mt-8 pt-5'
 					: 'mt-16 py-6'}"
 			>

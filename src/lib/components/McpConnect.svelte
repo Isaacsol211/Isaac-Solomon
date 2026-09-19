@@ -64,7 +64,7 @@
 			<ul class="mt-5 space-y-5">
 				{#each steps as step (step.id)}
 					<li>
-						<p class="text-xs font-medium tracking-[0.25em] uppercase text-cream/40">
+						<p class="text-xs font-medium tracking-[0.25em] uppercase text-cream/55">
 							{step.client}
 						</p>
 						<div class="mt-2 flex flex-col items-start gap-2 sm:flex-row sm:gap-3">
@@ -80,7 +80,7 @@
 								{copiedId === step.id ? 'Copied ✓' : 'Copy'}
 							</button>
 						</div>
-						<p class="mt-2 text-xs leading-relaxed text-cream/40">{step.hint}</p>
+						<p class="mt-2 text-xs leading-relaxed text-cream/55">{step.hint}</p>
 					</li>
 				{/each}
 			</ul>

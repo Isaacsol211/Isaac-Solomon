@@ -25,3 +25,6 @@ vite.config.ts.timestamp-*
 # Impeccable engine binary — 12 MB, macOS-only, re-fetched by `npx impeccable install`.
 # The hook in .claude/settings.local.json is guarded and no-ops when it is absent.
 .claude/skills/impeccable/scripts/bin/
+
+# Playwright
+/test-results

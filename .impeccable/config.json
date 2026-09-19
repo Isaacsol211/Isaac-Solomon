@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "broken-image",
+        "value": "*",
+        "files": [
+          "src/lib/components/Projects.svelte"
+        ],
+        "createdAt": "2026-09-19T12:00:38.969Z",
+        "reason": "Claude: hover-preview img gets its src lazily on first pointerenter by design (see seen[] comment); not a placeholder"
+      }
+    ]
+  }
+}

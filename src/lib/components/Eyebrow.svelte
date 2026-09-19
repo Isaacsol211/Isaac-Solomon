@@ -1,11 +1,9 @@
 <script lang="ts">
 	let {
-		index,
 		title,
 		tone = 'light',
 		as = 'p'
 	}: {
-		index?: string;
 		title: string;
 		tone?: 'light' | 'dark';
 		/**
@@ -31,7 +29,7 @@
 		what is drawn changes.
 	-->
 	<span
-		><span aria-hidden="true">(&nbsp;</span>{index ? `${index} — ` : ''}{title}<span
+		><span aria-hidden="true">(&nbsp;</span>{title}<span
 			aria-hidden="true">&nbsp;)</span
 		></span
 	>

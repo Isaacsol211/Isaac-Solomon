@@ -40,6 +40,14 @@ export function openingAlreadyRevealed(): boolean {
 	return document.documentElement.classList.contains('opened');
 }
 
+/**
+ * Seconds the opening choreography should wait: while app.html's first-visit
+ * entrance curtain is up, the hero plays as it lifts rather than behind it.
+ */
+export function entranceDelay(): number {
+	return document.documentElement.classList.contains('site-entering') ? 0.65 : 0;
+}
+
 /** Live read — never cache the result across a session. */
 export function prefersReducedMotion(): boolean {
 	return window.matchMedia(REDUCED_MOTION).matches;
