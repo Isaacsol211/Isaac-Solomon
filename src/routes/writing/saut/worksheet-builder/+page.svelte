@@ -1,50 +1,13 @@
 <script lang="ts">
-	import { site } from '$lib/content';
-	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
-	import ReadingProgress from '$lib/components/ReadingProgress.svelte';
+	import ArticleChrome from '$lib/components/ArticleChrome.svelte';
 	import NextArticle from '$lib/components/NextArticle.svelte';
 
 	const title = 'The Worksheet Builder — A Design Tool Inside an LMS — Isaac Solomon';
 	const description =
 		'How I built a drag-and-drop canvas for special educators to create pixel-perfect printable worksheets — flashcards, shapes, multiple A4 artboards, all from a browser.';
-	const canonical = `${site.url}/writing/saut/worksheet-builder`;
 </script>
 
-<svelte:head>
-	<title>{title}</title>
-	<meta name="description" content={description} />
-	<link rel="canonical" href={canonical} />
-	<!-- markdown twin for agents — see /llms.txt -->
-	<link rel="alternate" type="text/markdown" href="{canonical}.md" />
-	<meta property="og:type" content="article" />
-	<meta property="og:title" content={title} />
-	<meta property="og:description" content={description} />
-	<meta property="og:url" content={canonical} />
-	<meta property="og:image" content="{site.url}/projects/saut/landing-hero-devices-right-to-left.png" />
-	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:title" content={title} />
-	<meta name="twitter:description" content={description} />
-	<meta name="twitter:image" content="{site.url}/projects/saut/landing-hero-devices-right-to-left.png" />
-</svelte:head>
-
-<ReadingProgress />
-
-<!-- back nav -->
-<header class="border-b border-line px-5 py-4 sm:px-8">
-	<div class="mx-auto flex max-w-3xl items-center justify-between">
-		<a
-			href="/writing/saut"
-			class="group flex items-center gap-2 text-xs font-medium tracking-[0.2em] uppercase text-dim transition-colors hover:text-ink"
-		>
-			<span class="inline-block transition-transform duration-200 group-hover:-translate-x-1" aria-hidden="true">←</span>
-			SAUT Case Study
-		</a>
-		<div class="flex items-center gap-3">
-			<span class="text-xs font-medium tracking-[0.2em] uppercase text-dim">Writing</span>
-			<ThemeToggle />
-		</div>
-	</div>
-</header>
+<ArticleChrome {title} {description} path="/writing/saut/worksheet-builder" image="/projects/saut/landing-hero-devices-right-to-left.png" back={{ href: '/writing/saut', label: 'SAUT Case Study' }} />
 
 <main id="main" class="px-5 pb-24 sm:px-8">
 
@@ -52,10 +15,10 @@
 	<div class="mx-auto max-w-3xl pt-14 md:pt-20">
 
 		<p class="text-xs font-medium tracking-[0.25em] uppercase text-accent-text">
-			Case Study · SAUT — Part 2
+			Deep Dive · SAUT
 		</p>
 
-		<h1 class="mt-4 text-4xl font-medium leading-[1.1] tracking-tight md:text-6xl">
+		<h1 class="mt-4 text-4xl font-medium leading-[1.1] tracking-tight lowercase md:text-6xl">
 			A Design Tool<br />Disguised as
 			<em class="font-serif font-normal italic text-dim">a Feature.</em>
 		</h1>
@@ -160,7 +123,7 @@
 					{ n: '02', q: 'Drag-and-drop positioning with pixel-precise placement' },
 					{ n: '03', q: 'Flashcards from the SAUT library — searchable by name and tags' },
 					{ n: '04', q: 'Three flashcard display modes — image + text, image only, text only' },
-					{ n: '05', q: 'Three print sizes — small (16/page), medium (12/page), large (6/page)' },
+					{ n: '05', q: 'Three card sizes — small (16 to a page), medium (12), large (6)' },
 					{ n: '06', q: 'Multi-page worksheets — multiple A4 artboards, one PDF' },
 				] as item}
 					<div class="flex items-baseline gap-5 py-4">
@@ -189,7 +152,7 @@
 			</p>
 
 			<p>
-				And the sizes: small prints sixteen cards on a single A4 page. Medium gives you twelve.
+				And the sizes: at small, sixteen cards fit on a single A4 page. Medium gives you twelve.
 				Large gives you six. The teacher picks the size based on the child's needs — younger
 				children or those with visual processing challenges get larger cards. These aren't
 				arbitrary sizes — they're calculated to divide an A4 sheet evenly with consistent margins.
@@ -234,33 +197,33 @@
 				The tricky part was the UI. How do you navigate between artboards without losing your
 				mental model of the worksheet as a whole? How do you reorder pages? Duplicate a page
 				and modify it slightly for a different child? Delete page three without affecting pages
-				one and two? It's the kind of feature that sounds simple in a spec and gets complex
-				the moment a real teacher starts using it.
+				one and two?
 			</p>
 
 			<h2>The print problem</h2>
 
 			<p>
 				Browser printing is a minefield. Every browser handles <code>@media print</code> slightly
-				differently. Safari on iPad — the device teachers actually used — has its own quirks
+				differently. Safari on iPad has its own quirks
 				around margins, page breaks, and scaling. The goal was simple: what the teacher sees on
 				the canvas is exactly what prints on paper. No surprises, no misalignment, no elements
 				drifting off the edge.
 			</p>
 
 			<p>
-				We had to account for the difference between CSS pixels and physical millimetres. An A4
-				sheet is 210 × 297mm, but the canvas renders in pixels at whatever DPI the device happens
-				to use. The mapping between drag-and-drop coordinates and print positions had to be
-				exact — a flashcard placed in the top-right corner of the canvas had to appear in the
-				top-right corner of the printed page, not shifted by the browser's default margins.
+				The canvas is an HTML <code>&lt;canvas&gt;</code> driven by fabric.js, with a fixed-size
+				artboard — 740 × 895 pixels in portrait, 937 × 578 in landscape — so a position on the
+				canvas is the same position on every device, whatever its screen. Export renders the
+				artboards with html2pdf.js at five times their on-screen resolution, and jsPDF sets the
+				page orientation; the PDF is then uploaded to the backend. The fixed artboard keeps a
+				flashcard where the teacher put it; the 5× render keeps it sharp on paper.
 			</p>
 
 			<p>
 				This took more iterations than I'd like to admit. The first version worked on desktop Chrome.
 				It broke on Safari. The Safari fix broke the iPad print flow. The iPad fix introduced a
 				scaling issue on high-DPI displays. Each fix revealed another edge case. Eventually we
-				got it right — consistent, predictable, pixel-perfect printing across every device the
+				got it right — consistent, predictable printing on every device the
 				teachers used.
 			</p>
 
@@ -305,9 +268,9 @@
 
 			<ul>
 				<li>The hardest features are the ones that sound simple in the brief. "Teachers can create worksheets" is one sentence. The implementation was months of work.</li>
-				<li>Print fidelity is a browser compatibility problem disguised as a design problem. You solve it with testing, not with clever CSS.</li>
+				<li>Print fidelity is a browser compatibility problem disguised as a design problem. You solve it with a device matrix and repeated testing, not with one clever stylesheet.</li>
 				<li>A canvas tool in a domain-specific application doesn't need to be Figma. It needs to do ten things perfectly, not a hundred things adequately. Constraining the feature set was as important as building it.</li>
-				<li>Watching a teacher build a worksheet for a specific child — picking flashcards that match that child's current subgoals, sizing them for that child's visual processing level — is the moment you understand why custom tooling matters. A PDF generator couldn't do this.</li>
+				<li>Watching a teacher build a worksheet for a specific child — picking flashcards that match that child's current subgoals, sizing them for that child's visual processing level — is the moment you understand why custom tooling matters. A templated PDF couldn't do this.</li>
 			</ul>
 
 		</div>
@@ -329,14 +292,14 @@
 					<span class="shrink-0 font-mono text-[10px] tracking-[0.2em] text-accent/60">→</span>
 					<span>
 						<span class="text-sm font-medium group-hover:text-accent transition-colors">Wearing Three Hats</span>
-						<span class="mt-0.5 block text-xs text-dim">How four years on one product turned a frontend dev into a PM and designer.</span>
+						<span class="mt-0.5 block text-xs text-dim">How four years on one product turned a frontend developer into a product manager and stand-in designer.</span>
 					</span>
 				</a>
 			</div>
 		</div>
 
 		<!-- footer -->
-		<NextArticle href="/writing/mivi" />
+		<NextArticle href="/writing/saut/three-hats" />
 
 		<div class="mt-16 flex items-center justify-between border-t border-line pt-8">
 			<a

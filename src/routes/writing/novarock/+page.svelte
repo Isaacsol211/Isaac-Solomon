@@ -1,50 +1,15 @@
 <script lang="ts">
-	import { site } from '$lib/content';
-	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
-	import ReadingProgress from '$lib/components/ReadingProgress.svelte';
+	import ArticleChrome from '$lib/components/ArticleChrome.svelte';
 	import NextArticle from '$lib/components/NextArticle.svelte';
+	import CaseSummary from '$lib/components/CaseSummary.svelte';
+	import EvidenceTable from '$lib/components/EvidenceTable.svelte';
 
 	const title = 'Building Without a Brief — Isaac Solomon';
 	const description =
 		'How I turned a four-word brief into a static, bilingual, WhatsApp-first website for a mining tools company — without a designer, mockups, or a brand guide.';
-	const canonical = `${site.url}/writing/novarock`;
 </script>
 
-<svelte:head>
-	<title>{title}</title>
-	<meta name="description" content={description} />
-	<link rel="canonical" href={canonical} />
-	<!-- markdown twin for agents — see /llms.txt -->
-	<link rel="alternate" type="text/markdown" href="{canonical}.md" />
-	<meta property="og:type" content="article" />
-	<meta property="og:title" content={title} />
-	<meta property="og:description" content={description} />
-	<meta property="og:url" content={canonical} />
-	<meta property="og:image" content="{site.url}/writing/novarock/og.png" />
-	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:title" content={title} />
-	<meta name="twitter:description" content={description} />
-	<meta name="twitter:image" content="{site.url}/writing/novarock/og.png" />
-</svelte:head>
-
-<ReadingProgress />
-
-<!-- back nav -->
-<header class="border-b border-line px-5 py-4 sm:px-8">
-	<div class="mx-auto flex max-w-3xl items-center justify-between">
-		<a
-			href="/"
-			class="group flex items-center gap-2 text-xs font-medium tracking-[0.2em] uppercase text-dim transition-colors hover:text-ink"
-		>
-			<span class="inline-block transition-transform duration-200 group-hover:-translate-x-1" aria-hidden="true">←</span>
-			Isaac Solomon
-		</a>
-		<div class="flex items-center gap-3">
-			<span class="text-xs font-medium tracking-[0.2em] uppercase text-dim">Writing</span>
-			<ThemeToggle />
-		</div>
-	</div>
-</header>
+<ArticleChrome {title} {description} path="/writing/novarock" image="/writing/novarock/og.png" />
 
 <main id="main" class="px-5 pb-24 sm:px-8">
 
@@ -55,7 +20,7 @@
 			Case Study · Nova Rock Tools
 		</p>
 
-		<h1 class="mt-4 text-4xl font-medium leading-[1.1] tracking-tight md:text-6xl">
+		<h1 class="mt-4 text-4xl font-medium leading-[1.1] tracking-tight lowercase md:text-6xl">
 			Building<br />Without a
 			<em class="font-serif font-normal italic text-dim">Brief.</em>
 		</h1>
@@ -65,25 +30,13 @@
 			for a mining tools company — without a designer, mockups, or a brand guide.
 		</p>
 
-		<!-- meta -->
-		<div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-b border-line py-5 text-xs font-medium tracking-[0.2em] uppercase text-dim">
-			<span>2025</span>
-			<span class="h-3 w-px bg-line"></span>
-			<span>B2B · Industrial</span>
-			<span class="h-3 w-px bg-line"></span>
-			<span>SvelteKit · Cloudflare</span>
-			<span class="h-3 w-px bg-line"></span>
-			<a href="https://www.novarocktools.com" target="_blank" rel="noopener noreferrer"
-				class="text-accent transition-opacity hover:opacity-70">
-				novarocktools.com ↗
-			</a>
-		</div>
+		<CaseSummary href="/writing/novarock" />
 
 		<!-- payoff teaser — give readers the result before the deep dive -->
 		<div class="mt-10 rounded-xl border border-line bg-paper-2/60 px-6 py-5">
 			<p class="text-sm leading-relaxed text-dim">
 				<strong class="font-medium text-ink">The result:</strong> a static, bilingual, WhatsApp-first product site
-				that went from ~4.2 MB per load to under 400 KB, shipped correct Open Graph previews for every product page,
+				that went from an estimated ~4.2 MB per load to about 430 KB, shipped correct Open Graph previews for every product page,
 				and looked like it belonged in industrial procurement — not a template marketplace.
 			</p>
 		</div>
@@ -121,7 +74,7 @@
 			<div>
 				<div class="mb-2 flex items-center justify-between">
 					<span class="text-[10px] font-medium tracking-[0.2em] uppercase text-accent">Production (SvelteKit)</span>
-					<span class="rounded-full bg-accent/10 border border-accent/30 px-2.5 py-1 font-mono text-[10px] text-accent">Perf 100</span>
+					<span class="rounded-full bg-accent/10 border border-accent/30 px-2.5 py-1 font-mono text-[10px] text-accent">Perf 95</span>
 				</div>
 				<div class="overflow-hidden rounded-xl border border-accent/30 shadow-[0_16px_32px_-16px_rgba(20,19,17,0.15)]">
 					<div class="flex items-center gap-1.5 border-b border-line bg-paper-2 px-3 py-2">
@@ -153,12 +106,12 @@
 				<span class="col-span-2 text-right">Delta</span>
 			</div>
 			{#each [
-				{ label: 'Performance', before: '57', after: '100', delta: '+43', good: true },
-				{ label: 'Best Practices', before: '76', after: '92', delta: '+16', good: true },
-				{ label: 'LCP', before: '7.7 s', after: '0.8 s', delta: '−6.9 s', good: true },
-				{ label: 'FCP', before: '6.1 s', after: '0.5 s', delta: '−5.6 s', good: true },
-				{ label: 'Speed Index', before: '11.0 s', after: '0.6 s', delta: '−10.4 s', good: true },
-				{ label: 'Page weight', before: '549 KB', after: '248 KB', delta: '−55%', good: true },
+				{ label: 'Performance', before: '57', after: '95', delta: '+38', good: true },
+				{ label: 'Best Practices', before: '76', after: '93', delta: '+17', good: true },
+				{ label: 'LCP', before: '7.7 s', after: '1.3 s', delta: '−6.4 s', good: true },
+				{ label: 'FCP', before: '6.1 s', after: '1.0 s', delta: '−5.1 s', good: true },
+				{ label: 'Speed Index', before: '11.0 s', after: '1.2 s', delta: '−9.8 s', good: true },
+				{ label: 'Page weight', before: '549 KB', after: '433 KB', delta: '−21%', good: true },
 			] as row}
 				<div class="grid grid-cols-5 items-center border-b border-line/60 px-5 py-3 text-sm last:border-0">
 					<span class="text-xs font-medium text-dim">{row.label}</span>
@@ -168,7 +121,7 @@
 				</div>
 			{/each}
 			<div class="border-t border-line bg-paper-2/60 px-5 py-2.5 text-[10px] leading-relaxed text-dim">
-				Lighthouse desktop audit — concept site at IP, production at novarocktools.com. Same test conditions, same categories.
+				Lighthouse desktop audit — concept site on its shared host; production on Cloudflare, Lighthouse 12.8, 19 September 2026, median of three runs. The hosting difference is part of the result.
 			</div>
 		</div>
 	</div>
@@ -196,7 +149,7 @@
 			<h2>The client: B2B, industrial, bilingual</h2>
 
 			<p>
-				Nova Rock Tools makes DTH hammers, drill bits and tricones for underground mining operations.
+				Nova Rock Tools makes DTH hammers, drill bits and tricones for mining, water-well drilling, construction and geological exploration.
 				Their customers are procurement engineers at Peruvian mining companies — people who need to
 				<em>trust a supplier</em> before they'll put their number on a quote request.
 				There's no impulse buy. There's no "add to cart." There is: <em>does this company look like
@@ -246,7 +199,7 @@
 
 			<p>
 				The site also had to speak two languages. Spanish is the language of the business,
-				but ISO certifications and export inquiries increasingly come from English-speaking engineers.
+				but ISO certifications and export enquiries increasingly come from English-speaking engineers.
 				One codebase, two audiences — and no brief for either.
 			</p>
 
@@ -309,7 +262,7 @@
 			<p>
 				WhatsApp scrapers don't execute JavaScript. Share a product page link and your customers see
 				the homepage thumbnail, every time, for every product. The fix was migrating to
-				<strong>SvelteKit with static prerendering</strong> — all ten routes built to real HTML at
+				<strong>SvelteKit with static prerendering</strong> — all nine routes built to real HTML at
 				deploy time, served from Cloudflare's edge. Correct Open Graph tags on every page. A real 404.
 				No JavaScript required for first paint.
 			</p>
@@ -435,10 +388,9 @@
 					<code class="rounded border border-line bg-paper-2 px-1.5 py-0.5 text-[11px]">&lt;picture&gt;</code> element
 					with <code class="rounded border border-line bg-paper-2 px-1.5 py-0.5 text-[11px]">srcset + sizes</code>,
 					explicit dimensions to kill CLS, <code class="rounded border border-line bg-paper-2 px-1.5 py-0.5 text-[11px]">fetchpriority="high"</code> on the LCP image,
-					and a <code class="rounded border border-line bg-paper-2 px-1.5 py-0.5 text-[11px]">mobileSkip</code> prop that emits
-					a mobile-first source on small screens. The intent was for the hero to be skipped on a phone
-					outright rather than merely hidden — the note under the snippet explains why an empty source
-					alone does not deliver that, and what does.
+					and a <code class="rounded border border-line bg-paper-2 px-1.5 py-0.5 text-[11px]">mobileSkip</code> prop for
+					decorative heroes that phones never show. Phones skip the download outright rather than
+					fetching an image and hiding it — the note under the snippet explains how.
 				</p>
 			</div>
 		</div>
@@ -449,7 +401,7 @@
 				<span class="font-mono text-[10px] tracking-wider text-dim">Picture.svelte — usage</span>
 				<span class="text-[10px] font-medium tracking-[0.15em] uppercase text-dim/60">Svelte 5</span>
 			</div>
-			<pre class="overflow-x-auto p-5 text-[12px] leading-relaxed"><code><span class="text-dim">&lt;!-- Hero — preloaded; mobileSkip meant to skip the phone download (see note) --&gt;</span>
+			<pre class="overflow-x-auto p-5 text-[12px] leading-relaxed"><code><span class="text-dim">&lt;!-- Hero — fetchpriority high; mobileSkip keeps it off phones (see note) --&gt;</span>
 <span class="text-accent">&lt;Picture</span>
   <span class="text-[#86d993]">src</span>=<span class="text-[#e8c57d]">"/img/dth-hammer.png"</span>
   <span class="text-[#86d993]">alt</span>=<span class="text-[#e8c57d]">"DTH hammer NRT45DH"</span>
@@ -468,11 +420,12 @@
   <span class="text-[#86d993]">loading</span>=<span class="text-[#e8c57d]">"lazy"</span>
 <span class="text-accent">/&gt;</span></code></pre>
 			<div class="border-t border-line bg-paper-2/50 px-4 py-3 text-xs leading-relaxed text-dim">
-				<code class="rounded border border-line bg-paper-2 px-1.5 py-0.5 text-[10px]">mobileSkip</code> emits
-				<code class="rounded border border-line bg-paper-2 px-1.5 py-0.5 text-[10px]">&lt;source media="(max-width: 639px)" srcset=""&gt;</code>
-				as the first source. Per the HTML spec, a source whose parsed source set is empty is <em>skipped</em>, not honoured — the browser moves on to the next candidate and downloads the hero anyway. On its own this does not suppress the request. What does: point the mobile source at a real, tiny placeholder, or leave the element out of the mobile markup entirely. Hiding it with
+				With <code class="rounded border border-line bg-paper-2 px-1.5 py-0.5 text-[10px]">mobileSkip</code>, the only
+				<code class="rounded border border-line bg-paper-2 px-1.5 py-0.5 text-[10px]">&lt;source&gt;</code> is
+				<code class="rounded border border-line bg-paper-2 px-1.5 py-0.5 text-[10px]">media="(min-width: 640px)"</code>, and the
+				<code class="rounded border border-line bg-paper-2 px-1.5 py-0.5 text-[10px]">&lt;img&gt;</code> fallback is a 1×1 transparent GIF data URI.
+				Below 640px no source matches, so the browser uses the fallback and never requests the hero. Hiding it with
 				<code class="rounded border border-line bg-paper-2 px-1.5 py-0.5 text-[10px]">display:none</code> doesn't help either; hidden images are still fetched.
-				<code class="rounded border border-line bg-paper-2 px-1.5 py-0.5 text-[10px]">display:none</code> doesn't do this.
 			</div>
 		</div>
 
@@ -498,7 +451,6 @@
 			<p>
 				None of those are especially creative decisions. They're correct ones.
 				Consumer brands need to delight; industrial B2B needs to not scare people off.
-				The goal was not to make it exciting. The goal was to make it credible.
 			</p>
 
 			<h2>The part AI actually helped with</h2>
@@ -525,35 +477,25 @@
 		</div>
 
 		<!-- ── What changed — merged outcome + what shipped ─────────── -->
-		<div class="not-prose my-10 overflow-hidden rounded-2xl border border-coal bg-coal text-cream">
-			<div class="border-b border-cream/10 px-6 py-4">
-				<p class="text-xs font-medium tracking-[0.25em] uppercase text-cream/50">What changed</p>
-				<p class="mt-1 font-medium tracking-tight">Before and after, in plain numbers.</p>
-			</div>
-			<div class="divide-y divide-cream/10">
-				{#each [
-					{ metric: 'Page weight (home)', before: '~4.2 MB', after: '< 400 KB' },
-					{ metric: 'Largest asset', before: '1.78 MB', after: '77 KB' },
-					{ metric: 'Rendering', before: 'Client-side SPA', after: 'Static HTML' },
-					{ metric: 'Crawlable links', before: '0', after: 'All routes' },
-					{ metric: 'WhatsApp / social previews', before: 'Homepage only', after: 'Correct per page' },
-					{ metric: 'Contact form', before: 'Injection-prone, no validation', after: 'Escaped + bot-filtered' },
-				] as row}
-					<div class="grid grid-cols-3 gap-2 px-6 py-3.5 text-sm">
-						<span class="text-xs font-medium tracking-wide text-cream/50">{row.metric}</span>
-						<span class="font-mono text-xs text-cream/35 line-through">{row.before}</span>
-						<span class="font-mono text-xs text-[#86d993]">{row.after}</span>
-					</div>
-				{/each}
-			</div>
-		</div>
+		<EvidenceTable
+			eyebrow="What changed"
+			title="Before and after, in plain numbers."
+			rows={[
+					{ label: 'Page weight (home)', before: '~4.2 MB', after: '~430 KB' },
+					{ label: 'Largest asset', before: '1.78 MB', after: '77 KB' },
+					{ label: 'Rendering', before: 'Client-side SPA', after: 'Static HTML' },
+					{ label: 'Crawlable links', before: '0', after: 'All routes' },
+					{ label: 'WhatsApp / social previews', before: 'Homepage only', after: 'Correct per page' },
+					{ label: 'Contact form', before: 'Injection-prone, no validation', after: 'Validated, escaped, honeypot' },
+			]}
+		/>
 
 		<div class="prose">
 
 			<p>
 				The live site at <a href="https://www.novarocktools.com" target="_blank" rel="noopener noreferrer">novarocktools.com</a>
-				is a fully static SvelteKit build on Cloudflare Pages — ten prerendered routes, WebP images, self-hosted fonts,
-				a Cloudflare Workers contact function wired to Resend with escaping, validation, and a honeypot,
+				is a fully static SvelteKit build on Cloudflare Pages — nine prerendered routes, WebP images, self-hosted fonts,
+				a SvelteKit contact endpoint on Cloudflare that sends through Resend, with validation, escaping and a honeypot,
 				and a floating WhatsApp CTA on every product page.
 			</p>
 
@@ -572,7 +514,7 @@
 			<ul>
 				<li>Add product structured data (JSON-LD) for each tool — drilling equipment queries are specific and long-tail.</li>
 				<li>Downloadable PDF spec sheets per product, gated behind the WhatsApp CTA.</li>
-				<li>Track WhatsApp CTA clicks by product to understand which tools drive the most inquiries.</li>
+				<li>Track WhatsApp CTA clicks by product to understand which tools drive the most enquiries.</li>
 				<li>Spanish-first SEO landing pages targeting specific drill types and mining regions.</li>
 				<li>A small FAQ section answering "¿Hacen envíos a mina?" and "¿Tiempos de entrega?" — these are the questions buyers actually ask before enquiring.</li>
 			</ul>

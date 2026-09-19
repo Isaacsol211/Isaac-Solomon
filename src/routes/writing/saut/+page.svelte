@@ -1,50 +1,15 @@
 <script lang="ts">
-	import { site } from '$lib/content';
-	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
-	import ReadingProgress from '$lib/components/ReadingProgress.svelte';
+	import ArticleChrome from '$lib/components/ArticleChrome.svelte';
 	import NextArticle from '$lib/components/NextArticle.svelte';
+	import CaseSummary from '$lib/components/CaseSummary.svelte';
+	import EvidenceTable from '$lib/components/EvidenceTable.svelte';
 
 	const title = 'Four Years, Two Frameworks, One Mission — Isaac Solomon';
 	const description =
 		'How I built a Learning Management System for special educators teaching children with Down syndrome — from Vue.js to SvelteKit, bilingual RTL/LTR, and a 5-month complete rewrite of a live product.';
-	const canonical = `${site.url}/writing/saut`;
 </script>
 
-<svelte:head>
-	<title>{title}</title>
-	<meta name="description" content={description} />
-	<link rel="canonical" href={canonical} />
-	<!-- markdown twin for agents — see /llms.txt -->
-	<link rel="alternate" type="text/markdown" href="{canonical}.md" />
-	<meta property="og:type" content="article" />
-	<meta property="og:title" content={title} />
-	<meta property="og:description" content={description} />
-	<meta property="og:url" content={canonical} />
-	<meta property="og:image" content="{site.url}/projects/saut/landing-hero-devices-right-to-left.png" />
-	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:title" content={title} />
-	<meta name="twitter:description" content={description} />
-	<meta name="twitter:image" content="{site.url}/projects/saut/landing-hero-devices-right-to-left.png" />
-</svelte:head>
-
-<ReadingProgress />
-
-<!-- back nav -->
-<header class="border-b border-line px-5 py-4 sm:px-8">
-	<div class="mx-auto flex max-w-3xl items-center justify-between">
-		<a
-			href="/"
-			class="group flex items-center gap-2 text-xs font-medium tracking-[0.2em] uppercase text-dim transition-colors hover:text-ink"
-		>
-			<span class="inline-block transition-transform duration-200 group-hover:-translate-x-1" aria-hidden="true">←</span>
-			Isaac Solomon
-		</a>
-		<div class="flex items-center gap-3">
-			<span class="text-xs font-medium tracking-[0.2em] uppercase text-dim">Writing</span>
-			<ThemeToggle />
-		</div>
-	</div>
-</header>
+<ArticleChrome {title} {description} path="/writing/saut" image="/projects/saut/landing-hero-devices-right-to-left.png" />
 
 <main id="main" class="px-5 pb-24 sm:px-8">
 
@@ -55,7 +20,7 @@
 			Case Study · SAUT
 		</p>
 
-		<h1 class="mt-4 text-4xl font-medium leading-[1.1] tracking-tight md:text-6xl">
+		<h1 class="mt-4 text-4xl font-medium leading-[1.1] tracking-tight lowercase md:text-6xl">
 			Four Years, Two<br />Frameworks,
 			<em class="font-serif font-normal italic text-dim">One Mission.</em>
 		</h1>
@@ -65,14 +30,7 @@
 			with Down syndrome — then rewrote it from scratch when the architecture couldn't keep up.
 		</p>
 
-		<!-- meta -->
-		<div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-b border-line py-5 text-xs font-medium tracking-[0.2em] uppercase text-dim">
-			<span>2019 – 2023</span>
-			<span class="h-3 w-px bg-line"></span>
-			<span>EdTech · LMS</span>
-			<span class="h-3 w-px bg-line"></span>
-			<span>Vue.js → SvelteKit · Rails · PostgreSQL</span>
-		</div>
+		<CaseSummary href="/writing/saut" />
 
 		<!-- payoff teaser -->
 		<div class="mt-10 rounded-xl border border-line bg-paper-2/60 px-6 py-5">
@@ -80,7 +38,7 @@
 				<strong class="font-medium text-ink">The result:</strong> a bilingual Arabic/English platform
 				with offline-first assessments, a drag-and-drop worksheet builder, and a 65-feature release roadmap
 				that shipped in full — built by a three-person dev team with no QA. The project grew my role from
-				pure frontend developer into product manager, and into the person extending the design system.
+				pure frontend developer into product manager and stand-in designer.
 			</p>
 		</div>
 	</div>
@@ -104,7 +62,8 @@
 		<div class="prose">
 
 			<p>
-				SAUT is a school in Riyadh for children with Down syndrome, backed by the Princess of Riyadh.
+				SAUT is a school in Riyadh for children with Down syndrome, with a board chaired by HRH Princess
+				Rima bint Sultan bin Abdulaziz Al Saud.
 				The platform I built — also called SAUT — is a Learning Management System designed for
 				their teachers: a tool for planning individualised curricula, running daily assessments,
 				printing personalised learning materials, and tracking each child's progress across years
@@ -119,16 +78,16 @@
 			</p>
 
 			<p>
-				I was on this project from day one to handoff — four-plus years. I built both versions of the
+				I was on this project from day one to handoff — four-plus years. I worked on both versions of the
 				frontend, managed the product roadmap, designed screens when the design team couldn't keep up,
 				and helped ship all six release phases. It's the longest I've worked on any single product,
-				and the one that taught me the most about what it means to build something that actually matters.
+				and the one whose early decisions I lived with longest.
 			</p>
 
 			<h2>The complexity</h2>
 
 			<p>
-				This wasn't a simple CRUD app with a few forms. The data model alone would give you pause.
+				The data model alone would give you pause.
 				A curriculum in SAUT has five levels of nesting: Curriculum → Domain → Category → Goal → Subgoal.
 				Each subgoal carries its own assessment criteria, flashcards, lesson plans, and learning materials.
 				Multiply that across every student, every classroom, every academic year.
@@ -136,9 +95,9 @@
 
 			<p>
 				Then there's assessment. Four different criteria types — a linear 5-point scale for most domains,
-				binary pass/fail for others, an 8-point Makaton scale for sign language communication, and
+				binary pass/fail for others, an 8-point Makaton scale for signed communication, and
 				percentile-based scoring for early childhood. A subgoal is "complete" when a student hits a
-				success threshold: say, three successful assessments out of five total attempts, non-consecutive.
+				success threshold: say, three successful assessments out of five attempts, not necessarily consecutive.
 				The system tracks all of this automatically.
 			</p>
 
@@ -157,7 +116,7 @@
 					{ n: '03', q: '4 assessment criteria types — Linear, Binary, Makaton, Percentile' },
 					{ n: '04', q: 'Offline-first daily assessments — syncs when connectivity returns' },
 					{ n: '05', q: 'Bilingual Arabic/English with a live RTL ↔ LTR toggle' },
-					{ n: '06', q: '65+ features shipped across 6 phased releases' },
+					{ n: '06', q: '65 features shipped across 6 phased releases' },
 				] as item}
 					<div class="flex items-baseline gap-5 py-4">
 						<span class="shrink-0 font-mono text-[10px] tracking-[0.2em] text-accent/60">{item.n}</span>
@@ -170,7 +129,7 @@
 		<div class="prose">
 
 			<p>
-				Nine user roles, each with a different slice of the system. A teacher creates IEPs and runs daily
+				Nine user roles, each with a different slice of the system. A teacher creates IEPs (individualised education plans) and runs daily
 				assessments. A supervisor reviews and approves them before they're finalised. A speech therapist
 				only sees communication-related goals. The school admin manages staff but can't create IEPs. The
 				super admin controls the curriculum across multiple schools. Every action in the system passes through
@@ -217,6 +176,14 @@
 				linked references instead of copies. Updates propagate automatically. No duplication.
 			</p>
 
+			<p>
+				The frontend went too, for a different reason. Teachers ran SAUT as a PWA on their
+				tablets and iPads, and the Vue bundle had grown heavy for those devices. SvelteKit was new
+				in the market, but it compiles components away instead of shipping a runtime — a lighter
+				app on the hardware teachers actually carried. Since the data layer was being rebuilt
+				anyway, it was the moment to change frameworks rather than carry the weight into V2.
+			</p>
+
 			<h2>V2 — the rewrite</h2>
 
 			<p>
@@ -229,29 +196,19 @@
 		</div>
 
 		<!-- migration comparison -->
-		<div class="not-prose my-10 overflow-hidden rounded-2xl border border-coal bg-coal text-cream">
-			<div class="border-b border-cream/10 px-6 py-4">
-				<p class="text-xs font-medium tracking-[0.25em] uppercase text-cream/50">The Migration</p>
-				<p class="mt-1 font-medium tracking-tight">What changed between V1 and V2.</p>
-			</div>
-			<div class="divide-y divide-cream/10">
-				{#each [
-					{ metric: 'Frontend framework', before: 'Vue.js', after: 'SvelteKit + Tailwind' },
-					{ metric: 'Data architecture', before: 'Copied goals per student', after: 'Linked references — single source of truth' },
-					{ metric: 'Curriculum updates', before: 'Manual propagation', after: 'Automatic — edit once, propagates everywhere' },
-					{ metric: 'School support', before: 'Single-school', after: 'Multi-school with centralised permissions' },
-					{ metric: 'Assessment criteria', before: 'Fixed per domain', after: 'Flexible — overridable per student' },
-					{ metric: 'IEP editing', before: 'Locked after approval', after: 'Versioned — case studies create new IEP versions' },
-					{ metric: 'Offline support', before: 'None', after: 'Service worker — attendance and assessments sync on reconnection' },
-				] as row}
-					<div class="grid grid-cols-3 gap-2 px-6 py-3.5 text-sm">
-						<span class="text-xs font-medium tracking-wide text-cream/50">{row.metric}</span>
-						<span class="font-mono text-xs text-cream/35 line-through">{row.before}</span>
-						<span class="font-mono text-xs text-[#86d993]">{row.after}</span>
-					</div>
-				{/each}
-			</div>
-		</div>
+		<EvidenceTable
+			eyebrow="The Migration"
+			title="What changed between V1 and V2."
+			rows={[
+					{ label: 'Frontend framework', before: 'Vue.js', after: 'SvelteKit + Tailwind' },
+					{ label: 'Data architecture', before: 'Copied goals per student', after: 'Linked references — single source of truth' },
+					{ label: 'Curriculum updates', before: 'Manual propagation', after: 'Automatic — edit once, propagates everywhere' },
+					{ label: 'School support', before: 'Single-school', after: 'Multi-school with centralised permissions' },
+					{ label: 'Assessment criteria', before: 'Fixed per domain', after: 'Flexible — overridable per student' },
+					{ label: 'IEP editing', before: 'Locked after approval', after: 'Versioned — case studies create new IEP versions' },
+					{ label: 'Offline support', before: 'None', after: 'PWA — offline records in IndexedDB, replayed by Background Sync' },
+			]}
+		/>
 
 		<div class="prose">
 
@@ -300,8 +257,10 @@
 				Scroll animations that slide content in from the left? They need to slide from the right in RTL.
 				A sidebar that opens from the left edge? It opens from the right. Progress bars that fill
 				left-to-right? Reversed. Tab navigation, breadcrumbs, icon positions, text truncation,
-				number formatting — everything mirrors. The CSS logical properties help (<code>margin-inline-start</code>
-				instead of <code>margin-left</code>), but the edge cases are endless.
+				number formatting — everything mirrors. The <code>dir</code> attribute on the body sets the
+				direction, and Tailwind's <code>rtl:</code> and <code>ltr:</code> variants carry most of the rest —
+				over a thousand of them across the codebase, from reversed spacing to icons rotated 180°. The
+				sliding tab indicator needed hand-written mirrored transforms. The edge cases are endless.
 			</p>
 
 			<p>
@@ -309,6 +268,17 @@
 				flashcard labels. But the UI chrome, navigation, and structural elements needed to work in both
 				directions. Teachers could switch languages without reloading, and the layout had to respond
 				instantly.
+			</p>
+
+			<h2>Offline in the classroom</h2>
+
+			<p>
+				Classrooms don't always have a connection, and teachers ran SAUT as a PWA on their tablets.
+				A Workbox service worker caches pages and API reads. When a teacher marks attendance or a
+				daily assessment offline, the record goes into IndexedDB (through Dexie) instead of the API.
+				When the connection returns, the Background Sync API replays the queue: each record is
+				posted to the backend and deleted locally only once the server has accepted it, and the
+				teacher gets a notification with the count.
 			</p>
 
 		</div>
@@ -335,7 +305,7 @@
 
 			<p>
 				V2 wasn't a single release — it was a 65-feature roadmap phased across six versions. Phase 2.0
-				was the core: student onboarding, IEP creation, daily assessment, login. Each subsequent phase
+				was the core: login, student onboarding, IEP creation and daily assessment. Each subsequent phase
 				added a layer: materials library, case studies, worksheets, classgroups, reports at three levels
 				(student, classroom, school), and finally a digital curriculum module for parents to subscribe
 				to individually.
@@ -352,8 +322,7 @@
 
 			<p>
 				The design came from Tropics, an external design studio led by Zubin. They created the visual
-				language and the Figma files. Our team at Able.do built the product: two frontend devs, one
-				backend dev. The client team at SAUT — led by Haifa Alshaik — handled UAT and provided daily
+				language and the Figma files. The client team at SAUT — led by Haifa Alshaik — handled UAT and provided daily
 				feedback.
 			</p>
 
@@ -369,24 +338,24 @@
 			<ul>
 				<li><strong>Frontend:</strong> SvelteKit + Tailwind CSS (V2), Vue.js (V1)</li>
 				<li><strong>Backend:</strong> Ruby on Rails + PostgreSQL</li>
-				<li><strong>Hosting:</strong> AWS Middle East region — $200-300/month operational cost</li>
+				<li><strong>Hosting:</strong> AWS Middle East region — $200–300/month operational cost</li>
 				<li><strong>Security:</strong> Cloudflare — WAF, SSL/TLS, rate limiting, DDoS protection</li>
-				<li><strong>Offline:</strong> Service worker with sync-on-reconnect for attendance and assessments</li>
-				<li><strong>Testing:</strong> Rails unit tests + rspec (backend), vitest + Playwright (frontend)</li>
+				<li><strong>Offline:</strong> Workbox service worker, Dexie (IndexedDB) queue, Background Sync for attendance and assessments</li>
+				<li><strong>Testing:</strong> RSpec (backend), Vitest + Playwright (frontend)</li>
 				<li><strong>Design:</strong> Figma — three files maintained by Tropics</li>
 			</ul>
 
 			<h2>The handoff</h2>
 
 			<p>
-				After four-plus years, the contract moved to a larger company based in the Middle East. SAUT is
-				backed by the Princess of Riyadh, and as the project grew, the stakeholders wanted a regional team
+				After four-plus years, the contract moved to a larger company based in the Middle East. As the
+				project grew, the stakeholders wanted a regional team
 				with a bigger name for investor visibility. It wasn't a performance decision — every phase had
 				shipped, the product was stable, and the teachers were using it daily.
 			</p>
 
 			<p>
-				We handed off a fully documented, fully tested system with a complete product wiki, permission
+				We handed off a documented, tested system with a complete product wiki, permission
 				matrices, data migration guides, and operational runbooks. The kind of handoff where the receiving
 				team can actually pick it up and keep going.
 			</p>
@@ -395,7 +364,7 @@
 
 			<ul>
 				<li>A three-person team can ship a complex product if the communication loop is tight enough. Daily calls with the client removed ambiguity faster than any specification document.</li>
-				<li>Data architecture decisions made in year one define what's possible in year four. V1's copy-based model held while the curriculum was small, and stopped holding the moment it was not — a five-month rewrite.</li>
+				<li>Data architecture decisions made in year one define what's possible in year four. V1's copy-based model held while there was one school, and stopped holding the moment there were two — a five-month rewrite.</li>
 				<li>RTL support isn't a feature you bolt on at the end. It's an architectural decision that shapes every component, every animation, every layout decision from day one.</li>
 				<li>Building the same product twice — first in Vue, then in Svelte — teaches you what the framework gave you and what was always just your code. Most of the hard problems were domain problems, not framework problems.</li>
 				<li>The best product knowledge comes from building every screen yourself. By V2, I could answer product questions faster than checking the spec because I'd already built the flows that the spec described.</li>
@@ -421,14 +390,14 @@
 					<span class="shrink-0 font-mono text-[10px] tracking-[0.2em] text-accent/60">02</span>
 					<span>
 						<span class="text-sm font-medium group-hover:text-accent transition-colors">Wearing Three Hats</span>
-						<span class="mt-0.5 block text-xs text-dim">How four years on one product turned a frontend developer into a product manager and design-system maintainer.</span>
+						<span class="mt-0.5 block text-xs text-dim">How four years on one product turned a frontend developer into a product manager and stand-in designer.</span>
 					</span>
 				</a>
 			</div>
 		</div>
 
 		<!-- footer -->
-		<NextArticle href="/writing/saut/three-hats" />
+		<NextArticle href="/writing/saut/worksheet-builder" />
 
 		<div class="mt-16 flex items-center justify-between border-t border-line pt-8">
 			<a
@@ -444,7 +413,7 @@
 				rel="noopener noreferrer"
 				class="text-sm font-medium text-accent transition-opacity hover:opacity-70"
 			>
-				Visit SAUT ↗
+				Visit the SAUT demo ↗
 			</a>
 		</div>
 	</article>

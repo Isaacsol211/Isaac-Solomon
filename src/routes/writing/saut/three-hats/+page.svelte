@@ -1,50 +1,14 @@
 <script lang="ts">
-	import { site } from '$lib/content';
-	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
-	import ReadingProgress from '$lib/components/ReadingProgress.svelte';
+	import ArticleChrome from '$lib/components/ArticleChrome.svelte';
 	import NextArticle from '$lib/components/NextArticle.svelte';
+	import EvidenceTable from '$lib/components/EvidenceTable.svelte';
 
 	const title = 'Wearing Three Hats — Frontend Dev, PM, Designer — Isaac Solomon';
 	const description =
-		'How four years on a single product turned a frontend developer into a product manager and design-system maintainer — and why understanding all three disciplines made me better at each one.';
-	const canonical = `${site.url}/writing/saut/three-hats`;
+		'How four years on a single product turned a frontend developer into a product manager and stand-in designer — and why understanding all three disciplines made me better at each one.';
 </script>
 
-<svelte:head>
-	<title>{title}</title>
-	<meta name="description" content={description} />
-	<link rel="canonical" href={canonical} />
-	<!-- markdown twin for agents — see /llms.txt -->
-	<link rel="alternate" type="text/markdown" href="{canonical}.md" />
-	<meta property="og:type" content="article" />
-	<meta property="og:title" content={title} />
-	<meta property="og:description" content={description} />
-	<meta property="og:url" content={canonical} />
-	<meta property="og:image" content="{site.url}/projects/saut/landing-hero-devices-right-to-left.png" />
-	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:title" content={title} />
-	<meta name="twitter:description" content={description} />
-	<meta name="twitter:image" content="{site.url}/projects/saut/landing-hero-devices-right-to-left.png" />
-</svelte:head>
-
-<ReadingProgress />
-
-<!-- back nav -->
-<header class="border-b border-line px-5 py-4 sm:px-8">
-	<div class="mx-auto flex max-w-3xl items-center justify-between">
-		<a
-			href="/writing/saut"
-			class="group flex items-center gap-2 text-xs font-medium tracking-[0.2em] uppercase text-dim transition-colors hover:text-ink"
-		>
-			<span class="inline-block transition-transform duration-200 group-hover:-translate-x-1" aria-hidden="true">←</span>
-			SAUT Case Study
-		</a>
-		<div class="flex items-center gap-3">
-			<span class="text-xs font-medium tracking-[0.2em] uppercase text-dim">Writing</span>
-			<ThemeToggle />
-		</div>
-	</div>
-</header>
+<ArticleChrome {title} {description} path="/writing/saut/three-hats" image="/projects/saut/landing-hero-devices-right-to-left.png" back={{ href: '/writing/saut', label: 'SAUT Case Study' }} />
 
 <main id="main" class="px-5 pb-24 sm:px-8">
 
@@ -52,10 +16,10 @@
 	<div class="mx-auto max-w-3xl pt-14 md:pt-20">
 
 		<p class="text-xs font-medium tracking-[0.25em] uppercase text-accent-text">
-			Case Study · SAUT — Part 3
+			Essay · SAUT
 		</p>
 
-		<h1 class="mt-4 text-4xl font-medium leading-[1.1] tracking-tight md:text-6xl">
+		<h1 class="mt-4 text-4xl font-medium leading-[1.1] tracking-tight lowercase md:text-6xl">
 			Frontend Dev.<br />Product Manager.
 			<em class="font-serif font-normal italic text-dim">Stand-in Designer.</em>
 		</h1>
@@ -107,20 +71,20 @@
 		<div class="prose">
 
 			<p>
-				I didn't plan to become a product manager. Nobody does, really — at least not on a three-person
+				I didn't plan to become a product manager. Not on a three-person
 				dev team where "product manager" isn't a job title anyone holds. You become one because the
 				product needs someone to, and you're the person who understands it best.
 			</p>
 
 			<p>
 				When I started on SAUT, I was a frontend developer. 100% coding, 0% opinions about feature
-				prioritisation. Four years later, I was spending 40% of my time on product decisions, 30% coding,
+				prioritisation. Four years later, I was spending roughly 40% of my time on product decisions, 30% coding,
 				20% designing screens, and the last 10% on coordination — daily calls, planning, and keeping
 				three parties pointed the same way. The shift wasn't a promotion or a role change — it was the natural
 				consequence of building every screen in a product for four years straight.
 			</p>
 
-			<h2>Phase one: just build</h2>
+			<h2>Just build</h2>
 
 			<p>
 				V1 was straightforward. Tropics — the design studio led by Zubin — handed us Figma files. I
@@ -137,7 +101,7 @@
 				room for lunch. You ship what's specced, you ship it fast, you make it work.
 			</p>
 
-			<h2>Phase two: the shift</h2>
+			<h2>The shift</h2>
 
 			<p>
 				After V2 went live, the pressure changed shape. The core system was stable. Teachers were
@@ -162,30 +126,16 @@
 		</div>
 
 		<!-- role evolution callout -->
-		<div class="not-prose my-10 overflow-hidden rounded-2xl border border-coal bg-coal text-cream">
-			<div class="border-b border-cream/10 px-6 py-4">
-				<p class="text-xs font-medium tracking-[0.25em] uppercase text-cream/50">The Evolution</p>
-				<p class="mt-1 font-medium tracking-tight">How the role changed over four years.</p>
-			</div>
-			<div class="divide-y divide-cream/10">
-				{#each [
-					{ phase: 'V1 (2019–2022)', coding: '100%', pm: '0%', design: '0%', note: 'Pure frontend — Vue.js components from Figma specs' },
-					{ phase: 'V2 rewrite (early 2023)', coding: '100%', pm: '0%', design: '0%', note: 'Five-month migration sprint — no room for anything else' },
-					{ phase: 'V2 stabilised (mid 2023)', coding: '45%', pm: '45%', design: '10%', note: 'Product decisions creep in — feature prioritisation, client calls' },
-					{ phase: 'V2 mature (late 2023)', coding: '30%', pm: '40%', design: '20%', coord: '10%', note: 'Junior devs take over coding — PM and design become primary' },
-				] as row}
-					<div class="px-6 py-4">
-						<div class="flex items-baseline justify-between gap-4">
-							<span class="text-xs font-medium tracking-wide text-cream/50">{row.phase}</span>
-							<span class="font-mono text-xs text-[#86d993]">{row.coding} code · {row.pm} PM · {row.design} design{row.coord
-									? ` · ${row.coord} coordination`
-									: ''}</span>
-						</div>
-						<p class="mt-1.5 text-xs text-cream/40">{row.note}</p>
-					</div>
-				{/each}
-			</div>
-		</div>
+		<EvidenceTable
+			eyebrow="The Evolution"
+			title="How the role changed over four years."
+			rows={[
+				{ label: 'V1 (2019–2022)', after: '100% code · 0% PM · 0% design', note: 'Pure frontend — Vue.js components from Figma specs' },
+				{ label: 'V2 rewrite (early 2023)', after: '100% code · 0% PM · 0% design', note: 'Five-month migration sprint — no room for anything else' },
+				{ label: 'V2 stabilised (mid 2023)', after: '45% code · 45% PM · 10% design', note: 'Product decisions creep in — feature prioritisation, client calls' },
+				{ label: 'V2 mature (late 2023)', after: '30% code · 40% PM · 20% design · 10% coordination', note: 'Devs take over coding — PM and design become primary' },
+			]}
+		/>
 
 		<div class="prose">
 
@@ -209,7 +159,7 @@
 
 			<p>
 				That speed — collapsing the feedback loop between "what should we build" and "what can
-				we build" — is what made a three-person team ship sixty-five features. There was no
+				we build" — is what let a three-person team keep pace with the roadmap. There was no
 				handoff delay. No "let me check with the dev team." The dev team was in the call,
 				making the decision.
 			</p>
@@ -217,7 +167,7 @@
 			<h2>Designing from the system</h2>
 
 			<p>
-				Tropics — the design studio — handled the visual design. They set the design language,
+				Tropics handled the visual design. They set the design language,
 				built the component library in Figma, and designed the core screens. But a 65-feature
 				roadmap across six releases generates more screens than any external design team can
 				keep pace with, especially when the dev team is shipping weekly.
@@ -292,7 +242,7 @@
 
 		<!-- video: parent view -->
 		<div class="not-prose my-10 lg:relative lg:left-1/2 lg:-translate-x-1/2 lg:w-[calc(100vw-3rem)] lg:max-w-[100rem]">
-			<p class="mb-4 text-xs font-medium tracking-[0.25em] uppercase text-dim">Product demo — Parent-facing content (LMS 6+)</p>
+			<p class="mb-4 text-xs font-medium tracking-[0.25em] uppercase text-dim">Product demo — Parent-facing content</p>
 			<div class="overflow-hidden rounded-xl border border-line">
 				<video
 					controls
@@ -325,19 +275,12 @@
 				reason, and most of those reasons came from watching teachers use the product.
 			</p>
 
-			<p>
-				All six phases shipped. Every feature made it to production. That's the number I keep
-				coming back to. Not the technology, not the framework migration, not the bilingual support.
-				Sixty-five features planned, sixty-five features delivered. With three developers and
-				no QA team.
-			</p>
-
 			<h2>What I'd tell myself</h2>
 
 			<ul>
 				<li>Don't wait for someone to give you the PM title. If you understand the product better than anyone else in the room, you're already doing the job — you just haven't named it yet.</li>
 				<li>The best design work I did came from constraints, not inspiration. Designing within an existing system — same spacing, same components, same patterns — is harder and more valuable than designing from a blank canvas.</li>
-				<li>Small teams win when the feedback loop is tight. Daily calls, same-day decisions, ship-on-Friday culture. The moment you add a handoff step, you lose a day. Multiply that by sixty-five features and you lose months.</li>
+				<li>Small teams win when the feedback loop is tight. Daily calls, same-day decisions, same-week releases. The moment you add a handoff step, you lose a day. Multiply that by sixty-five features and you lose months.</li>
 				<li>Building the same product for four years teaches you things that jumping between projects never will. You see the consequences of your early decisions. You live with the shortcuts. You learn that the component you built in a hurry is the one you'll be maintaining for the next three years.</li>
 			</ul>
 
@@ -367,7 +310,7 @@
 		</div>
 
 		<!-- footer -->
-		<NextArticle href="/writing/saut/worksheet-builder" />
+		<NextArticle href="/writing/mivi" />
 
 		<div class="mt-16 flex items-center justify-between border-t border-line pt-8">
 			<a

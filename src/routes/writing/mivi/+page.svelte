@@ -1,50 +1,15 @@
 <script lang="ts">
-	import { site } from '$lib/content';
-	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
-	import ReadingProgress from '$lib/components/ReadingProgress.svelte';
+	import ArticleChrome from '$lib/components/ArticleChrome.svelte';
 	import NextArticle from '$lib/components/NextArticle.svelte';
+	import CaseSummary from '$lib/components/CaseSummary.svelte';
+	import EvidenceTable from '$lib/components/EvidenceTable.svelte';
 
 	const title = 'Shipping at Launch Speed — Isaac Solomon';
 	const description =
-		'How I built and evolved the frontend for India\'s biggest audio brand — 3-4 product launches a day, a platform migration mid-flight, and a design system that emerged from the pressure.';
-	const canonical = `${site.url}/writing/mivi`;
+		'How I built and evolved the frontend for Mivi, India\'s first audio manufacturing brand — 3–4 product launches a day, a platform migration mid-flight, and a design system that emerged from the pressure.';
 </script>
 
-<svelte:head>
-	<title>{title}</title>
-	<meta name="description" content={description} />
-	<link rel="canonical" href={canonical} />
-	<!-- markdown twin for agents — see /llms.txt -->
-	<link rel="alternate" type="text/markdown" href="{canonical}.md" />
-	<meta property="og:type" content="article" />
-	<meta property="og:title" content={title} />
-	<meta property="og:description" content={description} />
-	<meta property="og:url" content={canonical} />
-	<meta property="og:image" content="{site.url}/projects/mivi-desktop.png" />
-	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:title" content={title} />
-	<meta name="twitter:description" content={description} />
-	<meta name="twitter:image" content="{site.url}/projects/mivi-desktop.png" />
-</svelte:head>
-
-<ReadingProgress />
-
-<!-- back nav -->
-<header class="border-b border-line px-5 py-4 sm:px-8">
-	<div class="mx-auto flex max-w-3xl items-center justify-between">
-		<a
-			href="/"
-			class="group flex items-center gap-2 text-xs font-medium tracking-[0.2em] uppercase text-dim transition-colors hover:text-ink"
-		>
-			<span class="inline-block transition-transform duration-200 group-hover:-translate-x-1" aria-hidden="true">←</span>
-			Isaac Solomon
-		</a>
-		<div class="flex items-center gap-3">
-			<span class="text-xs font-medium tracking-[0.2em] uppercase text-dim">Writing</span>
-			<ThemeToggle />
-		</div>
-	</div>
-</header>
+<ArticleChrome {title} {description} path="/writing/mivi" image="/projects/mivi-desktop.png" />
 
 <main id="main" class="px-5 pb-24 sm:px-8">
 
@@ -55,29 +20,17 @@
 			Case Study · Mivi
 		</p>
 
-		<h1 class="mt-4 text-4xl font-medium leading-[1.1] tracking-tight md:text-6xl">
+		<h1 class="mt-4 text-4xl font-medium leading-[1.1] tracking-tight lowercase md:text-6xl">
 			Shipping at<br />Launch
 			<em class="font-serif font-normal italic text-dim">Speed.</em>
 		</h1>
 
 		<p class="mt-6 max-w-xl text-lg leading-relaxed text-dim md:text-xl">
-			How I built and evolved the frontend for India's biggest audio brand —
-			where 3-4 products launched in a single day, and I had two days to keep the pages ready.
+			How I built and evolved the frontend for Mivi, India's first audio manufacturing brand —
+			where three or four products could launch in a single day, and every page had a two-day turnaround.
 		</p>
 
-		<!-- meta -->
-		<div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-b border-line py-5 text-xs font-medium tracking-[0.2em] uppercase text-dim">
-			<span>2018 – 2022</span>
-			<span class="h-3 w-px bg-line"></span>
-			<span>E-Commerce · Audio</span>
-			<span class="h-3 w-px bg-line"></span>
-			<span>Custom CMS · Apex Platform</span>
-			<span class="h-3 w-px bg-line"></span>
-			<a href="https://www.mivi.in" target="_blank" rel="noopener noreferrer"
-				class="text-accent transition-opacity hover:opacity-70">
-				mivi.in ↗
-			</a>
-		</div>
+		<CaseSummary href="/writing/mivi" />
 
 		<!-- payoff teaser -->
 		<div class="mt-10 rounded-xl border border-line bg-paper-2/60 px-6 py-5">
@@ -134,13 +87,13 @@
 			<h2>The pace</h2>
 
 			<p>
-				There were days when Mivi would launch three or four products in a single day. Not variants —
+				There were days when Mivi launched three or four products at once. Not variants —
 				entirely new products, each with its own specs, its own photography, its own story
 				to tell. And the turnaround? Two days. Sometimes less.
 			</p>
 
 			<p>
-				That's the rhythm I built inside for years. A product brief lands, you get the assets,
+				That was the rhythm I worked in for four years. A product brief lands, you get the assets,
 				you build the page, you test it, it ships. Then the next one lands. There's no sprint planning
 				for this — there's just a pipeline that either keeps up or doesn't.
 			</p>
@@ -163,7 +116,7 @@
 				{#each [
 					{ n: '01', q: '3–4 new products launched in a single day' },
 					{ n: '02', q: '2-day turnaround from brief to live page' },
-					{ n: '03', q: 'Every product page custom — not a template with swapped images' },
+					{ n: '03', q: 'Every product page distinct — shared components underneath, not a template with swapped images' },
 				] as item}
 					<div class="flex items-baseline gap-5 py-4">
 						<span class="shrink-0 font-mono text-[10px] tracking-[0.2em] text-accent/60">{item.n}</span>
@@ -195,34 +148,29 @@
 			<p>
 				My job was the frontend side of that lift. Rebuilding the component layer, the product page
 				templates, the cart, the checkout flow — all on the new platform — while making sure customers
-				never noticed the switch. The design didn't change. The architecture underneath it did.
+				never noticed the switch. That day, the design didn't change. The architecture underneath it did.
+			</p>
+
+			<p>
+				Mivi has since moved off Apex. Everything here describes the storefront as it ran during
+				my time on it, 2018 to 2022.
 			</p>
 
 		</div>
 
 		<!-- platform comparison -->
-		<div class="not-prose my-10 overflow-hidden rounded-2xl border border-coal bg-coal text-cream">
-			<div class="border-b border-cream/10 px-6 py-4">
-				<p class="text-xs font-medium tracking-[0.25em] uppercase text-cream/50">The Migration</p>
-				<p class="mt-1 font-medium tracking-tight">What changed under the hood.</p>
-			</div>
-			<div class="divide-y divide-cream/10">
-				{#each [
-					{ metric: 'Product pages', before: 'Template-driven', after: 'Fully custom per product' },
-					{ metric: 'CMS flexibility', before: 'Plugin-dependent', after: 'Built for the content team' },
-					{ metric: 'Frontend architecture', before: 'Theme layer', after: 'Componentised from scratch' },
-					{ metric: 'Analytics & campaigns', before: 'Third-party bolted on', after: 'Native tracking + attribution' },
-					{ metric: 'Customer base', before: 'Outgrowing the platform', after: '100,000+ managed natively' },
-					{ metric: 'Order processing', before: 'Bottlenecked at scale', after: '10,000+ orders (and growing)' },
-				] as row}
-					<div class="grid grid-cols-3 gap-2 px-6 py-3.5 text-sm">
-						<span class="text-xs font-medium tracking-wide text-cream/50">{row.metric}</span>
-						<span class="font-mono text-xs text-cream/35 line-through">{row.before}</span>
-						<span class="font-mono text-xs text-[#86d993]">{row.after}</span>
-					</div>
-				{/each}
-			</div>
-		</div>
+		<EvidenceTable
+			eyebrow="The Migration"
+			title="What changed under the hood."
+			rows={[
+					{ label: 'Product pages', before: 'Template-driven', after: 'Composed per product from shared components' },
+					{ label: 'CMS flexibility', before: 'Plugin-dependent', after: 'Built for the content team' },
+					{ label: 'Frontend architecture', before: 'Theme layer', after: 'Componentised on the new platform' },
+					{ label: 'Analytics & campaigns', before: 'Third-party bolted on', after: 'Native tracking + attribution' },
+					{ label: 'Customer base', before: 'Outgrowing the platform', after: '100,000+ managed natively' },
+					{ label: 'Order processing', before: 'Bottlenecked at scale', after: '10,000+ orders' },
+			]}
+		/>
 
 		<div class="prose">
 
@@ -249,7 +197,7 @@
 
 			<p>
 				That's the thing about building under pressure: you don't plan a design system, you
-				<em>discover</em> one. Each sprint, each late-night product page, each "we need this live
+				<em>discover</em> one. Each launch, each late-night product page, each "we need this live
 				by morning" — they all carved the system into shape. The constraints did the design work
 				that a committee never could.
 			</p>
@@ -326,7 +274,7 @@
 			</ul>
 
 			<p>
-				The site served two languages worth of product content across dozens of SKUs, handled
+				The site served two languages' worth of product content across dozens of SKUs, handled
 				campaigns, discount codes, and influencer attribution — and the content team ran it
 				day-to-day without engineering support. That's the real measure of whether a system works:
 				can the people who aren't developers use it without calling one?
@@ -346,10 +294,10 @@
 				When you have two days to ship a product page, you can't afford to be sloppy —
 				sloppy means rework, and rework means you miss the next launch. The pace forced
 				the code to be clean, the components to be reusable, the system to be predictable.
-				Not because anyone mandated it. Because the alternative was drowning.
+				Not because anyone mandated it. Because the alternative was missing the next launch.
 			</p>
 
-			<h2>What I'd have improved next</h2>
+			<h2>What I'd improve next</h2>
 
 			<ul>
 				<li>Performance audit on the heaviest product pages — image optimisation, lazy loading, bundle analysis.</li>

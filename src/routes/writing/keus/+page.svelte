@@ -1,50 +1,15 @@
 <script lang="ts">
-	import { site } from '$lib/content';
-	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
-	import ReadingProgress from '$lib/components/ReadingProgress.svelte';
+	import ArticleChrome from '$lib/components/ArticleChrome.svelte';
 	import NextArticle from '$lib/components/NextArticle.svelte';
+	import CaseSummary from '$lib/components/CaseSummary.svelte';
+	import EvidenceTable from '$lib/components/EvidenceTable.svelte';
 
 	const title = 'The Scroll Problem — Isaac Solomon';
 	const description =
-		'How we built a scroll-driven animation site for India\'s fastest-growing smart home brand — and why we threw away the first approach.';
-	const canonical = `${site.url}/writing/keus`;
+		'How we built a scroll-driven animation site for India\'s fastest-growing premium smart home brand — and why we threw away the first approach.';
 </script>
 
-<svelte:head>
-	<title>{title}</title>
-	<meta name="description" content={description} />
-	<link rel="canonical" href={canonical} />
-	<!-- markdown twin for agents — see /llms.txt -->
-	<link rel="alternate" type="text/markdown" href="{canonical}.md" />
-	<meta property="og:type" content="article" />
-	<meta property="og:title" content={title} />
-	<meta property="og:description" content={description} />
-	<meta property="og:url" content={canonical} />
-	<meta property="og:image" content="{site.url}/writing/keus/hero.png" />
-	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:title" content={title} />
-	<meta name="twitter:description" content={description} />
-	<meta name="twitter:image" content="{site.url}/writing/keus/hero.png" />
-</svelte:head>
-
-<ReadingProgress />
-
-<!-- back nav -->
-<header class="border-b border-line px-5 py-4 sm:px-8">
-	<div class="mx-auto flex max-w-3xl items-center justify-between">
-		<a
-			href="/"
-			class="group flex items-center gap-2 text-xs font-medium tracking-[0.2em] uppercase text-dim transition-colors hover:text-ink"
-		>
-			<span class="inline-block transition-transform duration-200 group-hover:-translate-x-1" aria-hidden="true">←</span>
-			Isaac Solomon
-		</a>
-		<div class="flex items-center gap-3">
-			<span class="text-xs font-medium tracking-[0.2em] uppercase text-dim">Writing</span>
-			<ThemeToggle />
-		</div>
-	</div>
-</header>
+<ArticleChrome {title} {description} path="/writing/keus" image="/writing/keus/hero.png" />
 
 <main id="main" class="px-5 pb-24 sm:px-8">
 
@@ -55,37 +20,25 @@
 			Case Study · Keus
 		</p>
 
-		<h1 class="mt-4 text-4xl font-medium leading-[1.1] tracking-tight md:text-6xl">
+		<h1 class="mt-4 text-4xl font-medium leading-[1.1] tracking-tight lowercase md:text-6xl">
 			The Scroll<br />
 			<em class="font-serif font-normal italic text-dim">Problem.</em>
 		</h1>
 
 		<p class="mt-6 max-w-xl text-lg leading-relaxed text-dim md:text-xl">
-			How we built a scroll-driven animation site for India's fastest-growing smart home brand —
+			How we built a scroll-driven animation site for India's fastest-growing premium smart home brand —
 			and why we threw away the first approach after the proof of concept.
 		</p>
 
-		<!-- meta -->
-		<div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-b border-line py-5 text-xs font-medium tracking-[0.2em] uppercase text-dim">
-			<span>2024</span>
-			<span class="h-3 w-px bg-line"></span>
-			<span>Smart Home · Premium</span>
-			<span class="h-3 w-px bg-line"></span>
-			<span>11ty · GSAP</span>
-			<span class="h-3 w-px bg-line"></span>
-			<a href="https://www.keus.in" target="_blank" rel="noopener noreferrer"
-				class="text-accent transition-opacity hover:opacity-70">
-				keus.in ↗
-			</a>
-		</div>
+		<CaseSummary href="/writing/keus" />
 
 		<!-- payoff teaser -->
 		<div class="mt-10 rounded-xl border border-line bg-paper-2/60 px-6 py-5">
 			<p class="text-sm leading-relaxed text-dim">
 				<strong class="font-medium text-ink">The result:</strong> a scroll-driven product showcase
-				for a premium smart home brand deployed in 1,500+ luxury residences — built on 11ty and GSAP,
+				for a premium smart home brand deployed in 1,500+ luxury residences — built on SvelteKit and GSAP,
 				after pivoting from image-sequence scrubbing to a video pause-and-play system that cut
-				page weight from gigabytes of frames down to manageable video files.
+				page weight from hundreds of megabytes of frames down to about 12 MB, most of it video.
 			</p>
 		</div>
 	</div>
@@ -147,15 +100,15 @@
 			</p>
 
 			<p>
-				The problem: you can't dictate how someone opens their browser. Half your visitors
+				The problem: you can't dictate how someone opens their browser. Most of your visitors
 				are on a laptop with a toolbar, a bookmarks bar, and DevTools docked to the side.
-				A third are on a phone. The fullscreen fantasy doesn't survive contact with real viewports.
+				Plenty are on a phone. The fullscreen fantasy doesn't survive contact with real viewports.
 			</p>
 
 			<p>
 				So we went back. The team at
 				<a href="https://www.able.do" target="_blank" rel="noopener noreferrer">Able.do</a>
-				brought years of design expertise to the table and worked directly with Keus's in-house
+				worked directly with Keus's in-house
 				design team to rethink the approach. Not to water down the vision, but to make it work
 				in a browser — at any size, on any device. That meant working through layouts and scroll
 				sequences together, breakpoint by breakpoint, rather than trading files and waiting a
@@ -239,9 +192,9 @@
 			</div>
 			<div class="divide-y divide-accent/10 px-6">
 				{#each [
-					{ n: '01', q: 'Each video produced 300–500 individual frames' },
+					{ n: '01', q: 'Each video produced hundreds of frames — the longest, 1,440' },
 					{ n: '02', q: 'Each page had ~10 scroll-driven video sections' },
-					{ n: '03', q: 'That\'s 3,000–5,000 images per page — gigabytes of assets' },
+					{ n: '03', q: 'That\'s thousands of images per page' },
 				] as item}
 					<div class="flex items-baseline gap-5 py-4">
 						<span class="shrink-0 font-mono text-[10px] tracking-[0.2em] text-accent/60">{item.n}</span>
@@ -257,13 +210,14 @@
 				The videos Keus provided were high quality — product animations showing consoles
 				transforming, lights shifting, curtains drawing. Beautiful footage. But when you
 				extract those to individual frames for scroll scrubbing, each video produces
-				300 to 500 images. And each page had around ten of these scroll-driven sections.
+				hundreds of images — the longest clip we were given ran a minute, which at 24 fps is
+				1,440 frames on its own. And each page had around ten of these scroll-driven sections.
 			</p>
 
 			<p>
-				Do the maths: 5,000 images on a single page. Even aggressively compressed, that's
-				a page weight measured in gigabytes. No lazy-loading strategy in the world makes that
-				work on a mid-range phone. The POC looked great on a developer's MacBook Pro.
+				Do the maths: thousands of images on a single page. Even aggressively compressed, that's
+				a page weight in the hundreds of megabytes — over a gigabyte at retina sizes. Loading frames per
+				section helps, but nothing makes that work on a mid-range phone. The POC looked great on a developer's MacBook Pro.
 				It would have melted any real user's device.
 			</p>
 
@@ -274,7 +228,7 @@
 			<h2>Back to the board: video pause and play</h2>
 
 			<p>
-				We went back to the drawing board and rethought the interaction model from scratch.
+				We rethought the interaction model.
 				Instead of scrubbing through thousands of static frames, we'd use the actual videos —
 				but controlled by scroll position.
 			</p>
@@ -289,28 +243,18 @@
 		</div>
 
 		<!-- approach comparison -->
-		<div class="not-prose my-10 overflow-hidden rounded-2xl border border-coal bg-coal text-cream">
-			<div class="border-b border-cream/10 px-6 py-4">
-				<p class="text-xs font-medium tracking-[0.25em] uppercase text-cream/50">The Pivot</p>
-				<p class="mt-1 font-medium tracking-tight">Image scrubbing vs. video pause-and-play.</p>
-			</div>
-			<div class="divide-y divide-cream/10">
-				{#each [
-					{ metric: 'Assets per section', before: '300–500 images', after: '1 compressed video' },
-					{ metric: 'Total assets per page', before: '~5,000 frames', after: '~10 video files' },
-					{ metric: 'Page weight', before: 'Gigabytes', after: 'Tens of megabytes' },
-					{ metric: 'Memory pressure', before: 'Thousands of images in DOM', after: 'Single video element per section' },
-					{ metric: 'Decoding', before: 'CPU (canvas/image swap)', after: 'Hardware video decoder' },
-					{ metric: 'Device compatibility', before: 'High-end only', after: 'Works on most devices' },
-				] as row}
-					<div class="grid grid-cols-3 gap-2 px-6 py-3.5 text-sm">
-						<span class="text-xs font-medium tracking-wide text-cream/50">{row.metric}</span>
-						<span class="font-mono text-xs text-cream/35 line-through">{row.before}</span>
-						<span class="font-mono text-xs text-[#86d993]">{row.after}</span>
-					</div>
-				{/each}
-			</div>
-		</div>
+		<EvidenceTable
+			eyebrow="The Pivot"
+			title="Image scrubbing vs. video pause-and-play."
+			rows={[
+					{ label: 'Assets per section', before: 'Hundreds of images, up to 1,440', after: '1 compressed video' },
+					{ label: 'Total assets per page', before: 'Thousands of frames', after: '~10 video files' },
+					{ label: 'Page weight', before: 'Hundreds of MB to over a GB', after: '~12 MB' },
+					{ label: 'Memory pressure', before: 'Thousands of decoded frames in memory', after: 'Single video element per section' },
+					{ label: 'Decoding', before: 'Per-frame image decode + canvas draw', after: 'Hardware video decoder' },
+					{ label: 'Device compatibility', before: 'High-end only', after: 'Works on most devices' },
+			]}
+		/>
 
 		<div class="prose">
 
@@ -322,7 +266,7 @@
 			</p>
 
 			<p>
-				But the trade-off was worth it. The site actually loads. It runs on real devices.
+				But it was worth it. The site actually loads. It runs on real devices.
 				And honestly, the slight momentum of the video playback gives the scroll a more
 				cinematic feel than frame-perfect scrubbing does. Sometimes the compromise turns
 				out to be the better design decision.
@@ -358,19 +302,20 @@
 
 		<div class="prose">
 
-			<h2>The stack: 11ty and GSAP</h2>
+			<h2>The stack: SvelteKit and GSAP</h2>
 
 			<p>
-				We built the site on <strong>11ty</strong> (Eleventy) for static generation and
-				<strong>GSAP</strong> (GreenSock) for the scroll-driven animation layer.
+				We built the site on <strong>SvelteKit</strong>, deployed on Cloudflare, with
+				<strong>GSAP</strong> (GreenSock) and ScrollTrigger for the scroll-driven animation layer
+				and Lenis for smooth scrolling.
 			</p>
 
 			<p>
-				11ty was the right choice for this kind of site — mostly static content, no client-side
-				routing needed, just fast-loading pages with heavy animation work on top. GSAP's
-				ScrollTrigger plugin handled the scroll-to-video binding: detecting scroll position,
-				triggering video play/pause, coordinating transitions between sections, and managing
-				the timeline of each page's choreography.
+				Each section has its own GSAP timeline. When a section's tween completes, it plays the
+				video and pauses it again after the remaining length of the clip; scrolling back into a
+				section rewinds its video to the start. The videos are muted H.264 MP4s. Desktop sources
+				are only attached on screens 768px and wider, and phones get their own cuts, so a phone
+				never downloads the desktop footage.
 			</p>
 
 			<p>
@@ -400,14 +345,14 @@
 				<span class="col-span-2 text-right">Context</span>
 			</div>
 			{#each [
-				{ label: 'Performance', value: '97', context: 'Video-heavy site, lean code' },
+				{ label: 'Performance', value: '96', context: 'Median of three runs (80–97)' },
 				{ label: 'SEO', value: '92', context: 'Static pages, structured markup' },
-				{ label: 'FCP', value: '2.6 s', context: 'Static shell loads fast' },
-				{ label: 'LCP', value: '3.2 s', context: 'Hero video / image' },
-				{ label: 'TBT', value: '0 ms', context: 'GSAP doesn\'t block main thread' },
-				{ label: 'CLS', value: '0.012', context: 'Near-zero layout shift' },
-				{ label: 'Total page weight', value: '11.2 MB', context: 'Driven by video assets' },
-				{ label: 'DOM size', value: '423', context: 'Lean markup despite visual density' },
+				{ label: 'FCP', value: '0.8 s', context: 'Static shell loads fast' },
+				{ label: 'LCP', value: '1.1 s', context: 'Hero video poster' },
+				{ label: 'TBT', value: '20 ms', context: 'Little main-thread work during load' },
+				{ label: 'CLS', value: '0.003', context: 'Near-zero layout shift' },
+				{ label: 'Total page weight', value: '11.9 MB', context: '5.8 MB video, 4.3 MB images, 1.8 MB script' },
+				{ label: 'DOM size', value: '447', context: 'Lean markup despite visual density' },
 				{ label: 'JS execution', value: '0.4 s', context: 'Lightweight runtime' },
 			] as row}
 				<div class="grid grid-cols-5 items-center border-b border-line/60 px-5 py-3 text-sm last:border-0">
@@ -417,24 +362,25 @@
 				</div>
 			{/each}
 			<div class="border-t border-line bg-paper-2/60 px-5 py-2.5 text-[10px] leading-relaxed text-dim">
-				Lighthouse desktop audit — keus.in homepage.
+				Lighthouse 12.8, desktop preset — keus.in homepage, 19 September 2026. Median of three runs.
 			</div>
 		</div>
 
 		<div class="prose">
 
 			<p>
-				A 97 on Performance for a video-heavy, scroll-animated site is not where most projects
-				like this land. Look at the breakdown: FCP at 2.6 seconds, LCP at 3.2 — both
-				reasonable for a page that loads multiple video assets. Total Blocking Time is zero.
-				CLS is 0.012 — near-perfect layout stability. The JavaScript execution clocks in at
-				just 0.4 seconds, and the DOM is only 423 elements despite the visual density of the page.
+				A 96 on Performance for a video-heavy, scroll-animated site is not where most projects
+				like this land. FCP is 0.8 seconds and LCP 1.1, because the hero paints a poster frame
+				before any video arrives. Total Blocking Time is 20 ms and CLS is 0.003. JavaScript
+				execution takes 0.4 seconds, and the DOM is 447 elements despite the visual density of
+				the page. A cold first run scored 80, so the number depends on what is already cached.
 			</p>
 
 			<p>
-				The site isn't heavy because of bad code — it's heavy because of video assets.
-				That's a fundamentally different problem than a bloated SPA. The application layer is
-				lean: small DOM, fast JS, zero main-thread blocking. GSAP does its work without
+				Most of the weight is media: 5.8 MB of video and 4.3 MB of images out of 11.9 MB.
+				Of the 1.8 MB of script, only 67 KB is the site's own; the rest is tag manager, a chat
+				widget and ad pixels. That is the part I would cut next. The application layer itself stays light: small DOM, short JS
+				execution, almost no main-thread blocking. GSAP does its work without
 				getting in the browser's way. The weight is intentional — it's the cost of the
 				cinematic experience the brief demanded — and the video pause-and-play approach is
 				what keeps it manageable instead of catastrophic.
@@ -469,7 +415,7 @@
 				<li>Modern image formats — 2.3 MB of savings sitting on the table by converting to WebP/AVIF.</li>
 				<li>Reduced-motion alternative — a static version for users who prefer less animation, with key frames shown as images instead.</li>
 				<li>Better mobile scroll handling — touch scroll on phones has different momentum curves than trackpad/mouse wheel; the pause timing could adapt.</li>
-				<li>Video codec upgrade — AV1 could cut video file sizes by 30-50% without visible quality loss, if browser support allows.</li>
+				<li>Video codec upgrade — AV1 behind an H.264 fallback (multiple <code>&lt;source&gt;</code> elements) could cut file sizes by 30–50% at the same visual quality; Safari's AV1 support is hardware-gated, so the fallback is not optional.</li>
 				<li>Accessibility pass — contrast ratios, keyboard navigation through scroll sections, and screen reader support for the video-driven content.</li>
 			</ul>
 

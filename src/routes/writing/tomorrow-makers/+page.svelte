@@ -1,50 +1,16 @@
 <script lang="ts">
 	import { site } from '$lib/content';
-	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
-	import ReadingProgress from '$lib/components/ReadingProgress.svelte';
+	import ArticleChrome from '$lib/components/ArticleChrome.svelte';
 	import NextArticle from '$lib/components/NextArticle.svelte';
+	import CaseSummary from '$lib/components/CaseSummary.svelte';
+	import EvidenceTable from '$lib/components/EvidenceTable.svelte';
 
 	const title = 'Every Child Carries a Spark — Isaac Solomon';
 	const description =
 		'Building the national talent platform that helps Godrej Foundation find and support India\'s highest-potential students from underserved communities.';
-	const canonical = `${site.url}/writing/tomorrow-makers`;
 </script>
 
-<svelte:head>
-	<title>{title}</title>
-	<meta name="description" content={description} />
-	<link rel="canonical" href={canonical} />
-	<!-- markdown twin for agents — see /llms.txt -->
-	<link rel="alternate" type="text/markdown" href="{canonical}.md" />
-	<meta property="og:type" content="article" />
-	<meta property="og:title" content={title} />
-	<meta property="og:description" content={description} />
-	<meta property="og:url" content={canonical} />
-	<meta property="og:image" content="{site.url}/writing/tomorrow-makers/og.png" />
-	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:title" content={title} />
-	<meta name="twitter:description" content={description} />
-	<meta name="twitter:image" content="{site.url}/writing/tomorrow-makers/og.png" />
-</svelte:head>
-
-<ReadingProgress />
-
-<!-- back nav -->
-<header class="border-b border-line px-5 py-4 sm:px-8">
-	<div class="mx-auto flex max-w-3xl items-center justify-between">
-		<a
-			href="/"
-			class="group flex items-center gap-2 text-xs font-medium tracking-[0.2em] uppercase text-dim transition-colors hover:text-ink"
-		>
-			<span class="inline-block transition-transform duration-200 group-hover:-translate-x-1" aria-hidden="true">←</span>
-			Isaac Solomon
-		</a>
-		<div class="flex items-center gap-3">
-			<span class="text-xs font-medium tracking-[0.2em] uppercase text-dim">Writing</span>
-			<ThemeToggle />
-		</div>
-	</div>
-</header>
+<ArticleChrome {title} {description} path="/writing/tomorrow-makers" image="/writing/tomorrow-makers/og.png" />
 
 <main id="main" class="px-5 pb-24 sm:px-8">
 
@@ -55,7 +21,7 @@
 			Case Study · Tomorrow Makers
 		</p>
 
-		<h1 class="mt-4 text-4xl font-medium leading-[1.1] tracking-tight md:text-6xl">
+		<h1 class="mt-4 text-4xl font-medium leading-[1.1] tracking-tight lowercase md:text-6xl">
 			Every Child Carries<br />
 			a <em class="font-serif font-normal italic text-dim">Spark.</em>
 		</h1>
@@ -65,27 +31,15 @@
 			India's highest-potential students from the most underserved communities.
 		</p>
 
-		<!-- meta -->
-		<div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-b border-line py-5 text-xs font-medium tracking-[0.2em] uppercase text-dim">
-			<span>2026</span>
-			<span class="h-3 w-px bg-line"></span>
-			<span>Philanthropy · EdTech</span>
-			<span class="h-3 w-px bg-line"></span>
-			<span>SvelteKit · Tailwind · Cloudflare</span>
-			<span class="h-3 w-px bg-line"></span>
-			<a href="https://www.tomorrow-makers.in" target="_blank" rel="noopener noreferrer"
-				class="text-accent transition-opacity hover:opacity-70">
-				tomorrow-makers.in ↗
-			</a>
-		</div>
+		<CaseSummary href="/writing/tomorrow-makers" />
 
 		<!-- payoff teaser -->
 		<div class="mt-10 rounded-xl border border-line bg-paper-2/60 px-6 py-5">
 			<p class="text-sm leading-relaxed text-dim">
-				<strong class="font-medium text-ink">The result:</strong> a multi-pathway assessment
-				and matching platform — live across India, with WhatsApp onboarding, support for
-				11 languages, and four distinct student pathways. Built on SvelteKit and Cloudflare Pages,
-				extending the same foundation as the earlier Godrej Foundation site.
+				<strong class="font-medium text-ink">The result:</strong> the public site for a multi-pathway
+				talent programme — live across India, with WhatsApp onboarding, an assessment in
+				11 languages, and four student pathways. Built on SvelteKit and Cloudflare Pages,
+				on the same stack as the earlier Godrej Foundation site.
 			</p>
 		</div>
 	</div>
@@ -111,7 +65,7 @@
 				loading="eager"
 			/>
 		</div>
-		<p class="mt-3 text-center text-xs text-dim">The homepage hero — bold, direct, built to reach students not investors.</p>
+		<p class="mt-3 text-center text-xs text-dim">The homepage hero — bold, direct, built to reach students, not donors.</p>
 	</div>
 
 	<!-- ── Article body ─────────────────────────────────────────────── -->
@@ -144,8 +98,7 @@
 
 			<p>
 				<a href="https://3sided.co.in" target="_blank" rel="noopener noreferrer">3 Sided Coin</a>
-				designed the platform — the same award-winning studio (Webby Honoree 2022, iPad App of the
-				Year 2018) that designed the Godrej Foundation site. But where the Foundation site is
+				designed the platform — the same studio that designed the Godrej Foundation site. But where the Foundation site is
 				corporate and restrained, Tomorrow Makers is loud, bold, and unapologetically youthful.
 			</p>
 
@@ -159,7 +112,7 @@
 
 			<p>
 				Each of the four pathways gets its own colour identity: Science in teal, Arts in magenta,
-				Invention in yellow-green, Service in dark. That gives each pathway a distinct visual
+				Invention in yellow, Service in dark. That gives each pathway a distinct visual
 				personality while keeping everything under one design system.
 			</p>
 
@@ -271,9 +224,9 @@
 			</p>
 
 			<p>
-				The assessment itself is available in 11 languages for the younger cohorts (Classes 6–7),
-				because aptitude shouldn't be gated by English fluency. The process is three steps:
-				assess aptitude in the sciences, arts, defence or invention; select high-potential
+				The assessment itself is available in 11 languages — for the arts in Classes 6–10 and the
+				sciences in Classes 6–7 — because aptitude shouldn't be gated by English fluency. The process is three steps:
+				assess aptitude in science, arts, invention or service; select high-potential
 				candidates through a structured scoring process; and connect them to the right partner
 				organisation for their pathway.
 			</p>
@@ -319,43 +272,42 @@
 				SvelteKit on Cloudflare Pages — the same foundation I built the
 				<a href="/writing/godrej">Godrej Foundation site</a> on. Tailwind for styling.
 				The architectural DNA is shared: component-driven, statically rendered where possible,
-				deployed on Cloudflare's edge network for fast global delivery.
+				deployed on Cloudflare's edge so it loads fast on a mid-range phone.
 			</p>
 
 			<p>
-				But Tomorrow Makers pushes further than a corporate brochure site. There's a dynamic
-				assessment flow, a WhatsApp bot integration for onboarding, multi-language support
-				across 11 languages, and partner-specific routing that directs qualified students to
-				the right organisation. The platform had to be both a marketing site that sells the
-				vision and a working tool that processes real applications.
+				The site is the front door, not the assessment engine. Registration and the assessment
+				run on a separate platform at register.tomorrow-makers.in, and every "Register" button
+				hands off to it; WhatsApp onboarding is a WhatsApp Business link into the programme's
+				chatbot. What the site owns is everything a student and a parent read before they
+				commit: the four pathway pages, eligibility by class, the partner organisations, the
+				FAQs, and an Invention-pathway enquiry form that posts to a SvelteKit endpoint and on to
+				the Apex mailer, behind reCAPTCHA.
+			</p>
+
+			<p>
+				The pathway colours are Tailwind theme tokens, so each pathway carries its own colour
+				through every section it appears in without a single one-off style.
 			</p>
 
 		</div>
 
 		<!-- tech comparison table -->
-		<div class="not-prose my-10 overflow-hidden rounded-2xl border border-coal bg-coal text-cream">
-			<div class="border-b border-cream/10 px-6 py-4">
-				<p class="text-xs font-medium tracking-[0.25em] uppercase text-cream/50">Platform at a Glance</p>
-				<p class="mt-1 font-medium tracking-tight">What the build required.</p>
-			</div>
-			<div class="divide-y divide-cream/10">
-				{#each [
-					{ metric: 'Framework', value: 'SvelteKit (SSR + static)' },
-					{ metric: 'Styling', value: 'Tailwind CSS' },
-					{ metric: 'Deployment', value: 'Cloudflare Pages' },
-					{ metric: 'Assessment languages', value: '11 (Classes 6–7)' },
-					{ metric: 'Student pathways', value: '4 (Science, Arts, Invention, Service)' },
-					{ metric: 'Partner organisations', value: '8 across all pathways' },
-					{ metric: 'Onboarding channels', value: 'Web + WhatsApp bot' },
-					{ metric: 'Design', value: '3 Sided Coin' },
-				] as row}
-					<div class="grid grid-cols-2 gap-2 px-6 py-3.5 text-sm">
-						<span class="text-xs font-medium tracking-wide text-cream/50">{row.metric}</span>
-						<span class="font-mono text-xs text-[#86d993]">{row.value}</span>
-					</div>
-				{/each}
-			</div>
-		</div>
+		<EvidenceTable
+			eyebrow="Platform at a Glance"
+			title="What the build required."
+			rows={[
+					{ label: 'Framework', after: 'SvelteKit 2 · Svelte 5' },
+					{ label: 'Styling', after: 'Tailwind CSS v4, pathway colours as theme tokens' },
+					{ label: 'Deployment', after: 'Cloudflare Pages' },
+					{ label: 'Assessment languages', after: '11 (arts: Classes 6–10, sciences: 6–7)' },
+					{ label: 'Student pathways', after: '4 (Science, Arts, Invention, Service)' },
+					{ label: 'Partner organisations', after: '8 across all pathways' },
+					{ label: 'Onboarding channels', after: 'Web registration + WhatsApp chatbot' },
+					{ label: 'Registration', after: 'Separate platform — register.tomorrow-makers.in' },
+					{ label: 'Design', after: '3 Sided Coin' },
+			]}
+		/>
 
 		<!-- full-page tour -->
 		<div class="not-prose my-12 lg:relative lg:left-1/2 lg:-translate-x-1/2 lg:w-[calc(100vw-3rem)] lg:max-w-[100rem]">
@@ -396,14 +348,7 @@
 				Tomorrow Makers launched as a Godrej Foundation initiative — the same trust whose
 				<a href="/writing/godrej">website and CMS I built the year before</a>. That earlier
 				project went through two complete iterations (pre-rebrand and post-rebrand), and the
-				quality of that work is what opened the door to this one.
-			</p>
-
-			<p>
-				There's a pattern in client work that matters more than any portfolio piece: when a
-				client comes back with a harder brief, it means the first one landed. Tomorrow Makers
-				was a bigger scope, a different audience, and a more complex system — but it came from
-				the same trust, born out of a relationship built by doing the work right the first time.
+				relationship it built is what led to this one.
 			</p>
 
 			<p>
@@ -419,9 +364,8 @@
 			<ul>
 				<li>Building for impact is different from building for conversion. There's no add-to-cart here — the goal is getting a 14-year-old from a village in Maharashtra to take an aptitude test that could change their life. Every design decision filters through that lens.</li>
 				<li>WhatsApp-first onboarding isn't optional when your users are in underserved communities. A website is one channel; the channel your audience already lives on is the one that matters.</li>
-				<li>Multi-language support at the assessment level (not just the UI) is a fundamentally different problem. You're not just translating labels — you're ensuring that aptitude questions work across linguistic and cultural contexts.</li>
 				<li>Design systems that serve multiple audiences within one product need colour as architecture, not just decoration. The pathway colours aren't aesthetic — they're wayfinding.</li>
-				<li>The best briefs come from clients you've already proven yourself to. The Godrej Foundation site led directly to Tomorrow Makers — earned through quality, not pitched.</li>
+				<li>The best briefs come from clients you've already proven yourself to. The Godrej Foundation site led directly to Tomorrow Makers — repeat work, not a pitch.</li>
 			</ul>
 
 		</div>

@@ -1,50 +1,15 @@
 <script lang="ts">
-	import { site } from '$lib/content';
-	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
-	import ReadingProgress from '$lib/components/ReadingProgress.svelte';
+	import ArticleChrome from '$lib/components/ArticleChrome.svelte';
 	import NextArticle from '$lib/components/NextArticle.svelte';
+	import CaseSummary from '$lib/components/CaseSummary.svelte';
+	import EvidenceTable from '$lib/components/EvidenceTable.svelte';
 
 	const title = 'Building (and Rebuilding) for Godrej Foundation — Isaac Solomon';
 	const description =
-		'How I built the website and CMS for India\'s oldest philanthropic trust — then rebuilt it when Godrej\'s entire brand identity changed overnight.';
-	const canonical = `${site.url}/writing/godrej`;
+		'How I built the website and CMS for Godrej Foundation, the philanthropic trust of the Godrej Group, founded in 1897 — then rebuilt the frontend on the same CMS when Godrej\'s entire brand identity changed.';
 </script>
 
-<svelte:head>
-	<title>{title}</title>
-	<meta name="description" content={description} />
-	<link rel="canonical" href={canonical} />
-	<!-- markdown twin for agents — see /llms.txt -->
-	<link rel="alternate" type="text/markdown" href="{canonical}.md" />
-	<meta property="og:type" content="article" />
-	<meta property="og:title" content={title} />
-	<meta property="og:description" content={description} />
-	<meta property="og:url" content={canonical} />
-	<meta property="og:image" content="{site.url}/writing/godrej/og.png" />
-	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:title" content={title} />
-	<meta name="twitter:description" content={description} />
-	<meta name="twitter:image" content="{site.url}/writing/godrej/og.png" />
-</svelte:head>
-
-<ReadingProgress />
-
-<!-- back nav -->
-<header class="border-b border-line px-5 py-4 sm:px-8">
-	<div class="mx-auto flex max-w-3xl items-center justify-between">
-		<a
-			href="/"
-			class="group flex items-center gap-2 text-xs font-medium tracking-[0.2em] uppercase text-dim transition-colors hover:text-ink"
-		>
-			<span class="inline-block transition-transform duration-200 group-hover:-translate-x-1" aria-hidden="true">←</span>
-			Isaac Solomon
-		</a>
-		<div class="flex items-center gap-3">
-			<span class="text-xs font-medium tracking-[0.2em] uppercase text-dim">Writing</span>
-			<ThemeToggle />
-		</div>
-	</div>
-</header>
+<ArticleChrome {title} {description} path="/writing/godrej" image="/writing/godrej/og.png" />
 
 <main id="main" class="px-5 pb-24 sm:px-8">
 
@@ -55,29 +20,17 @@
 			Case Study · Godrej Foundation
 		</p>
 
-		<h1 class="mt-4 text-4xl font-medium leading-[1.1] tracking-tight md:text-6xl">
+		<h1 class="mt-4 text-4xl font-medium leading-[1.1] tracking-tight lowercase md:text-6xl">
 			Built Twice, Shipped<br />
 			<em class="font-serif font-normal italic text-dim">Better.</em>
 		</h1>
 
 		<p class="mt-6 max-w-xl text-lg leading-relaxed text-dim md:text-xl">
-			How I built the website and CMS for India's oldest philanthropic trust —
-			then rebuilt it when Godrej's entire brand identity changed overnight.
+			How I built the website and CMS for Godrej Foundation, the philanthropic trust of the Godrej Group, founded in 1897 —
+			then rebuilt the frontend on the same CMS when Godrej's entire brand identity changed.
 		</p>
 
-		<!-- meta -->
-		<div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-b border-line py-5 text-xs font-medium tracking-[0.2em] uppercase text-dim">
-			<span>2024</span>
-			<span class="h-3 w-px bg-line"></span>
-			<span>Philanthropy · Non-profit</span>
-			<span class="h-3 w-px bg-line"></span>
-			<span>SvelteKit · Tailwind · Custom CMS</span>
-			<span class="h-3 w-px bg-line"></span>
-			<a href="https://www.godrejfoundation.com" target="_blank" rel="noopener noreferrer"
-				class="text-accent transition-opacity hover:opacity-70">
-				godrejfoundation.com ↗
-			</a>
-		</div>
+		<CaseSummary href="/writing/godrej" />
 
 		<!-- payoff teaser -->
 		<div class="mt-10 rounded-xl border border-line bg-paper-2/60 px-6 py-5">
@@ -120,9 +73,10 @@
 
 			<p>
 				Godrej Foundation is an independent philanthropic trust that works on crafting a more prosperous
-				India. With a 15 percent shareholding in the Godrej Industries Group, it's one of the oldest
-				and most respected foundations in the country — dedicated to strengthening economic growth,
-				advancing inclusion, and backing bold ideas through their Tomorrow Grants programme.
+				India. It holds a 15 percent shareholding in the Godrej Industries Group, and its philanthropy
+				goes back to the Godrej family trusts of the 1970s; the group itself was founded in 1897,
+				one of India's oldest. The foundation works on strengthening economic growth, advancing
+				inclusion, and backing bold ideas through its Tomorrow Grants programme.
 			</p>
 
 			<p>
@@ -137,9 +91,8 @@
 			<p>
 				The first iteration was designed by
 				<a href="https://3sided.co.in/" target="_blank" rel="noopener noreferrer">3 Sided Coin</a>
-				— an award-winning design studio whose work includes a Webby Honoree for FiftyTwo magazine
-				and the iPad App of the Year for Froggipedia. They've designed for Flipkart, Microsoft, and
-				Urban Company. When 3 Sided Coin hands you a design system, you pay attention.
+				— a design studio with a strong editorial portfolio, and a design system that set the bar
+				for the build.
 			</p>
 
 			<p>
@@ -196,9 +149,12 @@
 			</p>
 
 			<p>
-				Not a colour tweak — a full corporate identity overhaul. New logo, new typography, new visual
-				language, new guidelines. Everything the Godrej group touches had to change, and the foundation
-				website was no exception. The design I'd spent months building was suddenly out of date.
+				The 2024 restructuring had split the conglomerate into the Godrej Industries Group and the
+				Godrej Enterprises Group, and on 22 April 2026 Godrej Industries unveiled a new corporate
+				identity to match — a geometric "GI" identifier used alongside the Godrej signature, a
+				custom typeface, GI Sans, and new guidelines, built by its in-house design team. Not a
+				colour tweak. The group's corporate surfaces had to change, and the foundation website was
+				one of them. The design I'd spent months building was suddenly out of date.
 			</p>
 
 		</div>
@@ -271,36 +227,26 @@
 			</p>
 
 			<p>
-				We rebuilt the frontend from new designs — new component library, new layout system,
+				I rebuilt the frontend from new designs — new component library, new layout system,
 				new visual patterns. But here's where the architecture paid off: the CMS didn't have to change.
 			</p>
 
 		</div>
 
 		<!-- Migration comparison -->
-		<div class="not-prose my-10 overflow-hidden rounded-2xl border border-coal bg-coal text-cream">
-			<div class="border-b border-cream/10 px-6 py-4">
-				<p class="text-xs font-medium tracking-[0.25em] uppercase text-cream/50">The Rebuild</p>
-				<p class="mt-1 font-medium tracking-tight">What changed between v1 and v2.</p>
-			</div>
-			<div class="divide-y divide-cream/10">
-				{#each [
-					{ metric: 'Logo & identity', before: 'Old Godrej wordmark', after: 'New Godrej mark + wordmark' },
-					{ metric: 'Hero approach', before: 'Banyan tree, editorial', after: 'Hands/sky, aspirational' },
-					{ metric: 'Typography', before: 'Previous brand type stack', after: 'New Godrej type system' },
-					{ metric: 'Colour palette', before: 'Warm, earthy tones', after: 'Lighter, more modern palette' },
-					{ metric: 'Layout system', before: 'Text-forward, classic grid', after: 'Visual-forward, modern grid' },
-					{ metric: 'CMS & data model', before: 'Custom, built for Godrej', after: 'Unchanged — same system, new skin' },
-					{ metric: 'Content & copy', before: 'Managed by foundation team', after: 'Unchanged — zero migration needed' },
-				] as row}
-					<div class="grid grid-cols-3 gap-2 px-6 py-3.5 text-sm">
-						<span class="text-xs font-medium tracking-wide text-cream/50">{row.metric}</span>
-						<span class="font-mono text-xs text-cream/35 line-through">{row.before}</span>
-						<span class="font-mono text-xs text-[#86d993]">{row.after}</span>
-					</div>
-				{/each}
-			</div>
-		</div>
+		<EvidenceTable
+			eyebrow="The Rebuild"
+			title="What changed between v1 and v2."
+			rows={[
+					{ label: 'Logo & identity', before: 'Old Godrej wordmark', after: 'New Godrej mark + wordmark' },
+					{ label: 'Hero approach', before: 'Banyan tree, editorial', after: 'Hands/sky, aspirational' },
+					{ label: 'Typography', before: 'Previous brand type stack', after: 'New Godrej type system' },
+					{ label: 'Colour palette', before: 'Warm, earthy tones', after: 'Lighter, more modern palette' },
+					{ label: 'Layout system', before: 'Text-forward, classic grid', after: 'Visual-forward, modern grid' },
+					{ label: 'CMS & data model', before: 'Custom, built for Godrej', after: 'Unchanged — same content model, new presentation' },
+					{ label: 'Content & copy', before: 'Managed by foundation team', after: 'Unchanged — zero migration needed' },
+			]}
+		/>
 
 		<div class="prose">
 
@@ -316,28 +262,35 @@
 
 			<p>
 				Both iterations run on <strong>SvelteKit</strong> with <strong>Tailwind CSS</strong>.
-				SvelteKit handles the routing, server-side rendering, and static prerendering.
+				Content lives in Apex, Able.do's own CMS platform; the site fetches it at build time and
+				renders pages on the server from that snapshot, so publishing means a rebuild and a redeploy.
 				Tailwind handles the design system — spacing, typography, colour tokens — making it
 				possible to rebuild the visual layer quickly when the rebrand landed.
 			</p>
 
 			<p>
-				The CMS is a custom build, personalised for how the Godrej Foundation operates.
-				It's not WordPress with custom fields, and it's not a headless CMS with a generic
-				content model. It's a tool built specifically for this team — their content types,
-				their publishing patterns, their organisational structure. That specificity is what
-				made the rebrand migration so clean: the content model was designed around the foundation's
-				work, not the visual design.
+				The content model in Apex is shaped around how the foundation operates — their content
+				types, their publishing patterns, their organisational structure — rather than around
+				any one page design. Editors get a preview of pages and posts before they publish.
+				That is what let the redesign change the presentation without touching the content.
 			</p>
 
 			<h2>What I learned</h2>
 
 			<ul>
 				<li>Separate content from presentation as early as possible. When you build a CMS around the content model instead of the visual design, you can survive a rebrand without migrating data.</li>
-				<li>Working from a strong design — like 3 Sided Coin's v1 — sets the bar. It forces you to build well because the design demands it.</li>
 				<li>Building something twice teaches you what actually mattered the first time. The second iteration was faster and cleaner because the hard decisions were already made.</li>
 				<li>A rebrand isn't a disaster if the architecture is right. It's a frontend rebuild, not a platform rebuild. The difference is weeks vs. months.</li>
 				<li>Non-technical teams will actually use a CMS if it matches their mental model. Generic tools get abandoned; personalised tools get adopted.</li>
+			</ul>
+
+			<h2>What I'd improve next</h2>
+
+			<ul>
+				<li>A responsive image pipeline. Images are served straight from the CMS's asset host at one size; resized variants with <code>srcset</code> would cut most of the page weight on phones.</li>
+				<li>Structured data. The foundation's programmes, grants and posts carry no JSON-LD today.</li>
+				<li>A title and description on every route, enforced at build time rather than checked by hand.</li>
+				<li>Move the content security policy from report-only to enforced.</li>
 			</ul>
 
 		</div>
