@@ -14,7 +14,7 @@
 </script>
 
 {#if painted.includes(kind)}
-	<img src="/story/spot-{kind}.webp" alt="" aria-hidden="true" class={className} />
+	<img src="/story/spot-{kind}.webp" alt="" aria-hidden="true" class="story-art-sm {className}" />
 {:else}
 <svg
 	viewBox="0 0 100 100"

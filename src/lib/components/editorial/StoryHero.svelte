@@ -36,7 +36,7 @@
 				alt="Illustrated portrait of Isaac Solomon in a blue beret, looking up"
 				width="671"
 				height="795"
-				class="mt-4 block h-auto w-[min(70vw,22rem)]"
+				class="story-art mt-4 block h-auto w-[min(70vw,22rem)]"
 			/>
 			<p class="mt-1 font-serif text-sm text-dim italic" aria-hidden="true">fig. 1 — the author, looking up.</p>
 
@@ -74,7 +74,7 @@
 		</div>
 
 		<!-- left meta column, laid over the composition on desktop -->
-		<div class="mt-10 max-w-sm md:absolute md:top-24 md:left-0 md:mt-0">
+		<div class="mt-10 max-w-sm lg:absolute lg:top-24 lg:left-0 lg:mt-0 lg:max-w-[16rem] xl:max-w-[18rem]">
 			<p class="text-[15px] leading-relaxed text-ink">
 				{site.heroLead}
 			</p>

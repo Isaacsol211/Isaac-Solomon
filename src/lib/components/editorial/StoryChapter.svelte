@@ -44,7 +44,7 @@
 		<!-- illustration on its offset colour block -->
 		<div class="relative flex justify-center {reverse ? 'md:order-2' : ''}">
 			<span class="absolute bottom-2 {reverse ? 'right-10' : 'left-10'} block size-24 {block}" aria-hidden="true"></span>
-			<img src={artSrc[art]} alt="" aria-hidden="true" class="relative block w-[min(44vw,11rem)]" />
+			<img src={artSrc[art]} alt="" aria-hidden="true" class="story-art relative block w-[min(44vw,11rem)]" />
 		</div>
 
 		<!-- the chapter's text -->
